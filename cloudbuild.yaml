@@ -1,0 +1,45 @@
+steps:
+  - name: node:14
+    entrypoint: npm
+    args: ["install"]
+    dir: "client"
+    id: "install-client"
+    waitFor: ["-"]
+  - name: node:14
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - "API_URL=${_API_URL}"
+    dir: "client"
+    id: "envvars-client"
+    waitFor: ["install-client"]
+  - name: node:14
+    entrypoint: npm
+    args: ["run", "generate"]
+    dir: "client"
+    id: "generate-client"
+    waitFor: ["envvars-client", "install-client"]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]
+    dir: "client"
+    id: "deploy-client"
+    waitFor: ["envvars-client", "install-client", "generate-client"]
+  - name: node:14
+    entrypoint: npm
+    args: ["install"]
+    dir: "server"
+    id: "install-server"
+    waitFor: ["-"]
+  - name: node:14
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - "API_URL=${_API_URL}"
+    dir: "server"
+    id: "envvars-server"
+    waitFor: ["install-server"]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]
+    dir: "server"
+    waitFor: ["envvars-server", "install-server"]
+  
