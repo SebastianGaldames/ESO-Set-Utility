@@ -21,6 +21,7 @@ app.use(express.static(__dirname + '/views/'));
 
 // Defining route middleware
 app.use('/api', require('./routes/api'));
+app.use('/scrapper', require('./routes/scrapper'))
 
 // Listening to port
 app.listen(port);
