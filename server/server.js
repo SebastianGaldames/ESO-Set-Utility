@@ -1,9 +1,19 @@
 // Importing required modules
 const cors = require('cors');
 const express = require('express');
-
+const morgan = require('morgan');
+const mongoose = require('mongoose');
 // parse env variables
 require('dotenv').config();
+
+//Conexion MongoDB
+
+mongoose.Promise=global.Promise;
+mongoose.connect('mongodb+srv://admin:esosetutility@eso-set-utility.bubka.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-59b7z4-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true')
+    .then(db => console.log('DB is connected'))
+    .catch(err => console.error(err));
+
+
 
 // Configuring port
 const port = process.env.PORT || 9000;
@@ -13,6 +23,7 @@ const app = express();
 // Configure middlewares
 app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 
 app.set('view engine', 'html');
 

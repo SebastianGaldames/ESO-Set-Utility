@@ -4,16 +4,22 @@
   "description": "Express.js template",
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "node server.js --exec babel-node",
     "serve": "nodemon server.js",
     "format": "prettier server.js **/*.js --write",
     "create-env": "printenv > .env"
   },
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.4",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mongoose": "^6.0.12",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3",
