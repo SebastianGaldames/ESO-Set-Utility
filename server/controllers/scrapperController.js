@@ -1,14 +1,14 @@
-const secret = 'fxuekQ67r6'
+const axios = require('axios')
+const secret = '4atmBrPlHQ'
 
 function test() {
   return 'hello im the scrapper'
 }
 
-function scrap(url, secret) {
-  if (this.secret === secret) {
-    return 'secret is valid'
-  } else {
-    return 'invalid secret'
-  }
+const scrap = async (req, res) => {
+  const url = req.body.url
+  const response = await axios.get(url)
+  res.send(response.data)
 }
-module.exports = { test, scrap }
+
+module.exports = { scrap }
