@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   res.send({ msg: 'controlador de personaje' })
 })
 
-router.get('/add', PersonajeController.add)
+router.post('/add', PersonajeController.add)
 router.get('/query',PersonajeController.query)
 router.get('/list',PersonajeController.list)
 router.put('/update',PersonajeController.update)

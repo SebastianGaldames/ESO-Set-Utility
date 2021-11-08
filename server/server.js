@@ -9,7 +9,7 @@ require('dotenv').config()
 //Conexion MongoDB
 
 mongoose.Promise=global.Promise;
-mongoose.connect('mongodb+srv://admin:esosetutility@eso-set-utility.bubka.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-59b7z4-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true')
+mongoose.connect(process.env.MONGODB_URL)
     .then(db => console.log('DB is connected'))
     .catch(err => console.error(err));
 
