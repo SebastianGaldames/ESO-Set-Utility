@@ -23,7 +23,8 @@ const itemSchema = new Schema({
   peso: { type: String, required: true },
   nivel: { type: Number, required: true },
   calidad: { type: String, required: true },
-  familia: { type: Schema.ObjectId, ref: 'Familia', required: true }
+  familia: { type: Schema.ObjectId, ref: 'Familia', required: true },
+  imagen: { type: String} 
 })
 
 module.exports = model('Item', itemSchema)
