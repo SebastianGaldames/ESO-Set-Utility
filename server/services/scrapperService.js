@@ -7,8 +7,8 @@ from eso-hub
 const secret = '4atmBrPlHQ'
 
 // const url = 'http://localhost:9000/scrapper/test'
-// const url = 'https://eso-hub.com/en/sets/all'
-const url = 'https://eso-hub.com/en/sets'
+const url = 'https://eso-hub.com/en/sets/all'
+// const url = 'https://eso-hub.com/en/sets'
 
 function testService() {
   console.log(process.env)
