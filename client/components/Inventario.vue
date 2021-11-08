@@ -25,6 +25,8 @@ export default {
       { nombre: 'Breton Gauntlets', familia: 'HIST WHISPERER' },
     ],
   }),
-  methods: {},
+  methods: {
+    agregarItem() {},
+  },
 }
 </script>

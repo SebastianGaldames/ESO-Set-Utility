@@ -2,6 +2,7 @@
   <v-card>
     <v-list>
       <v-subheader>Personajes</v-subheader>
+      <v-btn @click="agregarPersonaje()">+</v-btn>
       <personaje-card v-for="pj in personajes" :key="pj.id" :nombre="pj.nombre">
       </personaje-card>
     </v-list>
@@ -23,6 +24,9 @@ export default {
         { nombre: 'Bar', stats: 'weak', id: 1 },
       ],
     }
+  },
+  methods: {
+    agregarPersonaje() {},
   },
 }
 </script>
