@@ -14,13 +14,12 @@ const scrap = async (req, res) => {
   } else {
     const url = scrapperService.url
     const response = await axios.get(url)
-    // const $ = cheerio.load(response.data)
-    // var list = $('#searchable-table-sets')
-    //console.dir(list)
     const dom = new JSDOM(response.data)
     var table = dom.window.document.getElementById('searchable-table-sets')
-    const nodeList = [...table.querySelectorAll('tr td a')] //gets all the set links
-    nodeList.forEach((link) => console.log(link.href))
+    const nodeList = [...table.querySelectorAll('tr td:first-child a')] //gets all the set links
+    const setListUrls = []
+    nodeList.forEach((link) => setListUrls.push(link.href))
+    console.log(setListUrls)
     res.send(response.data)
   }
 }
