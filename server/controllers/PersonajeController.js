@@ -45,7 +45,7 @@ const list = async (req,res,next) =>{
 //Metodo para actualizar un personaje en concreto mediante el _id
 const update = async (req,res,next) =>{
     try {
-        const reg= await models.Personaje.findByIdAndUpdate({_id:req.body._id},{});
+        const reg= await models.Personaje.findByIdAndUpdate({_id:req.body._id},{nombre:req.nombre});
             res.status(200).json(reg);
     } catch(e){
         res.status(500).send({
@@ -69,8 +69,36 @@ const remove = async (req,res,next) =>{
     }
 }
 //Metodo para agregar items al personaje
-const addItem = async (req,res,next) =>{
-    
+const getItems = async (req,res,next) =>{
+    try {
+        const reg=await models.Personaje.findOne({_id:req.query._id});
+        if(!reg){
+            res.status(404).send({
+                message: 'El registro no existe'
+            });
+        }
+        else{
+            res.status(200).json(reg.items);
+        }
+    } catch(e){
+        res.status(500).send({
+            message: 'Ocurrio un error'
+        });
+        next(e);
+    }
 }
 
-module.exports = { add, query, list, update, remove}
+//Metodo para agregar items al personaje
+const actualizarItems = async (req,res,next) =>{
+    try {
+        const reg= await models.Personaje.findByIdAndUpdate({_id:req.body._id},{items:req.items});
+            res.status(200).json(reg);
+    } catch(e){
+        res.status(500).send({
+            message: 'Ocurrio un error'
+        });
+        next(e);
+    }
+}
+
+module.exports = { add, query, list, update, remove, getItems, actualizarItems}
