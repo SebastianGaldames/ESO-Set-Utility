@@ -17,12 +17,12 @@ const estadisticaSchema = new Schema({
 
 const itemSchema = new Schema({
   nombre: { type: String, required: true },
-  estadistica: { type: estadisticaSchema, required: true },
-  efecto: { type: [String], required: true },
+  estadistica: { type: estadisticaSchema, required: false },
+  efecto: { type: [String], required: false },
   categoria: { type: String, required: true },
   peso: { type: String, required: true },
-  nivel: { type: Number, required: true },
-  calidad: { type: String, required: true },
+  nivel: { type: Number, default: 50 },
+  calidad: { type: String, default: "dorada" },
   familia: { type: Schema.ObjectId, ref: 'Familia', required: true },
   imagen: { type: String} 
 })
