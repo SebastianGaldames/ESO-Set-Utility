@@ -1,10 +1,8 @@
-import mongoosse,{Schema} from 'mongoose';
+const { Schema, model } = require('mongoose')
 
 const familiaSchema = new Schema({
-    nombre: {type: String, required: true},
-    ubicacion: {type: [String], required: true},
-});
+  nombre: { type: String, required: true },
+  ubicacion: { type: [String], required: true }
+})
 
-const Familia = mongoosse.model('Familia',familiaSchema);
-
-export default Familia;
+module.exports = model('Familia', familiaSchema)

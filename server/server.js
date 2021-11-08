@@ -13,8 +13,6 @@ mongoose.connect('mongodb+srv://admin:esosetutility@eso-set-utility.bubka.mongod
     .then(db => console.log('DB is connected'))
     .catch(err => console.error(err));
 
-
-
 // Configuring port
 const port = process.env.PORT || 9000
 
@@ -34,6 +32,10 @@ app.use(express.static(__dirname + '/views/'))
 // Defining route middleware
 app.use('/api', require('./routes/api'))
 app.use('/scrapper', require('./routes/scrapper'))
+app.use('/Usuario', require('./routes/Usuario'))
+app.use('/Personaje', require('./routes/Personaje'))
+app.use('/Item', require('./routes/Item'))
+app.use('/Familia', require('./routes/Familia'))
 
 // Listening to port
 app.listen(port)

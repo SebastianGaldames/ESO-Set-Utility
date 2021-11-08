@@ -1,10 +1,8 @@
-import mongoosse,{Schema} from 'mongoose';
+const { Schema, model } = require('mongoose')
 
 const personajeSchema = new Schema({
-    nombre: {type: String, required: true},
-    items: {type: [Schema.ObjectId], ref: 'Item'}
-});
+  nombre: { type: String, required: true },
+  items: { type: [Schema.ObjectId], ref: 'Item'}
+})
 
-const Personaje = mongoosse.model('Personaje',personajeSchema);
-
-export default Personaje;
+module.exports = model('Personaje', personajeSchema)
