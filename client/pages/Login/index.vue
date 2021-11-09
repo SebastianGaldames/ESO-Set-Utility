@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <NavbarIS> </NavbarIS>
+    <NavbarIS></NavbarIS>
     <Navbar> </Navbar>
 
     <v-card class="mx-auto pa-10 ma-10" max-width="380" max-height="2000">
