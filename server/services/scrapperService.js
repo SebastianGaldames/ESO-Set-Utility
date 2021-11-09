@@ -20,8 +20,25 @@ function auth(authSecret) {
   return ok
 }
 
+const scrapAllSets = async (setUrls) => {
+  const allSets = []
+  var i = 0
+  for (const url of setUrls) {
+    const contents = await scrapSet(url)
+    allSets.push(contents)
+    console.log('scrapping: ' + i)
+    //test
+    if (i % 10 === 0) {
+      console.log(allSets[i])
+    }
+    i += 1
+  }
+
+  return allSets
+}
+
 const scrapSet = async (setUrl) => {
-  const html = await getHtmlFromSetUrl(testurl) // test url to save time
+  const html = await getHtmlFromSetUrl(setUrl) // test url to save time
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
   // set metadata
@@ -35,11 +52,13 @@ const scrapSet = async (setUrl) => {
   //console.log(setBonusSpan.textContent)
   var setData = scrapSetMeta(stronk, set)
   setData.setBonus = setBonus //add the scrapped bonus
+  //scrap image
+  const imgURL = setBonusPanel.querySelector('picture img')
+  setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
   return setData
 }
 
 const getHtmlFromSetUrl = async (setUrl) => {
-  console.log(setUrl)
   const response = await axios.get(setUrl)
   return response.data
 }
@@ -48,7 +67,9 @@ function scrapSetMeta(data, set) {
   const scrapped = {
     name: '',
     type: '',
+    imageUrl: '',
     location: [],
+    setBonus: [],
   }
   data.forEach((str) => {
     if (str.textContent.includes('Name')) {
@@ -75,14 +96,14 @@ function scrapSetBonus(setBonusSpan) {
   const spl = txt.split('(')
   const setBonusAmountScrapped = [...setBonusSpan.querySelectorAll('strong')]
   const setBonus = []
-  setBonusAmountScrapped.forEach((numNode) => {
+  setBonusAmountScrapped.forEach((numNode, index) => {
     //console.log(numNode.textContent)
     const nbr = numNode.textContent
     const bonus = {
-      number: nbr,
-      bonus = spl
+      number: nbr[1],
+      bonus: '(' + spl[index + 1],
     }
-    setBonus.push(numNode.textContent)
+    setBonus.push(bonus)
   })
   return setBonus
 }
@@ -110,4 +131,5 @@ module.exports = {
   scrapSetsTable,
   getHtmlFromSetUrl,
   scrapSet,
+  scrapAllSets,
 }
