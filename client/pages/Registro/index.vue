@@ -1,5 +1,5 @@
 <template>
-  <v-layout justify-center>
+  <v-layout class="margenForm" justify-center>
     <v-flex xs12 sm10 md8 lg6>
       <v-card>
         <v-autocomplete
@@ -22,6 +22,7 @@
         <v-flex xs12 sm6>
           <v-text-field
             v-model="mensaje"
+            :rules="[emailrules.required, emailrules.syntax]"
             label="Email"
             clearable
           ></v-text-field>
@@ -29,12 +30,14 @@
         <v-flex xs12 sm6>
           <v-text-field
             v-model="mensaje"
+            :rules="[emailrules.required, emailrules.equals]"
             label="Confirma tu email"
             clearable
           ></v-text-field>
         </v-flex>
         <v-flex xs12 sm6>
           <v-text-field
+            v-model="password"
             :rules="[rules.required, rules.min]"
             :type="show2 ? 'text' : 'password'"
             name="input-10-2"
@@ -47,7 +50,7 @@
         </v-flex>
         <v-flex xs12 sm6>
           <v-text-field
-            :rules="[rules.required, rules.min]"
+            :rules="[rules.required, rules.min, rules.equals]"
             :type="show2 ? 'text' : 'password'"
             name="input-10-2"
             label="Confirma tu contraseña"
@@ -58,14 +61,11 @@
           ></v-text-field>
         </v-flex>
 
-        <v-checkbox
-          v-model="checkbox"
-          :error-messages="checkboxErrors"
-          label="Estoy de acuerdo con los términos y condiciones"
-          required
-          @change="$v.checkbox.$touch()"
-          @blur="$v.checkbox.$touch()"
-        ></v-checkbox>
+        <v-checkbox v-model="checkbox">
+          <template v-slot:label>
+            <div>Estoy de acuerdo con los términos y condiciones</div>
+          </template>
+        </v-checkbox>
         <v-row>
           <v-col>
             <div class="text-xs-center">
@@ -83,17 +83,34 @@
   </v-layout>
 </template>
 
-<style></style>
+<style>
+.margenform {
+  margin-left: 20%;
+  margin-right: 20%;
+  font-size: 12px;
+  border-radius: 10px;
+  border-color: transparent transparent #1c335f transparent;
+}
+</style>
 
 <script>
 export default {
   data() {
     return {
-      show: false,
-      password: 'Password',
+      paises: ['Afghanistan', 'Albania', 'Algeria'],
+      show: true,
+      email: '',
+      password: '',
+      checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
+        equals: (v) => v === this.password || 'Las contraseñas no coinciden',
+      },
+      emailrules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        equals: (v) => v === this.email || 'Los e-malis no coinciden',
+        syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
     }
   },
