@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 
 router.post('/add', ItemController.add)
 router.get('/query',ItemController.query)
+router.get('/queryHash',ItemController.queryHash)
 router.get('/list',ItemController.list)
 router.put('/update',ItemController.update)
 router.delete('/remove/:id',ItemController.remove)

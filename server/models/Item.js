@@ -18,6 +18,7 @@ const estadisticaSchema = new Schema({
 
 const itemSchema = new Schema({
   nombre: { type: String, required: true }, 
+  hash: { type: String, required: true, unique: true },
   estadistica: { type: estadisticaSchema, required: false }, 
   efecto: { type: [String], required: false },
   categoria: { type: String, required: false },
