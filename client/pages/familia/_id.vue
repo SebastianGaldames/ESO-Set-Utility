@@ -15,7 +15,7 @@
             <v-row no-gutters>
               <v-col sm="6">
                 <h1 class="title text-center lista texto1--text">
-                  Set: "Nombre de la Familia"
+                  Set: {{ $route.params.item.nombre }}
                 </h1>
               </v-col>
               <v-spacer />
@@ -88,7 +88,7 @@
                     <v-col md="3"></v-col>
                     <v-col md="6">
                       <h1 class="centro texto1--text">
-                        "Nombre de la Familia"
+                        {{ $route.params.item.nombre }}
                       </h1>
                     </v-col>
                     <v-col md="3"></v-col>
@@ -122,13 +122,7 @@
     <div class="w-100 primario">
       <v-row class="galery">
         <v-col v-for="n in 20" :key="n" md="2">
-          <v-card
-            v-ripple
-            class="item borde"
-            color="primario"
-            outlined
-            @click="redirigir()"
-          >
+          <v-card v-ripple class="item borde" color="primario" outlined>
             <img
               class="test"
               src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
