@@ -1,7 +1,5 @@
-/*
-Module containing all the necesary methods to scrap the armor sets and item info
-from eso-hub
-*/
+const jsdom = require('jsdom')
+const { JSDOM } = jsdom
 
 //move to ENV variables, change secret then
 const secret = '4atmBrPlHQ'
@@ -21,4 +19,17 @@ function auth(authSecret) {
   return ok
 }
 
-module.exports = { testService, auth, url }
+function scrapSetsTable(data) {
+  const dom = new JSDOM(data)
+  var table = dom.window.document.getElementById('searchable-table-sets')
+  return scrapTableUrls(table)
+}
+//scraps all the urls for each set in the table sets
+function scrapTableUrls(table) {
+  const nodeList = [...table.querySelectorAll('tr td:first-child a')] //gets all the set links
+  const setListUrls = []
+  nodeList.forEach((link) => setListUrls.push(link.href))
+  return setListUrls
+}
+
+module.exports = { testService, auth, url, scrapTableUrls, scrapSetsTable }
