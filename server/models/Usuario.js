@@ -7,7 +7,8 @@ const usuarioSchema = new Schema({
   password: { type: String, minlength: 8, required: true },
   sexo: { type: String, required: true },
   personajes: { type: [Schema.ObjectId], ref: 'Personaje' },
-  inventario: {type: [Schema.ObjectId], ref: 'Item' }
+  inventario: {type: [Schema.ObjectId], ref: 'Item' },
+  rol: {type: String, unique: true, required: true}
 })
 
 module.exports = model('Usuario', usuarioSchema)
