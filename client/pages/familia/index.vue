@@ -5,12 +5,11 @@
         <v-toolbar-title align="center">Aqui estaria la barra</v-toolbar-title>
       </v-toolbar>
     </div>
-    <div c lass="w-50">
-      <v-row>
+    <div class="w-100">
+      <v-row class="galery">
         <v-col class="mx-auto" md="6" sm="8">
           <v-container class="grey lighten-5">
             <v-row no-gutters>
-              <v-col sm="2"></v-col>
               <v-col sm="6">
                 <h1 class="title text-center lista">
                   Set: "Nombre de la Familia"
@@ -46,6 +45,7 @@
               <v-col class="der" md="3">
                 <h3>Localización:</h3>
               </v-col>
+              <v-col></v-col>
             </v-row>
             <v-row>
               <v-col class="der" md="3">
@@ -57,34 +57,29 @@
             </v-row>
           </v-container>
         </v-col>
-        <v-col class="mx-auto" md="4" sm="8">
+        <v-col class="mx-auto" md="6" sm="8">
           <v-container class="grey lighten-5">
             <v-row no-gutters>
               <v-col>
                 <v-card class="pa-2" outlined tile>
-                  <v-row>
-                    <v-col md="1"></v-col>
+                  <v-row class="galery">
                     <v-col md="4">
                       <h5>"obtención"</h5>
                     </v-col>
-                    <v-col md="1"></v-col>
-                    <v-col md="5">
+
+                    <v-col md="8">
                       <h5 class="der">level "50" - CP "160"</h5>
                     </v-col>
-                    <v-col md="1"></v-col>
                   </v-row>
                   <v-spacer />
                   <v-row>
-                    <v-col md="5"></v-col>
                     <v-col>
-                      <v-img
-                        lazy-src="https://picsum.photos/id/11/10/6"
-                        max-height="80"
-                        max-width="80"
-                        src="https://picsum.photos/id/11/500/300"
-                      ></v-img>
+                      <img
+                        class="test"
+                        src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
+                        alt=""
+                      />
                     </v-col>
-                    <v-col md="5"></v-col>
                   </v-row>
                   <v-row>
                     <v-col md="3"></v-col>
@@ -104,21 +99,18 @@
 
                   <v-spacer />
                   <v-row>
-                    <v-col md="3"></v-col>
                     <v-col class="centro">
                       <p>(2 items) "buffo de estadisticas"</p>
                       <p>(3 items) "buffo de estadisticas"</p>
                       <p>(4 items) "buffo de estadisticas"</p>
                       <p>(5 items) "bono por uso de la familia"</p>
                     </v-col>
-                    <v-col md="3"></v-col>
                   </v-row>
                 </v-card>
               </v-col>
             </v-row>
           </v-container>
         </v-col>
-        <v-col class="mx-auto" md="2"></v-col>
       </v-row>
     </div>
     <v-spacer />
