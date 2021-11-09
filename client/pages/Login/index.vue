@@ -3,7 +3,7 @@
     <NavbarIS> </NavbarIS>
     <Navbar> </Navbar>
 
-    <v-card>
+    <v-card class="mx-auto pa-10 ma-10" max-width="380" max-height="2000">
       <v-text-field
         v-model="mensaje"
         label="Usuario"
@@ -17,7 +17,7 @@
         name="input-10-2"
         label="Contraseña"
         hint="Ingresa tu contraseña"
-        value=""
+        value="wqfasds"
         class="input-group--focused"
         @click:append="show2 = !show2"
       ></v-text-field>
@@ -25,7 +25,9 @@
       <v-btn round color="error" dark>Iniciar Sesión</v-btn>
       <div>
         ¿No tienes cuenta?
-        <v-btn flat small>Regístrate</v-btn>
+        <v-btn flat small
+          ><NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
+        >
       </div>
     </v-card>
   </v-container>

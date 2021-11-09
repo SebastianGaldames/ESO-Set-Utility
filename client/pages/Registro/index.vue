@@ -1,8 +1,13 @@
 <template>
-  <v-container>
+  <v-container class="colorFondo primario">
     <NavbarIS> </NavbarIS>
     <Navbar> </Navbar>
-    <v-card class="mx-auto pa-10 ma-10" max-width="380" max-height="2000">
+    <v-card
+      class="mx-auto pa-10 ma-10 margenCarta"
+      max-width="380"
+      max-height="2000"
+      color="primario"
+    >
       <v-autocomplete
         ref="pais"
         v-model="pais"
@@ -20,7 +25,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="mensaje"
+        v-model="email"
         :rules="[emailrules.required, emailrules.syntax]"
         label="Email"
         clearable
@@ -38,7 +43,7 @@
         :rules="[rules.required, rules.min]"
         :type="show2 ? 'text' : 'password'"
         name="input-10-2"
-        label="Ingresa tu contraseña"
+        label="Contraseña ingresada con éxito"
         hint="Debe tener al menos 8 caracteres"
         value="wqfasds"
         class="input-group--focused"
@@ -58,7 +63,7 @@
 
       <v-checkbox v-model="checkbox">
         <template v-slot:label>
-          <div>Estoy de acuerdo con los términos y condiciones</div>
+          Estoy de acuerdo con los términos y condiciones
         </template>
       </v-checkbox>
       <v-row>
@@ -84,6 +89,19 @@
   font-size: 12px;
   border-radius: 10px;
   border-color: transparent transparent #1c335f transparent;
+}
+,
+.colorTexto {
+  text-emphasis-color: secundario;
+}
+
+.my-text-style >>> .v-text-field__slot input {
+  color: red;
+}
+
+.margenCarta {
+  border-color: secundario;
+  border-radius: 3px;
 }
 </style>
 

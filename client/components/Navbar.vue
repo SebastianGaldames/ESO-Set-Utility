@@ -1,11 +1,11 @@
 <template>
-  <v-toolbar>
+  <v-toolbar dark>
     <v-row class="d-flex justify-center">
-      <v-btn text> Inicio </v-btn>
+      <v-btn text> <NuxtLink to="/">Inicio</NuxtLink> </v-btn>
       <v-btn text> Familias </v-btn>
       <v-btn text> Personajes </v-btn>
       <v-btn text> Items </v-btn>
-      <div align-h="end">
+      <div>
         <v-autocomplete
           v-model="model"
           :items="items"

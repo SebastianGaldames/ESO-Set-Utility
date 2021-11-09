@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="color primario">
     <v-flex class="d-flex justify-end">
       <v-btn class="mx-2" fab dark small color="black">
         <v-icon dark>mdi-account</v-icon>

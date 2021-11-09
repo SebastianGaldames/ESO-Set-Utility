@@ -1,8 +1,8 @@
 <template>
-  <v-main>
+  <v-main class="color primario">
     <NavbarIS> </NavbarIS>
     <Navbar> </Navbar>
-    <v-container>
+    <v-container class="centrado">
       <v-carousel :show-arrows="false">
         <v-carousel-item
           v-for="(item, i) in items"
@@ -13,7 +13,12 @@
     </v-container>
   </v-main>
 </template>
-<style scoped></style>
+<style scoped>
+.centrado {
+  width: 55%;
+  height: 60%;
+}
+</style>
 <script>
 export default {
   data() {
