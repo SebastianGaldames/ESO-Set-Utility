@@ -1,9 +1,16 @@
 <template>
-  <div class="container">
-    <tabla-items :families="families"></tabla-items>
-    <!-- <label for="">{{ post }}</label> -->
-    <!-- <label for="">{{ families }}</label> -->
-  </div>
+  <v-main>
+    <div>
+      <NavbarIS> </NavbarIS>
+      <Navbar> </Navbar>
+    </div>
+
+    <div class="container">
+      <tabla-items :families="families"></tabla-items>
+      <!-- <label for="">{{ post }}</label> -->
+      <!-- <label for="">{{ families }}</label> -->
+    </div>
+  </v-main>
 </template>
 
 <script>
