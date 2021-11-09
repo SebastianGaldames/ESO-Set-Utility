@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title primary-title> Crear Personaje </v-card-title>
     <v-card-text>
-      <v-container grid-list-xs>
+      <v-container>
         <v-row>
           <v-col>
             <v-text-field
