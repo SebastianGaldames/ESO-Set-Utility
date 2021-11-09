@@ -11,11 +11,14 @@ const scrap = async (req, res) => {
   if (!scrapperService.auth(req.body.secret)) {
     res.status(401).send('secret invalid')
   } else {
-    const url = scrapperService.url
-    const response = await axios.get(url)
-    const setListUrls = scrapperService.scrapSetsTable(response.data)
-    console.log(setListUrls)
-    res.status(200).send(setListUrls)
+    // const url = scrapperService.url
+    // const response = await axios.get(url)
+    // const setListUrls = scrapperService.scrapSetsTable(response.data)
+    // const t = await scrapperService.scrapSet(setListUrls[0])
+
+    const t = await scrapperService.scrapSet('bleh')
+
+    res.status(200).send(t)
   }
 }
 
