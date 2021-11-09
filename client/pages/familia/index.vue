@@ -131,8 +131,8 @@
               src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
               alt=""
             />
-            <h5 class="centro">"Tipo</h5>
-            <h4 class="centro">nombre</h4>
+            <h5 class="centro">"Tipo"</h5>
+            <h4 class="centro">"Nombre"</h4>
           </v-card>
         </v-col>
       </v-row>
