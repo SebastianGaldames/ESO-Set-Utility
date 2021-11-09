@@ -175,8 +175,5 @@ export default {
       ],
     }
   },
-  mounted() {
-    console.log('soy:' + this.hola)
-  },
 }
 </script>

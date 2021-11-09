@@ -1,11 +1,8 @@
 <template>
   <section color="primario">
     <div class="w-100 mx-auto">
-      <v-toolbar color="primario">
-        <v-toolbar-title align="center" class="secundario--text">
-          Aqui estaria la barra
-        </v-toolbar-title>
-      </v-toolbar>
+      <NavbarIS> </NavbarIS>
+      <Navbar> </Navbar>
     </div>
     <hr class="secundario" />
     <div class="w-100 primario">
