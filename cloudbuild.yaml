@@ -10,7 +10,7 @@ steps:
     args: ["run", "create-env"]
     env:
       - "SERVER_URL=${_SERVER_URL}" 
-	    - "MONGODB_URL=${_MONGODB_URL}"
+      - "MONGODB_URL=${_MONGODB_URL}"
     dir: "client"
     id: "envvars-client"
     waitFor: ["install-client"]
