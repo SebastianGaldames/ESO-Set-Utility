@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title primary-title> Crear Personaje </v-card-title>
-    <v-form>
+    <v-form ref="form" v-model="valid" lazy-validation>
       <v-card-text>
         <v-container>
           <v-row>
@@ -9,6 +9,9 @@
               <v-text-field
                 v-model="newPersonaje.nombre"
                 label="Nombre"
+                :counter="20"
+                :rules="nombreRules"
+                required
                 clearable
               ></v-text-field>
             </v-col>
@@ -19,7 +22,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="cerrarEvent()">Cancelar</v-btn>
-        <v-btn text @click="postPersonaje()">Crear</v-btn>
+        <v-btn text :disabled="!valid" @click="postPersonaje()">Crear</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -32,7 +35,11 @@ export default {
       newPersonaje: {
         nombre: '',
       },
-      formHasErrors: false,
+      valid: true,
+      nombreRules: [
+        (v) => !!v || 'Se requiere un nombre',
+        (v) => (v && v.length <= 20) || 'Máximo de 20 caracteres',
+      ],
     }
   },
   computed: {
@@ -48,13 +55,26 @@ export default {
     },
     cerrarEvent() {
       this.clearData()
+      this.reset()
       this.$emit('cerrarDialog')
     },
     postPersonaje() {
-      //   const newPersonaje = {
-      //     nombre: this.newPersonaje.nombre,
-      //   }
-      this.cerrarEvent()
+      this.validate()
+      if (this.valid) {
+        //   const newPersonaje = {
+        //     nombre: this.newPersonaje.nombre,
+        //   }
+        this.cerrarEvent()
+      }
+    },
+    validate() {
+      this.valid = this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
     },
   },
 }
