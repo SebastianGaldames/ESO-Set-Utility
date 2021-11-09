@@ -5,9 +5,9 @@
         <v-card>
           <v-flex xs12 sm6>
             <v-text-field
-              v-model="nombreUsuario"
+              v-model="usuario"
               input
-              type="nombreUsuario"
+              type="usuario"
               label="Usuario"
               hint="Ingresa tu Usuario"
               clearable
@@ -62,7 +62,7 @@ export default {
     return {
       show2: false,
       password: '',
-      nombreUsuario: '',
+      usuario: '',
       errorM: '',
 
       rules: {
@@ -81,7 +81,7 @@ export default {
       axios
         .post('http://localhost:9000/Usuario/login', {
           // HAY QUE USAR LA VARIABLE DE ENTORNO
-          nombreUsuario: this.nombreUsuario,
+          usuario: this.usuario,
           password: this.password,
         })
         .then((respuesta) => {

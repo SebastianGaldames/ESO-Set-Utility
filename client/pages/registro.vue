@@ -5,8 +5,8 @@
         <v-card>
           <v-flex xs12 sm6>
             <v-text-field
-              v-model="idUsuario"
-              label="Ingresa tu ID"
+              v-model="usuario"
+              label="Ingresa tu Usuario"
               clearable
             ></v-text-field>
           </v-flex>
@@ -76,26 +76,28 @@
 import axios from 'axios'
 
 class Usuario {
-  constructor(rol, idUsuario, email, pais, password) {
-    this.rol = rol
-    this.idUsuario = idUsuario
+  constructor(usuario, email, rol, pais, password, sexo) {
+    this.usuario = usuario
     this.email = email
+    this.rol = rol
     this.pais = pais
     this.password = password
+    this.sexo = sexo
   }
 }
 export default {
   data() {
     return {
       rol: 'usuario',
-      idUsuario: '',
+      usuario: '',
       show2: false,
       pais: 'Chile',
       password: '',
       rePassword: '',
+      sexo: 'masculino',
       email: '',
       reEmail: '',
-      usuario: new Usuario(),
+      user: new Usuario(),
 
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -114,20 +116,22 @@ export default {
   },
   methods: {
     registroNuevoUsuario() {
-      this.usuario = new Usuario(
-        this.rol,
-        this.idUsuario,
+      this.user = new Usuario(
+        this.usuario,
         this.email,
+        this.rol,
         this.pais,
-        this.password
+        this.password,
+        this.sexo
       )
       axios
         .post('http://localhost:9000/api/Usuario/add', {
-          rol: 'usuario',
-          idUsuario: this.usuario.idUsuario,
-          email: this.usuario.email,
-          pais: this.usuario.pais,
-          password: this.usuario.password,
+          usuario: this.user.usuario,
+          email: this.user.email,
+          rol: this.user.rol,
+          pais: this.user.pais,
+          password: this.user.password,
+          sexo: this.user.sexo,
         })
         .then((respuesta) => {
           return respuesta.data

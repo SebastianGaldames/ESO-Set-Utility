@@ -1,4 +1,6 @@
+const { ConnectionStates } = require('mongoose');
 const models = require('../models')
+const token = require('../services/token')
 //const bcrypt = require('bcrypt');
 
 //Metodo para crear un usuario (registro)
@@ -57,16 +59,14 @@ const list = async (req,res,next) =>{
         next(e);
     }
 }
-//Metodo login que busca por nombreUsuario y compara la contraseña encriptada de la BD 
+//Metodo login que busca por nombreUsuario y compara la contraseña  de la BD 
 const login = async (req,res,next) => {
     try{
-        const user = await models.Usuario.findOne({nombreUsuario: req.body.nombreUsuario});
+        const user = await models.Usuario.findOne({usuario:req.body.usuario});
         if(user){//existe un usuario con ese nombre de usuario
-            console.log(req.body.email + "email");
-            console.log("email");
             const match = await compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
             if(match){
-                let tokenReturn = await token.encode(user._id, user.rol, user.nombreUsuario);
+                const tokenReturn = await token.encode(user._id, user.rol, user.usuario);
                 
                 res.status(200).json({user, tokenReturn});
             } else{
