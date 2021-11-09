@@ -1,5 +1,7 @@
 <template>
-  <v-layout class="margenForm" justify-center>
+  <v-container>
+    <NavbarIS> </NavbarIS>
+    <Navbar> </Navbar>
     <v-flex xs12 sm10 md8 lg6>
       <v-card>
         <v-autocomplete
@@ -80,7 +82,7 @@
         </v-row>
       </v-card>
     </v-flex>
-  </v-layout>
+  </v-container>
 </template>
 
 <style>
