@@ -6,7 +6,11 @@
       </v-row>
       <v-row align="center" class="text-right">
         <v-card elevation="0" width="215">Usuario :</v-card>
-        <v-text-field v-model="cuenta.usuario" label=" " />
+        <v-text-field
+          v-model="cuenta.usuario"
+          label=" "
+          :rules="[rules.required]"
+        />
       </v-row>
       <v-row align="center" class="text-right">
         <v-card elevation="0" width="215">Pais :</v-card>
@@ -44,7 +48,7 @@ export default {
   async asyncData({ route, $http }) {
     try {
       const userparam = route.query.user
-      const userLogued = await $http.$get('/users' + userparam)
+      const userLogued = await $http.$get('/Usuarios' + userparam)
       return {
         usuario: userLogued,
       }
@@ -52,6 +56,9 @@ export default {
   },
   data() {
     return {
+      rules: {
+        required: (value) => !!value || 'Requerido.',
+      },
       cuenta: {
         usuario: 'Pepito',
         pais: '',
