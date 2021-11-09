@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="400">
+  <v-card>
     <v-card-title primary-title> Crear Personaje </v-card-title>
     <v-card-text>
       <v-container grid-list-xs>
@@ -46,7 +46,7 @@ export default {
     },
     cerrarEvent() {
       this.clearData()
-      this.$emit('cerrarDialog', false)
+      this.$emit('cerrarDialog')
     },
     postPersonaje() {
       //   const newPersonaje = {
