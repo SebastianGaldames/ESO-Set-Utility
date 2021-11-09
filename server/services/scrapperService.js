@@ -4,10 +4,12 @@ const { JSDOM } = jsdom
 
 //move to ENV variables, change secret then
 const secret = '4atmBrPlHQ'
-
+const testUrls = [
+  'https://eso-hub.com/en/sets/dreugh-king-slayer',
+  'https://eso-hub.com/en/sets/armor-of-the-code',
+]
 const url = 'https://eso-hub.com/en/sets/all'
-const testurl = 'https://eso-hub.com/en/sets/akaviri-dragonguard'
-
+const testurl = testUrls[0]
 function testService() {
   console.log(process.env)
   return 'hello im the scrapper service'
@@ -22,26 +24,67 @@ const scrapSet = async (setUrl) => {
   const html = await getHtmlFromSetUrl(testurl) // test url to save time
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
-  // var div = set.getElementsByClassName('div')
-
+  // set metadata
   const div2 = set.querySelector('.col-md-8')
   const stronk = div2.querySelectorAll('strong')
+  //set bonus
+  const setBonusPanel = set.querySelector('.set-tooltip-center')
+  const setBonusSpan = setBonusPanel.querySelector('span')
 
-  //console.log(setData.innerHTML)
-  const setDataParsed = []
-  const name = stronk[0].nextSibling.textContent.trim()
-  const type = stronk[1].nextSibling.nextSibling.textContent.trim()
-  setDataParsed.push(name)
-  setDataParsed.push(type)
-  // setDataParsed.push()
-  //stronk.forEach((str) => setDataParsed.push(str.nextSibling.textContent))
-  return setDataParsed
+  const setBonus = scrapSetBonus(setBonusSpan)
+  //console.log(setBonusSpan.textContent)
+  var setData = scrapSetMeta(stronk, set)
+  setData.setBonus = setBonus //add the scrapped bonus
+  return setData
 }
 
 const getHtmlFromSetUrl = async (setUrl) => {
   console.log(setUrl)
   const response = await axios.get(setUrl)
   return response.data
+}
+
+function scrapSetMeta(data, set) {
+  const scrapped = {
+    name: '',
+    type: '',
+    location: [],
+  }
+  data.forEach((str) => {
+    if (str.textContent.includes('Name')) {
+      scrapped.name = str.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('Type')) {
+      scrapped.type = str.nextSibling.nextSibling.textContent.trim()
+    }
+    if (str.textContent === 'Location:') {
+      const locationSelection = set.querySelector('ul') //first list
+      const elements = locationSelection.getElementsByTagName('li')
+      for (var i = 0; i < elements.length; i++) {
+        scrapped.location.push(elements[i].textContent.trim())
+      }
+    }
+  })
+
+  return scrapped
+}
+
+function scrapSetBonus(setBonusSpan) {
+  const txt = setBonusSpan.textContent.trim()
+
+  const spl = txt.split('(')
+  const setBonusAmountScrapped = [...setBonusSpan.querySelectorAll('strong')]
+  const setBonus = []
+  setBonusAmountScrapped.forEach((numNode) => {
+    //console.log(numNode.textContent)
+    const nbr = numNode.textContent
+    const bonus = {
+      number: nbr,
+      bonus = spl
+    }
+    setBonus.push(numNode.textContent)
+  })
+  return setBonus
 }
 
 //scraps the entire html table for the sets and returns and array
