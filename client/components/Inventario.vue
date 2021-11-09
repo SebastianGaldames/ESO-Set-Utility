@@ -1,9 +1,11 @@
 <template>
-  <v-item-group>
+  <v-item-group class="contenedor primario">
     <v-container>
       <div>Lista de Items</div>
       <v-row justify="end"
-        ><v-btn @click="dialogAgregar = true">Agregar Item</v-btn></v-row
+        ><v-btn class="agreBtn acentuado1" @click="dialogAgregar = true"
+          >Agregar Item</v-btn
+        ></v-row
       >
       <v-row>
         <v-col v-for="(item, id) in items" :key="id" md="4">
