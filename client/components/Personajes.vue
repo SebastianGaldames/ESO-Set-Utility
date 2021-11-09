@@ -24,10 +24,7 @@
         </v-list-item-group>
       </v-list>
       <div>
-        <equipamiento-personaje
-          v-if="personajeSeleccionado !== null"
-          :equip="personajes[personajeSeleccionado].equip"
-        />
+        <equipamiento-personaje :equip="pjSeleccionadoEquip" />
       </div>
     </div>
   </v-card>
@@ -76,6 +73,13 @@ export default {
       crearPjDialog: false,
       personajeSeleccionado: null,
     }
+  },
+  computed: {
+    pjSeleccionadoEquip() {
+      if (Number.isInteger(this.personajeSeleccionado)) {
+        return this.personajes[this.personajeSeleccionado].equip
+      } else return []
+    },
   },
   methods: {
     agregarPersonaje() {},
