@@ -1,34 +1,41 @@
 <template>
   <v-item-group>
-    <div>{{ cuenta.usuario }}</div>
     <v-container>
-      <v-row rows="7">
-        <v-col>
-          <v-card>
-            <div>Usuario</div>
-            <div>Pais</div>
-            <div>Sexo</div>
-            <div>Correo</div>
-            <div>Contraseña actual</div>
-            <div>Nueva contraseña</div>
-            <div>Confirmar nueva contraseña</div>
-          </v-card>
-        </v-col>
-        <v-col></v-col>
-        <v-col>
-          <v-card>
-            <v-text-field v-model="cuenta.usuario" label="Usuario" />
-            <v-text-field v-model="cuenta.pais" label="Pais" />
-            <v-text-field v-model="cuenta.sexo" label="Sexo" />
-            <v-text-field v-model="cuenta.correo" label="Correo" />
-            <v-text-field v-model="cuenta.pass" label="Contraseña actual" />
-            <v-text-field v-model="cuenta.nuevaPass" label="Nueva contraseña" />
-            <v-text-field label="Confirmar nueva contraseña" />
-          </v-card>
-        </v-col>
+      <v-row align="center" class="text-left">
+        <v-card elevation="0">Perfil: {{ cuenta.usuario }}</v-card>
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Usuario :</v-card>
+        <v-text-field v-model="cuenta.usuario" label=" " />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Pais :</v-card>
+        <v-text-field v-model="cuenta.pais" label="" />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Sexo :</v-card>
+        <v-text-field v-model="cuenta.sexo" label="" />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Correo :</v-card>
+        <v-text-field v-model="cuenta.correo" label="" />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Contraseña actual :</v-card>
+        <v-text-field v-model="cuenta.pass" label="" />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Nueva contraseña :</v-card>
+        <v-text-field v-model="cuenta.nuevaPass" label="" />
+      </v-row>
+      <v-row align="center" class="text-right">
+        <v-card elevation="0" width="215">Confirmar nueva contraseña :</v-card>
+        <v-text-field label="" />
+      </v-row>
+      <v-row align="center" class="text-right" justify="end">
+        <v-btn left:fixed @click="guardarCambios()">Guardar cambios</v-btn>
       </v-row>
     </v-container>
-    <v-btn @click="guardarCambios()">Guardar cambios</v-btn>
   </v-item-group>
 </template>
 
