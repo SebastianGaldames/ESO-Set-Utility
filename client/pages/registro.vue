@@ -3,16 +3,6 @@
     <v-layout justify-center>
       <v-flex xs12 sm10 md8 lg6>
         <v-card>
-          <v-autocomplete
-            ref="país"
-            v-model="pais"
-            :rules="[() => !!pais || '¡Este campo es obligatorio!']"
-            :items="paises"
-            label="País"
-            placeholder="Selecciona..."
-            required
-          ></v-autocomplete>
-
           <v-flex xs12 sm6>
             <v-text-field
               v-model="idUsuario"
@@ -62,23 +52,15 @@
               @click:append="show2 = !show2"
             ></v-text-field>
           </v-flex>
-
-          <v-checkbox
-            :error-messages="checkboxErrors"
-            label="Estoy de acuerdo con los términos y condiciones"
-            required
-            @change="$v.checkbox.$touch()"
-            @blur="$v.checkbox.$touch()"
-          ></v-checkbox>
           <v-row>
             <v-col>
               <div class="text-xs-center">
-                <v-btn round color="error" dark>Registrarme</v-btn>
+                <v-btn rounded color="error" dark>Registrarme</v-btn>
               </div>
             </v-col>
             <v-col>
               <div class="text-xs-center">
-                <v-btn round dark>cancelar</v-btn>
+                <v-btn rounded dark>cancelar</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -108,7 +90,7 @@ export default {
       rol: 'usuario',
       idUsuario: '',
       show2: false,
-      pais: '',
+      pais: 'Chile',
       password: '',
       rePassword: '',
       email: '',
@@ -140,7 +122,7 @@ export default {
         this.password
       )
       axios
-        .post('http://localhost:4000/api/Usuario/add', {
+        .post('http://localhost:9000/api/Usuario/add', {
           rol: 'usuario',
           idUsuario: this.usuario.idUsuario,
           email: this.usuario.email,

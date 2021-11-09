@@ -79,7 +79,8 @@ export default {
      */
     buscarPerfil() {
       axios
-        .post('http://localhost:4000/api/Usuario/login', {
+        .post('http://localhost:9000/Usuario/login', {
+          // HAY QUE USAR LA VARIABLE DE ENTORNO
           nombreUsuario: this.nombreUsuario,
           password: this.password,
         })
@@ -92,6 +93,7 @@ export default {
           if (this.$store.state.usuario.rol === 'admin') {
             this.$router.push('/') // push a admin??
           } else {
+            console.log('FUNCIONA')
             this.$router.push('/') // push a cuenta de usuario pendiente
           }
         })

@@ -59,6 +59,33 @@ const list = async (req,res,next) =>{
 }
 //Metodo login que busca por nombreUsuario y compara la contraseña encriptada de la BD 
 const login = async (req,res,next) => {
+    try{
+        const user = await models.Usuario.findOne({nombreUsuario: req.body.nombreUsuario});
+        if(user){//existe un usuario con ese nombre de usuario
+            console.log(req.body.email + "email");
+            console.log("email");
+            const match = await compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
+            if(match){
+                let tokenReturn = await token.encode(user._id, user.rol, user.nombreUsuario);
+                
+                res.status(200).json({user, tokenReturn});
+            } else{
+                res.status(404).send({
+                    message: 'password incorrecta'
+                });
+            }
+        } else{
+            res.status(404).send({
+                message: 'No existe este usuario'
+            });
+        }
+
+    } catch(e){
+        res.status(500).send({
+            message: 'Ocurrio un error'
+        });
+        next(e);
+    }
     
 }
 //Metodo para obtener el array de personajes al usuario
