@@ -12,7 +12,7 @@
             <v-row no-gutters>
               <v-col sm="6">
                 <h1 class="title text-center lista">
-                  Set: "Nombre de la Familia"
+                  Set: {{ $route.params.item.nombre }}
                 </h1>
               </v-col>
               <v-spacer />
@@ -84,7 +84,7 @@
                   <v-row>
                     <v-col md="3"></v-col>
                     <v-col md="6">
-                      <h1 class="centro">"Nombre de la Familia"</h1>
+                      <h1 class="centro">{{ $route.params.item.nombre }}</h1>
                     </v-col>
                     <v-col md="3"></v-col>
                   </v-row>

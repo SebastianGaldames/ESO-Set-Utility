@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <tabla-items></tabla-items>
+    <tabla-items :families="families"></tabla-items>
     <!-- <label for="">{{ post }}</label> -->
-    <label for="">{{ post }}</label>
+    <!-- <label for="">{{ families }}</label> -->
   </div>
 </template>
 
@@ -10,11 +10,15 @@
 import TablaItems from '~/components/Buscador/TablaItems.vue'
 export default {
   components: { TablaItems },
-  // async asyncData({ params, $http }) {
-  //   const post = await $http.$get(
-  //     `http://localhost:9000/Familia/list${params.id}`
-  //   )
-  //   return { post }
-  // },
+  async asyncData({ $axios }) {
+    const post = await $axios.$get(process.env.SERVER_URL + '/Familia/list/')
+    return { families: post }
+  },
+  data() {
+    return {
+      families: [],
+      hola: ['hola'],
+    }
+  },
 }
 </script>
