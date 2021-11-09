@@ -1,8 +1,10 @@
 <template>
   <v-card>
-    <v-toolbar dark>
-      <v-toolbar-title class="secundario--text">Perfil</v-toolbar-title>
-    </v-toolbar>
+    <div class="div1">
+      <v-toolbar dark>
+        <v-toolbar-title class="secundario--text">Perfil</v-toolbar-title>
+      </v-toolbar>
+    </div>
     <v-tabs vertical class="tabPerfil primario" dark>
       <v-tab class="secundario--text"> Cuenta </v-tab>
       <v-tab class="secundario--text"> Inventario </v-tab>
@@ -13,6 +15,14 @@
     </v-tabs>
   </v-card>
 </template>
+
+<style>
+.div1 {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #a68f7b;
+}
+</style>
 
 <script>
 import Cuenta from '@/components/Cuenta.vue'
