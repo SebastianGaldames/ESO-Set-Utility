@@ -1,3 +1,5 @@
+import colors from 'vuetify/es5/util/colors'
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -60,5 +62,23 @@ export default {
     /*
      ** You can extend webpack config here
      */
+  },
+  vuetify: {
+    theme: {
+      light: true,
+      themes: {
+        light: {
+          primario: '#000000',
+          secundario: '#A68F7B',
+          texto1: '#FAFAFA',
+          acentuado1: '#DE360B',
+          acentuado2: '#8B8B8B',
+          // info: colors.teal.lighten1,
+          // warning: colors.amber.base,
+          // error: colors.deepOrange.accent4,
+          // success: colors.green.accent3
+        },
+      },
+    },
   },
 }
