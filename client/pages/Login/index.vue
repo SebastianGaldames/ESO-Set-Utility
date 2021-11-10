@@ -29,13 +29,13 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-btn flat small>¿Olvidaste tu contraseña?</v-btn>
+        <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
         <div class="mx-auto pa-10">
-          <v-btn round color="error" dark>Iniciar Sesión</v-btn>
+          <v-btn rounded color="error" dark>Iniciar Sesión</v-btn>
         </div>
         <div>
           ¿No tienes cuenta?
-          <v-btn flat small
+          <v-btn text small
             ><NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
           >
         </div>

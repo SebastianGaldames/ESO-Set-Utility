@@ -28,6 +28,7 @@
           </v-col>
         </v-row>
       </div>
+      <p>families</p>
       <v-data-table :headers="columnas" :items="families" :search="search">
         <template v-slot:item.imagen="{ item }">
           <router-link
