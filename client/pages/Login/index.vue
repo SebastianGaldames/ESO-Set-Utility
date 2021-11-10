@@ -28,7 +28,7 @@
           name="input-10-2"
           label="Contraseña"
           hint="Ingresa tu contraseña"
-          value="wqfasds"
+          value=""
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
