@@ -1,9 +1,10 @@
 const axios = require('axios')
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
+const scrapperAdapter = require('../services/scrapperAdapterService')
 
 //move to ENV variables, change secret then
-const secret = '4atmBrPlHQ'
+const secret = 'hola'
 const testUrls = [
   'https://eso-hub.com/en/sets/dreugh-king-slayer',
   'https://eso-hub.com/en/sets/armor-of-the-code',
@@ -34,7 +35,7 @@ const scrapAllSets = async (setUrls) => {
     i += 1
   }
 
-  return allSets
+  return { message: 'Agregados ' + i + ' familias' }
 }
 
 const scrapSet = async (setUrl) => {
@@ -58,7 +59,7 @@ const scrapSet = async (setUrl) => {
 
   const itemsScrapped = getItemsFromSet(dataItemsPanel)
   setData.items = itemsScrapped
-
+  scrapperAdapter.addFamily(setData)
   return setData
 }
 
