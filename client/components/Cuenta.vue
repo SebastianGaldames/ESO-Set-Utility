@@ -125,7 +125,7 @@ export default {
         required: (value) => !!value || 'Requerido.',
       },
       cuenta: {
-        usuario: 'Pepito',
+        usuario: '',
         pais: '',
         sexo: '',
         correo: '',
