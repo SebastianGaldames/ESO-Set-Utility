@@ -1,18 +1,28 @@
 <template>
   <v-card>
-    <v-toolbar flat color="primary" dark>
-      <v-toolbar-title>Perfil</v-toolbar-title>
-    </v-toolbar>
-    <v-tabs vertical>
-      <v-tab> Cuenta </v-tab>
-      <v-tab> Inventario </v-tab>
-      <v-tab> Personajes </v-tab>
+    <div class="div1">
+      <v-toolbar dark>
+        <v-toolbar-title class="secundario--text">Perfil</v-toolbar-title>
+      </v-toolbar>
+    </div>
+    <v-tabs vertical class="tabPerfil primario" dark>
+      <v-tab class="secundario--text"> Cuenta </v-tab>
+      <v-tab class="secundario--text"> Inventario </v-tab>
+      <v-tab class="secundario--text"> Personajes </v-tab>
       <v-tab-item> <cuenta> </cuenta> </v-tab-item>
       <v-tab-item> <inventario> </inventario> </v-tab-item>
       <v-tab-item> <personajes> </personajes> </v-tab-item>
     </v-tabs>
   </v-card>
 </template>
+
+<style>
+.div1 {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #a68f7b;
+}
+</style>
 
 <script>
 import Cuenta from '@/components/Cuenta.vue'

@@ -1,43 +1,119 @@
 <template>
-  <v-item-group>
-    <div>{{ cuenta.usuario }}</div>
-    <v-container>
-      <v-row rows="7">
-        <v-col>
-          <v-card>
-            <div>Usuario</div>
-            <div>Pais</div>
-            <div>Sexo</div>
-            <div>Correo</div>
-            <div>Contraseña actual</div>
-            <div>Nueva contraseña</div>
-            <div>Confirmar nueva contraseña</div>
-          </v-card>
-        </v-col>
-        <v-col></v-col>
-        <v-col>
-          <v-card>
-            <v-text-field v-model="cuenta.usuario" label="Usuario" />
-            <v-text-field v-model="cuenta.pais" label="Pais" />
-            <v-text-field v-model="cuenta.sexo" label="Sexo" />
-            <v-text-field v-model="cuenta.correo" label="Correo" />
-            <v-text-field v-model="cuenta.pass" label="Contraseña actual" />
-            <v-text-field v-model="cuenta.nuevaPass" label="Nueva contraseña" />
-            <v-text-field label="Confirmar nueva contraseña" />
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-btn @click="guardarCambios()">Guardar cambios</v-btn>
-  </v-item-group>
+  <div class="vig">
+    <div>
+      <v-item-group class="contenedor primario">
+        <v-container>
+          <v-row align="center" class="text-left">
+            <v-card elevation="0" class="primario secundario--text"
+              >Perfil: {{ cuenta.usuario }}</v-card
+            >
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Usuario :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.usuario"
+              label=" "
+              class="acentuado2"
+              :rules="[rules.required]"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Pais :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.pais"
+              label=""
+              class="pais acentuado2"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="1" width="215" class="primario secundario--text"
+              >Sexo :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.sexo"
+              label=""
+              class="acentuado2"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Correo :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.correo"
+              label=""
+              class="acentuado2"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Contraseña actual :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.pass"
+              label=""
+              class="acentuado2"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Nueva contraseña :</v-card
+            >
+            <v-text-field
+              v-model="cuenta.nuevaPass"
+              label=""
+              class="acentuado2"
+              outlined
+              dense
+            />
+          </v-row>
+          <v-row align="center" class="text-right">
+            <v-card elevation="0" width="215" class="primario secundario--text"
+              >Confirmar nueva contraseña :</v-card
+            >
+            <v-text-field label="" class="acentuado2" outlined dense />
+          </v-row>
+          <v-row align="center" class="text-right" justify="end">
+            <v-btn
+              left:fixed
+              class="btnSave acentuado1 texto1--text"
+              @click="guardarCambios()"
+              >Guardar cambios</v-btn
+            >
+          </v-row>
+        </v-container>
+      </v-item-group>
+    </div>
+  </div>
 </template>
 
+<style>
+.vig {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #a68f7b;
+}
+</style>
 <script>
 export default {
   async asyncData({ route, $http }) {
     try {
       const userparam = route.query.user
-      const userLogued = await $http.$get('/users' + userparam)
+      const userLogued = await $http.$get('/Usuarios' + userparam)
       return {
         usuario: userLogued,
       }
@@ -45,6 +121,9 @@ export default {
   },
   data() {
     return {
+      rules: {
+        required: (value) => !!value || 'Requerido.',
+      },
       cuenta: {
         usuario: 'Pepito',
         pais: '',
