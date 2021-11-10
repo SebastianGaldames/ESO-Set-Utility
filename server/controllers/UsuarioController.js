@@ -1,5 +1,5 @@
 const { ConnectionStates } = require('mongoose');
-const models = require('../models')
+const models = require('../models');
 const token = require('../services/token')
 //const bcrypt = require('bcrypt');
 
@@ -63,9 +63,9 @@ const list = async (req,res,next) =>{
 const login = async (req,res,next) => {
     try{
         const user = await models.Usuario.findOne({usuario:req.body.usuario});
+        console.log(user);
         if(user){//existe un usuario con ese nombre de usuario
-            const match = await compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
-            if(match){
+            if(req.body.password === user.password){
                 const tokenReturn = await token.encode(user._id, user.rol, user.usuario);
                 
                 res.status(200).json({user, tokenReturn});

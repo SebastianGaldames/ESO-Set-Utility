@@ -15,7 +15,7 @@ async function checkToken(token){
     } catch (e){
         return false;
     }
-    const user = await models.Usuario.findOne({_id:__id,estado:1});
+    const user = await models.Usuario.findOne({_id:__id});
     if (user){
         const token = jwt.sign({_id:__id},'clavesecretaparagenerartoken',{expiresIn:'1d'});
         return {token,rol:user.rol};
@@ -27,11 +27,11 @@ async function encode(_id, rol, nombreUsuario){
     const token = jwt.sign({_id:_id,rol:rol,nombreUsuario: nombreUsuario},'clavesecretaparagenerartoken',{expiresIn: '1d'});
     return token;
     
-} 
+}
 async function decode(token){
     try {
         const {_id} = await jwt.verify(token,'clavesecretaparagenerartoken');
-        const user = await models.Usuario.findOne({_id,estado:1});
+        const user = await models.Usuario.findOne({_id});
         if (user){
             return user;
         } else{
@@ -42,3 +42,4 @@ async function decode(token){
         return newToken;
     }
 } 
+module.exports = { checkToken, encode, decode}
