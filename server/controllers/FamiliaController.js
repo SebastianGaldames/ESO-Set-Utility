@@ -17,7 +17,26 @@ const query = async (req,res,next) =>{
     try {
         const reg=await models.Familia.findOne({_id:req.query._id});
         if(!reg){
-            res.status(404).sed({
+            res.status(404).send({
+                message: 'El registro no existe'
+            });
+        }
+        else{
+            res.status(200).json(reg);
+        }
+    } catch(e){
+        res.status(500).send({
+            message: 'Ocurrio un error'
+        });
+        next(e);
+    }
+}
+//Metodo para obtener una Familia mediante hash
+const queryHash = async (req,res,next) =>{
+    try {
+        const reg=await models.Familia.findOne({hash:req.query.hash});
+        if(!reg){
+            res.status(404).send({
                 message: 'El registro no existe'
             });
         }
@@ -102,4 +121,4 @@ const addItemFamilia = async (req,res,next) =>{
 }
 
 
-module.exports = { add, query, list, update, remove, getItems, addItemFamilia}
+module.exports = { add, query, list, update, remove, getItems, addItemFamilia, queryHash}

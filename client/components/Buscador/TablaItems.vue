@@ -28,13 +28,13 @@
           </v-col>
         </v-row>
       </div>
-
-      <v-data-table :headers="columnas" :items="familias" :search="search">
+      <p>families</p>
+      <v-data-table :headers="columnas" :items="families" :search="search">
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
               name: 'familia-id',
-              params: { id: item.name, item: item },
+              params: { id: item.nombre, item: item },
             }"
           >
             <div>
@@ -53,6 +53,12 @@
 </template>
 <script>
 export default {
+  props: {
+    families: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       items: ['filtro1', 'filtro2', 'filtro3', 'filtro4'],
@@ -61,7 +67,7 @@ export default {
         { value: 'imagen', sortable: false, width: '1%' },
         {
           sortable: false,
-          value: 'name',
+          value: 'nombre',
           width: '30%',
         },
         { sortable: false, value: 'calories' },
