@@ -1,10 +1,6 @@
 <template>
   <div class="container">
     <div>
-      <v-btn v-if="logueado" icon @click="salir()">
-        <v-icon>logut</v-icon>Salir
-      </v-btn>
-      <v-btn v-else icon> </v-btn>
       <Logo />
       <h2 class="subtitle">MEVN starter template based on Nuxt-js</h2>
       <div class="links">
