@@ -9,7 +9,7 @@ steps:
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - "SERVER_URL=${_SERVER_URL}" 
+      - "VUE_APP_SERVER_URL=${_VUE_APP_SERVER_URL}" 
       - "MONGODB_URL=${_MONGODB_URL}"
     dir: "client"
     id: "envvars-client"
@@ -35,7 +35,7 @@ steps:
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - "SERVER_URL=${_SERVER_URL}" 
+      - "VUE_APP_SERVER_URL=${_VUE_APP_SERVER_URL}" 
       - "MONGODB_URL=${_MONGODB_URL}"
     dir: "server"
     id: "envvars-server"
