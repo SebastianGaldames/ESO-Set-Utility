@@ -29,9 +29,9 @@ const scrapAllSets = async (setUrls) => {
     allSets.push(contents)
     console.log('scrapping: ' + i)
     //test
-    if (i % 10 === 0) {
-      console.log(allSets[i])
-    }
+    //if (i % 10 === 0) {
+    //  console.log(allSets[i])
+    //}
     i += 1
   }
 
