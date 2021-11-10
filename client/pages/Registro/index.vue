@@ -1,7 +1,5 @@
 <template>
   <v-main class="colorFondo primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
     <v-card
       dark
       class="mx-auto pa-10 ma-10 margenCarta"

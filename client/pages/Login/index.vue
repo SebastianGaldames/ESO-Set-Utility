@@ -1,9 +1,6 @@
 <template>
   <v-main class="color primario">
     <v-container>
-      <NavbarIS></NavbarIS>
-      <Navbar> </Navbar>
-
       <v-card
         dark
         class="mx-auto pa-10 ma-10"
