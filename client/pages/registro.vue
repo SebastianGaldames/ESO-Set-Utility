@@ -55,7 +55,9 @@
           <v-row>
             <v-col>
               <div class="text-xs-center">
-                <v-btn rounded color="error" dark>Registrarme</v-btn>
+                <v-btn color="error" dark @click="registroNuevoUsuario"
+                  >Registrarme</v-btn
+                >
               </div>
             </v-col>
             <v-col>
@@ -76,13 +78,24 @@
 import axios from 'axios'
 
 class Usuario {
-  constructor(usuario, email, rol, pais, password, sexo) {
+  constructor(
+    usuario,
+    email,
+    rol,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario
+  ) {
     this.usuario = usuario
     this.email = email
     this.rol = rol
     this.pais = pais
     this.password = password
     this.sexo = sexo
+    this.personajes = personajes
+    this.inventario = inventario
   }
 }
 export default {
@@ -97,6 +110,8 @@ export default {
       sexo: 'masculino',
       email: '',
       reEmail: '',
+      personajes: [],
+      inventario: [],
       user: new Usuario(),
 
       rules: {
@@ -122,25 +137,26 @@ export default {
         this.rol,
         this.pais,
         this.password,
-        this.sexo
+        this.sexo,
+        this.personajes,
+        this.inventario
       )
       axios
-        .post('http://localhost:9000/api/Usuario/add', {
+        .post('http://localhost:9000/Usuario/add', {
           usuario: this.user.usuario,
           email: this.user.email,
           rol: this.user.rol,
           pais: this.user.pais,
           password: this.user.password,
           sexo: this.user.sexo,
+          personajes: this.personajes,
+          inventario: this.inventario,
         })
         .then((respuesta) => {
           return respuesta.data
         })
         .then((data) => {
           this.$router.push('/')
-        })
-        .catch(function (error) {
-          console.log(error)
         })
     },
   },

@@ -85,17 +85,17 @@ export default {
           password: this.password,
         })
         .then((respuesta) => {
+          console.log(respuesta)
           return respuesta.data
         })
         .then((data) => {
-          this.$store.dispatch('guardarToken', data.tokenReturn)
-          console.log(data.tokenReturn)
-          if (this.$store.state.usuario.rol === 'admin') {
-            this.$router.push('/') // push a admin??
-          } else {
-            console.log('FUNCIONA')
-            this.$router.push('/') // push a cuenta de usuario pendiente
-          }
+          // this.$store.dispatch('guardarToken', data.tokenReturn)
+          // if (this.$store.state.usuario.rol === 'admin') {
+          //   this.$router.push('/') // push a admin??
+          // } else {
+          //   this.$router.push('/') // push a cuenta de usuario pendiente
+          // }
+          this.$router.push('/')
         })
         .catch((error) => {
           this.errorM = null

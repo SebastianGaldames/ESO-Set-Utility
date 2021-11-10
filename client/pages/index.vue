@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div>
+      <v-btn v-if="logueado" icon @click="salir()">
+        <v-icon>logut</v-icon>Salir
+      </v-btn>
+      <v-btn v-else icon> </v-btn>
       <Logo />
       <h2 class="subtitle">MEVN starter template based on Nuxt-js</h2>
       <div class="links">
@@ -26,7 +30,27 @@
 </template>
 
 <script>
-export default {}
+export default {
+  // computed: {
+  //   logueado() {
+  //     return this.$store.state.usuario
+  //   },
+  //   esUsuario() {
+  //     return this.$store.state.usuario
+  //   },
+  //   esAdmin() {
+  //     return this.$store.state.usuario
+  //   },
+  // },
+  // created() {
+  //   this.$store.dispatch('autoLogin')
+  // },
+  // methods: {
+  //   salir() {
+  //     this.$store.dispatch('salir')
+  //   },
+  // },
+}
 </script>
 
 <style>
