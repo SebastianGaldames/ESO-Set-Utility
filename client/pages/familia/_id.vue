@@ -9,7 +9,7 @@
             <v-row no-gutters>
               <v-col sm="6">
                 <h1 class="title text-center lista texto1--text">
-                  Set: {{ $route.params.item.nombre }}
+                  Set: {{ $route.params.id }}
                 </h1>
               </v-col>
               <v-spacer />
@@ -82,7 +82,7 @@
                     <v-col md="3"></v-col>
                     <v-col md="6">
                       <h1 class="centro texto1--text">
-                        {{ $route.params.item.nombre }}
+                        {{ $route.params.id }}
                       </h1>
                     </v-col>
                     <v-col md="3"></v-col>
