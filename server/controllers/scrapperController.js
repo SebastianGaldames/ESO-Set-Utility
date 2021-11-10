@@ -1,4 +1,6 @@
 const axios = require('axios')
+const jsdom = require('jsdom')
+const { JSDOM } = jsdom
 const scrapperService = require('../services/scrapperService')
 
 const test = async (req, res) => {
@@ -11,7 +13,13 @@ const scrap = async (req, res) => {
   } else {
     const url = scrapperService.url
     const response = await axios.get(url)
-    res.send(response.data)
+    const setListUrls = scrapperService.scrapSetsTable(response.data)
+    //const t = await scrapperService.scrapSet(setListUrls[255])
+    const allSets = await scrapperService.scrapAllSets(setListUrls)
+
+    //const t = await scrapperService.scrapSet('bleh')
+
+    res.status(200).send(allSets)
   }
 }
 

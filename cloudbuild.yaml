@@ -9,7 +9,8 @@ steps:
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - "API_URL=${_API_URL}"
+      - "SERVER_URL=${_SERVER_URL}" 
+      - "MONGODB_URL=${_MONGODB_URL}"
     dir: "client"
     id: "envvars-client"
     waitFor: ["install-client"]
@@ -34,7 +35,8 @@ steps:
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - "API_URL=${_API_URL}"
+      - "SERVER_URL=${_SERVER_URL}" 
+      - "MONGODB_URL=${_MONGODB_URL}"
     dir: "server"
     id: "envvars-server"
     waitFor: ["install-server"]

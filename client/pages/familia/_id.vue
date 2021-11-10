@@ -58,7 +58,7 @@
           <v-container>
             <v-row no-gutters>
               <v-col>
-                <v-card class="pa-2 borde" color="primario" outlined tile>
+                <v-card dark outlined tile style="border: 2px solid #a68f7b">
                   <v-row class="galery">
                     <v-col md="4">
                       <h5 class="texto1--text">"obtención"</h5>
@@ -116,7 +116,7 @@
     <div class="w-100 primario">
       <v-row class="galery">
         <v-col v-for="n in 20" :key="n" md="2">
-          <v-card v-ripple class="item borde" color="primario" outlined>
+          <v-card v-ripple dark style="border: 2px solid #a68f7b" outlined>
             <img
               class="test"
               src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
