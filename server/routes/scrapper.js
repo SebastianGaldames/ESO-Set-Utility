@@ -10,4 +10,6 @@ router.get('/test', scrapperController.test)
 
 router.post('/scrap', scrapperController.scrap)
 
+router.post('/scrap-single', scrapperController.scrapSingle)
+
 module.exports = router
