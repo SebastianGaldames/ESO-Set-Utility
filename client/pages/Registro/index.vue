@@ -1,7 +1,5 @@
 <template>
   <v-container class="colorFondo primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
     <v-card
       class="mx-auto pa-10 ma-10 margenCarta"
       max-width="380"

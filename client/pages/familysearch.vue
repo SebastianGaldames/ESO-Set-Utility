@@ -1,16 +1,11 @@
 <template>
-  <v-main>
-    <div>
-      <NavbarIS> </NavbarIS>
-      <Navbar> </Navbar>
-    </div>
-
-    <div class="container">
+  <section>
+    <div class="primario">
       <tabla-items :families="families"></tabla-items>
       <!-- <label for="">{{ post }}</label> -->
       <!-- <label for="">{{ families }}</label> -->
     </div>
-  </v-main>
+  </section>
 </template>
 
 <script>
@@ -18,7 +13,7 @@ import TablaItems from '~/components/Buscador/TablaItems.vue'
 export default {
   components: { TablaItems },
   async asyncData({ $axios }) {
-    const post = await $axios.$get(process.env.SERVER_URL + '/Familia/list/')
+    const post = await $axios.$get('http://localhost:9000/Familia/list')
     return { families: post }
   },
   data() {

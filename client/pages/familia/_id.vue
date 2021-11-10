@@ -1,9 +1,6 @@
 <template>
   <section color="primario">
-    <div class="w-100 mx-auto">
-      <NavbarIS> </NavbarIS>
-      <Navbar> </Navbar>
-    </div>
+    <div class="w-100 mx-auto"></div>
     <hr class="secundario" />
     <div class="w-100 primario">
       <v-row class="galery">
