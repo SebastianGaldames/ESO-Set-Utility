@@ -34,7 +34,7 @@ const scrapSingle = async (req, res) => {
 
     const t = await scrapperService.scrapSet(setListUrls[urlIndex])
 
-    res.status(200).send(t)
+    res.status(200).send([t])
   }
 }
 

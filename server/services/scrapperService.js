@@ -42,8 +42,8 @@ const scrapSet = async (setUrl) => {
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
   // set metadata
-  const div2 = set.querySelector('.col-md-8')
-  const stronk = div2.querySelectorAll('strong')
+  const dataItemsPanel = set.querySelector('.col-md-8')
+  const stronk = dataItemsPanel.querySelectorAll('strong')
   //set bonus
   const setBonusPanel = set.querySelector('.set-tooltip-center')
   const setBonusSpan = setBonusPanel.querySelector('span')
@@ -55,12 +55,39 @@ const scrapSet = async (setUrl) => {
   //scrap image
   const imgURL = setBonusPanel.querySelector('picture img')
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
+
+  const itemsScrapped = getItemsFromSet(dataItemsPanel)
+  setData.items = itemsScrapped
+
   return setData
 }
 
 const getHtmlFromSetUrl = async (setUrl) => {
   const response = await axios.get(setUrl)
   return response.data
+}
+
+function getItemsFromSet(setDomData) {
+  const linksScrapped = [
+    ...setDomData.querySelectorAll(
+      'a[href*="https://eso-hub.com/en/fashion-outfits"]'
+    ),
+  ]
+  const links = []
+  linksScrapped.forEach((linkNode) => {
+    const itemName = linkNode.querySelector('picture img').getAttribute('title')
+    const itemImg = linkNode
+      .querySelector('picture source[type*="image/png"]')
+      .getAttribute('srcset')
+    const item = {
+      name: itemName,
+      img: 'https://eso-hub.com' + itemImg,
+      url: linkNode.href,
+    }
+    links.push(item)
+    //links.push(linkNode.getAttribute('title'))
+  })
+  return links
 }
 
 function scrapSetMeta(data, set) {
@@ -70,6 +97,7 @@ function scrapSetMeta(data, set) {
     imageUrl: '',
     location: [],
     setBonus: [],
+    items: [],
   }
   data.forEach((str) => {
     if (str.textContent.includes('Name')) {
