@@ -1,10 +1,17 @@
 <template>
-  <v-card>
+  <v-card color="primario">
     <div>
-      <v-subheader>Personajes</v-subheader>
+      <v-header class="secundario--text">Personajes</v-header>
       <v-dialog v-model="crearPjDialog" max-width="600px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on"> + </v-btn>
+          <v-btn
+            v-bind="attrs"
+            color="acentuado1"
+            class="texto1--text"
+            v-on="on"
+          >
+            +
+          </v-btn>
         </template>
         <div>
           <crear-personaje @cerrarDialog="cerrarPjDialog"></crear-personaje>
@@ -13,7 +20,7 @@
     </div>
 
     <div class="d-flex">
-      <v-list>
+      <v-list color="primario">
         <v-list-item-group v-model="personajeSeleccionado">
           <personaje-card
             v-for="pj in personajes"

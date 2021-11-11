@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+// import colors from 'vuetify/es5/util/colors'
 
 export default {
   /*
@@ -11,6 +11,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
+  env: {
+    VUE_APP_SERVER_URL: process.env.VUE_APP_SERVER_URL,
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head

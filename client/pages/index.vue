@@ -1,7 +1,5 @@
 <template>
   <v-main class="color primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
     <v-container class="centrado">
       <v-carousel :show-arrows="false">
         <v-carousel-item
