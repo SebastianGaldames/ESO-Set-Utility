@@ -1,49 +1,47 @@
 <template>
-  <v-layout justify-center>
-    <v-flex xs12 sm10 md8 lg6>
-      <v-card>
-        <v-flex xs12 sm6>
-          <v-text-field
-            v-model="mensaje"
-            label="Usuario"
-            hint="Ingresa tu Usuario"
-            clearable
-          ></v-text-field>
-        </v-flex>
+  <v-main class="color primario">
+    <v-container>
+      <v-card
+        dark
+        class="mx-auto pa-10 ma-10"
+        max-width="380"
+        max-height="2000"
+        style="border: 2px solid #a68f7b"
+      >
+        <div>
+          <v-img src="https://i.ibb.co/sHT1f9G/Daco-5763924.png"></v-img>
+        </div>
 
-        <v-flex xs12 sm6>
-          <v-text-field
-            :rules="[rules.required, rules.min]"
-            :type="show2 ? 'text' : 'password'"
-            name="input-10-2"
-            label="Contraseña"
-            hint="Ingresa tu contraseña"
-            value="wqfasds"
-            class="input-group--focused"
-            @click:append="show2 = !show2"
-          ></v-text-field>
-        </v-flex>
-        <v-col>
-          <v-row>
-            <div>
-              <v-btn flat small>¿Olvidaste tu contraseña?</v-btn>
-            </div>
-          </v-row>
-          <v-row>
-            <div class="text-xs-center">
-              <v-btn round color="error" dark>Iniciar Sesión</v-btn>
-            </div>
-          </v-row>
-          <v-row>
-            <div>
-              ¿No tienes cuenta?
-              <v-btn flat small>Regístrate</v-btn>
-            </div>
-          </v-row>
-        </v-col>
+        <v-text-field
+          v-model="mensaje"
+          label="Usuario"
+          hint="Ingresa tu Usuario"
+          clearable
+        ></v-text-field>
+
+        <v-text-field
+          :rules="[rules.required, rules.min]"
+          :type="show2 ? 'text' : 'password'"
+          name="input-10-2"
+          label="Contraseña"
+          hint="Ingresa tu contraseña"
+          value=""
+          class="input-group--focused"
+          @click:append="show2 = !show2"
+        ></v-text-field>
+        <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
+        <div class="mx-auto pa-10">
+          <v-btn rounded color="error" dark>Iniciar Sesión</v-btn>
+        </div>
+        <div>
+          ¿No tienes cuenta?
+          <v-btn text small
+            ><NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
+          >
+        </div>
       </v-card>
-    </v-flex>
-  </v-layout>
+    </v-container>
+  </v-main>
 </template>
 
 <style></style>

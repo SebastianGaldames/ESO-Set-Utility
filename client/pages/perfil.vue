@@ -1,14 +1,14 @@
 <template>
-  <v-card>
+  <v-card color="primario" height="100%">
     <div class="div1">
-      <v-toolbar dark>
+      <v-toolbar dark color="primario">
         <v-toolbar-title class="secundario--text">Perfil</v-toolbar-title>
       </v-toolbar>
     </div>
-    <v-tabs vertical class="tabPerfil primario" dark>
-      <v-tab class="secundario--text"> Cuenta </v-tab>
-      <v-tab class="secundario--text"> Inventario </v-tab>
-      <v-tab class="secundario--text"> Personajes </v-tab>
+    <v-tabs vertical class="tabPerfil primario" dark height="100%">
+      <v-tab class="primario acentuado1--text"> Cuenta </v-tab>
+      <v-tab class="primario acentuado1--text"> Inventario </v-tab>
+      <v-tab class="primario acentuado1--text"> Personajes </v-tab>
       <v-tab-item> <cuenta> </cuenta> </v-tab-item>
       <v-tab-item> <inventario> </inventario> </v-tab-item>
       <v-tab-item> <personajes> </personajes> </v-tab-item>
