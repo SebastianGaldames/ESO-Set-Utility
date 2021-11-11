@@ -13,18 +13,17 @@
 
       <v-autocomplete
         ref="pais"
-        v-model="pais"
-        :rules="[() => !!pais || '¡Este campo es obligatorio!']"
+        :rules="[rules.required]"
         :items="paises"
         label="Pais"
         placeholder="Selecciona..."
-        required
+        clearable
         class="secundario--text"
       ></v-autocomplete>
 
       <v-text-field
-        v-model="mensaje"
-        label="Ingresa tu ID"
+        :rules="[rules.required]"
+        label="Ingresa tu usuario"
         clearable
         class="secundario--text"
       ></v-text-field>
@@ -38,7 +37,6 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="mensaje"
         :rules="[emailrules.required, emailrules.equals]"
         label="Confirma tu email"
         clearable
@@ -48,24 +46,24 @@
       <v-text-field
         v-model="password"
         :rules="[rules.required, rules.min]"
-        :type="show2 ? 'text' : 'password'"
+        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Contraseña ingresada con éxito"
         hint="Debe tener al menos 8 caracteres"
         value="wqfasds"
         class="input-group--focused secundario--text"
-        @click:append="show2 = !show2"
+        @click:append="show = !show"
       ></v-text-field>
 
       <v-text-field
         :rules="[rules.required, rules.min, rules.equals]"
-        :type="show2 ? 'text' : 'password'"
+        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Confirma tu contraseña"
-        hint="Reingresa la contraseña"
+        hint="Las contraseñas coinciden"
         value=""
         class="input-group--focused secundario--text"
-        @click:append="show2 = !show2"
+        @click:append="show = !show"
       ></v-text-field>
 
       <v-checkbox v-model="checkbox" class="secundario--text">
@@ -76,7 +74,9 @@
       <v-row>
         <v-col>
           <div class="text-xs-center">
-            <v-btn rounded color="error" dark>Registrarme</v-btn>
+            <v-btn rounded color="error" dark @click="registrar"
+              >Registrarme</v-btn
+            >
           </div>
         </v-col>
         <v-col>
@@ -103,13 +103,15 @@ export default {
         'Perú',
         'Venezuela',
       ],
-      show: true,
+      show: false,
       email: '',
       password: '',
       checkbox: false,
+      hola: 0,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
-        min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
+        min: () =>
+          this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
         equals: (v) => v === this.password || 'Las contraseñas no coinciden',
       },
       emailrules: {
@@ -118,6 +120,9 @@ export default {
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
     }
+  },
+  methods: {
+    registrar() {},
   },
 }
 </script>
