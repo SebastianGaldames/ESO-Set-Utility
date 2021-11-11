@@ -1,13 +1,16 @@
 <template>
-  <v-container class="colorFondo primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
+  <v-main class="colorFondo primario">
     <v-card
+      dark
       class="mx-auto pa-10 ma-10 margenCarta"
       max-width="380"
       max-height="2000"
-      color="primario"
+      style="border: 2px solid #a68f7b"
     >
+      <div>
+        <v-img src="https://i.ibb.co/sHT1f9G/Daco-5763924.png"></v-img>
+      </div>
+
       <v-autocomplete
         ref="pais"
         v-model="pais"
@@ -16,12 +19,14 @@
         label="Pais"
         placeholder="Selecciona..."
         required
+        class="secundario--text"
       ></v-autocomplete>
 
       <v-text-field
         v-model="mensaje"
         label="Ingresa tu ID"
         clearable
+        class="secundario--text"
       ></v-text-field>
 
       <v-text-field
@@ -29,6 +34,7 @@
         :rules="[emailrules.required, emailrules.syntax]"
         label="Email"
         clearable
+        class="secundario--text"
       ></v-text-field>
 
       <v-text-field
@@ -36,6 +42,7 @@
         :rules="[emailrules.required, emailrules.equals]"
         label="Confirma tu email"
         clearable
+        class="secundario--text"
       ></v-text-field>
 
       <v-text-field
@@ -46,7 +53,7 @@
         label="Contraseña ingresada con éxito"
         hint="Debe tener al menos 8 caracteres"
         value="wqfasds"
-        class="input-group--focused"
+        class="input-group--focused secundario--text"
         @click:append="show2 = !show2"
       ></v-text-field>
 
@@ -56,12 +63,12 @@
         name="input-10-2"
         label="Confirma tu contraseña"
         hint="Reingresa la contraseña"
-        value="wqfasds"
-        class="input-group--focused"
+        value=""
+        class="input-group--focused secundario--text"
         @click:append="show2 = !show2"
       ></v-text-field>
 
-      <v-checkbox v-model="checkbox">
+      <v-checkbox v-model="checkbox" class="secundario--text">
         <template v-slot:label>
           Estoy de acuerdo con los términos y condiciones
         </template>
@@ -69,41 +76,20 @@
       <v-row>
         <v-col>
           <div class="text-xs-center">
-            <v-btn round color="error" dark>Registrarme</v-btn>
+            <v-btn rounded color="error" dark>Registrarme</v-btn>
           </div>
         </v-col>
         <v-col>
           <div class="text-xs-center">
-            <v-btn round dark>cancelar</v-btn>
+            <v-btn rounded dark>cancelar</v-btn>
           </div>
         </v-col>
       </v-row>
     </v-card>
-  </v-container>
+  </v-main>
 </template>
 
-<style>
-.margenform {
-  margin-left: 20%;
-  margin-right: 20%;
-  font-size: 12px;
-  border-radius: 10px;
-  border-color: transparent transparent #1c335f transparent;
-}
-,
-.colorTexto {
-  text-emphasis-color: secundario;
-}
-
-.my-text-style >>> .v-text-field__slot input {
-  color: red;
-}
-
-.margenCarta {
-  border-color: secundario;
-  border-radius: 3px;
-}
-</style>
+<style></style>
 
 <script>
 export default {
