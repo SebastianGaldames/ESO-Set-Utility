@@ -1,7 +1,5 @@
 <template>
   <v-main class="colorFondo primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
     <v-card
       dark
       class="mx-auto pa-10 ma-10 margenCarta"
@@ -78,12 +76,12 @@
       <v-row>
         <v-col>
           <div class="text-xs-center">
-            <v-btn round color="error" dark>Registrarme</v-btn>
+            <v-btn rounded color="error" dark>Registrarme</v-btn>
           </div>
         </v-col>
         <v-col>
           <div class="text-xs-center">
-            <v-btn round dark>cancelar</v-btn>
+            <v-btn rounded dark>cancelar</v-btn>
           </div>
         </v-col>
       </v-row>
