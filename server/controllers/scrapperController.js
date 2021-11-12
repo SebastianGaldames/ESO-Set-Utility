@@ -35,7 +35,7 @@ const scrapSingle = async (req, res) => {
     const setListUrls = scrapperService.scrapSetsTable(response.data)
 
     const t = await scrapperService.scrapSet(setListUrls[urlIndex])
-    scrapperAdapter.addFamily(t)
+    //scrapperAdapter.addFamily(t)
     res.status(200).send([t])
   }
 }
