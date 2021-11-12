@@ -83,10 +83,10 @@ const addFamilyDeprecated = async (family) => {
 }
 
 // Agrega una familia a la base de datos. Asume que sus items ya existen.
-const addFamily = async (family) => {
+const addFamily = async (family, items) => {
   // Se obtiene la id de los items desde la base de datos
   const itemsId = []
-  family.items.forEach((item) => {
+  items.forEach((item) => {
     const res = await axios
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
