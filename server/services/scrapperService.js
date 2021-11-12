@@ -101,7 +101,7 @@ const scrapItemType = async (itemUrl) => {
   const content = itemDom.window.document.getElementById('content')
 
   const tp = content.querySelector('.col-md-8 strong').nextSibling
-  console.log(tp.textContent)
+  // console.log(tp.textContent)
   return tp.textContent.trim()
 }
 
@@ -175,4 +175,5 @@ module.exports = {
   getHtmlFromSetUrl,
   scrapSet,
   scrapAllSets,
+  scrapItemType,
 }

@@ -64,9 +64,17 @@ const addFamily = async (family) => {
     const body = {
       nombre: family.name,
       ubicacion: family.location,
-      bonos: family.setBonus,
+      bonos: [],
       itemsFamilia: itemsRef,
     }
+    family.setBonus.forEach((bonusTier) => {
+      const bono = {
+        texto: bonusTier.bonus,
+        cantidad: Number(bonusTier.number),
+      }
+      body.bonos.push(bono)
+    })
+
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/familia/add',
       body
@@ -79,6 +87,7 @@ const addItem = async (item) => {
     const body = {
       nombre: item.name,
       imagen: item.img,
+      tipo: item.type,
     }
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/item/add',
