@@ -12,6 +12,7 @@
       <v-tab-item> <cuenta> </cuenta> </v-tab-item>
       <v-tab-item> <inventario> </inventario> </v-tab-item>
       <v-tab-item> <personajes> </personajes> </v-tab-item>
+      <v-btn @click="salir">salir</v-btn>
     </v-tabs>
   </v-card>
 </template>
@@ -28,12 +29,25 @@
 import Cuenta from '@/components/Cuenta.vue'
 import Inventario from '@/components/Inventario.vue'
 import Personajes from '@/components/Personajes.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Cuenta,
     Inventario,
     Personajes,
+  },
+  computed: {
+    // Obtenemos usuario
+    ...mapGetters({
+      usuario: 'obtenerUsuario',
+    }),
+  },
+  methods: {
+    salir() {
+      this.$store.dispatch('salir')
+      this.$router.push({ name: 'index' })
+    },
   },
 }
 </script>

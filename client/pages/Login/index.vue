@@ -13,13 +13,14 @@
         </div>
 
         <v-text-field
-          v-model="mensaje"
+          v-model="nombreUsuario"
           label="Usuario"
           hint="Ingresa tu Usuario"
           clearable
         ></v-text-field>
 
         <v-text-field
+          v-model="password"
           :rules="[rules.required, rules.min]"
           :type="show2 ? 'text' : 'password'"
           name="input-10-2"
@@ -31,7 +32,7 @@
         ></v-text-field>
         <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
         <div class="mx-auto pa-10">
-          <v-btn rounded color="error" dark>Iniciar Sesión</v-btn>
+          <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
         <div>
           ¿No tienes cuenta?
@@ -50,13 +51,41 @@
 export default {
   data() {
     return {
-      show: false,
-      password: 'Password',
+      show2: false,
+      nombreUsuario: '',
+      password: '',
+      errorM: '',
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
     }
+  },
+  methods: {
+    async busq() {
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/login', {
+          nombreUsuario: this.nombreUsuario,
+          password: this.password,
+        })
+        .then((respuesta) => {
+          return respuesta.data
+        })
+        .then((data) => {
+          this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
+          this.$router.push({ name: 'perfil' }) // vamos hacia la ruta de perfil
+        })
+        .catch((error) => {
+          this.errorM = null
+          if (error.response.status === 404) {
+            this.errorM =
+              'No existe el usuario o las condiciones son incorrectas'
+          } else {
+            this.errorM = 'Ocurrio un error con el servidor'
+          }
+          console.log(this.errorM)
+        })
+    },
   },
 }
 </script>

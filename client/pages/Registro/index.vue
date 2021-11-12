@@ -13,6 +13,7 @@
 
       <v-autocomplete
         ref="pais"
+        v-model="pais"
         :rules="[rules.required]"
         :items="paises"
         label="Pais"
@@ -22,6 +23,7 @@
       ></v-autocomplete>
 
       <v-text-field
+        v-model="usuario"
         :rules="[rules.required]"
         label="Ingresa tu usuario"
         clearable
@@ -37,6 +39,7 @@
       ></v-text-field>
 
       <v-text-field
+        v-model="reEmail"
         :rules="[emailrules.required, emailrules.equals]"
         label="Confirma tu email"
         clearable
@@ -74,7 +77,7 @@
       <v-row>
         <v-col>
           <div class="text-xs-center">
-            <v-btn rounded color="error" dark @click="registrar"
+            <v-btn rounded color="error" dark @click="registroNuevoUsuario"
               >Registrarme</v-btn
             >
           </div>
@@ -92,6 +95,18 @@
 <style></style>
 
 <script>
+import axios from 'axios'
+class Usuario {
+  constructor(usuario, email, pais, password, sexo, personajes, inventario) {
+    this.usuario = usuario
+    this.email = email
+    this.pais = pais
+    this.password = password
+    this.sexo = sexo
+    this.personajes = personajes
+    this.inventario = inventario
+  }
+}
 export default {
   data() {
     return {
@@ -104,10 +119,17 @@ export default {
         'Venezuela',
       ],
       show: false,
-      email: '',
+      usuario: '',
       password: '',
+      rePassword: '',
+      sexo: 'masculino',
+      email: '',
+      reEmail: '',
+      personajes: [],
+      pais: '',
+      inventario: [],
+      user: new Usuario(),
       checkbox: false,
-      hola: 0,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: () =>
@@ -121,8 +143,43 @@ export default {
       },
     }
   },
+  computed: {
+    passwordConfirmationRule() {
+      return () =>
+        this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
+    },
+    emailConfirmationRule() {
+      return () => this.email === this.ReEmail || 'Los email no coinciden'
+    },
+  },
   methods: {
-    registrar() {},
+    registroNuevoUsuario() {
+      this.user = new Usuario(
+        this.usuario,
+        this.email,
+        this.pais,
+        this.password,
+        this.sexo,
+        this.personajes,
+        this.inventario
+      )
+      axios
+        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
+          usuario: this.user.usuario,
+          email: this.user.email,
+          pais: this.user.pais,
+          password: this.user.password,
+          sexo: this.user.sexo,
+          personajes: this.personajes,
+          inventario: this.inventario,
+        })
+        .then((respuesta) => {
+          return respuesta.data
+        })
+        .then((data) => {
+          this.$router.push('/')
+        })
+    },
   },
 }
 </script>
