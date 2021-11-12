@@ -151,7 +151,7 @@ const filterNewItems = async (items) => {
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
       .catch(function (err) {
-        console.log(err)
+        //console.log(err)
       })
     // Si la respuesta es undefined, significa que no está en la base de datos
     if (res === undefined) {
