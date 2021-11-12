@@ -61,9 +61,9 @@ const addFamily = async (family) => {
   //console.log(...itemsRef)
 
   try {
-    const bonoSet={
-      texto = family.setBonus.bonus,
-      cantidad = Number(family.setBonus.number)
+    const bonoSet = {
+      texto: family.setBonus.bonus,
+      cantidad: Number(family.setBonus.number),
     }
     const body = {
       nombre: family.name,
