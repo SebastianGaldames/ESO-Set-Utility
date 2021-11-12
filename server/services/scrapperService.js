@@ -3,8 +3,8 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
-//move to ENV variables, change secret then
-const secret = 'hola'
+// move to ENV variables, change secret then
+// const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
   'https://eso-hub.com/en/sets/dreugh-king-slayer',
   'https://eso-hub.com/en/sets/armor-of-the-code',
@@ -17,7 +17,7 @@ function testService() {
 }
 
 function auth(authSecret) {
-  var ok = secret == authSecret
+  var ok = process.env.SCRAPPER_SECRET == authSecret
   return ok
 }
 
@@ -57,9 +57,9 @@ const scrapSet = async (setUrl) => {
   const imgURL = setBonusPanel.querySelector('picture img')
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
 
-  const itemsScrapped = getItemsFromSet(dataItemsPanel)
+  const itemsScrapped = await getItemsFromSet(dataItemsPanel)
   setData.items = itemsScrapped
-  scrapperAdapter.addFamily(setData)
+  scrapperAdapter.addFamily(setData) //DESCOMENTAR AL TERMINAR PRUEBAS
   return setData
 }
 
@@ -68,27 +68,41 @@ const getHtmlFromSetUrl = async (setUrl) => {
   return response.data
 }
 
-function getItemsFromSet(setDomData) {
+const getItemsFromSet = async (setDomData) => {
   const linksScrapped = [
     ...setDomData.querySelectorAll(
       'a[href*="https://eso-hub.com/en/fashion-outfits"]'
     ),
   ]
   const links = []
-  linksScrapped.forEach((linkNode) => {
+
+  for (const linkNode of linksScrapped) {
     const itemName = linkNode.querySelector('picture img').getAttribute('title')
     const itemImg = linkNode
       .querySelector('picture source[type*="image/png"]')
       .getAttribute('srcset')
+    const itemType = await scrapItemType(linkNode.href)
     const item = {
       name: itemName,
       img: 'https://eso-hub.com' + itemImg,
       url: linkNode.href,
+      type: itemType,
     }
     links.push(item)
-    //links.push(linkNode.getAttribute('title'))
-  })
+  }
+
   return links
+}
+
+const scrapItemType = async (itemUrl) => {
+  const response = await axios.get(itemUrl)
+  const html = response.data
+  const itemDom = new JSDOM(html)
+  const content = itemDom.window.document.getElementById('content')
+
+  const tp = content.querySelector('.col-md-8 strong').nextSibling
+  console.log(tp.textContent)
+  return tp.textContent.trim()
 }
 
 function scrapSetMeta(data, set) {
