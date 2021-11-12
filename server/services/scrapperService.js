@@ -57,9 +57,15 @@ const scrapSet = async (setUrl) => {
   const imgURL = setBonusPanel.querySelector('picture img')
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
 
-  const itemsScrapped = await getItemsFromSet(dataItemsPanel)
-  setData.items = itemsScrapped
-  scrapperAdapter.addFamily(setData) //DESCOMENTAR AL TERMINAR PRUEBAS
+  const noTypeItems = await getItemNoTypeList(dataItemsPanel)
+  const itemsToScrapType = await scrapperAdapter.filterNewItems(noTypeItems)
+  const itemsToAdd = await getTypeItem(itemsToScrapType)
+  scrapperAdapter.addItemRange(itemsToAdd)
+  scrapperAdapter.addFamily(setData, noTypeItems)
+  //const itemsScrapped = await getItemsFromSet(dataItemsPanel)
+  //setData.items = itemsScrapped
+  //scrapperAdapter.addFamily(setData)
+
   return setData
 }
 
@@ -68,6 +74,42 @@ const getHtmlFromSetUrl = async (setUrl) => {
   return response.data
 }
 
+const getItemNoTypeList = async (setDomData) => {
+  const linksScrapped = [
+    ...setDomData.querySelectorAll(
+      'a[href*="https://eso-hub.com/en/fashion-outfits"]'
+    ),
+  ]
+  const links = []
+
+  for (const linkNode of linksScrapped) {
+    const itemName = linkNode.querySelector('picture img').getAttribute('title')
+    const itemImg = linkNode
+      .querySelector('picture source[type*="image/png"]')
+      .getAttribute('srcset')
+    //const itemType = await scrapItemType(linkNode.href)
+    const item = {
+      name: itemName,
+      img: 'https://eso-hub.com' + itemImg,
+      url: linkNode.href,
+      type: '',
+    }
+    links.push(item)
+  }
+
+  return links
+}
+
+//completa la property type para cada item in items y retorna la misma lista
+const getTypeItem = async (items) => {
+  for (const item of items) {
+    const itemType = await scrapItemType(item.url)
+    item.type = itemType
+  }
+  return items
+}
+
+//DEPRECATED
 const getItemsFromSet = async (setDomData) => {
   const linksScrapped = [
     ...setDomData.querySelectorAll(
