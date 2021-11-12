@@ -92,7 +92,7 @@ const addFamily = async (family, items) => {
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
       .catch(function (err) {
-        console.log(err)
+        //console.log(err)
       })
     if (res !== undefined) {
       itemsId.push(res.data._id)
