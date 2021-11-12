@@ -145,7 +145,7 @@ const addItem = async (item) => {
 const filterNewItems = async (items) => {
   const newItems = []
   // Se intenta buscar cada item en la base de datos
-  items.forEach((item) => {
+  for (const item of items) {
     const res = await axios
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
@@ -157,7 +157,7 @@ const filterNewItems = async (items) => {
     if (res === undefined) {
       newItems.push(item)
     }
-  })
+  }
   return newItems
 }
 
