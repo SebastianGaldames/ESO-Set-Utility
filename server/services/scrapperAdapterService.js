@@ -86,7 +86,7 @@ const addFamilyDeprecated = async (family) => {
 const addFamily = async (family, items) => {
   // Se obtiene la id de los items desde la base de datos
   const itemsId = []
-  items.forEach((item) => {
+  for (const item of items) {
     const res = await axios
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
@@ -97,7 +97,7 @@ const addFamily = async (family, items) => {
     if (res !== undefined) {
       itemsId.push(res.data._id)
     }
-  })
+  }
 
   // Se construye un set para evitar repeticiones de items
   const itemsIdSet = new Set(itemsId)
