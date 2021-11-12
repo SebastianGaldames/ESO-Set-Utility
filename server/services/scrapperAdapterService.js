@@ -158,7 +158,8 @@ const filterNewItems = async (items) => {
       newItems.push(item)
     }
   }
-  return newItems
+  const newItemsSet = new Set(newItems)
+  return Array.from(newItemsSet)
 }
 
 const addItemRange = async (items) => {
