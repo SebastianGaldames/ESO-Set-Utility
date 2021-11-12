@@ -92,7 +92,7 @@ const addFamily = async (family, items) => {
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
       .catch(function (err) {
-        console.log(err)
+        //console.log(err)
       })
     if (res !== undefined) {
       itemsId.push(res.data._id)
@@ -143,7 +143,7 @@ const addItem = async (item) => {
 
 // De una lista de items, retorna aquellos que no están en la base de datos
 const filterNewItems = async (items) => {
-  const newItems = []
+  const newItemsNames = []
   // Se intenta buscar cada item en la base de datos
   for (const item of items) {
     const res = await axios
@@ -155,11 +155,18 @@ const filterNewItems = async (items) => {
       })
     // Si la respuesta es undefined, significa que no está en la base de datos
     if (res === undefined) {
-      newItems.push(item)
+      newItemsNames.push(item.name)
     }
   }
-  const newItemsSet = new Set(newItems)
-  return Array.from(newItemsSet)
+
+  const noRepetition = []
+  newItemsNamesSet = new Set(newItemsNames)
+  newItemsNamesSet.forEach((itemName) => {
+    const found = items.find((element) => element.name === itemName)
+    noRepetition.push(found)
+  })
+
+  return noRepetition
 }
 
 const addItemRange = async (items) => {
