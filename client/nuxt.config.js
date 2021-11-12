@@ -1,14 +1,19 @@
+// import colors from 'vuetify/es5/util/colors'
+
 export default {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
- mode: 'universal',
+  mode: 'universal',
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
+  env: {
+    VUE_APP_SERVER_URL: process.env.VUE_APP_SERVER_URL,
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -44,14 +49,13 @@ export default {
    ** Nuxt.js dev-modules
    ** See https://nuxtjs.org/api/configuration-modules/#buildmodules
    */
-  buildModules: [
-    '@nuxtjs/eslint-module',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/vuetify'],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://nuxtjs.org/api/configuration-modules/
+    '@nuxtjs/axios',
   ],
   /*
    ** Build configuration
@@ -59,7 +63,25 @@ export default {
    */
   build: {
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
+  },
+  vuetify: {
+    theme: {
+      light: true,
+      themes: {
+        light: {
+          primario: '#000000',
+          secundario: '#A68F7B',
+          texto1: '#FAFAFA',
+          acentuado1: '#DE360B',
+          acentuado2: '#8B8B8B',
+          // info: colors.teal.lighten1,
+          // warning: colors.amber.base,
+          // error: colors.deepOrange.accent4,
+          // success: colors.green.accent3
+        },
+      },
+    },
   },
 }
