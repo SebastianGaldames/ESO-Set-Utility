@@ -39,6 +39,7 @@ const scrapAllSets = async (setUrls) => {
 }
 
 const scrapSet = async (setUrl) => {
+  console.log('scrapping: ' + setUrl)
   const html = await getHtmlFromSetUrl(setUrl) // test url to save time
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
@@ -58,13 +59,18 @@ const scrapSet = async (setUrl) => {
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
 
   const noTypeItems = await getItemNoTypeList(dataItemsPanel)
+  console.log('items no type:')
+  noTypeItems.forEach((item) => {
+    console.log(item.name)
+  })
   const itemsToScrapType = await scrapperAdapter.filterNewItems(noTypeItems)
+  console.log('items to scrap:')
+  itemsToScrapType.forEach((item) => {
+    console.log(item.name)
+  })
   const itemsToAdd = await getTypeItem(itemsToScrapType)
   scrapperAdapter.addItemRange(itemsToAdd)
   scrapperAdapter.addFamily(setData, noTypeItems)
-  //const itemsScrapped = await getItemsFromSet(dataItemsPanel)
-  //setData.items = itemsScrapped
-  //scrapperAdapter.addFamily(setData)
 
   return setData
 }
