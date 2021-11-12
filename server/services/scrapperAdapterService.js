@@ -61,10 +61,14 @@ const addFamily = async (family) => {
   //console.log(...itemsRef)
 
   try {
+    const bonoSet={
+      texto = family.setBonus.bonus,
+      cantidad = Number(family.setBonus.number)
+    }
     const body = {
       nombre: family.name,
       ubicacion: family.location,
-      bonos: family.setBonus,
+      bonos: bonoSet,
       itemsFamilia: itemsRef,
     }
     const res = await axios.post(
@@ -79,6 +83,7 @@ const addItem = async (item) => {
     const body = {
       nombre: item.name,
       imagen: item.img,
+      tipo: item.type,
     }
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/item/add',
