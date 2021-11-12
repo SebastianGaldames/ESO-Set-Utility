@@ -159,7 +159,8 @@ const filterNewItems = async (items) => {
     }
   }
   const newItemsSet = new Set(newItems)
-  return Array.from(newItemsSet)
+  const noRepetitions = Array.from(newItemsSet)
+  return noRepetitions
 }
 
 const addItemRange = async (items) => {
