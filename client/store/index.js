@@ -12,15 +12,16 @@ export const actions = {
   guardarToken({ commit }, token) {
     commit('setToken', token)
     const user = decode(token)
-    commit('setUsuario', user.nombreUsuario)
+    commit('setUsuario', user.usuario)
     localStorage.setItem('token', token)
   },
   autoLogin({ commit }) {
     const token = localStorage.getItem('token')
     if (token) {
-      // console.log(token + "    TOKEN ENCONTRADO!!!!!");
+      const user = decode(token)
       commit('setToken', token)
-      commit('setUsuario', decode(token))
+      commit('setUsuario', user.usuario)
+      console.log(this.state.usuario)
     } else {
       console.log('No Logueado')
     }
