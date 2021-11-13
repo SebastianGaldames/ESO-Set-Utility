@@ -5,7 +5,7 @@
     <v-combobox
       v-model="selectedPersonaje"
       :items="personajes"
-      hide-selected
+      item-text="nombre"
       outlined
       solo
       @input="triggerUpdate"
@@ -27,10 +27,11 @@ export default {
   },
   data() {
     return {
-      selectedPersonaje: '',
+      selectedPersonaje: {},
     }
   },
   methods: {
+    // emits an event to update the parent component
     triggerUpdate(event) {
       this.$emit('input', this.selectedPersonaje)
     },
