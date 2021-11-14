@@ -23,15 +23,16 @@
               >
             </div>
           </template>
-
-          <v-list v-if="usuarioLogeado">
-            <v-list-item>
-              <div class="columnaOpciones">
-                <v-btn @click="irPerfil()">Perfil</v-btn>
-                <v-btn @click="salir()">Salir</v-btn>
-              </div>
-            </v-list-item>
-          </v-list>
+          <div>
+            <v-list v-if="usuarioLogeado" class="tile">
+              <v-list class="tile">
+                <div class="columnaOpciones tile2">
+                  <v-btn @click="irPerfil()">Perfil</v-btn>
+                  <v-btn @click="salir()">Salir</v-btn>
+                </div>
+              </v-list>
+            </v-list>
+          </div>
         </v-menu>
       </div>
     </div>
@@ -73,6 +74,18 @@ export default {
 </script>
 
 <style>
+.tile {
+  background-color: black !important;
+}
+.tile:hover {
+  background-color: black !important;
+}
+.tile:active {
+  background-color: black !important;
+}
+.tile2 {
+  background-color: black;
+}
 .ajustes {
   display: flex;
   height: 60px;
@@ -82,6 +95,7 @@ export default {
 .columnaOpciones {
   flex-direction: column;
   display: flex;
+  align-content: center;
   justify-content: space-between;
 }
 </style>
