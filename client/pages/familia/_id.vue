@@ -9,34 +9,10 @@
             <v-row no-gutters>
               <v-col sm="6">
                 <h1 class="title text-center lista texto1--text">
-                  Set: {{ $route.params.id }}
+                  Set: {{ miFamilia.nombre }}
                 </h1>
               </v-col>
               <v-spacer />
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Obtencion:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>DLC requerido:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Estilo:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
             </v-row>
             <v-row>
               <v-col class="der texto1--text" md="3">
@@ -49,7 +25,9 @@
                 <h3></h3>
               </v-col>
               <v-col>
-                <p class="secundario--text">Ubicacion</p>
+                <p class="secundario--text">
+                  {{ miFamilia.ubicacion }}
+                </p>
               </v-col>
             </v-row>
           </v-container>
@@ -71,10 +49,11 @@
                   <v-spacer />
                   <v-row>
                     <v-col>
-                      <img
+                      <v-img
+                        :src="imagenFamilia"
+                        height="64px"
+                        width="64px"
                         class="test"
-                        src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
-                        alt=""
                       />
                     </v-col>
                   </v-row>
@@ -82,7 +61,7 @@
                     <v-col md="3"></v-col>
                     <v-col md="6">
                       <h1 class="centro texto1--text">
-                        {{ $route.params.id }}
+                        {{ miFamilia.nombre }}
                       </h1>
                     </v-col>
                     <v-col md="3"></v-col>
@@ -113,17 +92,25 @@
       </v-row>
     </div>
     <v-spacer />
-    <div class="w-100 primario">
+    <div v-if="estanItems" class="w-100 primario">
       <v-row class="galery">
-        <v-col v-for="n in 20" :key="n" md="2">
-          <v-card v-ripple dark style="border: 2px solid #a68f7b" outlined>
-            <img
-              class="test"
-              src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
-              alt=""
-            />
-            <h5 class="centro texto1--text">"Tipo"</h5>
-            <h4 class="centro texto1--text">"Nombre"</h4>
+        <v-col v-for="item in items" :key="item.nombre" md="2">
+          <v-card
+            v-ripple
+            dark
+            style="border: 2px solid #a68f7b"
+            outlined
+            class="justify-center"
+          >
+            <div class="imagen">
+              <v-img
+                :src="item.imagen"
+                :alt="item.nombre"
+                height="64px"
+                width="64px"
+              />
+              <h5 class="centro texto1--text">{{ item.nombre }}</h5>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -131,7 +118,50 @@
   </section>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      miFamilia: Object,
+      items: [],
+      imagenFamilia: '',
+      estanItems: false,
+    }
+  },
+  created() {
+    this.JSONtoFamilia(this.$route.params.id)
+    this.busq()
+    this.setImagenF()
+  },
+  methods: {
+    JSONtoFamilia(miJson) {
+      this.miFamilia = JSON.parse(miJson)
+    },
+    async busq() {
+      for (let i = 0; i < this.miFamilia.itemsFamilia.length; i++) {
+        const item = await this.$axios.get(
+          process.env.VUE_APP_SERVER_URL +
+            '/Item/query?_id=' +
+            this.miFamilia.itemsFamilia[i]
+        )
+        this.items[i] = item.data
+      }
+      this.estanItems = true
+    },
+    setImagenF() {
+      this.imagenFamilia = this.miFamilia.imagen
+    },
+  },
+}
+</script>
+
 <style>
+.imagen {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .test {
   display: block;
   margin: 0 auto;
