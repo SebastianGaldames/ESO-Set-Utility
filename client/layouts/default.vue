@@ -10,10 +10,9 @@
 
 <script>
 export default {
-  mounted() {
+  created() {
     this.$store.dispatch('autoLogin')
   },
-  methods: {},
 }
 </script>
 

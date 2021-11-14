@@ -16,14 +16,15 @@ export const actions = {
     localStorage.setItem('token', token)
   },
   autoLogin({ commit }) {
-    const token = localStorage.getItem('token')
-    if (token) {
-      const user = decode(token)
-      commit('setToken', token)
-      commit('setUsuario', user.usuario)
-      console.log(this.state.usuario)
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token')
+      if (token) {
+        const user = decode(token)
+        commit('setToken', token)
+        commit('setUsuario', user.usuario)
+      }
     } else {
-      console.log('No Logueado')
+      // console.log('we are running on the server')
     }
   },
   salir({ commit }) {

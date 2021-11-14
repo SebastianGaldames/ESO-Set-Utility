@@ -1,6 +1,7 @@
 <template>
   <v-main class="color primario">
     <v-container>
+      {{ comprobarUsuario() }}
       <v-card
         dark
         class="mx-auto pa-10 ma-10"
@@ -30,16 +31,20 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
-        <div class="mx-auto pa-10">
+        <v-flex v-if="errorM" class="red--text">
+          {{ errorM }}
+        </v-flex>
+        <div class="ajustes1">
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
-        <div>
-          ¿No tienes cuenta?
+        <div class="ajustes2">
+          <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
           <v-btn text small
-            ><NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
+            >¿No tienes cuenta?
+            <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
           >
         </div>
+        <div class="ajustes2"></div>
       </v-card>
     </v-container>
   </v-main>
@@ -73,19 +78,38 @@ export default {
         })
         .then((data) => {
           this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
-          this.$router.push({ name: 'perfil' }) // vamos hacia la ruta de perfil
+          this.$router.push({ name: 'index' }) // vamos hacia la ruta de home
         })
         .catch((error) => {
           this.errorM = null
           if (error.response.status === 404) {
-            this.errorM =
-              'No existe el usuario o las condiciones son incorrectas'
+            this.errorM = 'Datos ingresados incorrectamente'
           } else {
             this.errorM = 'Ocurrio un error con el servidor'
           }
-          console.log(this.errorM)
         })
+    },
+    comprobarUsuario() {
+      if (this.$store.state.usuario != null) {
+        this.$router.push({ name: 'index' })
+      }
     },
   },
 }
 </script>
+
+<style>
+.ajustes2 {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ajustes1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-end: 5%;
+  margin-block-start: 1.5%;
+}
+</style>
