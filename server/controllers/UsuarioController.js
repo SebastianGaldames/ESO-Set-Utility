@@ -63,8 +63,8 @@ const login = async (req,res,next) => {
     try{
         let user = await models.Usuario.findOne({usuario: req.body.nombreUsuario});
         if(user){//existe un usuario con ese nombre de usuario
-            let match = await bcrypt.compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
-            if(match){
+            let coincidencia = await bcrypt.compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
+            if(coincidencia){
                 let tokenReturn = await token.encode(user._id,user.usuario);
                 res.status(200).json({user, tokenReturn});
             } else{
