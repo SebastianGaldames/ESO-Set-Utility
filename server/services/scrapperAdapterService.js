@@ -175,9 +175,51 @@ const addItemRange = async (items) => {
   }
 }
 
+const parseItemType = async (itemType) => {
+  console.log('parseItemType running')
+  var typeTokens = itemType.split(' ')
+  var tipo = ''
+  var categoria = ''
+  var infoTipo = ''
+
+  if (await isArmorWeight(typeTokens[0])) {
+    tipo = 'Armadura'
+    infoTipo = typeTokens.shift() //Heavy, Medium, Light
+    categoria = typeTokens.join(' ') //Head, Shoulders, etc...
+  } else {
+    tipo = 'Arma'
+    if (typeTokens[0] === 'Off') {
+      categoria = typeTokens[0] + ' ' + typeTokens[1] //Off Hand
+      typeTokens.shift()
+      typeTokens.shift()
+    } else {
+      categoria = typeTokens.shift() //One-handed, Two-handed, ...
+    }
+    infoTipo = typeTokens.join(' ') // Shield, Sword, Lightning Staff ...
+  }
+
+  const typeData = {
+    tipo: tipo,
+    categoria: categoria,
+    infoTipo: infoTipo,
+  }
+
+  return typeData
+}
+
+const isArmorWeight = async (string) => {
+  if (string === 'Heavy' || string === 'Medium' || string === 'Light') {
+    return true
+  } else {
+    return false
+  }
+}
+
 module.exports = {
   addFamily,
   addItem,
   filterNewItems,
   addItemRange,
+  isArmorWeight,
+  parseItemType,
 }
