@@ -4,6 +4,7 @@
       <v-card-title>
         <v-text-field
           v-model="search"
+          class="bordes acentuado1--text"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
@@ -28,8 +29,32 @@
           </v-col>
         </v-row>
       </div>
-      <p>families</p>
-      <v-data-table :headers="columnas" :items="families" :search="search">
+      <div>
+        <v-sheet outlined color="yellow" rounded="">
+          <v-card class="grey darken-4" outlined color="yellow" rounded="">
+            <v-row align="center">
+              <v-col class="d-flex">
+                <v-text class="centrar">families</v-text>
+              </v-col>
+              <v-col class="d-flex">
+                <v-text class="centrar">Tipo</v-text>
+              </v-col>
+              <v-col class="d-flex">
+                <v-text class="centrar">Estilo</v-text>
+              </v-col>
+              <v-col class="d-flex">
+                <v-text class="centrar">Localizacion</v-text>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-sheet>
+      </div>
+      <v-data-table
+        :headers="columnas"
+        :items="families"
+        :search="search"
+        class="grey darken-4"
+      >
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
@@ -46,11 +71,25 @@
               ></v-img>
             </div>
           </router-link>
+          <v-divider></v-divider>
         </template>
       </v-data-table>
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.centrar {
+  text-align: left;
+  padding-left: 50%;
+}
+.bordes {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #a68f7b;
+}
+</style>
+
 <script>
 export default {
   props: {

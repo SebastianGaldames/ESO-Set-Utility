@@ -1,8 +1,10 @@
 <template>
   <div>
     <v-app>
-      <NavbarIS> </NavbarIS>
-      <Navbar> </Navbar>
+      <div>
+        <NavbarIS> </NavbarIS>
+        <Navbar> </Navbar>
+      </div>
       <Nuxt />
     </v-app>
   </div>
