@@ -25,8 +25,8 @@ h1 {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .centrado {
-  width: 55%;
-  height: 60%;
+  width: 60%;
+  height: 70%;
 }
 </style>
 <script>

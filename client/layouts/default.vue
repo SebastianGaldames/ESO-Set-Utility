@@ -6,6 +6,7 @@
         <Navbar> </Navbar>
       </div>
       <Nuxt />
+      <PiePag></PiePag>
     </v-app>
   </div>
 </template>

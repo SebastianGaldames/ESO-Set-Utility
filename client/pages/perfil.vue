@@ -7,7 +7,6 @@
     </div>
     <v-tabs vertical class="tabPerfil primario" dark height="100%">
       <v-tab class="primario acentuado1--text"> Cuenta </v-tab>
-      <v-tab class="primario acentuado1--text"> Inventario </v-tab>
       <v-tab class="primario acentuado1--text"> Personajes </v-tab>
       <v-tab-item> <cuenta> </cuenta> </v-tab-item>
       <v-tab-item> <inventario> </inventario> </v-tab-item>
@@ -26,13 +25,11 @@
 
 <script>
 import Cuenta from '@/components/Cuenta.vue'
-import Inventario from '@/components/Inventario.vue'
 import Personajes from '@/components/Personajes.vue'
 
 export default {
   components: {
     Cuenta,
-    Inventario,
     Personajes,
   },
 }
