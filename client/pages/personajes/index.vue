@@ -28,11 +28,12 @@ export default {
       familias: [],
       glyphs: [],
       traits: [],
-      selectedPersonaje: 'not selected',
+      selectedPersonaje: {},
     }
   },
   mounted() {
     this.makeDummyData()
+    this.selectedPersonaje = this.personajes[0]
   },
   methods: {
     makeDummyData() {
