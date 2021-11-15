@@ -1,11 +1,11 @@
 <template>
   <v-card color="primario" height="100%">
     <div class="div1">
-      <v-toolbar dark color="primario">
+      <v-toolbar color="primario">
         <v-toolbar-title class="secundario--text">Perfil</v-toolbar-title>
       </v-toolbar>
     </div>
-    <v-tabs vertical class="tabPerfil primario" dark height="100%">
+    <v-tabs vertical class="tabPerfil primario" height="100%">
       <v-tab class="primario acentuado1--text"> Cuenta </v-tab>
       <v-tab class="primario acentuado1--text"> Personajes </v-tab>
       <v-tab-item> <cuenta> </cuenta> </v-tab-item>

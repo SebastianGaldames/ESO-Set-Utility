@@ -1,4 +1,4 @@
-<template>
+<template dark color="primario">
   <section>
     <div class="primario">
       <tabla-items :families="families"></tabla-items>
