@@ -27,13 +27,11 @@
 
 <script>
 import Cuenta from '@/components/Cuenta.vue'
-import Personajes from '@/components/Personajes.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Cuenta,
-    Personajes,
   },
   computed: {
     // Obtenemos usuario
