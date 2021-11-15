@@ -100,7 +100,7 @@
           <v-row align="center" class="pb-2 text-right" justify="end">
             <v-btn
               left:fixed
-              class="btnSave acentuado1 texto1--text"
+              class="btnSave acentuado3 texto1--text"
               @click="guardarCambios()"
               >Guardar cambios</v-btn
             >
