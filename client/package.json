@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "jwt-decode": "^3.1.2",
     "nuxt": "^2.14.0",
-    "vue-resource": "^1.5.3",
-    "@nuxtjs/vuetify": "^1.12.1"
+    "vue-resource": "^1.5.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.0.0",

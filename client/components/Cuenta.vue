@@ -146,7 +146,6 @@ export default {
   },
   methods: {
     guardarCambios() {
-      console.log('xd')
       const nuevaInfo = {
         usuario: this.cuenta.usuario,
         pais: this.cuenta.pais,

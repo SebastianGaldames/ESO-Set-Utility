@@ -11,6 +11,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  created() {
+    this.$store.dispatch('autoLogin')
+  },
+}
+</script>
+
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
