@@ -8,7 +8,8 @@
       label="Buscar"
       append-icon="fas fa-lock"
     ></v-text-field>
-    {{ selectedItem }}
+    <v-combobox :items="categorias" outlined solo></v-combobox>
+    {{ items[0] }}
     <div class="d-flex align-content-start flex-wrap">
       <div v-for="item in resultadoBusqueda" :key="item.nombre" flat>
         <item-box :item="item"></item-box>
@@ -21,12 +22,17 @@ import ItemBox from '~/components/personajes/ItemBox.vue'
 export default {
   components: { ItemBox },
   props: {
-    value: {
-      type: Object,
-      default: () => {},
+    // value: {
+    //   type: Object,
+    //   default: () => {},
+    //   required: true,
+    // },
+    items: {
+      type: Array,
+      default: () => [],
       required: true,
     },
-    items: {
+    familias: {
       type: Array,
       default: () => [],
       required: true,
@@ -36,6 +42,7 @@ export default {
     return {
       selectedItem: {},
       busqueda: '',
+      categoriaFilterValue: '',
     }
   },
   computed: {
@@ -45,11 +52,22 @@ export default {
           return this.busqueda
             .toLowerCase()
             .split(' ')
-            .every((v) => item.nombre.toLowerCase().includes(v))
+            .every(
+              (v) =>
+                item.nombre.toLowerCase().includes(v) ||
+                item.tipo.toLowerCase().includes(v)
+            )
         })
       } else {
         return this.items
       }
+    },
+    categorias() {
+      const cats = new Set()
+      for (const item of this.items) {
+        cats.add(item.tipo)
+      }
+      return [...cats]
     },
   },
 }

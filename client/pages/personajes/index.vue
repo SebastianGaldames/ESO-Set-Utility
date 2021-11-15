@@ -4,7 +4,10 @@
     <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
     </seleccion-personaje>
     {{ selectedPersonaje }}
-    <personaje-inventario :items="items"></personaje-inventario>
+    <personaje-inventario
+      :familias="familias"
+      :items="items"
+    ></personaje-inventario>
   </div>
 </template>
 
@@ -18,7 +21,10 @@ export default {
     const itemsResponse = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Item/list'
     )
-    return { items: itemsResponse }
+    const familiasResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Item/list'
+    )
+    return { items: itemsResponse, familias: familiasResponse }
   },
   data() {
     return {
