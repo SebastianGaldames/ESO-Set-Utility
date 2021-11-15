@@ -5,35 +5,24 @@
     <div class="w-100 primario">
       <v-row class="galery">
         <v-col class="mx-auto" color="primario" md="6" sm="8">
-          <v-container class="primario">
-            <v-row no-gutters>
-              <v-col sm="6">
-                <h1 class="title text-center lista texto1--text">
-                  Set: {{ miFamilia.nombre }}
-                </h1>
-              </v-col>
-              <v-spacer />
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Localización:</h3>
-              </v-col>
-              <v-col></v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der" md="3">
-                <h3></h3>
-              </v-col>
-              <v-col>
-                <p class="secundario--text">
-                  {{ miFamilia.ubicacion }}
-                </p>
-              </v-col>
-            </v-row>
+          <v-container class="nombreUbi">
+            <div>
+              <h1>Set: {{ miFamilia.nombre }}</h1>
+            </div>
+            <div class="ubicacion">
+              <h3>Localización:</h3>
+              <div
+                v-for="ubicacion in miFamilia.ubicacion"
+                :key="ubicacion"
+                md="2"
+              >
+                <p class="secundario--text">• {{ ubicacion }}</p>
+              </div>
+            </div>
           </v-container>
         </v-col>
         <v-col class="mx-auto" md="6" sm="8" color="primario">
-          <v-container>
+          <div>
             <v-row no-gutters>
               <v-col>
                 <v-card dark outlined tile style="border: 2px solid #a68f7b">
@@ -74,20 +63,20 @@
                     </v-col>
                     <v-col md="3"></v-col>
                   </v-row>
-
                   <v-spacer />
-                  <v-row>
-                    <v-col class="centro texto1--text">
-                      <p>(2 items) "buffo de estadisticas"</p>
-                      <p>(3 items) "buffo de estadisticas"</p>
-                      <p>(4 items) "buffo de estadisticas"</p>
-                      <p>(5 items) "bono por uso de la familia"</p>
-                    </v-col>
-                  </v-row>
+                  <div class="bonos">
+                    <div
+                      v-for="bono in miFamilia.bonos"
+                      :key="bono.texto"
+                      class="bonos2"
+                    >
+                      <p>{{ bono.texto }}</p>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
-          </v-container>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -162,6 +151,23 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+.bonos {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2%;
+}
+.ubicacion {
+  margin-top: 3%;
+}
+.bonos2 {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 70%;
+}
 .test {
   display: block;
   margin: 0 auto;
@@ -194,5 +200,10 @@ export default {
 .primario {
   border: 1px solid white !important;
   border-color: #a68f7b !important;
+}
+.nombreUbi {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 </style>

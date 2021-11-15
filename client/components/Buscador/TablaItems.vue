@@ -28,7 +28,7 @@
           </v-col>
         </v-row>
       </div>
-      <p>families</p>
+      <p>Familias</p>
       <v-data-table :headers="columnas" :items="families" :search="search">
         <template v-slot:item.imagen="{ item }">
           <router-link
@@ -66,11 +66,17 @@ export default {
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
-          sortable: false,
+          sortable: true,
           value: 'nombre',
-          width: '30%',
+          width: '10%',
+          text: 'Nombre',
         },
-        { sortable: false, value: 'calories' },
+        {
+          sortable: true,
+          value: 'ubicacion',
+          width: '30%',
+          text: 'Ubicacion',
+        },
       ],
     }
   },
