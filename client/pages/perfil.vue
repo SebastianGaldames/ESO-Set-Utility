@@ -11,7 +11,7 @@
         <v-tab class="primario acentuado1--text"> Cuenta </v-tab>
         <v-tab class="primario acentuado1--text"> Personajes </v-tab>
         <v-tab-item> <cuenta> </cuenta> </v-tab-item>
-        <v-tab-item> <inventario> </inventario> </v-tab-item>
+        <v-tab-item> <personajes> </personajes> </v-tab-item>
       </v-tabs>
     </v-card>
   </div>
@@ -27,11 +27,14 @@
 
 <script>
 import Cuenta from '@/components/Cuenta.vue'
+import Personajes from '@/components/Personajes.vue'
+
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Cuenta,
+    Personajes,
   },
   computed: {
     // Obtenemos usuario
