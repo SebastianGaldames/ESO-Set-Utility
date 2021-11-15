@@ -1,25 +1,40 @@
 <template>
-  <div>
-    <v-card>
+  <div dark color="primario">
+    <v-card dark color="primario">
       <v-card dark color="primario">
         <v-text-field
           v-model="search"
-          class="bordes"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
           hide-details
           white
+          rounded
+          solo
+          class="pt-2"
         ></v-text-field>
       </v-card>
 
-      <div dark color="primario">
+      <div dark color="primario" class="pt-2">
         <v-row align="center">
           <v-col class="d-flex">
-            <v-select :items="items" label="filtro 1" solo></v-select>
+            <v-select
+              dark
+              color="primario"
+              :items="items"
+              item-color="primario"
+              label="filtro 1"
+              solo
+            ></v-select>
           </v-col>
           <v-col class="d-flex">
-            <v-select :items="items" label="filtro 2" solo></v-select>
+            <v-select
+              :items="items"
+              label="filtro 2"
+              solo
+              dark
+              color="primario"
+            ></v-select>
           </v-col>
           <v-col class="d-flex">
             <v-select
@@ -27,12 +42,20 @@
               item-text="filtro"
               label="filtro 3"
               solo
+              dark
+              color="primario"
             ></v-select>
           </v-col>
         </v-row>
       </div>
 
-      <v-data-table :headers="columnas" :items="families" :search="search">
+      <v-data-table
+        :headers="columnas"
+        :items="families"
+        :search="search"
+        color="primario"
+        dark
+      >
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
