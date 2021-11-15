@@ -1,16 +1,19 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>
+      <v-card dark color="primario">
         <v-text-field
           v-model="search"
+          class="bordes"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
           hide-details
+          white
         ></v-text-field>
-      </v-card-title>
-      <div>
+      </v-card>
+
+      <div dark color="primario">
         <v-row align="center">
           <v-col class="d-flex">
             <v-select :items="items" label="filtro 1" solo></v-select>
@@ -28,7 +31,7 @@
           </v-col>
         </v-row>
       </div>
-      <p>families</p>
+
       <v-data-table :headers="columnas" :items="families" :search="search">
         <template v-slot:item.imagen="{ item }">
           <router-link
@@ -46,11 +49,26 @@
               ></v-img>
             </div>
           </router-link>
+          <v-divider></v-divider>
         </template>
       </v-data-table>
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.centrar {
+  text-align: left;
+  padding-left: 50%;
+  background-color: dimgray;
+}
+.bordes {
+  border-width: 2px;
+  border-style: solid;
+  border-color: gold;
+}
+</style>
+
 <script>
 export default {
   props: {
@@ -66,11 +84,14 @@ export default {
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
-          sortable: false,
+          text: 'Familias',
+          sortable: true,
           value: 'nombre',
           width: '30%',
         },
-        { sortable: false, value: 'calories' },
+        { text: 'Tipo', value: 'tipo', sortable: true },
+        { text: 'Estilo', value: 'estilo', sortable: true },
+        { text: 'Localizacion', value: 'localizacion', sortable: true },
       ],
       familias: [
         {
