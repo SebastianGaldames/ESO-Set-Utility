@@ -157,6 +157,8 @@ function scrapSetMeta(data, set) {
   const scrapped = {
     name: '',
     type: '',
+    style: '',
+    dlcRequirement: '',
     imageUrl: '',
     location: [],
     setBonus: [],
@@ -168,6 +170,12 @@ function scrapSetMeta(data, set) {
     }
     if (str.textContent.includes('Type')) {
       scrapped.type = str.nextSibling.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('Style')) {
+      scrapped.style = str.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('DLC')) {
+      scrapped.dlcRequirement = str.nextSibling.nextSibling.textContent.trim()
     }
     if (str.textContent === 'Location:') {
       const locationSelection = set.querySelector('ul') //first list
