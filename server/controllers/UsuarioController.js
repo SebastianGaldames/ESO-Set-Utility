@@ -1,10 +1,11 @@
 const models = require('../models')
-//const bcrypt = require('bcrypt');
+const token = require('../services/token') 
+const bcrypt = require('bcryptjs');
 
 //Metodo para crear un usuario (registro)
 const add = async (req,res,next) =>{
     try{
-        //req.body.password = await bcrypt.hash(req.body.password,10);
+        req.body.password = await bcrypt.hash(req.body.password,10);
         const reg = await models.Usuario.create(req.body);
         res.status(200).json(reg);
     } catch (e){
@@ -59,8 +60,34 @@ const list = async (req,res,next) =>{
 }
 //Metodo login que busca por nombreUsuario y compara la contraseña encriptada de la BD 
 const login = async (req,res,next) => {
+    try{
+        let user = await models.Usuario.findOne({usuario: req.body.nombreUsuario});
+        if(user){//existe un usuario con ese nombre de usuario
+            let coincidencia = await bcrypt.compare(req.body.password,user.password); //comparamos si son iguales las contraseñas
+            if(coincidencia){
+                let tokenReturn = await token.encode(user._id,user.usuario);
+                res.status(200).json({user, tokenReturn});
+            } else{
+                res.status(404).send({
+                    message: 'password incorrecta'
+                });
+            }
+        } 
+        else{
+            res.status(404).send({
+                message: 'No existe este usuario'
+            });
+        }
+
+    } catch(e){
+        res.status(500).send({
+            message: 'Ocurrio un error'
+        });
+        next(e);
+    }
     
 }
+
 //Metodo para obtener el array de personajes al usuario
 const getPersonajes = async (req,res,next) => {
     try {
