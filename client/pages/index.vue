@@ -10,11 +10,8 @@
           transition="fade-transition"
         >
           <v-row class="fill-height title" align="center" justify="center">
-            <div>
-              <h1>{{ item.title }}</h1>
-            </div>
-          </v-row></v-carousel-item
-        >
+          </v-row
+        ></v-carousel-item>
       </v-carousel>
     </v-container>
   </v-main>
@@ -22,11 +19,12 @@
 <style scoped>
 h1 {
   color: #ffffff;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 .centrado {
   width: 60%;
-  height: 70%;
+  height: auto;
 }
 </style>
 <script>
@@ -35,11 +33,10 @@ export default {
     return {
       items: [
         {
-          src: 'https://i.imgur.com/rHmoQHQ.jpg',
-          title: 'Elder Scrolls Online',
+          src: 'https://i.imgur.com/DmGcmJu.jpg',
         },
         {
-          src: 'https://i.imgur.com/bfn0jw5.jpg',
+          src: 'https://i.imgur.com/bgmZ682.jpg',
         },
         {
           src: 'https://i.imgur.com/9jFMJYF.jpg',

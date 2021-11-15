@@ -1,7 +1,7 @@
 <template>
   <v-footer dark padless>
     <v-card class="flex" flat tile>
-      <v-card-title class="grey darken-4">
+      <v-card-title class="grey darken-3">
         <strong class="subheading">Contactanos!</strong>
         <v-spacer></v-spacer>
         <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon>

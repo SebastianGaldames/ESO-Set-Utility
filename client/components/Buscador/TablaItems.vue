@@ -1,17 +1,19 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>
+      <v-card dark color="primario">
         <v-text-field
           v-model="search"
-          class="bordes acentuado1--text"
+          class="bordes"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
           hide-details
+          white
         ></v-text-field>
-      </v-card-title>
-      <div>
+      </v-card>
+
+      <div dark color="primario">
         <v-row align="center">
           <v-col class="d-flex">
             <v-select :items="items" label="filtro 1" solo></v-select>
@@ -29,32 +31,8 @@
           </v-col>
         </v-row>
       </div>
-      <div>
-        <v-sheet outlined color="yellow" rounded="">
-          <v-card class="grey darken-4" outlined color="yellow" rounded="">
-            <v-row align="center">
-              <v-col class="d-flex">
-                <v-text class="centrar">families</v-text>
-              </v-col>
-              <v-col class="d-flex">
-                <v-text class="centrar">Tipo</v-text>
-              </v-col>
-              <v-col class="d-flex">
-                <v-text class="centrar">Estilo</v-text>
-              </v-col>
-              <v-col class="d-flex">
-                <v-text class="centrar">Localizacion</v-text>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-sheet>
-      </div>
-      <v-data-table
-        :headers="columnas"
-        :items="families"
-        :search="search"
-        class="grey darken-4"
-      >
+
+      <v-data-table :headers="columnas" :items="families" :search="search">
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
@@ -82,11 +60,12 @@
 .centrar {
   text-align: left;
   padding-left: 50%;
+  background-color: dimgray;
 }
 .bordes {
   border-width: 2px;
   border-style: solid;
-  border-color: #a68f7b;
+  border-color: gold;
 }
 </style>
 
@@ -105,11 +84,14 @@ export default {
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
-          sortable: false,
+          text: 'Familias',
+          sortable: true,
           value: 'nombre',
           width: '30%',
         },
-        { sortable: false, value: 'calories' },
+        { text: 'Tipo', value: 'tipo', sortable: true },
+        { text: 'Estilo', value: 'estilo', sortable: true },
+        { text: 'Localizacion', value: 'localizacion', sortable: true },
       ],
       familias: [
         {
