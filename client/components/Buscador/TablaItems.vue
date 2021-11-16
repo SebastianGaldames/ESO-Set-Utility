@@ -39,7 +39,7 @@
           v-if="(selected, selectedUbi !== '')"
           elevation="2"
           @click=";(selectedUbi = ''), (select = false)"
-          >{{ selectedUbi }}</v-btn
+          >{{ selectedUbi }} x</v-btn
         >
       </div>
       <p>Familias</p>
@@ -52,7 +52,7 @@
           <router-link
             :to="{
               name: 'familia-id',
-              params: { id: familiaToJson(item), item: item },
+              params: { id: item._id },
             }"
           >
             <div>
