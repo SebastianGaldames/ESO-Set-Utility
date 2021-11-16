@@ -1,9 +1,7 @@
 <template>
   <v-main class="color primario">
     <v-container>
-      <NavbarIS></NavbarIS>
-      <Navbar> </Navbar>
-
+      {{ comprobarUsuario() }}
       <v-card
         dark
         class="mx-auto pa-10 ma-10"
@@ -16,32 +14,37 @@
         </div>
 
         <v-text-field
-          v-model="mensaje"
+          v-model="nombreUsuario"
           label="Usuario"
           hint="Ingresa tu Usuario"
           clearable
         ></v-text-field>
 
         <v-text-field
+          v-model="password"
           :rules="[rules.required, rules.min]"
           :type="show2 ? 'text' : 'password'"
           name="input-10-2"
           label="Contraseña"
           hint="Ingresa tu contraseña"
-          value="wqfasds"
+          value=""
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-btn flat small>¿Olvidaste tu contraseña?</v-btn>
-        <div class="mx-auto pa-10">
-          <v-btn round color="error" dark>Iniciar Sesión</v-btn>
+        <v-flex v-if="errorM" class="red--text">
+          {{ errorM }}
+        </v-flex>
+        <div class="ajustes1">
+          <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
-        <div>
-          ¿No tienes cuenta?
-          <v-btn flat small
-            ><NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
+        <div class="ajustes2">
+          <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
+          <v-btn text small
+            >¿No tienes cuenta?
+            <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
           >
         </div>
+        <div class="ajustes2"></div>
       </v-card>
     </v-container>
   </v-main>
@@ -53,13 +56,60 @@
 export default {
   data() {
     return {
-      show: false,
-      password: 'Password',
+      show2: false,
+      nombreUsuario: '',
+      password: '',
+      errorM: '',
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
     }
   },
+  methods: {
+    async busq() {
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/login', {
+          nombreUsuario: this.nombreUsuario,
+          password: this.password,
+        })
+        .then((respuesta) => {
+          return respuesta.data
+        })
+        .then((data) => {
+          this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
+          this.$router.push({ name: 'index' }) // vamos hacia la ruta de home
+        })
+        .catch((error) => {
+          this.errorM = null
+          if (error.response.status === 404) {
+            this.errorM = 'Datos ingresados incorrectamente'
+          } else {
+            this.errorM = 'Ocurrio un error con el servidor'
+          }
+        })
+    },
+    comprobarUsuario() {
+      if (this.$store.state.usuario != null) {
+        this.$router.push({ name: 'index' })
+      }
+    },
+  },
 }
 </script>
+
+<style>
+.ajustes2 {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ajustes1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-end: 5%;
+  margin-block-start: 1.5%;
+}
+</style>

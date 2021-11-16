@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+// import colors from 'vuetify/es5/util/colors'
 
 export default {
   /*
@@ -11,6 +11,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
+  env: {
+    VUE_APP_SERVER_URL: process.env.VUE_APP_SERVER_URL,
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -65,14 +68,15 @@ export default {
   },
   vuetify: {
     theme: {
-      light: true,
+      dark: true,
       themes: {
-        light: {
+        dark: {
           primario: '#000000',
-          secundario: '#A68F7B',
+          secundario: '#ffe34d',
           texto1: '#FAFAFA',
-          acentuado1: '#DE360B',
+          acentuado1: '#ffe34d',
           acentuado2: '#8B8B8B',
+          acentuado3: '#de360b',
           // info: colors.teal.lighten1,
           // warning: colors.amber.base,
           // error: colors.deepOrange.accent4,

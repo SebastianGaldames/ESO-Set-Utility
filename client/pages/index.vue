@@ -1,22 +1,30 @@
 <template>
   <v-main class="color primario">
-    <NavbarIS> </NavbarIS>
-    <Navbar> </Navbar>
     <v-container class="centrado">
-      <v-carousel :show-arrows="false">
+      <v-carousel :show-arrows="false" cycle>
         <v-carousel-item
           v-for="(item, i) in items"
           :key="i"
           :src="item.src"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        >
+          <v-row class="fill-height title" align="center" justify="center">
+          </v-row
         ></v-carousel-item>
       </v-carousel>
     </v-container>
   </v-main>
 </template>
 <style scoped>
+h1 {
+  color: #ffffff;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
 .centrado {
-  width: 55%;
-  height: 60%;
+  width: 60%;
+  height: auto;
 }
 </style>
 <script>
@@ -25,13 +33,13 @@ export default {
     return {
       items: [
         {
-          src: 'https://i.ibb.co/Jdn6tNC/img1.png',
+          src: 'https://i.imgur.com/DmGcmJu.jpg',
         },
         {
-          src: 'https://i.ibb.co/PZtqzVB/imh2.jpg',
+          src: 'https://i.imgur.com/bgmZ682.jpg',
         },
         {
-          src: 'https://i.ibb.co/wwDvhM4/img3.png',
+          src: 'https://i.imgur.com/9jFMJYF.jpg',
         },
       ],
     }

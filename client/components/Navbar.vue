@@ -1,10 +1,41 @@
 <template>
   <v-toolbar dark>
     <v-row class="d-flex justify-center">
-      <v-btn text> <NuxtLink to="/">Inicio</NuxtLink> </v-btn>
-      <v-btn text> Familias </v-btn>
-      <v-btn text> Personajes </v-btn>
-      <v-btn text> Items </v-btn>
+      <v-flex class="d-flex">
+        <v-img
+          max-height="100"
+          max-width="250"
+          src="https://i.imgur.com/Hc1mF2k.png"
+        ></v-img>
+      </v-flex>
+      <NuxtLink
+        to="/"
+        style="text-decoration: none; color: inherit"
+        class="pt-5"
+      >
+        <v-btn text> Inicio </v-btn></NuxtLink
+      >
+      <NuxtLink
+        to="/familysearch"
+        style="text-decoration: none; color: inherit"
+        class="pt-5"
+      >
+        <v-btn text> Familias </v-btn></NuxtLink
+      >
+      <NuxtLink
+        to="/"
+        style="text-decoration: none; color: inherit"
+        class="pt-5"
+      >
+        <v-btn text> Personajes </v-btn></NuxtLink
+      >
+      <NuxtLink
+        to="/"
+        style="text-decoration: none; color: inherit"
+        class="pt-5"
+      >
+        <v-btn text> Items </v-btn></NuxtLink
+      >
     </v-row>
   </v-toolbar>
 </template>
