@@ -33,6 +33,27 @@ const query = async (req, res, next) => {
     next(e)
   }
 }
+
+//Metodo para obtener un usuario mediante nombre
+const queryNombre = async (req, res, next) => {
+  try {
+    const reg = await models.Usuario.findOne({ usuario: req.body.usuario })
+    console.log('req: ' + req.body.usuario)
+    if (!reg) {
+      res.status(404).send({
+        message: 'El registro no existe',
+      })
+    } else {
+      res.status(200).json(reg)
+    }
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+
 const update = async (req, res, next) => {
   try {
     const reg0 = await models.Usuario.findOne({ _id: req.body._id })
@@ -206,6 +227,7 @@ const actualizarInventario = async (req, res, next) => {
 module.exports = {
   add,
   query,
+  queryNombre,
   update,
   list,
   login,
