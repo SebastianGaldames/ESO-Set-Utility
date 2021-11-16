@@ -19,48 +19,40 @@
         <v-row align="center">
           <v-col class="d-flex">
             <v-select
-              dark
-              color="primario"
-              :items="items"
-              item-color="primario"
-              label="filtro 1"
+              v-model="selectedUbi"
+              :items="ubicaciones"
+              label="Ubicacion"
               solo
+              @change="selected = true"
             ></v-select>
           </v-col>
           <v-col class="d-flex">
-            <v-select
-              :items="items"
-              label="filtro 2"
-              solo
-              dark
-              color="primario"
-            ></v-select>
+            <v-select :items="estilo" label="Estilo" solo></v-select>
           </v-col>
           <v-col class="d-flex">
-            <v-select
-              :items="items"
-              item-text="filtro"
-              label="filtro 3"
-              solo
-              dark
-              color="primario"
-            ></v-select>
+            <v-select :items="tipo" label="Tipo" solo></v-select>
           </v-col>
         </v-row>
       </div>
-
+      <div>
+        <v-btn
+          v-if="(selected, selectedUbi !== '')"
+          elevation="2"
+          @click=";(selectedUbi = ''), (select = false)"
+          >{{ selectedUbi }}</v-btn
+        >
+      </div>
+      <p>Familias</p>
       <v-data-table
         :headers="columnas"
-        :items="families"
+        :items="computed_items"
         :search="search"
-        color="primario"
-        dark
       >
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
               name: 'familia-id',
-              params: { id: item.nombre, item: item },
+              params: { id: familiaToJson(item), item: item },
             }"
           >
             <div>
@@ -102,123 +94,66 @@ export default {
   },
   data() {
     return {
-      items: ['filtro1', 'filtro2', 'filtro3', 'filtro4'],
+      selected: false,
+      ubicaciones: [],
+      estilo: [],
+      tipo: [],
       search: '',
+      selectedUbi: '',
+      auxNombre: '',
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
-          text: 'Familias',
           sortable: true,
           value: 'nombre',
+          width: '10%',
+          text: 'Nombre',
+        },
+        {
+          sortable: true,
+          value: 'ubicacion',
           width: '30%',
-        },
-        { text: 'Tipo', value: 'tipo', sortable: true },
-        { text: 'Estilo', value: 'estilo', sortable: true },
-        { text: 'Localizacion', value: 'localizacion', sortable: true },
-      ],
-      familias: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%',
-          imagen:
-            'https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp',
+          text: 'Ubicacion',
         },
       ],
     }
+  },
+  computed: {
+    computed_items() {
+      const filtroUbi = this.selectedUbi
+      const aux = this.auxNombre
+      return this.families.filter(function (item) {
+        let filtered = true
+        if (filtered) {
+          if (filtroUbi) {
+            filtered = item.nombre === aux
+            item.ubicacion.forEach((element) => {
+              filtered += element === filtroUbi
+            })
+          } else {
+            // cuando no hay filtros
+            filtered = item
+          }
+        }
+        return filtered
+      })
+    },
+  },
+  created() {
+    this.transformarUbis()
+  },
+  methods: {
+    familiaToJson(item) {
+      const myJSON = JSON.stringify(item)
+      return myJSON
+    },
+    transformarUbis() {
+      for (let i = 0; i < this.families.length; i++) {
+        for (let j = 0; j < this.families[i].ubicacion.length; j++) {
+          this.ubicaciones.push(this.families[i].ubicacion[j])
+        }
+      }
+    },
   },
 }
 </script>
