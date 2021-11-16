@@ -7,7 +7,7 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 7" :key="n" md="3">
-              <v-card outlined>slot{{ n }}</v-card>
+              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
             </v-col>
           </v-row>
         </v-container>
@@ -17,7 +17,7 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 3" :key="n" md="3">
-              <v-card outlined>slot{{ n }}</v-card>
+              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
             </v-col>
           </v-row>
         </v-container>
@@ -27,7 +27,7 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 3" :key="n" md="3">
-              <v-card outlined>slot{{ n }}</v-card>
+              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
             </v-col>
           </v-row>
         </v-container>
@@ -37,10 +37,44 @@
 </template>
 
 <script>
+import itemSlot from '~/components/personajes/Slot.vue'
+
 export default {
+  components: {
+    itemSlot,
+  },
+  props: {
+    inventario: {
+      type: Array,
+      default: () => [],
+    },
+    /*
+    equipamiento: {
+      type: Array,
+      default: () => [],
+    },
+    accesorios: {
+      type: Array,
+      default: () => [],
+    },
+    armas: {
+      type: Array,
+      default: () => [],
+    } */
+  },
   data() {
     return {
+      // Datos de prueba
       nombre: 'Pepe',
+      item: {
+        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+      },
+      glyph: {
+        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+      },
+      trait: {
+        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+      },
     }
   },
 }
