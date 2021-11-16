@@ -180,11 +180,12 @@ const parseItemType = async (itemType) => {
   var typeTokens = itemType.split(' ')
   var tipo = ''
   var categoria = ''
-  var infoTipo = ''
+  var peso = ''
+  var tipoArma = ''
 
   if (await isArmorWeight(typeTokens[0])) {
     tipo = 'Armadura'
-    infoTipo = typeTokens.shift() //Heavy, Medium, Light
+    peso = typeTokens.shift() //Heavy, Medium, Light
     categoria = typeTokens.join(' ') //Head, Shoulders, etc...
   } else {
     tipo = 'Arma'
@@ -195,13 +196,14 @@ const parseItemType = async (itemType) => {
     } else {
       categoria = typeTokens.shift() //One-handed, Two-handed, ...
     }
-    infoTipo = typeTokens.join(' ') // Shield, Sword, Lightning Staff ...
+    tipoArma = typeTokens.join(' ') // Shield, Sword, Lightning Staff ...
   }
 
   const typeData = {
     tipo: tipo,
     categoria: categoria,
-    infoTipo: infoTipo,
+    peso: peso,
+    tipoArma: tipoArma,
   }
 
   return typeData
@@ -215,6 +217,51 @@ const isArmorWeight = async (string) => {
   }
 }
 
+const testAddProperty = async () => {
+  const name = 'Breton Helm 3'
+  const res1 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const typeData = await parseItemType(res1.data.tipo)
+
+  try {
+    const body = {
+      _id: res1.data._id,
+      nombre: res1.data.nombre,
+      tipo: res1.data.tipo,
+      //categoria: typeData.categoria,
+      //infoTipo: typeData.infoTipo,
+      nivel: res1.data.nivel,
+      calidad: res1.data.calidad,
+      imagen: res1.data.imagen,
+    }
+    const res2 = await axios.post(
+      process.env.VUE_APP_SERVER_URL + '/item/update',
+      body
+    )
+  } catch (err) {
+    console.log(err.message)
+  }
+  const res3 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+  console.log(res3.data)
+}
+
+const sandbox = async () => {
+  item = {
+    name: 'itemDefaultTest',
+    type: '',
+    img: 'https://static.wikia.nocookie.net/espokemon/images/d/da/Caramelo_raro_%28Dream_World%29.png/revision/latest/scale-to-width-down/90?cb=20110130120819',
+  }
+  addItem(item)
+}
+
 module.exports = {
   addFamily,
   addItem,
@@ -222,4 +269,6 @@ module.exports = {
   addItemRange,
   isArmorWeight,
   parseItemType,
+  testAddProperty,
+  sandbox,
 }
