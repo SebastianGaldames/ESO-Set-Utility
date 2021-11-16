@@ -7,19 +7,19 @@
       <v-responsive class="overflow-y-auto" max-height="200">
         <v-row class="galery">
           <v-col v-for="n in glifos" :key="n" md="3">
-            <v-card v-ripple outlined @click="selectGlyph(glifo)">
+            <v-card v-ripple outlined @click="selectGlyph(n)">
               <img
                 class="img"
                 src="https://elderscrollsonline.wiki.fextralife.com/file/Elder-Scrolls-Online/glyph_of_health-eso-wiki-guide.png"
                 alt=""
               />
-              <h5 class="centro">{{ glifo.para }}</h5>
+              <h5 class="centro">{{ n.para }}</h5>
               <v-spacer />
               <hr class="linea" />
-              <h4 class="centro">{{ glifo.nombre }}</h4>
+              <h4 class="centro">{{ n.nombre }}</h4>
               <hr class="linea" />
               <v-spacer />
-              <h5 class="centro">{{ glifo.efecto }}</h5>
+              <h5 class="centro">{{ n.efecto }}</h5>
             </v-card>
           </v-col>
         </v-row>
@@ -31,9 +31,13 @@
 <script>
 export default {
   props: {
-    glifos: {
+    listaGlifos: {
       type: Array,
-      default: () => [],
+      default: () => [
+        { nombre: 'glifo1', para: 'armor', efecto: 'magia' },
+        { nombre: 'glifo2', para: 'armor', efecto: 'magia2' },
+        { nombre: 'glifo3', para: 'weapon', efecto: 'daño' },
+      ],
     },
     value: {
       type: Object,
@@ -44,6 +48,11 @@ export default {
   data() {
     return {
       selectedGlyph: this.value,
+      glifos: [
+        { nombre: 'glifo1', para: 'armor', efecto: 'magia' },
+        { nombre: 'glifo2', para: 'armor', efecto: 'magia2' },
+        { nombre: 'glifo3', para: 'weapon', efecto: 'daño' },
+      ],
     }
   },
   methods: {
