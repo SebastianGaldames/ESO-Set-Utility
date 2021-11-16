@@ -13,23 +13,36 @@
       <div>
         <v-row align="center">
           <v-col class="d-flex">
-            <v-select :items="items" label="filtro 1" solo></v-select>
-          </v-col>
-          <v-col class="d-flex">
-            <v-select :items="items" label="filtro 2" solo></v-select>
-          </v-col>
-          <v-col class="d-flex">
             <v-select
-              :items="items"
-              item-text="filtro"
-              label="filtro 3"
+              v-model="selectedUbi"
+              :items="ubicaciones"
+              label="Ubicacion"
               solo
+              @change="selected = true"
             ></v-select>
+          </v-col>
+          <v-col class="d-flex">
+            <v-select :items="estilo" label="Estilo" solo></v-select>
+          </v-col>
+          <v-col class="d-flex">
+            <v-select :items="tipo" label="Tipo" solo></v-select>
           </v-col>
         </v-row>
       </div>
+      <div>
+        <v-btn
+          v-if="(selected, selectedUbi !== '')"
+          elevation="2"
+          @click=";(selectedUbi = ''), (select = false)"
+          >{{ selectedUbi }}</v-btn
+        >
+      </div>
       <p>Familias</p>
-      <v-data-table :headers="columnas" :items="families" :search="search">
+      <v-data-table
+        :headers="columnas"
+        :items="computed_items"
+        :search="search"
+      >
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
@@ -61,8 +74,13 @@ export default {
   },
   data() {
     return {
-      items: ['filtro1', 'filtro2', 'filtro3', 'filtro4'],
+      selected: false,
+      ubicaciones: [],
+      estilo: [],
+      tipo: [],
       search: '',
+      selectedUbi: '',
+      auxNombre: '',
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
@@ -80,10 +98,41 @@ export default {
       ],
     }
   },
+  computed: {
+    computed_items() {
+      const filtroUbi = this.selectedUbi
+      const aux = this.auxNombre
+      return this.families.filter(function (item) {
+        let filtered = true
+        if (filtered) {
+          if (filtroUbi) {
+            filtered = item.nombre === aux
+            item.ubicacion.forEach((element) => {
+              filtered += element === filtroUbi
+            })
+          } else {
+            // cuando no hay filtros
+            filtered = item
+          }
+        }
+        return filtered
+      })
+    },
+  },
+  created() {
+    this.transformarUbis()
+  },
   methods: {
     familiaToJson(item) {
       const myJSON = JSON.stringify(item)
       return myJSON
+    },
+    transformarUbis() {
+      for (let i = 0; i < this.families.length; i++) {
+        for (let j = 0; j < this.families[i].ubicacion.length; j++) {
+          this.ubicaciones.push(this.families[i].ubicacion[j])
+        }
+      }
     },
   },
 }
