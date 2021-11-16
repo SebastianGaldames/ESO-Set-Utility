@@ -37,7 +37,8 @@ const query = async (req, res, next) => {
 //Metodo para obtener un usuario mediante nombre
 const queryNombre = async (req, res, next) => {
   try {
-    const reg = await models.Usuario.findOne({ usuario: req.body.usuario })
+    const reg = await models.Usuario.findOne({ usuario: req.query.usuario })
+    // console.log('req: ' + req.query)
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
