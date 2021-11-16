@@ -59,6 +59,7 @@
       ></v-text-field>
 
       <v-text-field
+        v-model="rePassword"
         :rules="[rules.required, rules.min, rules.equals]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
@@ -151,7 +152,7 @@ export default {
         this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
     },
     emailConfirmationRule() {
-      return () => this.email === this.ReEmail || 'Los email no coinciden'
+      return () => this.email === this.reEmail || 'Los email no coinciden'
     },
   },
   methods: {
@@ -164,7 +165,7 @@ export default {
       ) {
         alert('Datos faltantes')
       } else if (
-        this.email === this.ReEmail &&
+        this.email === this.reEmail &&
         this.password === this.rePassword &&
         this.usuario.length >= 8
       ) {
