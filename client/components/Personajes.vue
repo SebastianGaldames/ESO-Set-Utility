@@ -6,7 +6,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-bind="attrs"
-            color="acentuado1"
+            color="acentuado3"
             class="texto1--text"
             v-on="on"
           >

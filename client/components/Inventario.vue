@@ -6,7 +6,7 @@
           <div class="secundario--text">Lista de Items</div>
           <v-row justify="end"
             ><v-btn
-              class="agreBtn acentuado1 texto1--text"
+              class="agreBtn acentuado3 texto1--text"
               @click="dialogAgregar = true"
               >Agregar Item</v-btn
             ></v-row

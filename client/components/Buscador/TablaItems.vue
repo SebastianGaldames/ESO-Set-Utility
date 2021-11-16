@@ -1,16 +1,21 @@
 <template>
-  <div>
-    <v-card>
-      <v-card-title>
+  <div dark color="primario">
+    <v-card dark color="primario">
+      <v-card dark color="primario">
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
           hide-details
+          white
+          rounded
+          solo
+          class="pt-2"
         ></v-text-field>
-      </v-card-title>
-      <div>
+      </v-card>
+
+      <div dark color="primario" class="pt-2">
         <v-row align="center">
           <v-col class="d-flex">
             <v-select
@@ -59,11 +64,26 @@
               ></v-img>
             </div>
           </router-link>
+          <v-divider></v-divider>
         </template>
       </v-data-table>
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.centrar {
+  text-align: left;
+  padding-left: 50%;
+  background-color: dimgray;
+}
+.bordes {
+  border-width: 2px;
+  border-style: solid;
+  border-color: gold;
+}
+</style>
+
 <script>
 export default {
   props: {
