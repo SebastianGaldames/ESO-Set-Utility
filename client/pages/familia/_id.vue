@@ -84,12 +84,8 @@
     <div v-if="estanItems" class="w-100 primario">
       <v-row class="galery">
         <v-col v-for="item in items" :key="item.nombre" md="2">
-          <v-card
-            v-ripple
-            outlined
-            class="justify-center"
-          >
-            <div class="imagen">
+          <v-card v-ripple outlined class="justify-center">
+            <div class="imagen bordes">
               <v-img
                 :src="item.imagen"
                 :alt="item.nombre"
@@ -98,8 +94,6 @@
               />
               <h5 class="centro texto1--text">{{ item.nombre }}</h5>
             </div>
-        <v-col v-for="n in 20" :key="n" md="2" class="bordes">
-          <v-card v-ripple class="primario">
           </v-card>
         </v-col>
       </v-row>
@@ -196,7 +190,7 @@ export default {
   text-align: center;
 }
 .bordes {
-  border-width: 2px;
+  border-width: 1px;
   border-style: groove;
   border-color: gold;
 }

@@ -22,7 +22,7 @@
               v-model="selectedUbi"
               :items="ubicaciones"
               label="Ubicacion"
-              color = "primario"
+              color="primario"
               solo
               @change="selected = true"
             ></v-select>
