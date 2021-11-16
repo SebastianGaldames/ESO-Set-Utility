@@ -28,6 +28,9 @@ const addFamily = async (family, items) => {
   try {
     const body = {
       nombre: family.name,
+      tipo: family.type,
+      estilo: family.style,
+      dlc: family.dlcRequirement,
       ubicacion: family.location,
       bonos: [],
       imagen: family.imageUrl,
@@ -51,10 +54,15 @@ const addFamily = async (family, items) => {
 // Añade un item a la base de datos. Asume que no existe un duplicado
 const addItem = async (item) => {
   try {
+    const typeData = await parseItemType(item.type)
+
     const body = {
       nombre: item.name,
       imagen: item.img,
-      tipo: item.type,
+      tipo: typeData.tipo,
+      categoria: typeData.categoria,
+      peso: typeData.peso,
+      tipoArma: typeData.tipoArma,
     }
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/item/add',
@@ -97,9 +105,100 @@ const addItemRange = async (items) => {
   }
 }
 
+const parseItemType = async (itemType) => {
+  console.log('parseItemType running')
+  var typeTokens = itemType.split(' ')
+  var tipo = ''
+  var categoria = ''
+  var peso = ''
+  var tipoArma = ''
+
+  if (await isArmorWeight(typeTokens[0])) {
+    tipo = 'Armadura'
+    peso = typeTokens.shift() //Heavy, Medium, Light
+    categoria = typeTokens.join(' ') //Head, Shoulders, etc...
+  } else {
+    tipo = 'Arma'
+    if (typeTokens[0] === 'Off') {
+      categoria = typeTokens[0] + ' ' + typeTokens[1] //Off Hand
+      typeTokens.shift()
+      typeTokens.shift()
+    } else {
+      categoria = typeTokens.shift() //One-handed, Two-handed, ...
+    }
+    tipoArma = typeTokens.join(' ') // Shield, Sword, Lightning Staff ...
+  }
+
+  const typeData = {
+    tipo: tipo,
+    categoria: categoria,
+    peso: peso,
+    tipoArma: tipoArma,
+  }
+
+  return typeData
+}
+
+const isArmorWeight = async (string) => {
+  if (string === 'Heavy' || string === 'Medium' || string === 'Light') {
+    return true
+  } else {
+    return false
+  }
+}
+
+const testAddProperty = async () => {
+  const name = 'Breton Helm 3'
+  const res1 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const typeData = await parseItemType(res1.data.tipo)
+
+  try {
+    const body = {
+      _id: res1.data._id,
+      nombre: res1.data.nombre,
+      tipo: res1.data.tipo,
+      //categoria: typeData.categoria,
+      //infoTipo: typeData.infoTipo,
+      nivel: res1.data.nivel,
+      calidad: res1.data.calidad,
+      imagen: res1.data.imagen,
+    }
+    const res2 = await axios.post(
+      process.env.VUE_APP_SERVER_URL + '/item/update',
+      body
+    )
+  } catch (err) {
+    console.log(err.message)
+  }
+  const res3 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+  console.log(res3.data)
+}
+
+const sandbox = async () => {
+  item = {
+    name: 'itemDefaultTest',
+    type: '',
+    img: 'https://static.wikia.nocookie.net/espokemon/images/d/da/Caramelo_raro_%28Dream_World%29.png/revision/latest/scale-to-width-down/90?cb=20110130120819',
+  }
+  addItem(item)
+}
+
 module.exports = {
   addFamily,
   addItem,
   filterNewItems,
   addItemRange,
+  isArmorWeight,
+  parseItemType,
+  testAddProperty,
+  sandbox,
 }
