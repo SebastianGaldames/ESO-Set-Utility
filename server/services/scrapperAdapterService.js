@@ -28,6 +28,9 @@ const addFamily = async (family, items) => {
   try {
     const body = {
       nombre: family.name,
+      tipo: family.type,
+      estilo: family.style,
+      dlc: family.dlcRequirement,
       ubicacion: family.location,
       bonos: [],
       imagen: family.imageUrl,
@@ -51,10 +54,15 @@ const addFamily = async (family, items) => {
 // Añade un item a la base de datos. Asume que no existe un duplicado
 const addItem = async (item) => {
   try {
+    const typeData = await parseItemType(item.type)
+
     const body = {
       nombre: item.name,
       imagen: item.img,
-      tipo: item.type,
+      tipo: typeData.tipo,
+      categoria: typeData.categoria,
+      peso: typeData.peso,
+      tipoArma: typeData.tipoArma,
     }
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/item/add',
