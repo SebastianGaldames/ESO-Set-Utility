@@ -39,7 +39,7 @@
                   <v-row>
                     <v-col>
                       <v-img
-                        :src="imagenFamilia"
+                        :src="this.miFamilia.imagen"
                         height="64px"
                         width="64px"
                         class="test"
@@ -118,15 +118,17 @@ export default {
     }
   },
   created() {
-    this.JSONtoFamilia(this.$route.params.id)
     this.busq()
     this.setImagenF()
   },
   methods: {
-    JSONtoFamilia(miJson) {
-      this.miFamilia = JSON.parse(miJson)
-    },
     async busq() {
+      const get = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL +
+          '/Familia/query?_id=' +
+          this.$route.params.id
+      )
+      this.miFamilia = get
       for (let i = 0; i < this.miFamilia.itemsFamilia.length; i++) {
         const item = await this.$axios.get(
           process.env.VUE_APP_SERVER_URL +
