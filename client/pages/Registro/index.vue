@@ -70,7 +70,11 @@
         @click:append="show = !show"
       ></v-text-field>
 
-      <v-checkbox v-model="checkbox" class="secundario--text">
+      <v-checkbox
+        v-model="checkbox"
+        :rules="[rules.required]"
+        class="secundario--text"
+      >
         <template v-slot:label>
           Estoy de acuerdo con los términos y condiciones
         </template>
@@ -161,7 +165,8 @@ export default {
         this.usuario === '' ||
         this.email === '' ||
         this.pais === '' ||
-        this.password === ''
+        this.password === '' ||
+        this.checkbox === false
       ) {
         alert('Datos faltantes')
       } else if (

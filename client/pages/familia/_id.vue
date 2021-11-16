@@ -57,8 +57,8 @@
         <v-col class="mx-auto" md="6" sm="8" color="primario">
           <v-container>
             <v-row no-gutters>
-              <v-col>
-                <v-card dark outlined tile style="border: 2px solid #a68f7b">
+              <v-col class="bordes">
+                <v-card dark outlined tile>
                   <v-row class="galery">
                     <v-col md="4">
                       <h5 class="texto1--text">"obtención"</h5>
@@ -115,8 +115,8 @@
     <v-spacer />
     <div class="w-100 primario">
       <v-row class="galery">
-        <v-col v-for="n in 20" :key="n" md="2">
-          <v-card v-ripple dark style="border: 2px solid #a68f7b" outlined>
+        <v-col v-for="n in 20" :key="n" md="2" class="bordes">
+          <v-card v-ripple class="primario">
             <img
               class="test"
               src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
@@ -157,12 +157,9 @@
 .centro {
   text-align: center;
 }
-.borde {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
-}
-.primario {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
+.bordes {
+  border-width: 2px;
+  border-style: groove;
+  border-color: gold;
 }
 </style>
