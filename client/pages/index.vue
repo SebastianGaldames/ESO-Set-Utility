@@ -9,9 +9,7 @@
           reverse-transition="fade-transition"
           transition="fade-transition"
         >
-          <v-row class="fill-height title" align="center" justify="center">
-          </v-row
-        ></v-carousel-item>
+        </v-carousel-item>
       </v-carousel>
     </v-container>
   </v-main>
@@ -24,7 +22,7 @@ h1 {
 }
 .centrado {
   width: 60%;
-  height: auto;
+  height: fit-content;
 }
 </style>
 <script>

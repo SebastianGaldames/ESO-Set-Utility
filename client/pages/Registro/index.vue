@@ -24,7 +24,7 @@
 
       <v-text-field
         v-model="usuario"
-        :rules="[rules.required]"
+        :rules="[rules.required, rules.usermin]"
         label="Ingresa tu usuario"
         clearable
         class="secundario--text"
@@ -51,7 +51,7 @@
         :rules="[rules.required, rules.min]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
-        label="Contraseña ingresada con éxito"
+        label="Ingresa contraseña"
         hint="Debe tener al menos 8 caracteres"
         value="wqfasds"
         class="input-group--focused secundario--text"
@@ -59,6 +59,7 @@
       ></v-text-field>
 
       <v-text-field
+        v-model="rePassword"
         :rules="[rules.required, rules.min, rules.equals]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
@@ -69,7 +70,11 @@
         @click:append="show = !show"
       ></v-text-field>
 
-      <v-checkbox v-model="checkbox" class="secundario--text">
+      <v-checkbox
+        v-model="checkbox"
+        :rules="[rules.required]"
+        class="secundario--text"
+      >
         <template v-slot:label>
           Estoy de acuerdo con los términos y condiciones
         </template>
@@ -135,6 +140,8 @@ export default {
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
         equals: (v) => v === this.password || 'Las contraseñas no coinciden',
+        usermin: () =>
+          this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
       emailrules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -149,36 +156,52 @@ export default {
         this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
     },
     emailConfirmationRule() {
-      return () => this.email === this.ReEmail || 'Los email no coinciden'
+      return () => this.email === this.reEmail || 'Los email no coinciden'
     },
   },
   methods: {
     registroNuevoUsuario() {
-      this.user = new Usuario(
-        this.usuario,
-        this.email,
-        this.pais,
-        this.password,
-        this.sexo,
-        this.personajes,
-        this.inventario
-      )
-      axios
-        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
-          usuario: this.user.usuario,
-          email: this.user.email,
-          pais: this.user.pais,
-          password: this.user.password,
-          sexo: this.user.sexo,
-          personajes: this.personajes,
-          inventario: this.inventario,
-        })
-        .then((respuesta) => {
-          return respuesta.data
-        })
-        .then((data) => {
-          this.$router.push('/')
-        })
+      if (
+        this.usuario === '' ||
+        this.email === '' ||
+        this.pais === '' ||
+        this.password === '' ||
+        this.checkbox === false
+      ) {
+        alert('Datos faltantes')
+      } else if (
+        this.email === this.reEmail &&
+        this.password === this.rePassword &&
+        this.usuario.length >= 8
+      ) {
+        this.user = new Usuario(
+          this.usuario,
+          this.email,
+          this.pais,
+          this.password,
+          this.sexo,
+          this.personajes,
+          this.inventario
+        )
+        axios
+          .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
+            usuario: this.user.usuario,
+            email: this.user.email,
+            pais: this.user.pais,
+            password: this.user.password,
+            sexo: this.user.sexo,
+            personajes: this.personajes,
+            inventario: this.inventario,
+          })
+          .then((respuesta) => {
+            return respuesta.data
+          })
+          .then((data) => {
+            this.$router.push('/')
+          })
+      } else {
+        alert('Los datos no son iguales o son incorrectos')
+      }
     },
   },
 }

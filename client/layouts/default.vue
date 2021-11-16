@@ -1,12 +1,13 @@
 <template>
   <div>
-    <v-app>
-      <div>
+    <v-app class="page-container">
+      <div class="content-wrap">
         <NavbarIS> </NavbarIS>
         <Navbar> </Navbar>
+        <PiePag class="footer" solo></PiePag>
       </div>
+
       <Nuxt />
-      <PiePag></PiePag>
     </v-app>
   </div>
 </template>
@@ -66,5 +67,18 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+.footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  height: 0rem;
+}
+.content-wrap {
+  padding-bottom: 0rem;
+}
+.page-container {
+  position: relative;
+  min-height: 100vh;
 }
 </style>
