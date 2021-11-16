@@ -1,22 +1,40 @@
 <template>
-  <div>
-    <v-card>
-      <v-card-title>
+  <div dark color="primario">
+    <v-card dark color="primario">
+      <v-card dark color="primario">
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
           label="Buscar familia"
           single-line
           hide-details
+          white
+          rounded
+          solo
+          class="pt-2"
         ></v-text-field>
-      </v-card-title>
-      <div>
+      </v-card>
+
+      <div dark color="primario" class="pt-2">
         <v-row align="center">
           <v-col class="d-flex">
-            <v-select :items="items" label="filtro 1" solo></v-select>
+            <v-select
+              dark
+              color="primario"
+              :items="items"
+              item-color="primario"
+              label="filtro 1"
+              solo
+            ></v-select>
           </v-col>
           <v-col class="d-flex">
-            <v-select :items="items" label="filtro 2" solo></v-select>
+            <v-select
+              :items="items"
+              label="filtro 2"
+              solo
+              dark
+              color="primario"
+            ></v-select>
           </v-col>
           <v-col class="d-flex">
             <v-select
@@ -24,12 +42,20 @@
               item-text="filtro"
               label="filtro 3"
               solo
+              dark
+              color="primario"
             ></v-select>
           </v-col>
         </v-row>
       </div>
-      <p>families</p>
-      <v-data-table :headers="columnas" :items="families" :search="search">
+
+      <v-data-table
+        :headers="columnas"
+        :items="families"
+        :search="search"
+        color="primario"
+        dark
+      >
         <template v-slot:item.imagen="{ item }">
           <router-link
             :to="{
@@ -46,11 +72,26 @@
               ></v-img>
             </div>
           </router-link>
+          <v-divider></v-divider>
         </template>
       </v-data-table>
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.centrar {
+  text-align: left;
+  padding-left: 50%;
+  background-color: dimgray;
+}
+.bordes {
+  border-width: 2px;
+  border-style: solid;
+  border-color: gold;
+}
+</style>
+
 <script>
 export default {
   props: {
@@ -66,11 +107,14 @@ export default {
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
         {
-          sortable: false,
+          text: 'Familias',
+          sortable: true,
           value: 'nombre',
           width: '30%',
         },
-        { sortable: false, value: 'calories' },
+        { text: 'Tipo', value: 'tipo', sortable: true },
+        { text: 'Estilo', value: 'estilo', sortable: true },
+        { text: 'Localizacion', value: 'localizacion', sortable: true },
       ],
       familias: [
         {
