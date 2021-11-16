@@ -1,4 +1,3 @@
-<!-- Page Personajes -->
 <template>
   <div>
     Page Personajes
@@ -26,39 +25,11 @@ export default {
     )
     return { items: itemsResponse, familias: familiasResponse }
   },
-
-    const personajesResponse = await $axios.$get(
-      process.env.VUE_APP_SERVER_URL + '/Personaje/list'
-    )
-
-    const itemsResponse = await $axios.$get(
-      process.env.VUE_APP_SERVER_URL + '/Item/list'
-    )
-
-    const inventarioResponse = inventarioTest
-
-    const familiasResponse = await $axios.$get(
-      process.env.VUE_APP_SERVER_URL + '/Familia/list'
-    )
-
-    const glyphsResponse = glyphsTest
-
-    const traitsResponse = traitsTest
-
-    return {
-      personajes: personajesResponse,
-      items: itemsResponse,
-      inventario: inventarioResponse,
-      familias: familiasResponse,
-      glyphs: glyphsResponse,
-      traits: traitsResponse,
-    }
-  },
   data() {
     return {
       personajes: [],
       items: [],
-      inventario: [],
+      itemsInventario: [],
       familias: [],
       glyphs: [],
       traits: [],
