@@ -6,20 +6,20 @@
     <div class="w-100 mx-auto">
       <v-responsive class="overflow-y-auto" max-height="200">
         <v-row class="galery">
-          <v-col v-for="n in 38" :key="n" md="3">
-            <v-card v-ripple outlined>
+          <v-col v-for="n in glifos" :key="n" md="3">
+            <v-card v-ripple outlined @click="selectGlyph(glifo)">
               <img
                 class="img"
                 src="https://elderscrollsonline.wiki.fextralife.com/file/Elder-Scrolls-Online/glyph_of_health-eso-wiki-guide.png"
                 alt=""
               />
-              <h5 class="centro">armadura</h5>
+              <h5 class="centro">{{ glifo.para }}</h5>
               <v-spacer />
               <hr class="linea" />
-              <h4 class="centro">Glyph of Magicka</h4>
+              <h4 class="centro">{{ glifo.nombre }}</h4>
               <hr class="linea" />
               <v-spacer />
-              <h5 class="centro">aumenta en X la magia</h5>
+              <h5 class="centro">{{ glifo.efecto }}</h5>
             </v-card>
           </v-col>
         </v-row>
@@ -27,6 +27,34 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  props: {
+    glifos: {
+      type: Array,
+      default: () => [],
+    },
+    value: {
+      type: Object,
+      default: () => {},
+      required: true,
+    },
+  },
+  data() {
+    return {
+      selectedGlyph: this.value,
+    }
+  },
+  methods: {
+    // selecciona y envia el glifo, para despues usarlo
+    selectGlyph(glifo) {
+      console.log(this.glifo)
+      this.$emit('input', this.value)
+    },
+  },
+}
+</script>
 
 <style>
 .w-100 {
