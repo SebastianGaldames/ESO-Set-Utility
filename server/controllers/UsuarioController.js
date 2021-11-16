@@ -38,7 +38,6 @@ const query = async (req, res, next) => {
 const queryNombre = async (req, res, next) => {
   try {
     const reg = await models.Usuario.findOne({ usuario: req.body.usuario })
-    console.log('req: ' + req.body.usuario)
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
