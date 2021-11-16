@@ -64,7 +64,6 @@
               ></v-img>
             </div>
           </router-link>
-          <v-divider></v-divider>
         </template>
       </v-data-table>
     </v-card>
