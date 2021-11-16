@@ -8,10 +8,14 @@ const bonoSchema = new Schema({
 
 const familiaSchema = new Schema({
   nombre: { type: String, required: true },
-  hash: { type: String, unique: true },
+  //hash: { type: String, unique: true },
+  tipo: { type: String },
+  estilo: { type: String },
+  dlc: { type: String },
   ubicacion: { type: [String], required: true },
   itemsFamilia: { type: [Schema.ObjectId], ref: 'Item' },
   bonos: { type: [bonoSchema], required: true },
+  imagen: { type: String, default: 'no-asignado' },
 })
 
 module.exports = model('Familia', familiaSchema)
