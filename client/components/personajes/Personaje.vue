@@ -7,7 +7,9 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 7" :key="n" md="3">
-              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
+              <v-card outlined height="80px" width="62px"
+                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
+              ></v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -17,7 +19,9 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 3" :key="n" md="3">
-              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
+              <v-card outlined height="80px" width="62px"
+                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
+              ></v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -27,7 +31,9 @@
         <v-container>
           <v-row align="center" justify="center">
             <v-col v-for="n in 3" :key="n" md="3">
-              <itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot>
+              <v-card outlined height="80px" width="62px" dark
+                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
+              ></v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -35,6 +41,8 @@
     </v-item-group>
   </div>
 </template>
+
+<style></style>
 
 <script>
 import itemSlot from '~/components/personajes/Slot.vue'
@@ -47,6 +55,10 @@ export default {
     inventario: {
       type: Array,
       default: () => [],
+    },
+    value: {
+      type: Object,
+      default: () => {},
     },
     /*
     equipamiento: {

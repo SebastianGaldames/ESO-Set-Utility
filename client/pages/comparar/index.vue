@@ -1,10 +1,10 @@
 <template>
-  <div class="primario" style="height: 100%">
+  <div style="height: 100%" class="primario">
     <div style="margin: 20px">
       <v-item-group>
         <v-row>
-          <v-item class="primario" style="overflow: hidden">
-            <v-card width="30%">
+          <v-item dark style="overflow: hidden">
+            <v-card dark width="30%">
               <v-autocomplete
                 :items="personajes"
                 placeholder="Selecciona un personaje"
@@ -15,11 +15,11 @@
               <personaje class="bordes"></personaje>
             </v-card>
           </v-item>
-          <v-item class="primario">
+          <v-item dark>
             <v-card class="secundario--text" width="40%">stats</v-card>
           </v-item>
-          <v-item class="primario">
-            <v-card width="30%">
+          <v-item dark>
+            <v-card dark width="30%">
               <v-autocomplete
                 :items="personajes"
                 placeholder="Selecciona un personaje de referencia"
