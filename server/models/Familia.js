@@ -12,6 +12,7 @@ const familiaSchema = new Schema({
   ubicacion: { type: [String], required: true },
   itemsFamilia: { type: [Schema.ObjectId], ref: 'Item' },
   bonos: { type: [bonoSchema], required: true },
+  imagen: { type: String, default: 'no-asignado' },
 })
 
 module.exports = model('Familia', familiaSchema)

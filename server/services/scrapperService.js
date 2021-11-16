@@ -39,6 +39,7 @@ const scrapAllSets = async (setUrls) => {
 }
 
 const scrapSet = async (setUrl) => {
+  console.log('scrapping: ' + setUrl)
   const html = await getHtmlFromSetUrl(setUrl) // test url to save time
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
@@ -57,9 +58,20 @@ const scrapSet = async (setUrl) => {
   const imgURL = setBonusPanel.querySelector('picture img')
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
 
-  const itemsScrapped = await getItemsFromSet(dataItemsPanel)
-  setData.items = itemsScrapped
-  scrapperAdapter.addFamily(setData) //DESCOMENTAR AL TERMINAR PRUEBAS
+  const noTypeItems = await getItemNoTypeList(dataItemsPanel)
+  console.log('items no type:')
+  noTypeItems.forEach((item) => {
+    console.log(item.name)
+  })
+  const itemsToScrapType = await scrapperAdapter.filterNewItems(noTypeItems)
+  console.log('items to scrap:')
+  itemsToScrapType.forEach((item) => {
+    console.log(item.name)
+  })
+  const itemsToAdd = await getTypeItem(itemsToScrapType)
+  scrapperAdapter.addItemRange(itemsToAdd)
+  scrapperAdapter.addFamily(setData, noTypeItems)
+
   return setData
 }
 
@@ -68,6 +80,42 @@ const getHtmlFromSetUrl = async (setUrl) => {
   return response.data
 }
 
+const getItemNoTypeList = async (setDomData) => {
+  const linksScrapped = [
+    ...setDomData.querySelectorAll(
+      'a[href*="https://eso-hub.com/en/fashion-outfits"]'
+    ),
+  ]
+  const links = []
+
+  for (const linkNode of linksScrapped) {
+    const itemName = linkNode.querySelector('picture img').getAttribute('title')
+    const itemImg = linkNode
+      .querySelector('picture source[type*="image/png"]')
+      .getAttribute('srcset')
+    //const itemType = await scrapItemType(linkNode.href)
+    const item = {
+      name: itemName,
+      img: 'https://eso-hub.com' + itemImg,
+      url: linkNode.href,
+      type: '',
+    }
+    links.push(item)
+  }
+
+  return links
+}
+
+//completa la property type para cada item in items y retorna la misma lista
+const getTypeItem = async (items) => {
+  for (const item of items) {
+    const itemType = await scrapItemType(item.url)
+    item.type = itemType
+  }
+  return items
+}
+
+//DEPRECATED
 const getItemsFromSet = async (setDomData) => {
   const linksScrapped = [
     ...setDomData.querySelectorAll(
@@ -109,6 +157,8 @@ function scrapSetMeta(data, set) {
   const scrapped = {
     name: '',
     type: '',
+    style: '',
+    dlcRequirement: '',
     imageUrl: '',
     location: [],
     setBonus: [],
@@ -120,6 +170,12 @@ function scrapSetMeta(data, set) {
     }
     if (str.textContent.includes('Type')) {
       scrapped.type = str.nextSibling.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('Style')) {
+      scrapped.style = str.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('DLC')) {
+      scrapped.dlcRequirement = str.nextSibling.nextSibling.textContent.trim()
     }
     if (str.textContent === 'Location:') {
       const locationSelection = set.querySelector('ul') //first list
