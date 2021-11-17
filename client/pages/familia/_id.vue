@@ -10,7 +10,7 @@
               <h1>Set: {{ miFamilia.nombre }}</h1>
             </div>
             <div class="ubicacion">
-              <h3>Localización:</h3>
+              <h3>Ubicación:</h3>
               <div
                 v-for="ubicacion in miFamilia.ubicacion"
                 :key="ubicacion"
@@ -18,6 +18,18 @@
               >
                 <p class="secundario--text">• {{ ubicacion }}</p>
               </div>
+            </div>
+            <div v-if="miFamilia.estilo !== ''">
+              <h3>Estilo:</h3>
+              <p class="secundario--text">• {{ miFamilia.estilo }}</p>
+            </div>
+            <div v-if="miFamilia.tipo !== ''">
+              <h3>Tipo:</h3>
+              <p class="secundario--text">• {{ miFamilia.tipo }}</p>
+            </div>
+            <div v-if="miFamilia.dlc !== ''">
+              <h3>DLC:</h3>
+              <p class="secundario--text">• {{ miFamilia.dlc }}</p>
             </div>
           </v-container>
         </v-col>
