@@ -1,10 +1,8 @@
 <template>
   <div class="d-flex">
     <div style="width: 70%">
-      Page Personajes
       <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
       </seleccion-personaje>
-      {{ selectedPersonaje }}
       <v-tabs>
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
