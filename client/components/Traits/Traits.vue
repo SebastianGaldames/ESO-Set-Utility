@@ -39,17 +39,29 @@ export default {
           calidades: [{ legendary: '877' }, { legendary2h: '' }],
         },
       ],
+      listaAux: [],
     }
   },
+  mounted() {
+    this.listaAux = this.listaTrait
+  },
 
-  //  methods: {
-  // async CargaDatosServidor() {
-  //      await this.$axios
-  //        .get(process.env.VUE_APP_SERVER_URL)
-  //        .then(function (response) {
-  //          this.listaTraits.push(response.data)
-  //        })
-  //    },
-  //  },
+  methods: {
+    // async CargaDatosServidor() {
+    //      await this.$axios
+    //        .get(process.env.VUE_APP_SERVER_URL)
+    //        .then(function (response) {
+    //          this.listaTraits.push(response.data)
+    //        })
+    //    },
+    //   mostrarListaJewelry() {
+    //     this.listaTraits.length = 0
+    //   this.listaAux.forEach((element) => {
+    //   if (element.to === 'jewelry') {
+    //        this.listaTraits.push(element)
+    //      }
+    //    })
+    //   },
+  },
 }
 </script>
