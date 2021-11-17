@@ -38,13 +38,11 @@ export default {
     }
   },
   mounted() {
-    this.makeDummyData()
-    this.selectedPersonaje = this.personajes[0]
+    // this.makeDummyData()
+    // this.selectedPersonaje = this.personajes[0]
   },
   beforeMount() {
     const storeUser = this.$store.state.usuario
-    console.log('store: ' + storeUser)
-    console.log(this.currentUser)
     this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
@@ -53,17 +51,11 @@ export default {
       const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
       const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
       this.personajes.push(p1, p2, p3)
-      // const item1 = { nombre: 'item1', tipo: 'two handed back scratcher' }
-      // const item2 = { nombre: 'item2', tipo: 'light socks' }
-      // const item3 = { nombre: 'item3', tipo: 'heavy eyelashes' }
-      // const item4 = { nombre: 'item4', tipo: 'weed pipe' }
-      // this.items.push(item1, item2, item3, item4)
     },
     async fetchUsers() {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/list'
       )
-      console.log(user)
       this.currentUser = user[0]
     },
     async fetchUser(userName) {
@@ -71,7 +63,17 @@ export default {
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
         { params: { usuario: userName } }
       )
-      console.log(user)
+      await this.fetchPersonajes(user.personajes)
+      this.selectedPersonaje = this.personajes[0]
+    },
+    async fetchPersonajes(idsArray) {
+      for (const id of idsArray) {
+        const pj = await this.$axios.$get(
+          process.env.VUE_APP_SERVER_URL + '/Personaje/query',
+          { params: { _id: id } }
+        )
+        this.personajes.push(pj)
+      }
     },
   },
 }
