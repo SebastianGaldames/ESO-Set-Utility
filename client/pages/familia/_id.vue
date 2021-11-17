@@ -10,7 +10,7 @@
               <h1>Set: {{ miFamilia.nombre }}</h1>
             </div>
             <div class="ubicacion">
-              <h3>Localización:</h3>
+              <h3>Ubicación:</h3>
               <div
                 v-for="ubicacion in miFamilia.ubicacion"
                 :key="ubicacion"
@@ -19,13 +19,25 @@
                 <p class="secundario--text">• {{ ubicacion }}</p>
               </div>
             </div>
+            <div v-if="miFamilia.estilo !== ''">
+              <h3>Estilo:</h3>
+              <p class="secundario--text">• {{ miFamilia.estilo }}</p>
+            </div>
+            <div v-if="miFamilia.tipo !== ''">
+              <h3>Tipo:</h3>
+              <p class="secundario--text">• {{ miFamilia.tipo }}</p>
+            </div>
+            <div v-if="miFamilia.dlc !== ''">
+              <h3>DLC:</h3>
+              <p class="secundario--text">• {{ miFamilia.dlc }}</p>
+            </div>
           </v-container>
         </v-col>
         <v-col class="mx-auto" md="6" sm="8" color="primario">
           <div>
             <v-row no-gutters>
-              <v-col>
-                <v-card dark outlined tile style="border: 2px solid #a68f7b">
+              <v-col class="bordes">
+                <v-card dark outlined tile>
                   <v-row class="galery">
                     <v-col md="4">
                       <h5 class="texto1--text">"obtención"</h5>
@@ -84,14 +96,8 @@
     <div v-if="estanItems" class="w-100 primario">
       <v-row class="galery">
         <v-col v-for="item in items" :key="item.nombre" md="2">
-          <v-card
-            v-ripple
-            dark
-            style="border: 2px solid #a68f7b"
-            outlined
-            class="justify-center"
-          >
-            <div class="imagen">
+          <v-card v-ripple outlined class="justify-center">
+            <div class="imagen bordes">
               <v-img
                 :src="item.imagen"
                 :alt="item.nombre"
@@ -195,13 +201,10 @@ export default {
 .centro {
   text-align: center;
 }
-.borde {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
-}
-.primario {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
+.bordes {
+  border-width: 1px;
+  border-style: groove;
+  border-color: gold;
 }
 .nombreUbi {
   display: flex;
