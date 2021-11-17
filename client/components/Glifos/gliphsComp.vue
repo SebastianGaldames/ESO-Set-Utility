@@ -13,13 +13,13 @@
                 src="https://elderscrollsonline.wiki.fextralife.com/file/Elder-Scrolls-Online/glyph_of_health-eso-wiki-guide.png"
                 alt=""
               />
-              <h5 class="centro">{{ n.para }}</h5>
+              <h5 class="centro">{{ n.Para }}</h5>
               <v-spacer />
               <hr class="linea" />
-              <h4 class="centro">{{ n.nombre }}</h4>
+              <h4 class="centro">{{ n.Nombre }}</h4>
               <hr class="linea" />
               <v-spacer />
-              <h5 class="centro">{{ n.efecto }}</h5>
+              <h5 class="centro">{{ n.Efecto }}</h5>
             </v-card>
           </v-col>
         </v-row>
@@ -33,11 +33,7 @@ export default {
   props: {
     listaGlifos: {
       type: Array,
-      default: () => [
-        { nombre: 'glifo1', para: 'armor', efecto: 'magia' },
-        { nombre: 'glifo2', para: 'armor', efecto: 'magia2' },
-        { nombre: 'glifo3', para: 'weapon', efecto: 'daño' },
-      ],
+      default: () => [],
     },
     value: {
       type: Object,
@@ -48,11 +44,7 @@ export default {
   data() {
     return {
       selectedGlyph: this.value,
-      glifos: [
-        { nombre: 'glifo1', para: 'armor', efecto: 'magia' },
-        { nombre: 'glifo2', para: 'armor', efecto: 'magia2' },
-        { nombre: 'glifo3', para: 'weapon', efecto: 'daño' },
-      ],
+      glifos: this.listaGlifos,
     }
   },
   methods: {
