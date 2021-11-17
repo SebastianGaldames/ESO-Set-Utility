@@ -5,14 +5,15 @@
         <v-row>
           <v-item dark style="overflow: hidden">
             <v-card dark width="30%">
-              <v-autocomplete
-                :items="personajes"
-                placeholder="Selecciona un personaje"
-                outlined
-                background-color="acentuado2"
-                color="acentuado1"
-              ></v-autocomplete>
-              <personaje class="bordes"></personaje>
+              <seleccion-personaje
+                v-model="selectedPersonaje"
+                :personajes="personajes"
+              >
+              </seleccion-personaje>
+              <personaje
+                :nombre="selectedPersonaje.nombre"
+                class="bordes"
+              ></personaje>
             </v-card>
           </v-item>
           <v-item dark>
@@ -20,14 +21,15 @@
           </v-item>
           <v-item dark>
             <v-card dark width="30%">
-              <v-autocomplete
-                :items="personajes"
-                placeholder="Selecciona un personaje de referencia"
-                outlined
-                background-color="acentuado2"
-                color="acentuado1"
-              ></v-autocomplete>
-              <personaje class="bordes"></personaje>
+              <seleccion-personaje
+                v-model="selectedPersonajeRef"
+                :personajes="personajes"
+              >
+              </seleccion-personaje>
+              <personaje
+                :nombre="selectedPersonajeRef.nombre"
+                class="bordes"
+              ></personaje>
             </v-card>
           </v-item>
         </v-row>
@@ -45,12 +47,28 @@
 </style>
 <script>
 import Personaje from '~/components/personajes/Personaje.vue'
+import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 export default {
-  components: { Personaje },
+  components: { SeleccionPersonaje, Personaje },
   data() {
     return {
-      personajes: ['Pepe', 'Jaime', 'Manuel'],
+      personajes: [],
+      selectedPersonaje: {},
+      selectedPersonajeRef: {},
     }
+  },
+  mounted() {
+    this.makeDummyData()
+    this.selectedPersonaje = this.personajes[0]
+    this.selectedPersonajeRef = this.personajes[1]
+  },
+  methods: {
+    makeDummyData() {
+      const p1 = { nombre: 'juanin' }
+      const p2 = { nombre: 'tulio' }
+      const p3 = { nombre: 'calcetin con rombosman' }
+      this.personajes.push(p1, p2, p3)
+    },
   },
 }
 </script>

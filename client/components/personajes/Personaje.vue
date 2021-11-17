@@ -60,6 +60,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    nombre: {
+      type: String,
+      default: '',
+    },
     /*
     equipamiento: {
       type: Array,
@@ -77,7 +81,6 @@ export default {
   data() {
     return {
       // Datos de prueba
-      nombre: 'Pepe',
       item: {
         imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
       },
