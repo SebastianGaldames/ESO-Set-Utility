@@ -16,13 +16,12 @@ import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 export default {
   components: { SeleccionPersonaje, PersonajeInventario },
-  // components: { componente1... },
-  async asyncData({ $axios }) {
+  async asyncData({ store, $axios }) {
     const itemsResponse = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Item/list'
     )
     const familiasResponse = await $axios.$get(
-      process.env.VUE_APP_SERVER_URL + '/Item/list'
+      process.env.VUE_APP_SERVER_URL + '/Familia/list'
     )
     return { items: itemsResponse, familias: familiasResponse }
   },
@@ -35,11 +34,18 @@ export default {
       glyphs: [],
       traits: [],
       selectedPersonaje: {},
+      currentUser: {},
     }
   },
   mounted() {
     this.makeDummyData()
     this.selectedPersonaje = this.personajes[0]
+  },
+  beforeMount() {
+    const storeUser = this.$store.state.usuario
+    console.log('store: ' + storeUser)
+    console.log(this.currentUser)
+    this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
     makeDummyData() {
@@ -52,6 +58,20 @@ export default {
       // const item3 = { nombre: 'item3', tipo: 'heavy eyelashes' }
       // const item4 = { nombre: 'item4', tipo: 'weed pipe' }
       // this.items.push(item1, item2, item3, item4)
+    },
+    async fetchUsers() {
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/list'
+      )
+      console.log(user)
+      this.currentUser = user[0]
+    },
+    async fetchUser(userName) {
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: userName } }
+      )
+      console.log(user)
     },
   },
 }
