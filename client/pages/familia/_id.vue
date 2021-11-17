@@ -19,6 +19,18 @@
                 <p class="secundario--text">• {{ ubicacion }}</p>
               </div>
             </div>
+            <div v-if="miFamilia.estilo !== ''">
+              <h3>Estilo:</h3>
+              <p class="secundario--text">• {{ miFamilia.estilo }}</p>
+            </div>
+            <div v-if="miFamilia.tipo !== ''">
+              <h3>Tipo:</h3>
+              <p class="secundario--text">• {{ miFamilia.tipo }}</p>
+            </div>
+            <div v-if="miFamilia.dlc !== ''">
+              <h3>DLC:</h3>
+              <p class="secundario--text">• {{ miFamilia.dlc }}</p>
+            </div>
           </v-container>
         </v-col>
         <v-col class="mx-auto" md="6" sm="8" color="primario">
