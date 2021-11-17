@@ -23,18 +23,11 @@
         <v-btn text> Familias </v-btn></NuxtLink
       >
       <NuxtLink
-        to="/"
+        to="/personajes"
         style="text-decoration: none; color: inherit"
         class="pt-5"
       >
         <v-btn text> Personajes </v-btn></NuxtLink
-      >
-      <NuxtLink
-        to="/"
-        style="text-decoration: none; color: inherit"
-        class="pt-5"
-      >
-        <v-btn text> Items </v-btn></NuxtLink
       >
     </v-row>
   </v-toolbar>

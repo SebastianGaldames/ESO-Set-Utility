@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-2">
+  <div>
     <v-card outlined>
       <v-img contain :src="item.imagen" height="54px" />
       <v-card-title class="justify-center"> {{ item.nombre }}</v-card-title>
