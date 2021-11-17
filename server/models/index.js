@@ -5,4 +5,4 @@ const Personaje = require('./Personaje')
 const Glyph = require('./Glyph')
 const Trait = require('./Trait')
 
-module.exports = { Item, Usuario, Familia, Personaje, Glyph, Trait }
+module.exports = { Item, Usuario, Familia, Personaje, Glyph, Glifo, Trait }
