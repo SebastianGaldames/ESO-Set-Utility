@@ -18,14 +18,26 @@
         clearable
       ></v-combobox>
     </div>
-
-    {{ items[0] }} <br />
-    {{ categoriaFilterValue }}
-    <div class="d-flex align-content-start flex-wrap">
-      <div v-for="item in filteredItems" :key="item.nombre" flat>
-        <item-box :item="item"></item-box>
-      </div>
-    </div>
+    selecteditem: {{ selectedItem }}
+    <v-item-group v-model="selectedItem">
+      <v-container fluid>
+        <v-row no-gutters>
+          <v-col
+            v-for="item in filteredItems"
+            :key="item.nombre"
+            cols="12"
+            md="3"
+            no-gutters
+          >
+            <v-item v-slot="{ toggle }" class="ma-1" :value="item">
+              <v-card @click="toggle">
+                <item-box :item="item"></item-box>
+              </v-card>
+            </v-item>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-item-group>
   </div>
 </template>
 <script>
