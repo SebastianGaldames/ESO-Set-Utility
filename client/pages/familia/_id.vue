@@ -10,7 +10,7 @@
               <h1>Set: {{ miFamilia.nombre }}</h1>
             </div>
             <div class="ubicacion">
-              <h3>Localización:</h3>
+              <h3>Ubicación:</h3>
               <div
                 v-for="ubicacion in miFamilia.ubicacion"
                 :key="ubicacion"
