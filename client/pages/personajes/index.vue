@@ -45,14 +45,14 @@ export default {
       process.env.VUE_APP_SERVER_URL + '/Familia/list'
     )
 
-    // const glifosResponse = await $axios.$get(
-    //   process.env.VUE_APP_SERVER_URL + '/Glifo/list'
-    // )
+    const glifosResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Glyph/list'
+    )
 
     return {
       items: itemsResponse,
       familias: familiasResponse,
-      glyphs: [],
+      glyphs: glifosResponse,
     }
   },
   data() {
