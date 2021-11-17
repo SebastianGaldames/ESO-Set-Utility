@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 
 router.post('/add', UsuarioController.add)
 router.get('/query', UsuarioController.query)
+router.get('/querynombre', UsuarioController.queryNombre)
 router.get('/list', UsuarioController.list)
 router.put('/update', UsuarioController.update)
 router.post('/login', UsuarioController.login)
