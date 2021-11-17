@@ -29,11 +29,15 @@
             md="3"
             no-gutters
           >
-            <v-item v-slot="{ toggle }" class="ma-1" :value="item">
-              <v-card @click="toggle">
-                <item-box :item="item"></item-box>
-              </v-card>
-            </v-item>
+            <v-sheet min-height="100" class="fill-height" color="transparent">
+              <v-lazy>
+                <v-item v-slot="{ toggle }" class="ma-1" :value="item">
+                  <v-card @click="toggle">
+                    <item-box :item="item"></item-box>
+                  </v-card>
+                </v-item>
+              </v-lazy>
+            </v-sheet>
           </v-col>
         </v-row>
       </v-container>
