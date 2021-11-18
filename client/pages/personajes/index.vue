@@ -1,21 +1,40 @@
 <template>
-  <div>
-    Page Personajes
-    <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
-    </seleccion-personaje>
-    {{ selectedPersonaje }}
-    <personaje-inventario
-      :familias="familias"
-      :items="items"
-    ></personaje-inventario>
+  <div class="d-flex">
+    <div style="width: 70%">
+      <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
+      </seleccion-personaje>
+      <v-tabs>
+        <v-tab key="items"> items </v-tab>
+        <v-tab-item key="items">
+          <personaje-inventario
+            :familias="familias"
+            :items="items"
+          ></personaje-inventario
+        ></v-tab-item>
+        <v-tab key="glifos"> glifos </v-tab>
+        <v-tab-item key="glifos">
+          <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
+        ></v-tab-item>
+      </v-tabs>
+    </div>
+    <div style="width: 30%">
+      <personaje :nombre="selectedPersonaje.nombre"></personaje>
+    </div>
   </div>
 </template>
 
 <script>
 import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue'
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
+import Personaje from '~/components/personajes/Personaje.vue'
+import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 export default {
-  components: { SeleccionPersonaje, PersonajeInventario },
+  components: {
+    SeleccionPersonaje,
+    PersonajeInventario,
+    Personaje,
+    gliphsComp,
+  },
   async asyncData({ store, $axios }) {
     const itemsResponse = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Item/list'
@@ -23,7 +42,16 @@ export default {
     const familiasResponse = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Familia/list'
     )
-    return { items: itemsResponse, familias: familiasResponse }
+
+    const glifosResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Glyph/list'
+    )
+
+    return {
+      items: itemsResponse,
+      familias: familiasResponse,
+      glyphs: glifosResponse,
+    }
   },
   data() {
     return {

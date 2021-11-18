@@ -18,7 +18,7 @@
         clearable
       ></v-combobox>
     </div>
-    selecteditem: {{ selectedItem }} <br />
+    selecteditem: {{ selectedItem.nombre }} <br />
     selectedFamilia: {{ selectedFamilia.nombre }}
     <div class="d-flex flex-direction:column">
       <v-item-group v-model="selectedFamilia">
