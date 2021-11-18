@@ -1,30 +1,57 @@
 <template>
-  <div>
-    Page Personajes
-    <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
-    </seleccion-personaje>
-    {{ selectedPersonaje }}
-    <personaje-inventario
-      :familias="familias"
-      :items="items"
-    ></personaje-inventario>
+  <div class="d-flex">
+    <div style="width: 70%">
+      <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
+      </seleccion-personaje>
+      <v-tabs>
+        <v-tab key="items"> items </v-tab>
+        <v-tab-item key="items">
+          <personaje-inventario
+            :familias="familias"
+            :items="items"
+          ></personaje-inventario
+        ></v-tab-item>
+        <v-tab key="glifos"> glifos </v-tab>
+        <v-tab-item key="glifos">
+          <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
+        ></v-tab-item>
+      </v-tabs>
+    </div>
+    <div style="width: 30%">
+      <personaje :nombre="selectedPersonaje.nombre"></personaje>
+    </div>
   </div>
 </template>
 
 <script>
 import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue'
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
+import Personaje from '~/components/personajes/Personaje.vue'
+import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 export default {
-  components: { SeleccionPersonaje, PersonajeInventario },
-  // components: { componente1... },
-  async asyncData({ $axios }) {
+  components: {
+    SeleccionPersonaje,
+    PersonajeInventario,
+    Personaje,
+    gliphsComp,
+  },
+  async asyncData({ store, $axios }) {
     const itemsResponse = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Item/list'
     )
     const familiasResponse = await $axios.$get(
-      process.env.VUE_APP_SERVER_URL + '/Item/list'
+      process.env.VUE_APP_SERVER_URL + '/Familia/list'
     )
-    return { items: itemsResponse, familias: familiasResponse }
+
+    const glifosResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Glyph/list'
+    )
+
+    return {
+      items: itemsResponse,
+      familias: familiasResponse,
+      glyphs: glifosResponse,
+    }
   },
   data() {
     return {
@@ -35,11 +62,16 @@ export default {
       glyphs: [],
       traits: [],
       selectedPersonaje: {},
+      currentUser: {},
     }
   },
   mounted() {
-    this.makeDummyData()
-    this.selectedPersonaje = this.personajes[0]
+    // this.makeDummyData()
+    // this.selectedPersonaje = this.personajes[0]
+  },
+  beforeMount() {
+    const storeUser = this.$store.state.usuario
+    this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
     makeDummyData() {
@@ -47,11 +79,29 @@ export default {
       const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
       const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
       this.personajes.push(p1, p2, p3)
-      // const item1 = { nombre: 'item1', tipo: 'two handed back scratcher' }
-      // const item2 = { nombre: 'item2', tipo: 'light socks' }
-      // const item3 = { nombre: 'item3', tipo: 'heavy eyelashes' }
-      // const item4 = { nombre: 'item4', tipo: 'weed pipe' }
-      // this.items.push(item1, item2, item3, item4)
+    },
+    async fetchUsers() {
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/list'
+      )
+      this.currentUser = user[0]
+    },
+    async fetchUser(userName) {
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: userName } }
+      )
+      await this.fetchPersonajes(user.personajes)
+      this.selectedPersonaje = this.personajes[0]
+    },
+    async fetchPersonajes(idsArray) {
+      for (const id of idsArray) {
+        const pj = await this.$axios.$get(
+          process.env.VUE_APP_SERVER_URL + '/Personaje/query',
+          { params: { _id: id } }
+        )
+        this.personajes.push(pj)
+      }
     },
   },
 }
