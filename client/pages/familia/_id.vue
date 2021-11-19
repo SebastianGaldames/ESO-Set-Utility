@@ -5,60 +5,39 @@
     <div class="w-100 primario">
       <v-row class="galery">
         <v-col class="mx-auto" color="primario" md="6" sm="8">
-          <v-container class="primario">
-            <v-row no-gutters>
-              <v-col sm="6">
-                <h1 class="title text-center lista texto1--text">
-                  Set: {{ $route.params.id }}
-                </h1>
-              </v-col>
-              <v-spacer />
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Obtencion:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>DLC requerido:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Estilo:</h3>
-              </v-col>
-              <v-col>
-                <p class="izp secundario--text">infoPertinente</p>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der texto1--text" md="3">
-                <h3>Localización:</h3>
-              </v-col>
-              <v-col></v-col>
-            </v-row>
-            <v-row>
-              <v-col class="der" md="3">
-                <h3></h3>
-              </v-col>
-              <v-col>
-                <p class="secundario--text">Ubicacion</p>
-              </v-col>
-            </v-row>
+          <v-container class="nombreUbi">
+            <div>
+              <h1>Set: {{ miFamilia.nombre }}</h1>
+            </div>
+            <div class="ubicacion">
+              <h3>Ubicación:</h3>
+              <div
+                v-for="ubicacion in miFamilia.ubicacion"
+                :key="ubicacion"
+                md="2"
+              >
+                <p class="secundario--text">• {{ ubicacion }}</p>
+              </div>
+            </div>
+            <div v-if="miFamilia.estilo !== ''">
+              <h3>Estilo:</h3>
+              <p class="secundario--text">• {{ miFamilia.estilo }}</p>
+            </div>
+            <div v-if="miFamilia.tipo !== ''">
+              <h3>Tipo:</h3>
+              <p class="secundario--text">• {{ miFamilia.tipo }}</p>
+            </div>
+            <div v-if="miFamilia.dlc !== ''">
+              <h3>DLC:</h3>
+              <p class="secundario--text">• {{ miFamilia.dlc }}</p>
+            </div>
           </v-container>
         </v-col>
         <v-col class="mx-auto" md="6" sm="8" color="primario">
-          <v-container>
+          <div>
             <v-row no-gutters>
-              <v-col>
-                <v-card dark outlined tile style="border: 2px solid #a68f7b">
+              <v-col class="bordes">
+                <v-card dark outlined tile>
                   <v-row class="galery">
                     <v-col md="4">
                       <h5 class="texto1--text">"obtención"</h5>
@@ -71,10 +50,11 @@
                   <v-spacer />
                   <v-row>
                     <v-col>
-                      <img
+                      <v-img
+                        :src="this.miFamilia.imagen"
+                        height="64px"
+                        width="64px"
                         class="test"
-                        src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
-                        alt=""
                       />
                     </v-col>
                   </v-row>
@@ -82,7 +62,7 @@
                     <v-col md="3"></v-col>
                     <v-col md="6">
                       <h1 class="centro texto1--text">
-                        {{ $route.params.id }}
+                        {{ miFamilia.nombre }}
                       </h1>
                     </v-col>
                     <v-col md="3"></v-col>
@@ -95,35 +75,37 @@
                     </v-col>
                     <v-col md="3"></v-col>
                   </v-row>
-
                   <v-spacer />
-                  <v-row>
-                    <v-col class="centro texto1--text">
-                      <p>(2 items) "buffo de estadisticas"</p>
-                      <p>(3 items) "buffo de estadisticas"</p>
-                      <p>(4 items) "buffo de estadisticas"</p>
-                      <p>(5 items) "bono por uso de la familia"</p>
-                    </v-col>
-                  </v-row>
+                  <div class="bonos">
+                    <div
+                      v-for="bono in miFamilia.bonos"
+                      :key="bono.texto"
+                      class="bonos2"
+                    >
+                      <p>{{ bono.texto }}</p>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
-          </v-container>
+          </div>
         </v-col>
       </v-row>
     </div>
     <v-spacer />
-    <div class="w-100 primario">
+    <div v-if="estanItems" class="w-100 primario">
       <v-row class="galery">
-        <v-col v-for="n in 20" :key="n" md="2">
-          <v-card v-ripple dark style="border: 2px solid #a68f7b" outlined>
-            <img
-              class="test"
-              src="https://eso-hub.com/storage/icons/gear_breton_heavy_head_d.webp"
-              alt=""
-            />
-            <h5 class="centro texto1--text">"Tipo"</h5>
-            <h4 class="centro texto1--text">"Nombre"</h4>
+        <v-col v-for="item in items" :key="item.nombre" md="2">
+          <v-card v-ripple outlined class="justify-center">
+            <div class="imagen bordes">
+              <v-img
+                :src="item.imagen"
+                :alt="item.nombre"
+                height="64px"
+                width="64px"
+              />
+              <h5 class="centro texto1--text">{{ item.nombre }}</h5>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -131,7 +113,69 @@
   </section>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      miFamilia: Object,
+      items: [],
+      imagenFamilia: '',
+      estanItems: false,
+    }
+  },
+  created() {
+    this.busq()
+    this.setImagenF()
+  },
+  methods: {
+    async busq() {
+      const get = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL +
+          '/Familia/query?_id=' +
+          this.$route.params.id
+      )
+      this.miFamilia = get
+      for (let i = 0; i < this.miFamilia.itemsFamilia.length; i++) {
+        const item = await this.$axios.get(
+          process.env.VUE_APP_SERVER_URL +
+            '/Item/query?_id=' +
+            this.miFamilia.itemsFamilia[i]
+        )
+        this.items[i] = item.data
+      }
+      this.estanItems = true
+    },
+    setImagenF() {
+      this.imagenFamilia = this.miFamilia.imagen
+    },
+  },
+}
+</script>
+
 <style>
+.imagen {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bonos {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2%;
+}
+.ubicacion {
+  margin-top: 3%;
+}
+.bonos2 {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 70%;
+}
 .test {
   display: block;
   margin: 0 auto;
@@ -157,12 +201,14 @@
 .centro {
   text-align: center;
 }
-.borde {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
+.bordes {
+  border-width: 1px;
+  border-style: groove;
+  border-color: gold;
 }
-.primario {
-  border: 1px solid white !important;
-  border-color: #a68f7b !important;
+.nombreUbi {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 </style>
