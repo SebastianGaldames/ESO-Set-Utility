@@ -18,10 +18,10 @@
         clearable
       ></v-combobox>
     </div>
-    selecteditem: {{ selectedItem.nombre }} <br />
-    selectedFamilia: {{ selectedFamilia.nombre }}
+    selecteditemInner: {{ selectedItem.nombre }} <br />
+    selectedFamiliaInner: {{ selectedFamilia.nombre }}
     <div class="d-flex flex-direction:column">
-      <v-card min-width="250">
+      <v-card width="30%">
         <v-item-group v-model="selectedFamilia">
           <v-container fluid>
             <v-row no-gutters>
@@ -50,8 +50,9 @@
           </v-container>
         </v-item-group>
       </v-card>
-      <v-card>
-        <v-item-group v-model="selectedItem">
+      <v-card width="70%">
+        <item-box :item="items[0]"></item-box>
+        <!-- <v-item-group v-model="selectedItem">
           <v-container fluid>
             <v-row no-gutters>
               <v-col
@@ -77,7 +78,7 @@
               </v-col>
             </v-row>
           </v-container>
-        </v-item-group>
+        </v-item-group> -->
       </v-card>
     </div>
   </div>
@@ -159,7 +160,7 @@ export default {
     },
     // emits an event to update the parent component
     selectedFamilyChanged() {
-      this.$emit('familychanged', this.selectedFamilia)
+      this.$emit('familyChanged', this.selectedFamilia)
     },
     selectedItemChanged() {
       this.$emit('itemChanged', this.selectedItem)

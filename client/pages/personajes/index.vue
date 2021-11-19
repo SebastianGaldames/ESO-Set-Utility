@@ -9,6 +9,7 @@
           <personaje-inventario
             :familias="familias"
             :items="items"
+            @familyChanged="handleSelectedFamily"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -105,6 +106,9 @@ export default {
         )
         this.personajes.push(pj)
       }
+    },
+    handleSelectedFamily(content) {
+      // console.log(content.nombre)
     },
   },
 }
