@@ -18,10 +18,19 @@
         clearable
       ></v-combobox>
     </div>
-    selecteditemInner: {{ selectedItem.nombre }} <br />
-    selectedFamiliaInner: {{ selectedFamilia.nombre }}
+    selected item Inner:
+    {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
+    <br />
+    selected set Inner: {{ selectedFamilia.nombre }}<br />
+    <!-- items Ids: {{ items }} -->
     <div class="d-flex flex-direction:column">
-      <v-card width="30%">
+      <v-card width="30%" class="pa-2">
+        <v-text-field
+          v-model="setFilter"
+          label="Buscar Set"
+          clearable
+          append-icon="fas fa-lock"
+        ></v-text-field>
         <v-item-group v-model="selectedFamilia">
           <v-container fluid>
             <v-row no-gutters>
@@ -32,13 +41,9 @@
                 md="12"
                 no-gutters
               >
-                <v-sheet
-                  min-height="16"
-                  class="fill-height"
-                  color="transparent"
-                >
+                <v-sheet min-height="10" color="transparent">
                   <v-lazy>
-                    <v-item v-slot="{ toggle }" class="ma-1" :value="familia">
+                    <v-item v-slot="{ toggle }" class="mb-1" :value="familia">
                       <v-card @click="toggle">
                         {{ familia.nombre }}
                       </v-card>
@@ -51,8 +56,8 @@
         </v-item-group>
       </v-card>
       <v-card width="70%">
-        <item-box :item="items[0]"></item-box>
-        <!-- <v-item-group v-model="selectedItem">
+        <!-- <item-box :item="items[0]"></item-box> -->
+        <v-item-group v-model="selectedItem">
           <v-container fluid>
             <v-row no-gutters>
               <v-col
@@ -78,7 +83,7 @@
               </v-col>
             </v-row>
           </v-container>
-        </v-item-group> -->
+        </v-item-group>
       </v-card>
     </div>
   </div>
@@ -88,11 +93,6 @@ import ItemBox from '~/components/personajes/ItemBox.vue'
 export default {
   components: { ItemBox },
   props: {
-    // value: {
-    //   type: Object,
-    //   default: () => {},
-    //   required: true,
-    // },
     items: {
       type: Array,
       default: () => [],
@@ -110,12 +110,16 @@ export default {
       selectedFamilia: {},
       busqueda: '',
       categoriaFilterValue: '',
+      setFilter: '',
     }
   },
   computed: {
     filteredItems() {
       return this.filterByText(this.filterByTipo())
     },
+    // filteredSets() {
+    //   //
+    // },
     categorias() {
       const cats = new Set()
       for (const item of this.items) {
@@ -127,6 +131,9 @@ export default {
   watch: {
     selectedFamilia(val) {
       this.selectedFamilyChanged()
+    },
+    selectedItem(val) {
+      this.selectedItemChanged()
     },
   },
   methods: {
@@ -155,6 +162,20 @@ export default {
             (v) =>
               item.nombre.toLowerCase().includes(v) ||
               item.tipo.toLowerCase().includes(v)
+          )
+      })
+    },
+    filterSetByText() {
+      return this.familias.filter((set) => {
+        if (this.setFilter === '' || this.setFilter == null) {
+          return set
+        }
+        return this.setFilter
+          .toLowerCase()
+          .split(' ')
+          .every(
+            (v) => set.nombre.toLowerCase().includes(v)
+            // || item.tipo.toLowerCase().includes(v)
           )
       })
     },

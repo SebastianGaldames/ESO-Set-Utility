@@ -8,8 +8,8 @@
         <v-tab-item key="items">
           <personaje-inventario
             :familias="familias"
-            :items="items"
-            @familyChanged="handleSelectedFamily"
+            :items="itemsSingleSet"
+            @familyChanged="handleFamilyChanged"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -58,13 +58,26 @@ export default {
     return {
       personajes: [],
       items: [],
+      itemsCache: [],
       itemsInventario: [],
       familias: [],
       glyphs: [],
       traits: [],
       selectedPersonaje: {},
+      selectedSet: undefined,
       currentUser: {},
     }
+  },
+  computed: {
+    itemsSingleSet() {
+      if (this.selectedSet === undefined) return []
+      const filtered = []
+      for (const itemId of this.selectedSet.itemsFamilia) {
+        const found = this.items.find((item) => item._id === itemId)
+        filtered.push(found)
+      }
+      return filtered
+    },
   },
   watch: {
     //
@@ -107,7 +120,11 @@ export default {
         this.personajes.push(pj)
       }
     },
-    handleSelectedFamily(content) {
+    handleFamilyChanged(content) {
+      // console.log(content.nombre)
+      this.selectedSet = content
+    },
+    handleItemChanged(content) {
       // console.log(content.nombre)
     },
   },
