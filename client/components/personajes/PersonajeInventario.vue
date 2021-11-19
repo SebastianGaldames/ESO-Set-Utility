@@ -21,7 +21,8 @@
     selected item Inner:
     {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
     <br />
-    selected set Inner: {{ selectedFamilia.nombre }}<br />
+    selected set Inner:
+    {{ selectedFamilia === undefined ? 'none' : selectedFamilia.nombre }}<br />
     <!-- items Ids: {{ items }} -->
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
@@ -35,7 +36,7 @@
           <v-container fluid>
             <v-row no-gutters>
               <v-col
-                v-for="familia in familias"
+                v-for="familia in filteredSets"
                 :key="familia.nombre"
                 cols="12"
                 md="12"
@@ -117,9 +118,9 @@ export default {
     filteredItems() {
       return this.filterByText(this.filterByTipo())
     },
-    // filteredSets() {
-    //   //
-    // },
+    filteredSets() {
+      return this.filterSetByText()
+    },
     categorias() {
       const cats = new Set()
       for (const item of this.items) {
