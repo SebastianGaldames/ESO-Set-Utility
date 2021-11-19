@@ -21,53 +21,64 @@
     selecteditem: {{ selectedItem.nombre }} <br />
     selectedFamilia: {{ selectedFamilia.nombre }}
     <div class="d-flex flex-direction:column">
-      <v-item-group v-model="selectedFamilia">
-        <v-container fluid>
-          <v-row no-gutters>
-            <v-col
-              v-for="familia in familias"
-              :key="familia.nombre"
-              cols="12"
-              md="12"
-              no-gutters
-            >
-              <v-sheet min-height="16" class="fill-height" color="transparent">
-                <v-lazy>
-                  <v-item v-slot="{ toggle }" class="ma-1" :value="familia">
-                    <v-card @click="toggle">
-                      {{ familia.nombre }}
-                    </v-card>
-                  </v-item>
-                </v-lazy>
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-item-group>
-
-      <v-item-group v-model="selectedItem">
-        <v-container fluid>
-          <v-row no-gutters>
-            <v-col
-              v-for="item in filteredItems"
-              :key="item.nombre"
-              cols="12"
-              md="3"
-              no-gutters
-            >
-              <v-sheet min-height="100" class="fill-height" color="transparent">
-                <v-lazy>
-                  <v-item v-slot="{ toggle }" class="ma-1" :value="item">
-                    <v-card @click="toggle">
-                      <item-box :item="item"></item-box>
-                    </v-card>
-                  </v-item>
-                </v-lazy>
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-item-group>
+      <v-card min-width="250">
+        <v-item-group v-model="selectedFamilia">
+          <v-container fluid>
+            <v-row no-gutters>
+              <v-col
+                v-for="familia in familias"
+                :key="familia.nombre"
+                cols="12"
+                md="12"
+                no-gutters
+              >
+                <v-sheet
+                  min-height="16"
+                  class="fill-height"
+                  color="transparent"
+                >
+                  <v-lazy>
+                    <v-item v-slot="{ toggle }" class="ma-1" :value="familia">
+                      <v-card @click="toggle">
+                        {{ familia.nombre }}
+                      </v-card>
+                    </v-item>
+                  </v-lazy>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-item-group>
+      </v-card>
+      <v-card>
+        <v-item-group v-model="selectedItem">
+          <v-container fluid>
+            <v-row no-gutters>
+              <v-col
+                v-for="item in filteredItems"
+                :key="item.nombre"
+                cols="12"
+                md="3"
+                no-gutters
+              >
+                <v-sheet
+                  min-height="100"
+                  class="fill-height"
+                  color="transparent"
+                >
+                  <v-lazy>
+                    <v-item v-slot="{ toggle }" class="ma-1" :value="item">
+                      <v-card @click="toggle">
+                        <item-box :item="item"></item-box>
+                      </v-card>
+                    </v-item>
+                  </v-lazy>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-item-group>
+      </v-card>
     </div>
   </div>
 </template>
@@ -112,6 +123,11 @@ export default {
       return [...cats]
     },
   },
+  watch: {
+    selectedFamilia(val) {
+      this.selectedFamilyChanged()
+    },
+  },
   methods: {
     filterByTipo() {
       return this.items.filter((item) => {
@@ -140,6 +156,13 @@ export default {
               item.tipo.toLowerCase().includes(v)
           )
       })
+    },
+    // emits an event to update the parent component
+    selectedFamilyChanged() {
+      this.$emit('familychanged', this.selectedFamilia)
+    },
+    selectedItemChanged() {
+      this.$emit('itemChanged', this.selectedItem)
     },
   },
 }

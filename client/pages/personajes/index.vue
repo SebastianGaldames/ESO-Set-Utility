@@ -65,6 +65,9 @@ export default {
       currentUser: {},
     }
   },
+  watch: {
+    //
+  },
   mounted() {
     // this.makeDummyData()
     // this.selectedPersonaje = this.personajes[0]
