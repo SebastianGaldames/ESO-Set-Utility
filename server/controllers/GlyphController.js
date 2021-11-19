@@ -4,8 +4,8 @@ const models = require('../models')
 const list = async (req, res, next) => {
   console.log('in controller')
   try {
-    const reg = await models.Glyph.find({})
-    res.status(200).json(reg)
+    //const reg = await models.Glyph.find({})
+    res.status(200).json()
   } catch (e) {
     res.status(500).send({
       message: 'Ocurrio un error',
