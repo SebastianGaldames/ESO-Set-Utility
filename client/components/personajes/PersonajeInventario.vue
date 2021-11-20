@@ -52,7 +52,7 @@
           ></v-text-field>
           <v-combobox
             v-model="categoriaFilterValue"
-            label="Categoria"
+            label="Categoría"
             :items="categorias"
             outlined
             dense
