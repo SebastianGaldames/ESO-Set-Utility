@@ -4,7 +4,7 @@
       <h3>Lista de Glifos</h3>
     </div>
     <div class="w-100 mx-auto">
-      <v-responsive class="overflow-y-auto" max-height="200">
+      <v-responsive class="overflow-y-auto">
         <v-row class="galery">
           <v-col v-for="n in glifos" :key="n" md="3">
             <v-card v-ripple outlined @click="selectGlyph(n)">
