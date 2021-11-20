@@ -6,10 +6,43 @@
         <p style="text-align: center">Equipamiento</p>
         <v-container>
           <v-row align="center" justify="center">
-            <v-col v-for="n in 7" :key="n" md="3">
-              <v-card outlined height="80px" width="62px"
-                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
-              ></v-card>
+            <v-col align="center" justify="center">
+              <p style="text-align: center">Cabeza</p>
+              <v-card outlined width="125" height="125">
+                <v-card-title
+                  class="justify-center"
+                  style="height: 25%; padding: 0"
+                  ><p style="font-size: 15px; height: 25%">
+                    Casco shoro
+                  </p></v-card-title
+                >
+                <itemSlot
+                  :item="item"
+                  :trait="trait"
+                  :glyph="glyph"
+                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
+                ></itemSlot>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-col v-for="n in 6" :key="n" md="4">
+              <p style="text-align: center">{{ equipamiento[n] }}</p>
+              <v-card outlined width="125" height="125">
+                <v-card-title
+                  class="justify-center"
+                  style="height: 25%; padding: 0"
+                  ><p style="font-size: 15px; height: 25%">
+                    Casco shoro
+                  </p></v-card-title
+                >
+                <itemSlot
+                  :item="item"
+                  :trait="trait"
+                  :glyph="glyph"
+                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
+                ></itemSlot>
+              </v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -18,9 +51,21 @@
         <p style="text-align: center">Accesorios</p>
         <v-container>
           <v-row align="center" justify="center">
-            <v-col v-for="n in 3" :key="n" md="3">
-              <v-card outlined height="80px" width="62px"
-                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
+            <v-col v-for="n in 3" :key="n" md="4">
+              <p style="text-align: center">{{ accesorios[n] }}</p>
+              <v-card outlined width="125" height="125">
+                <v-card-title
+                  class="justify-center"
+                  style="height: 25%; padding: 0"
+                  ><p style="font-size: 15px; height: 25%">
+                    Casco shoro
+                  </p></v-card-title
+                ><itemSlot
+                  :item="item"
+                  :trait="trait"
+                  :glyph="glyph"
+                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
+                ></itemSlot
               ></v-card>
             </v-col>
           </v-row>
@@ -30,9 +75,21 @@
         <p style="text-align: center">Armas</p>
         <v-container>
           <v-row align="center" justify="center">
-            <v-col v-for="n in 3" :key="n" md="3">
-              <v-card outlined height="80px" width="62px" dark
-                ><itemSlot :item="item" :trait="trait" :glyph="glyph"></itemSlot
+            <v-col v-for="n in 2" :key="n" md="4">
+              <p style="text-align: center">{{ armas[n] }}</p>
+              <v-card outlined width="125" height="125">
+                <v-card-title
+                  class="justify-center"
+                  style="height: 25%; padding: 0"
+                  ><p style="font-size: 15px; height: 25%">
+                    Casco shoro
+                  </p></v-card-title
+                ><itemSlot
+                  :item="item"
+                  :trait="trait"
+                  :glyph="glyph"
+                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
+                ></itemSlot
               ></v-card>
             </v-col>
           </v-row>
@@ -90,6 +147,17 @@ export default {
       trait: {
         imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
       },
+      equipamiento: [
+        '',
+        'Hombros',
+        'Peto',
+        'Brazos',
+        'Piernas',
+        'Cintura',
+        'Pies',
+      ],
+      accesorios: ['', 'Cuello', 'Anillo', 'Anillo'],
+      armas: ['', 'Arma1', 'Arma2'],
     }
   },
 }
