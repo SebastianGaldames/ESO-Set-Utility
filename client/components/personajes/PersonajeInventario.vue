@@ -2,22 +2,6 @@
   <div>
     <div>inventario</div>
     <div>items</div>
-    <div class="d-flex pa-2">
-      <v-text-field
-        id="buscador"
-        v-model="busqueda"
-        label="Buscar"
-        clearable
-        append-icon="fas fa-lock"
-      ></v-text-field>
-      <v-combobox
-        v-model="categoriaFilterValue"
-        :items="categorias"
-        outlined
-        solo
-        clearable
-      ></v-combobox>
-    </div>
     selected item Inner:
     {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
     <br />
@@ -32,7 +16,7 @@
           clearable
           append-icon="fas fa-lock"
         ></v-text-field>
-        <v-item-group v-model="selectedFamilia">
+        <v-item-group v-model="selectedFamilia" class="scrollable">
           <v-container fluid>
             <v-row no-gutters>
               <v-col
@@ -58,6 +42,24 @@
       </v-card>
       <v-card width="70%">
         <!-- <item-box :item="items[0]"></item-box> -->
+        <div class="d-flex pa-2">
+          <v-text-field
+            id="buscador"
+            v-model="busqueda"
+            label="Buscar Item"
+            clearable
+            append-icon="fas fa-lock"
+          ></v-text-field>
+          <v-combobox
+            v-model="categoriaFilterValue"
+            label="Categoria"
+            :items="categorias"
+            outlined
+            dense
+            clearable
+            hide-selected
+          ></v-combobox>
+        </div>
         <v-item-group v-model="selectedItem">
           <v-container fluid>
             <v-row no-gutters>
@@ -190,3 +192,9 @@ export default {
   },
 }
 </script>
+<style>
+.scrollable {
+  overflow-y: scroll;
+  height: 50vh;
+}
+</style>
