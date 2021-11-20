@@ -1,7 +1,5 @@
 <template>
   <div>
-    seleccion personaje component <br />
-    {{ personajes }} <br />
     <v-combobox
       v-model="value"
       :items="personajes"
