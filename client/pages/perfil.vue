@@ -46,105 +46,140 @@
                 Cambiar datos existentes
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
-                <v-autocomplete
-                  ref="pais"
-                  v-model="pais"
-                  :rules="[rules.required]"
-                  :items="paises"
-                  label="País"
-                  color="goldenrod"
-                  placeholder="Selecciona..."
-                  clearable
-                  class="
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                ></v-autocomplete>
+                <v-row align="center" class="pt-2 pl-2">
+                  <v-checkbox
+                    v-model="checkbox1"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-autocomplete
+                    ref="pais"
+                    v-model="pais"
+                    :disabled="!checkbox1"
+                    :rules="[rules.required]"
+                    :items="paises"
+                    label="País"
+                    color="goldenrod"
+                    placeholder="Selecciona..."
+                    clearable
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-autocomplete>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox2"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="usuario"
+                    :disabled="!checkbox2"
+                    :rules="[rules.required, rules.usermin]"
+                    label="Ingresa tu usuario"
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox3"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="email"
+                    :disabled="!checkbox3"
+                    :rules="[emailrules.required, emailrules.syntax]"
+                    label="Email"
+                    clearable
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    light
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    disabled
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="reEmail"
+                    :disabled="!checkbox3"
+                    :rules="[emailrules.required, emailrules.equals]"
+                    label="Confirma tu email"
+                    clearable
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox4"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="password"
+                    :disabled="!checkbox4"
+                    :rules="[rules.required, rules.min]"
+                    :type="show ? 'text' : 'password'"
+                    name="input-10-2"
+                    label="Ingresa contraseña"
+                    hint="Debe tener al menos 8 caracteres"
+                    value="wqfasds"
+                    class="
+                      input-group--focused
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                    @click:append="show = !show"
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    light
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    disabled
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="rePassword"
+                    :disabled="!checkbox4"
+                    :rules="[rules.required, rules.min, rules.equals]"
+                    :type="show ? 'text' : 'password'"
+                    name="input-10-2"
+                    label="Confirma tu contraseña"
+                    hint="Las contraseñas coinciden"
+                    value=""
+                    class="
+                      input-group--focused
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                    @click:append="show = !show"
+                  ></v-text-field>
+                </v-row>
 
-                <v-text-field
-                  v-model="usuario"
-                  :rules="[rules.required, rules.usermin]"
-                  label="Ingresa tu usuario"
-                  clearable
-                  class="
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="email"
-                  :rules="[emailrules.required, emailrules.syntax]"
-                  label="Email"
-                  clearable
-                  class="
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="reEmail"
-                  :rules="[emailrules.required, emailrules.equals]"
-                  label="Confirma tu email"
-                  clearable
-                  class="
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  :rules="[rules.required, rules.min]"
-                  :type="show ? 'text' : 'password'"
-                  name="input-10-2"
-                  label="Ingresa contraseña"
-                  hint="Debe tener al menos 8 caracteres"
-                  value="wqfasds"
-                  class="
-                    input-group--focused
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                  @click:append="show = !show"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="rePassword"
-                  :rules="[rules.required, rules.min, rules.equals]"
-                  :type="show ? 'text' : 'password'"
-                  name="input-10-2"
-                  label="Confirma tu contraseña"
-                  hint="Las contraseñas coinciden"
-                  value=""
-                  class="
-                    input-group--focused
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                  @click:append="show = !show"
-                ></v-text-field>
-
-                <v-checkbox
-                  v-model="checkbox"
-                  :rules="[rules.required]"
-                  class="
-                    secundario--text
-                    text-input-goldenrod
-                    custom-label-color custom-placeholer-color
-                  "
-                >
-                  <template v-slot:label class="secundario">
-                    Estoy de acuerdo con los términos y condiciones
-                  </template>
-                </v-checkbox>
                 <v-row>
                   <v-col>
                     <div class="text-xs-center">
@@ -205,14 +240,6 @@ class Usuario {
 export default {
   data() {
     return {
-      cuenta: {
-        usuario: '',
-        pais: '',
-        sexo: '',
-        correo: '',
-        pass: '',
-        newPass: '',
-      },
       paises: [
         'Argentina',
         'Bolivia',
@@ -233,12 +260,17 @@ export default {
       inventario: [],
       user: new Usuario(),
       checkbox: false,
+      checkbox1: false,
+      checkbox2: false,
+      checkbox3: false,
+      checkbox4: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
         equals: (v) => v === this.password || 'Las contraseñas no coinciden',
-        usermin: (v) => v >= 8 || 'Debe tener al menos 8 caracteres',
+        usermin: () =>
+          this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
       emailrules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -267,15 +299,14 @@ export default {
     },
     async tomaUser() {
       const userparam = this.$store.state.usuario
-      console.log('usuario: ' + userparam)
       const userLogued = await this.$axios.get(
         process.env.VUE_APP_SERVER_URL +
           '/Usuario/querynombre?usuario=' +
           userparam
       )
       this.user = userLogued.data
-      console.log(this.user)
     },
+    async cambioDatos() {},
   },
 }
 </script>
