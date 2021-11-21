@@ -8,9 +8,10 @@
           <v-row align="center" justify="center" no-gutters>
             <v-col align="center" justify="center" no-gutters>
               <h4 style="text-align: center">Cabeza</h4>
-              <v-item v-slot="{ toggle }">
+              <v-item v-slot="{ toggle }" :value="item">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
+                    :casilla="Cabeza"
                     :item="item"
                     :trait="trait"
                     :glyph="glyph"
@@ -30,7 +31,7 @@
               no-gutters
             >
               <h4 style="text-align: center">{{ equipamiento[n] }}</h4>
-              <v-item v-slot="{ toggle }">
+              <v-item v-slot="{ toggle }" :value="item">
                 <v-card
                   class="d-flex align-center"
                   outlined
@@ -39,6 +40,7 @@
                   @click="toggle"
                 >
                   <itemSlot
+                    :casilla="equipamiento[n]"
                     :item="item"
                     :trait="trait"
                     :glyph="glyph"
@@ -58,9 +60,10 @@
               md="4"
             >
               <h4 style="text-align: center">{{ accesorios[n] }}</h4>
-              <v-item v-slot="{ toggle }">
+              <v-item v-slot="{ toggle }" :value="item">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
+                    :casilla="accesorios[n]"
                     :item="item"
                     :trait="trait"
                     :glyph="glyph"
@@ -80,9 +83,10 @@
               md="4"
             >
               <h4 style="text-align: center">{{ armas[n] }}</h4>
-              <v-item v-slot="{ toggle }">
+              <v-item v-slot="{ toggle }" :value="item">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
+                    :casilla="armas[n]"
                     :item="item"
                     :trait="trait"
                     :glyph="glyph"
@@ -120,24 +124,12 @@ export default {
       type: String,
       default: '',
     },
-    /*
-    equipamiento: {
-      type: Array,
-      default: () => [],
-    },
-    accesorios: {
-      type: Array,
-      default: () => [],
-    },
-    armas: {
-      type: Array,
-      default: () => [],
-    } */
   },
   data() {
     return {
       // Datos de prueba
       item: {
+        nombre: 'slot',
         imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
       },
       glyph: {
