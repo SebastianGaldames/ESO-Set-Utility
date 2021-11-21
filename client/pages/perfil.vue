@@ -18,17 +18,23 @@
                 Informacion Personal
               </h2>
               <div class="secundario--text pt-5 pl-5">
-                <v-icon color="grey darken-1"> mdi-account </v-icon>Usuario:
+                <v-icon color="grey darken-1"> mdi-account </v-icon>Usuario:{{
+                  user.usuario
+                }}
               </div>
               <div class="secundario--text pt-2 pl-5">
-                <v-icon color="grey darken-1"> mdi-earth </v-icon>País:
+                <v-icon color="grey darken-1"> mdi-earth </v-icon>País:{{
+                  user.pais
+                }}
               </div>
               <div class="secundario--text pt-2 pl-5">
-                <v-icon color="grey darken-1"> mdi-email </v-icon>Correo:
+                <v-icon color="grey darken-1"> mdi-email </v-icon>Correo:{{
+                  user.email
+                }}
               </div>
               <div class="secundario--text pt-2 pl-5 pb-5">
                 <v-icon color="grey darken-1"> mdi-gender-male-female </v-icon
-                >Sexo:
+                >Sexo:{{ user.sexo }}
               </div>
             </v-card-text>
           </v-card>
@@ -197,15 +203,6 @@ class Usuario {
 }
 
 export default {
-  async asyncData({ route, $http }) {
-    try {
-      const userparam = route.query.user
-      const userLogued = await $http.$get('/Usuarios' + userparam)
-      return {
-        usuario: userLogued,
-      }
-    } catch {}
-  },
   data() {
     return {
       cuenta: {
@@ -241,8 +238,7 @@ export default {
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
         equals: (v) => v === this.password || 'Las contraseñas no coinciden',
-        usermin: () =>
-          this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
+        usermin: (v) => v >= 8 || 'Debe tener al menos 8 caracteres',
       },
       emailrules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -260,11 +256,25 @@ export default {
       return () => this.email === this.reEmail || 'Los email no coinciden'
     },
   },
+  mounted() {
+    this.tomaUser()
+  },
   methods: {
     comprobarUsuario() {
       if (this.$store.state.usuario == null) {
         this.$router.push({ name: 'index' })
       }
+    },
+    async tomaUser() {
+      const userparam = this.$store.state.usuario
+      console.log('usuario: ' + userparam)
+      const userLogued = await this.$axios.get(
+        process.env.VUE_APP_SERVER_URL +
+          '/Usuario/querynombre?usuario=' +
+          userparam
+      )
+      this.user = userLogued.data
+      console.log(this.user)
     },
   },
 }
