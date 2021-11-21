@@ -72,13 +72,13 @@
                 md="3"
                 no-gutters
               >
-                <v-item v-slot="{ active, toggle }" class="ma-1" :value="item">
-                  <v-sheet class="d-flex align-center" @click="toggle">
+                <v-item v-slot="{ active, toggle }" :value="item">
+                  <v-sheet class="d-flex align-center ma-1" @click="toggle">
                     <v-card
                       v-if="active"
                       width="100%"
-                      outlined
                       color="acentuado1"
+                      outlined
                     >
                       <v-sheet rounded>
                         <item-box :item="item"></item-box>
