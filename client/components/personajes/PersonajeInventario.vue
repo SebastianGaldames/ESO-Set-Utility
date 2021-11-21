@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>inventario</div>
-    <div>items</div>
     selected item Inner:
     {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
     <br />
@@ -13,10 +12,11 @@
         <v-text-field
           v-model="setFilter"
           label="Buscar Set"
+          color="acentuado1"
           clearable
           append-icon="fas fa-lock"
         ></v-text-field>
-        <v-item-group v-model="selectedFamilia" class="scrollable">
+        <v-item-group v-model="selectedFamilia" class="scrollable" mandatory>
           <v-container fluid>
             <v-row no-gutters>
               <v-col
@@ -49,6 +49,7 @@
             label="Buscar Item"
             clearable
             append-icon="fas fa-lock"
+            color="acentuado1"
           ></v-text-field>
           <v-combobox
             v-model="categoriaFilterValue"
@@ -56,6 +57,7 @@
             :items="categorias"
             outlined
             dense
+            color="acentuado1"
             clearable
             hide-selected
           ></v-combobox>
@@ -70,19 +72,23 @@
                 md="3"
                 no-gutters
               >
-                <v-sheet
-                  min-height="100"
-                  class="fill-height"
-                  color="transparent"
-                >
-                  <v-lazy>
-                    <v-item v-slot="{ toggle }" class="ma-1" :value="item">
-                      <v-card @click="toggle">
+                <v-item v-slot="{ active, toggle }" class="ma-1" :value="item">
+                  <v-sheet class="d-flex align-center" @click="toggle">
+                    <v-card
+                      v-if="active"
+                      width="100%"
+                      outlined
+                      color="acentuado1"
+                    >
+                      <v-sheet rounded>
                         <item-box :item="item"></item-box>
-                      </v-card>
-                    </v-item>
-                  </v-lazy>
-                </v-sheet>
+                      </v-sheet>
+                    </v-card>
+                    <v-card v-else width="100%" outlined>
+                      <item-box :item="item"></item-box>
+                    </v-card>
+                  </v-sheet>
+                </v-item>
               </v-col>
             </v-row>
           </v-container>
@@ -94,6 +100,7 @@
 <script>
 import ItemBox from '~/components/personajes/ItemBox.vue'
 export default {
+  /* eslint-disable vue/no-unused-components */
   components: { ItemBox },
   props: {
     items: {
@@ -196,5 +203,8 @@ export default {
 .scrollable {
   overflow-y: scroll;
   height: 50vh;
+}
+.selected {
+  background-color: #ffe34d;
 }
 </style>
