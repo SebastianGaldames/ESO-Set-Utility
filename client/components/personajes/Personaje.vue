@@ -1,101 +1,100 @@
 <template>
   <div>
-    <h1 class="secundario--text" style="text-align: center">{{ nombre }}</h1>
-    <v-item-group>
-      <v-container class="equipamiento secundario--text">
-        <p style="text-align: center">Equipamiento</p>
-        <v-container>
-          <v-row align="center" justify="center">
-            <v-col align="center" justify="center">
-              <p style="text-align: center">Cabeza</p>
-              <v-card outlined width="125" height="125">
-                <v-card-title
-                  class="justify-center"
-                  style="height: 25%; padding: 0"
-                  ><p style="font-size: 15px; height: 25%">
-                    Casco shoro
-                  </p></v-card-title
+    <h1 style="text-align: center">{{ nombre }}</h1>
+    <div class="d-flex flex-direction:column">
+      <v-item-group v-model="selectedSlot">
+        <v-container fluid>
+          <h2 style="text-align: center">Equipamiento</h2>
+          <v-row align="center" justify="center" no-gutters>
+            <v-col align="center" justify="center" no-gutters>
+              <h4 style="text-align: center">Cabeza</h4>
+              <v-item v-slot="{ toggle }">
+                <v-card outlined width="90" height="90" @click="toggle">
+                  <itemSlot
+                    :item="item"
+                    :trait="trait"
+                    :glyph="glyph"
+                    style="padding: 5%; margin: auto"
+                  ></itemSlot>
+                </v-card>
+              </v-item>
+            </v-col>
+          </v-row>
+          <v-row align="center" justify="center" no-gutters>
+            <v-col
+              v-for="n in 6"
+              :key="n"
+              align="center"
+              justify="center"
+              md="4"
+              no-gutters
+            >
+              <h4 style="text-align: center">{{ equipamiento[n] }}</h4>
+              <v-item v-slot="{ toggle }">
+                <v-card
+                  class="d-flex align-center"
+                  outlined
+                  width="90"
+                  height="90"
+                  @click="toggle"
                 >
-                <itemSlot
-                  :item="item"
-                  :trait="trait"
-                  :glyph="glyph"
-                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
-                ></itemSlot>
-              </v-card>
+                  <itemSlot
+                    :item="item"
+                    :trait="trait"
+                    :glyph="glyph"
+                    style="padding: 5%; margin: auto"
+                  ></itemSlot>
+                </v-card>
+              </v-item>
             </v-col>
           </v-row>
+          <h2 style="text-align: center">Accesorios</h2>
           <v-row align="center" justify="center">
-            <v-col v-for="n in 6" :key="n" md="4">
-              <p style="text-align: center">{{ equipamiento[n] }}</p>
-              <v-card outlined width="125" height="125">
-                <v-card-title
-                  class="justify-center"
-                  style="height: 25%; padding: 0"
-                  ><p style="font-size: 15px; height: 25%">
-                    Casco shoro
-                  </p></v-card-title
-                >
-                <itemSlot
-                  :item="item"
-                  :trait="trait"
-                  :glyph="glyph"
-                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
-                ></itemSlot>
-              </v-card>
+            <v-col
+              v-for="n in 3"
+              :key="n"
+              align="center"
+              justify="center"
+              md="4"
+            >
+              <h4 style="text-align: center">{{ accesorios[n] }}</h4>
+              <v-item v-slot="{ toggle }">
+                <v-card outlined width="90" height="90" @click="toggle">
+                  <itemSlot
+                    :item="item"
+                    :trait="trait"
+                    :glyph="glyph"
+                    style="padding: 5%; margin: auto"
+                  ></itemSlot>
+                </v-card>
+              </v-item>
+            </v-col>
+          </v-row>
+          <h2 style="text-align: center">Armas</h2>
+          <v-row align="center" justify="center">
+            <v-col
+              v-for="n in 3"
+              :key="n"
+              align="center"
+              justify="center"
+              md="4"
+            >
+              <h4 style="text-align: center">{{ armas[n] }}</h4>
+              <v-item v-slot="{ toggle }">
+                <v-card outlined width="90" height="90" @click="toggle">
+                  <itemSlot
+                    :item="item"
+                    :trait="trait"
+                    :glyph="glyph"
+                    style="padding: 5%; margin: auto"
+                  ></itemSlot>
+                </v-card>
+              </v-item>
             </v-col>
           </v-row>
         </v-container>
-      </v-container>
-      <v-container class="accesorios secundario--text">
-        <p style="text-align: center">Accesorios</p>
-        <v-container>
-          <v-row align="center" justify="center">
-            <v-col v-for="n in 3" :key="n" md="4">
-              <p style="text-align: center">{{ accesorios[n] }}</p>
-              <v-card outlined width="125" height="125">
-                <v-card-title
-                  class="justify-center"
-                  style="height: 25%; padding: 0"
-                  ><p style="font-size: 15px; height: 25%">
-                    Casco shoro
-                  </p></v-card-title
-                ><itemSlot
-                  :item="item"
-                  :trait="trait"
-                  :glyph="glyph"
-                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
-                ></itemSlot
-              ></v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-container>
-      <v-container class="armas secundario--text">
-        <p style="text-align: center">Armas</p>
-        <v-container>
-          <v-row align="center" justify="center">
-            <v-col v-for="n in 2" :key="n" md="4">
-              <p style="text-align: center">{{ armas[n] }}</p>
-              <v-card outlined width="125" height="125">
-                <v-card-title
-                  class="justify-center"
-                  style="height: 25%; padding: 0"
-                  ><p style="font-size: 15px; height: 25%">
-                    Casco shoro
-                  </p></v-card-title
-                ><itemSlot
-                  :item="item"
-                  :trait="trait"
-                  :glyph="glyph"
-                  style="padding: 5%; margin: auto; width: 50%; height: 75%"
-                ></itemSlot
-              ></v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-container>
-    </v-item-group>
+      </v-item-group>
+    </div>
   </div>
 </template>
 
@@ -147,6 +146,7 @@ export default {
       trait: {
         imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
       },
+      selectedSlot: {},
       equipamiento: [
         '',
         'Hombros',
@@ -157,7 +157,7 @@ export default {
         'Pies',
       ],
       accesorios: ['', 'Cuello', 'Anillo', 'Anillo'],
-      armas: ['', 'Arma1', 'Arma2'],
+      armas: ['', 'Arma1', 'Arma2', 'Arma3'],
     }
   },
 }
