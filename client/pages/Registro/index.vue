@@ -26,13 +26,12 @@
         v-model="usuario"
         :rules="[rules.required, rules.usermin]"
         label="Ingresa tu usuario"
-        clearable
         class="secundario--text"
       ></v-text-field>
 
       <v-text-field
         v-model="email"
-        :rules="[emailrules.required, emailrules.syntax]"
+        :rules="[emailConfirmationRule(), emailSyntaxRule]"
         label="Email"
         clearable
         class="secundario--text"
@@ -40,7 +39,7 @@
 
       <v-text-field
         v-model="reEmail"
-        :rules="[emailrules.required, emailrules.equals]"
+        :rules="[emailConfirmationRule(), email2SyntaxRule]"
         label="Confirma tu email"
         clearable
         class="secundario--text"
@@ -48,19 +47,19 @@
 
       <v-text-field
         v-model="password"
-        :rules="[rules.required, rules.min]"
+        :rules="[largoMinimoContrasenna(), passwordConfirmationRule()]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Ingresa contraseña"
-        hint="Debe tener al menos 8 caracteres"
-        value="wqfasds"
+        hint="Contraseña ingresada con exito"
+        value=""
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
 
       <v-text-field
         v-model="rePassword"
-        :rules="[rules.required, rules.min, rules.equals]"
+        :rules="[largoMinimoContrasenna2(), passwordConfirmationRule()]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Confirma tu contraseña"
@@ -137,26 +136,34 @@ export default {
       checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
-        min: () =>
-          this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
-        equals: (v) => v === this.password || 'Las contraseñas no coinciden',
         usermin: () =>
           this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
-      },
-      emailrules: {
-        required: (value) => !!value || 'Campo obligatorio',
-        equals: (v) => v === this.email || 'Los e-mails no coinciden',
-        syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
     }
   },
   computed: {
     passwordConfirmationRule() {
       return () =>
-        this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
+        this.password === this.rePassword || 'Las contraseñas no coinciden'
     },
     emailConfirmationRule() {
       return () => this.email === this.reEmail || 'Los email no coinciden'
+    },
+    emailSyntaxRule() {
+      const re = /.+@.+\..+/
+      return re.test(this.email) || 'E-mail no es valido'
+    },
+    email2SyntaxRule() {
+      const re = /.+@.+\..+/
+      return re.test(this.reEmail) || 'E-mail no es valido'
+    },
+    largoMinimoContrasenna() {
+      return () =>
+        this.password.length === 8 || 'Debe tener al menos 8 caracteres'
+    },
+    largoMinimoContrasenna2() {
+      return () =>
+        this.rePassword.length === 8 || 'Debe tener al menos 8 caracteres'
     },
   },
   methods: {
@@ -171,6 +178,7 @@ export default {
         alert('Datos faltantes')
       } else if (
         this.email === this.reEmail &&
+        /.+@.+\..+/.test(this.email) &&
         this.password === this.rePassword &&
         this.usuario.length >= 8
       ) {
