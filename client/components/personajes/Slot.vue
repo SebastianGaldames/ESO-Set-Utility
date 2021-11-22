@@ -34,7 +34,7 @@ export default {
       type: String,
       required: true,
     },
-    slot: {
+    slotProp: {
       type: Object,
       required: true,
     },
@@ -52,27 +52,32 @@ export default {
     },
   },
   data() {
-    let itemImage = ''
-    let glyphImage = ''
-    let traitImage = ''
-    if (!(this.slot.item === null || this.slot.item === undefined)) {
-      itemImage = this.slot.item.imagen
-    }
-    if (!(this.slot.glyph === null || this.slot.glyph === undefined)) {
-      glyphImage = this.slot.glyph.imagen
-    }
-    if (!(this.slot.trait === null || this.slot.trait === undefined)) {
-      traitImage = this.slot.trait.imagen
-    }
     return {
-      itemImage,
-      glyphImage,
-      traitImage,
       defaultItemHeight: '50',
       defaultItemWidth: '50',
       defaultGlyphTraitHeight: '25',
       defaultGlyphTraitWidth: '25',
     }
+  },
+  computed: {
+    itemImage() {
+      if (!(this.slotProp.item === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
+    glyphImage() {
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
+    traitImage() {
+      if (!(this.slotProp.trait === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
   },
   methods: {
     test(event) {
