@@ -31,9 +31,9 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-flex v-if="errorM" class="red--text">
+        <!-- <v-flex v-if="errorM" class="red--text">
           {{ errorM }}
-        </v-flex>
+        </v-flex> -->
         <div class="ajustes1">
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
@@ -44,7 +44,6 @@
             <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
           >
         </div>
-        <div class="ajustes2"></div>
       </v-card>
     </v-container>
   </v-main>
@@ -84,6 +83,7 @@ export default {
           this.errorM = null
           if (error.response.status === 404) {
             this.errorM = 'Datos ingresados incorrectamente'
+            alert('Datos ingresados incorrectamente')
           } else {
             this.errorM = 'Ocurrio un error con el servidor'
           }
