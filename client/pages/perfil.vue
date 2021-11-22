@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-2">
     {{ comprobarUsuario() }}
     <v-card color="primario" height="100%">
       <div class="div1">
@@ -46,7 +46,7 @@
                 Cambiar datos existentes
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
-                <v-row align="center" class="pt-2 pl-2">
+                <v-row align="center" class="pt-4 pl-2">
                   <v-checkbox
                     v-model="checkbox1"
                     hide-details
@@ -57,7 +57,6 @@
                     ref="pais"
                     v-model="pais"
                     :disabled="!checkbox1"
-                    :rules="[rules.required]"
                     :items="paises"
                     label="País"
                     color="goldenrod"
@@ -80,7 +79,7 @@
                   <v-text-field
                     v-model="usuario"
                     :disabled="!checkbox2"
-                    :rules="[rules.required, rules.usermin]"
+                    :rules="[rules.usermin]"
                     label="Ingresa tu usuario"
                     class="
                       secundario--text
@@ -99,7 +98,7 @@
                   <v-text-field
                     v-model="email"
                     :disabled="!checkbox3"
-                    :rules="[emailrules.required, emailrules.syntax]"
+                    :rules="[emailrules.syntax]"
                     label="Email"
                     clearable
                     class="
@@ -119,7 +118,7 @@
                   <v-text-field
                     v-model="reEmail"
                     :disabled="!checkbox3"
-                    :rules="[emailrules.required, emailrules.syntax]"
+                    :rules="[emailrules.syntax]"
                     label="Confirma tu email"
                     clearable
                     class="
@@ -139,12 +138,11 @@
                   <v-text-field
                     v-model="password"
                     :disabled="!checkbox4"
-                    :rules="[rules.required, rules.min]"
+                    :rules="[rules.min]"
                     :type="show ? 'text' : 'password'"
                     name="input-10-2"
                     label="Ingresa contraseña"
                     hint=" "
-                    value="wqfasds"
                     class="
                       input-group--focused
                       secundario--text
@@ -163,12 +161,11 @@
                   <v-text-field
                     v-model="rePassword"
                     :disabled="!checkbox4"
-                    :rules="[rules.required, rules.remin]"
+                    :rules="[rules.remin]"
                     :type="show ? 'text' : 'password'"
                     name="input-10-2"
                     label="Confirma tu contraseña"
                     hint=" "
-                    value="wqfasds"
                     class="
                       input-group--focused
                       secundario--text
@@ -265,7 +262,6 @@ export default {
       checkbox3: false,
       checkbox4: false,
       rules: {
-        required: (value) => !!value || 'Campo obligatorio',
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
         remin: () =>
@@ -275,7 +271,6 @@ export default {
           this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
       emailrules: {
-        required: (value) => !!value || 'Campo obligatorio',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
     }
@@ -290,17 +285,35 @@ export default {
       }
     },
     comprobaciones() {
+      console.log(this.user._id)
+      console.log(this.password)
+      console.log(this.rePassword)
+      console.log(this.email)
+      console.log(this.reEmail)
       if (this.password === this.rePassword && this.email === this.reEmail) {
-        this.cambioDatos()
+        if (this.usuario.length >= 8 || this.usuario === '') {
+          console.log('comprobaciones exitosas')
+          this.cambioDatos()
+        }
       } else if (
         this.password !== this.rePassword &&
         this.email !== this.reEmail
       ) {
         alert('Error de email y contraseña no coinciden con su confirmacion')
+      } else if (this.email !== this.reEmail && this.usuario.length < 8) {
+        alert('Error usuario invalido y email no coincide con su confirmacion')
+      } else if (this.password !== this.rePassword && this.usuario.length < 8) {
+        alert(
+          'Error usuario invalido y contraseña no coincide con su confirmacion'
+        )
       } else if (this.email !== this.reEmail) {
         alert('Emails no coinciden')
-      } else if (this.password === this.rePassword) {
+      } else if (this.password !== this.rePassword) {
         alert('Contraseñas no coinciden')
+      } else if (this.usuario.length < 8 && this.usuario !== '') {
+        alert('Usuario invalido')
+      } else {
+        alert('algo ocurrio')
       }
     },
     async tomaUser() {
@@ -312,8 +325,51 @@ export default {
       )
       this.user = userLogued.data
     },
-    cambioDatos() {
-      alert('exito')
+    async cambioDatos() {
+      if (this.pais !== '') {
+        this.user.pais = this.pais
+        console.log(this.user.pais)
+      }
+      if (this.usuario !== '') {
+        this.user.usuario = this.usuario
+        console.log(this.user.usuario)
+      }
+      if (this.email !== '') {
+        this.user.email = this.email
+        console.log(this.user.email)
+      }
+      if (this.password !== '') {
+        this.user.password = this.password
+        console.log(this.user.password)
+      }
+      const datos = {
+        _id: this.user._id,
+        usuario: this.user.usuario,
+        email: this.user.email,
+        pais: this.user.pais,
+      }
+      const newPassword = {
+        _id: this.user._id,
+        password: this.user.password,
+      }
+      console.log(datos)
+      const updated = await this.$axios.put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/update',
+        datos
+      )
+      if (this.password !== '') {
+        const passwordUpdated = await this.$axios.put(
+          process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
+          newPassword
+        )
+        console.log(passwordUpdated)
+      }
+
+      if (updated) {
+        console.log(updated.data)
+      } else {
+        console.log('fallo')
+      }
     },
   },
 }
