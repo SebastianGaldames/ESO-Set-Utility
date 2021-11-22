@@ -38,15 +38,15 @@ export default {
       type: Object,
       required: true,
     },
-    agregarItem: {
+    enableItem: {
       type: Boolean,
       default: false,
     },
-    agregarGlyph: {
+    enableGlyph: {
       type: Boolean,
       default: false,
     },
-    agregarTrait: {
+    enableTrait: {
       type: Boolean,
       default: false,
     },
