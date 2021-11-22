@@ -12,16 +12,15 @@
       </div>
 
       <v-autocomplete
-        ref="pais"
         v-model="pais"
         :rules="[rules.required]"
-        :items="paises"
+        :items="countries"
         label="Pais"
         placeholder="Selecciona..."
         clearable
         class="secundario--text"
+        full-width
       ></v-autocomplete>
-
       <v-text-field
         v-model="usuario"
         :rules="[rules.required, rules.usermin]"
@@ -100,6 +99,7 @@
 
 <script>
 import axios from 'axios'
+
 class Usuario {
   constructor(usuario, email, pais, password, sexo, personajes, inventario) {
     this.usuario = usuario
@@ -111,7 +111,19 @@ class Usuario {
     this.inventario = inventario
   }
 }
+
 export default {
+  async asyncData({ $axios }) {
+    const post = await $axios.$get(
+      'https://countriesnode.herokuapp.com/v1/countries/'
+    )
+    const nombrePaises = []
+    for (let i = 0; i < post.length; i++) {
+      nombrePaises.push(post[i].name)
+    }
+    nombrePaises.sort()
+    return { countries: nombrePaises }
+  },
   data() {
     return {
       paises: [
@@ -122,6 +134,7 @@ export default {
         'Perú',
         'Venezuela',
       ],
+      countries: [],
       show: false,
       usuario: '',
       password: '',
@@ -166,6 +179,7 @@ export default {
         this.rePassword.length === 8 || 'Debe tener al menos 8 caracteres'
     },
   },
+
   methods: {
     registroNuevoUsuario() {
       if (
