@@ -24,7 +24,11 @@
       </v-tabs>
     </div>
     <div style="width: 30%">
-      <personaje :nombre="selectedPersonaje.nombre"></personaje>
+      <personaje
+        :nombre="selectedPersonaje.nombre"
+        :slots="selectedItem"
+        :set="selectedSet"
+      ></personaje>
     </div>
   </div>
 </template>
