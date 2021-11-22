@@ -20,7 +20,7 @@
           <v-col class="d-flex">
             <v-select
               v-model="selectedUbi"
-              :items="ubicaciones"
+              :items="computed_ubi"
               label="Ubicacion"
               solo
               @change="selected1 = true"
@@ -29,7 +29,7 @@
           <v-col class="d-flex">
             <v-select
               v-model="selectedTipo"
-              :items="tipos"
+              :items="computed_tipo"
               label="Tipo"
               solo
               @change="selected3 = true"
@@ -66,7 +66,6 @@
           >{{ selectedEstilo }} x</v-btn
         >
       </div>
-      <p>Familias</p>
       <v-data-table
         :headers="columnas"
         :items="computed_items"
@@ -124,6 +123,9 @@ export default {
       tipos: [],
       estilos: [],
       tipo: [],
+      posiblesU: [],
+      posiblesT: [],
+      posiblesE: [],
       search: '',
       selectedUbi: '',
       selectedTipo: '',
@@ -241,6 +243,47 @@ export default {
         }
         return filtered
       })
+    },
+    computed_tipo() {
+      const filtroUbi = this.selectedUbi
+      const selectedTipo = []
+
+      if (filtroUbi) {
+        this.families.forEach((element) => {
+          element.ubicacion.forEach((element2) => {
+            if (filtroUbi === element2) {
+              selectedTipo.push(element.tipo)
+            }
+          })
+          // Tiene k ir el otro filtro actualizado
+        })
+      } else {
+        this.families.forEach((element) => {
+          selectedTipo.push(element.tipo)
+        })
+      }
+      return selectedTipo.sort()
+    },
+    computed_ubi() {
+      const filtroTipo = this.selectedTipo
+      const selectedUbi = []
+      if (filtroTipo) {
+        this.families.forEach((element) => {
+          if (filtroTipo === element.tipo) {
+            element.ubicacion.forEach((element2) => {
+              selectedUbi.push(element2)
+            })
+          }
+        })
+      } else {
+        this.families.forEach((element) => {
+          element.ubicacion.forEach((element2) => {
+            selectedUbi.push(element2)
+          })
+        })
+      }
+
+      return selectedUbi.sort()
     },
   },
   created() {
