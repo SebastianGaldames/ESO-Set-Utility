@@ -1,12 +1,5 @@
 <template>
   <div class="pa-2">
-    <div>inventario</div>
-    <!-- selected item Inner:
-    {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
-    <br />
-    selected set Inner:
-    {{ selectedFamilia === undefined ? 'none' : selectedFamilia.nombre }}<br /> -->
-    <!-- items Ids: {{ items }} -->
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
         <v-text-field
@@ -16,29 +9,23 @@
           clearable
           append-icon="fas fa-lock"
         ></v-text-field>
-        <v-item-group v-model="selectedFamilia" class="scrollable" mandatory>
-          <v-container fluid>
-            <v-row no-gutters>
-              <v-col
-                v-for="familia in filteredSets"
-                :key="familia.nombre"
-                cols="12"
-                md="12"
-                no-gutters
-              >
-                <v-sheet min-height="10" color="transparent">
-                  <v-lazy>
-                    <v-item v-slot="{ toggle }" class="mb-1" :value="familia">
-                      <v-card @click="toggle">
-                        {{ familia.nombre }}
-                      </v-card>
-                    </v-item>
-                  </v-lazy>
-                </v-sheet>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-item-group>
+        <v-list nav dense>
+          <v-list-item-group
+            v-model="selectedFamilia"
+            class="scrollable"
+            mandatory
+          >
+            <v-list-item
+              v-for="(familia, nombre) in filteredSets"
+              :key="nombre"
+              :value="familia"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="familia.nombre"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
       </v-card>
       <v-card width="70%">
         <!-- <item-box :item="items[0]"></item-box> -->
@@ -208,9 +195,6 @@ export default {
 <style>
 .scrollable {
   overflow-y: scroll;
-  height: 50vh;
-}
-.selected {
-  background-color: #ffe34d;
+  height: 60vh;
 }
 </style>

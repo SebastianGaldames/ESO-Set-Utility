@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <!-- <v-btn @click="addInventarioTest">add inventario</v-btn> -->
+    <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
       </seleccion-personaje>
@@ -122,7 +122,7 @@ export default {
         this.personajes.push(pj)
       }
     },
-    async addInventarioTest() {
+    async updateInventario() {
       const response = await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Usuario/actualizarInventario',
         {
