@@ -12,6 +12,11 @@
               <h4 style="text-align: center">Cabeza</h4>
               <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
+                  <itemSlot
+                    :id="'Cabeza'"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
+                  ></itemSlot>
                 </v-card>
               </v-item>
             </v-col>
@@ -36,8 +41,8 @@
                 >
                   <itemSlot
                     :id="equipamiento[n]"
-                    :slot1="newSlot"
-                    style="padding: 5%; margin: auto"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -57,8 +62,8 @@
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
                     :id="accesorios[n]"
-                    :slot1="newSlot"
-                    style="padding: 5%; margin: auto"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -78,7 +83,7 @@
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
                     :id="armas[n]"
-                    :slot1="newSlot"
+                    :slot-prop="newSlot"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
