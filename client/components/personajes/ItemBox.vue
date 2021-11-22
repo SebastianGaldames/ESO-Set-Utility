@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <v-card outlined>
-      <v-img contain :src="item.imagen" height="54px" />
-      <v-card-title class="justify-center"> {{ item.nombre }}</v-card-title>
-      <v-card-text class="justify-center">family-name</v-card-text>
-    </v-card>
-  </div>
+  <v-sheet
+    color="transparent"
+    min-height="96"
+    width="100%"
+    class="d-flex flex-direction:column align-center py-4 px-2"
+  >
+    <v-img contain :src="item.imagen" height="32px" />
+    <h4>{{ item.nombre }}</h4>
+  </v-sheet>
 </template>
 <script>
 export default {

@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{ slots === undefined ? 'none' : slots.nombre }}
+    {{ set === undefined ? 'none' : set.nombre }}
     <h1 style="text-align: center">{{ nombre }}</h1>
     <div class="d-flex flex-direction:column">
       <v-item-group v-model="selectedSlot">
@@ -15,7 +17,7 @@
                     :item="item"
                     :trait="trait"
                     :glyph="glyph"
-                    style="padding: 5%; margin: auto"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -112,6 +114,14 @@ export default {
     itemSlot,
   },
   props: {
+    slots: {
+      type: Object,
+      default: () => {},
+    },
+    set: {
+      type: Object,
+      default: () => {},
+    },
     inventario: {
       type: Array,
       default: () => [],
