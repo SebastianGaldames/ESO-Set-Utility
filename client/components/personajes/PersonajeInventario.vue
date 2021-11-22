@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="pa-2">
     <div>inventario</div>
-    selected item Inner:
+    <!-- selected item Inner:
     {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
     <br />
     selected set Inner:
-    {{ selectedFamilia === undefined ? 'none' : selectedFamilia.nombre }}<br />
+    {{ selectedFamilia === undefined ? 'none' : selectedFamilia.nombre }}<br /> -->
     <!-- items Ids: {{ items }} -->
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
@@ -42,57 +42,59 @@
       </v-card>
       <v-card width="70%">
         <!-- <item-box :item="items[0]"></item-box> -->
-        <div class="d-flex pa-2">
-          <v-text-field
-            id="buscador"
-            v-model="busqueda"
-            label="Buscar Item"
-            clearable
-            append-icon="fas fa-lock"
-            color="acentuado1"
-          ></v-text-field>
-          <v-combobox
-            v-model="categoriaFilterValue"
-            label="Categoría"
-            :items="categorias"
-            outlined
-            dense
-            color="acentuado1"
-            clearable
-            hide-selected
-          ></v-combobox>
-        </div>
-        <v-item-group v-model="selectedItem">
-          <v-container fluid>
-            <v-row no-gutters>
-              <v-col
-                v-for="item in filteredItems"
-                :key="item.nombre"
-                cols="12"
-                md="3"
-                no-gutters
-              >
-                <v-item v-slot="{ active, toggle }" :value="item">
-                  <v-sheet class="d-flex align-center ma-1" @click="toggle">
-                    <v-card
-                      v-if="active"
-                      width="100%"
-                      color="acentuado1"
-                      outlined
-                    >
-                      <v-sheet rounded>
+        <div id="itemsPanel">
+          <div class="d-flex pa-2">
+            <v-text-field
+              id="buscador"
+              v-model="busqueda"
+              label="Buscar Item"
+              clearable
+              append-icon="fas fa-lock"
+              color="acentuado1"
+            ></v-text-field>
+            <v-combobox
+              v-model="categoriaFilterValue"
+              label="Categoría"
+              :items="categorias"
+              outlined
+              dense
+              color="acentuado1"
+              clearable
+              hide-selected
+            ></v-combobox>
+          </div>
+          <v-item-group v-model="selectedItem">
+            <v-container fluid>
+              <v-row no-gutters>
+                <v-col
+                  v-for="item in filteredItems"
+                  :key="item.nombre"
+                  cols="12"
+                  md="3"
+                  no-gutters
+                >
+                  <v-item v-slot="{ active, toggle }" :value="item">
+                    <v-sheet class="d-flex align-center ma-1" @click="toggle">
+                      <v-card
+                        v-if="active"
+                        width="100%"
+                        color="acentuado1"
+                        outlined
+                      >
+                        <v-sheet rounded>
+                          <item-box :item="item"></item-box>
+                        </v-sheet>
+                      </v-card>
+                      <v-card v-else width="100%" outlined>
                         <item-box :item="item"></item-box>
-                      </v-sheet>
-                    </v-card>
-                    <v-card v-else width="100%" outlined>
-                      <item-box :item="item"></item-box>
-                    </v-card>
-                  </v-sheet>
-                </v-item>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-item-group>
+                      </v-card>
+                    </v-sheet>
+                  </v-item>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-item-group>
+        </div>
       </v-card>
     </div>
   </div>
@@ -112,6 +114,10 @@ export default {
       type: Array,
       default: () => [],
       required: true,
+    },
+    inventario: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {

@@ -1,15 +1,20 @@
 <template>
   <div class="d-flex">
-    <div style="width: 70%">
+    <div style="width: 70%" class="pa-3">
       <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
       </seleccion-personaje>
-      <v-tabs>
+      <v-tabs color="acentuado1">
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
+          <div>
+            {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
+            {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
+          </div>
           <personaje-inventario
             :familias="familias"
             :items="itemsSingleSet"
             @familyChanged="handleFamilyChanged"
+            @itemChanged="handleItemChanged"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -65,6 +70,7 @@ export default {
       traits: [],
       selectedPersonaje: {},
       selectedSet: undefined,
+      selectedItem: {},
       currentUser: {},
     }
   },
@@ -126,6 +132,7 @@ export default {
     },
     handleItemChanged(content) {
       // console.log(content.nombre)
+      this.selectedItem = content
     },
   },
 }
