@@ -2,7 +2,6 @@
   <div>
     {{ item === undefined ? 'none' : item.nombre }}
     {{ set === undefined ? 'none' : set.nombre }}
-
     <h1 style="text-align: center">{{ nombre }}</h1>
     <div class="d-flex flex-direction:column">
       <v-item-group v-model="selectedSlot">
@@ -37,7 +36,7 @@
                 >
                   <itemSlot
                     :id="equipamiento[n]"
-                    :slot1="auxSlot"
+                    :slot1="newSlot"
                     style="padding: 5%; margin: auto"
                   ></itemSlot>
                 </v-card>
@@ -58,7 +57,7 @@
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
                     :id="accesorios[n]"
-                    :slot1="auxSlot"
+                    :slot1="newSlot"
                     style="padding: 5%; margin: auto"
                   ></itemSlot>
                 </v-card>
@@ -79,7 +78,7 @@
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
                     :id="armas[n]"
-                    :slot1="auxSlot"
+                    :slot1="newSlot"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -104,19 +103,11 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => {},
+      required: true,
     },
     set: {
       type: Object,
-      default: () => {},
-    },
-    inventario: {
-      type: Array,
-      default: () => [],
-    },
-    value: {
-      type: Object,
-      default: () => {},
+      required: true,
     },
     nombre: {
       type: String,
@@ -127,11 +118,6 @@ export default {
     return {
       // Datos de prueba
       selectedSlot: {},
-      auxSlot: {
-        item: this.item,
-        glyph: undefined,
-        trait: undefined,
-      },
       equipamiento: [
         '',
         'Hombros',
@@ -144,6 +130,16 @@ export default {
       accesorios: ['', 'Cuello', 'Anillo', 'Anillo'],
       armas: ['', 'Arma1', 'Arma2', 'Arma3'],
     }
+  },
+  computed: {
+    newSlot() {
+      const tempSlot = {
+        item: this.item,
+        glyph: undefined,
+        trait: undefined,
+      }
+      return tempSlot
+    },
   },
 }
 </script>
