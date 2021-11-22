@@ -119,7 +119,7 @@
                   <v-text-field
                     v-model="reEmail"
                     :disabled="!checkbox3"
-                    :rules="[emailrules.required, emailrules.equals]"
+                    :rules="[emailrules.required, emailrules.syntax]"
                     label="Confirma tu email"
                     clearable
                     class="
@@ -143,7 +143,7 @@
                     :type="show ? 'text' : 'password'"
                     name="input-10-2"
                     label="Ingresa contraseña"
-                    hint="Debe tener al menos 8 caracteres"
+                    hint=" "
                     value="wqfasds"
                     class="
                       input-group--focused
@@ -151,7 +151,6 @@
                       text-input-goldenrod
                       custom-label-color custom-placeholer-color
                     "
-                    @click:append="show = !show"
                   ></v-text-field>
                 </v-row>
                 <v-row align="center" class="pl-2">
@@ -164,26 +163,27 @@
                   <v-text-field
                     v-model="rePassword"
                     :disabled="!checkbox4"
-                    :rules="[rules.required, rules.min, rules.equals]"
+                    :rules="[rules.required, rules.remin]"
                     :type="show ? 'text' : 'password'"
                     name="input-10-2"
                     label="Confirma tu contraseña"
-                    hint="Las contraseñas coinciden"
-                    value=""
+                    hint=" "
+                    value="wqfasds"
                     class="
                       input-group--focused
                       secundario--text
                       text-input-goldenrod
                       custom-label-color custom-placeholer-color
                     "
-                    @click:append="show = !show"
                   ></v-text-field>
                 </v-row>
 
                 <v-row>
                   <v-col>
                     <div class="text-xs-center">
-                      <v-btn rounded color="error">Guardar cambios</v-btn>
+                      <v-btn color="error" @click="comprobaciones"
+                        >Guardar cambios</v-btn
+                      >
                     </div>
                   </v-col>
                   <v-col> </v-col>
@@ -268,25 +268,17 @@ export default {
         required: (value) => !!value || 'Campo obligatorio',
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
-        equals: (v) => v === this.password || 'Las contraseñas no coinciden',
+        remin: () =>
+          this.rePassword.length >= 8 || 'Debe tener al menos 8 caracteres',
+
         usermin: () =>
           this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
       emailrules: {
         required: (value) => !!value || 'Campo obligatorio',
-        equals: (v) => v === this.email || 'Los e-mails no coinciden',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
     }
-  },
-  computed: {
-    passwordConfirmationRule() {
-      return () =>
-        this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
-    },
-    emailConfirmationRule() {
-      return () => this.email === this.reEmail || 'Los email no coinciden'
-    },
   },
   mounted() {
     this.tomaUser()
@@ -295,6 +287,20 @@ export default {
     comprobarUsuario() {
       if (this.$store.state.usuario == null) {
         this.$router.push({ name: 'index' })
+      }
+    },
+    comprobaciones() {
+      if (this.password === this.rePassword && this.email === this.reEmail) {
+        this.cambioDatos()
+      } else if (
+        this.password !== this.rePassword &&
+        this.email !== this.reEmail
+      ) {
+        alert('Error de email y contraseña no coinciden con su confirmacion')
+      } else if (this.email !== this.reEmail) {
+        alert('Emails no coinciden')
+      } else if (this.password === this.rePassword) {
+        alert('Contraseñas no coinciden')
       }
     },
     async tomaUser() {
@@ -306,7 +312,9 @@ export default {
       )
       this.user = userLogued.data
     },
-    async cambioDatos() {},
+    cambioDatos() {
+      alert('exito')
+    },
   },
 }
 </script>
