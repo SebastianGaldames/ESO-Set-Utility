@@ -21,12 +21,24 @@
         class="secundario--text"
         full-width
       ></v-autocomplete>
+
       <v-text-field
         v-model="usuario"
         :rules="[rules.required, rules.usermin]"
         label="Ingresa tu usuario"
         class="secundario--text"
       ></v-text-field>
+
+      <v-autocomplete
+        v-model="sexo"
+        :rules="[rules.required]"
+        :items="sexos"
+        label="Sexo"
+        placeholder="Selecciona..."
+        clearable
+        class="secundario--text"
+        full-width
+      ></v-autocomplete>
 
       <v-text-field
         v-model="email"
@@ -126,20 +138,13 @@ export default {
   },
   data() {
     return {
-      paises: [
-        'Argentina',
-        'Bolivia',
-        'Chile',
-        'Colombia',
-        'Perú',
-        'Venezuela',
-      ],
       countries: [],
+      sexos: ['Masculino', 'Femenino', 'Otro'],
       show: false,
       usuario: '',
       password: '',
       rePassword: '',
-      sexo: 'masculino',
+      sexo: '',
       email: '',
       reEmail: '',
       personajes: [],
@@ -187,7 +192,8 @@ export default {
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.checkbox === false
+        this.checkbox === false ||
+        this.sexo === ''
       ) {
         alert('Datos faltantes')
       } else if (
