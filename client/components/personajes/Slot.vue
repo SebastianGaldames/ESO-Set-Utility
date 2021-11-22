@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{ slot1.item }}
+    {{ id }}
     <div>
       <v-img
         class="mx-1"
@@ -34,7 +36,7 @@ export default {
       type: String,
       required: true,
     },
-    slot: {
+    slot1: {
       type: Object,
       required: true,
     },
@@ -52,22 +54,23 @@ export default {
     },
   },
   data() {
-    let itemImage = ''
+    /* let itemImage = ''
     let glyphImage = ''
     let traitImage = ''
-    if (!(this.slot.item === null || this.slot.item === undefined)) {
-      itemImage = this.slot.item.imagen
+    console.log(this.slot1.item)
+    if (!(this.slot1.item === null || this.slot1.item === undefined)) {
+      itemImage = this.slot1.item.imagen
     }
-    if (!(this.slot.glyph === null || this.slot.glyph === undefined)) {
-      glyphImage = this.slot.glyph.imagen
+    if (!(this.slot1.glyph === null || this.slot1.glyph === undefined)) {
+      glyphImage = this.slot1.glyph.imagen
     }
-    if (!(this.slot.trait === null || this.slot.trait === undefined)) {
-      traitImage = this.slot.trait.imagen
-    }
+    if (!(this.slot1.trait === null || this.slot1.trait === undefined)) {
+      traitImage = this.slot1.trait.imagen
+    } */
     return {
-      itemImage,
-      glyphImage,
-      traitImage,
+      itemImage: this.slot1.item.imagen,
+      glyphImage: '',
+      traitImage: '',
       defaultItemHeight: '50',
       defaultItemWidth: '50',
       defaultGlyphTraitHeight: '25',
