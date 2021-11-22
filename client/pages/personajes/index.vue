@@ -26,7 +26,7 @@
     <div style="width: 30%">
       <personaje
         :nombre="selectedPersonaje.nombre"
-        :slots="selectedItem"
+        :item="selectedItem"
         :set="selectedSet"
       ></personaje>
     </div>

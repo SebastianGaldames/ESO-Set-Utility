@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ slots === undefined ? 'none' : slots.nombre }}
+    {{ item === undefined ? 'none' : item.nombre }}
     {{ set === undefined ? 'none' : set.nombre }}
     <h1 style="text-align: center">{{ nombre }}</h1>
     <div class="d-flex flex-direction:column">
@@ -10,13 +10,11 @@
           <v-row align="center" justify="center" no-gutters>
             <v-col align="center" justify="center" no-gutters>
               <h4 style="text-align: center">Cabeza</h4>
-              <v-item v-slot="{ toggle }" :value="item">
+              <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    :casilla="Cabeza"
-                    :item="item"
-                    :trait="trait"
-                    :glyph="glyph"
+                    :id="'Cabeza'"
+                    :slot-prop="newSlot"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -33,7 +31,7 @@
               no-gutters
             >
               <h4 style="text-align: center">{{ equipamiento[n] }}</h4>
-              <v-item v-slot="{ toggle }" :value="item">
+              <v-item v-slot="{ toggle }">
                 <v-card
                   class="d-flex align-center"
                   outlined
@@ -42,11 +40,9 @@
                   @click="toggle"
                 >
                   <itemSlot
-                    :casilla="equipamiento[n]"
-                    :item="item"
-                    :trait="trait"
-                    :glyph="glyph"
-                    style="padding: 5%; margin: auto"
+                    :id="equipamiento[n]"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -62,14 +58,12 @@
               md="4"
             >
               <h4 style="text-align: center">{{ accesorios[n] }}</h4>
-              <v-item v-slot="{ toggle }" :value="item">
+              <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    :casilla="accesorios[n]"
-                    :item="item"
-                    :trait="trait"
-                    :glyph="glyph"
-                    style="padding: 5%; margin: auto"
+                    :id="accesorios[n]"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -85,14 +79,12 @@
               md="4"
             >
               <h4 style="text-align: center">{{ armas[n] }}</h4>
-              <v-item v-slot="{ toggle }" :value="item">
+              <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    :casilla="armas[n]"
-                    :item="item"
-                    :trait="trait"
-                    :glyph="glyph"
-                    style="padding: 5%; margin: auto"
+                    :id="armas[n]"
+                    :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -114,21 +106,13 @@ export default {
     itemSlot,
   },
   props: {
-    slots: {
+    item: {
       type: Object,
-      default: () => {},
+      required: true,
     },
     set: {
       type: Object,
-      default: () => {},
-    },
-    inventario: {
-      type: Array,
-      default: () => [],
-    },
-    value: {
-      type: Object,
-      default: () => {},
+      required: true,
     },
     nombre: {
       type: String,
@@ -138,16 +122,6 @@ export default {
   data() {
     return {
       // Datos de prueba
-      item: {
-        nombre: 'slot',
-        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
-      },
-      glyph: {
-        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
-      },
-      trait: {
-        imagen: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
-      },
       selectedSlot: {},
       equipamiento: [
         '',
@@ -161,6 +135,16 @@ export default {
       accesorios: ['', 'Cuello', 'Anillo', 'Anillo'],
       armas: ['', 'Arma1', 'Arma2', 'Arma3'],
     }
+  },
+  computed: {
+    newSlot() {
+      const tempSlot = {
+        item: this.item,
+        glyph: undefined,
+        trait: undefined,
+      }
+      return tempSlot
+    },
   },
 }
 </script>
