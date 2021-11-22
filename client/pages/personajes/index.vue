@@ -1,14 +1,20 @@
 <template>
   <div class="d-flex">
-    <div style="width: 70%">
+    <div style="width: 70%" class="pa-3">
       <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
       </seleccion-personaje>
-      <v-tabs>
+      <v-tabs color="acentuado1">
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
+          <div>
+            {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
+            {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
+          </div>
           <personaje-inventario
             :familias="familias"
-            :items="items"
+            :items="itemsSingleSet"
+            @familyChanged="handleFamilyChanged"
+            @itemChanged="handleItemChanged"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -57,13 +63,30 @@ export default {
     return {
       personajes: [],
       items: [],
+      itemsCache: [],
       itemsInventario: [],
       familias: [],
       glyphs: [],
       traits: [],
       selectedPersonaje: {},
+      selectedSet: undefined,
+      selectedItem: {},
       currentUser: {},
     }
+  },
+  computed: {
+    itemsSingleSet() {
+      if (this.selectedSet === undefined) return []
+      const filtered = []
+      for (const itemId of this.selectedSet.itemsFamilia) {
+        const found = this.items.find((item) => item._id === itemId)
+        filtered.push(found)
+      }
+      return filtered
+    },
+  },
+  watch: {
+    //
   },
   mounted() {
     // this.makeDummyData()
@@ -102,6 +125,14 @@ export default {
         )
         this.personajes.push(pj)
       }
+    },
+    handleFamilyChanged(content) {
+      // console.log(content.nombre)
+      this.selectedSet = content
+    },
+    handleItemChanged(content) {
+      // console.log(content.nombre)
+      this.selectedItem = content
     },
   },
 }
