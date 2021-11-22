@@ -4,21 +4,21 @@
       <v-img
         class="mx-1"
         :height="defaultItemHeight"
-        :src="item.imagen"
+        :src="itemImage"
         :width="defaultItemWidth"
         @click="test"
       ></v-img>
       <div class="d-flex py-2">
         <v-img
           :max-height="defaultGlyphTraitHeight"
-          :src="trait.imagen"
+          :src="traitImage"
           :max-width="defaultGlyphTraitWidth"
           @click="test"
         ></v-img>
         <v-img
           class="mx-2"
           :max-height="defaultGlyphTraitHeight"
-          :src="glyph.imagen"
+          :src="glyphImage"
           :max-width="defaultGlyphTraitWidth"
           @click="test"
         ></v-img>
@@ -30,32 +30,44 @@
 <script>
 export default {
   props: {
-    casilla: {
+    id: {
       type: String,
-      default: '',
+      required: true,
     },
-    item: {
+    slot: {
       type: Object,
       required: true,
-      default: null,
     },
-    trait: {
-      type: Object,
-      required: true,
-      default: null,
+    agregarItem: {
+      type: Boolean,
+      default: false,
     },
-    glyph: {
-      type: Object,
-      required: true,
-      default: null,
+    agregarGlyph: {
+      type: Boolean,
+      default: false,
     },
-    arma: {
+    agregarTrait: {
       type: Boolean,
       default: false,
     },
   },
   data() {
+    let itemImage = ''
+    let glyphImage = ''
+    let traitImage = ''
+    if (!(this.slot.item === null || this.slot.item === undefined)) {
+      itemImage = this.slot.item.imagen
+    }
+    if (!(this.slot.glyph === null || this.slot.glyph === undefined)) {
+      glyphImage = this.slot.glyph.imagen
+    }
+    if (!(this.slot.trait === null || this.slot.trait === undefined)) {
+      traitImage = this.slot.trait.imagen
+    }
     return {
+      itemImage,
+      glyphImage,
+      traitImage,
       defaultItemHeight: '50',
       defaultItemWidth: '50',
       defaultGlyphTraitHeight: '25',
