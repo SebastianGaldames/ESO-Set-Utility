@@ -1,14 +1,27 @@
 <template>
   <div class="d-flex">
-    <div style="width: 70%">
+    <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
+    <div style="width: 70%" class="pa-3">
       <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
       </seleccion-personaje>
-      <v-tabs>
+      <v-tabs color="acentuado1">
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
+          <div>
+            <!-- {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
+            {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
+            <br /> -->
+            <!-- {{ currentUser.inventario }} -->
+          </div>
+          <v-divider></v-divider>
           <personaje-inventario
             :familias="familias"
-            :items="items"
+            :items="itemsSingleSet"
+            :inventario="currentUser.inventario"
+            :all-items="items"
+            @familyChanged="handleFamilyChanged"
+            @itemChanged="handleItemChanged"
+            @updateInventory="handleUpdateInventory"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -57,13 +70,30 @@ export default {
     return {
       personajes: [],
       items: [],
+      itemsCache: [],
       itemsInventario: [],
       familias: [],
       glyphs: [],
       traits: [],
       selectedPersonaje: {},
+      selectedSet: undefined,
+      selectedItem: {},
       currentUser: {},
     }
+  },
+  computed: {
+    itemsSingleSet() {
+      if (this.selectedSet === undefined) return []
+      const filtered = []
+      for (const itemId of this.selectedSet.itemsFamilia) {
+        const found = this.items.find((item) => item._id === itemId)
+        filtered.push(found)
+      }
+      return filtered
+    },
+  },
+  watch: {
+    //
   },
   mounted() {
     // this.makeDummyData()
@@ -74,18 +104,12 @@ export default {
     this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
-    makeDummyData() {
-      const p1 = { nombre: 'juanin', email: 'asd@asd.com' }
-      const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
-      const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
-      this.personajes.push(p1, p2, p3)
-    },
-    async fetchUsers() {
-      const user = await this.$axios.$get(
-        process.env.VUE_APP_SERVER_URL + '/Usuario/list'
-      )
-      this.currentUser = user[0]
-    },
+    // makeDummyData() {
+    //   const p1 = { nombre: 'juanin', email: 'asd@asd.com' }
+    //   const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
+    //   const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
+    //   this.personajes.push(p1, p2, p3)
+    // },
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
@@ -93,6 +117,7 @@ export default {
       )
       await this.fetchPersonajes(user.personajes)
       this.selectedPersonaje = this.personajes[0]
+      this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
       for (const id of idsArray) {
@@ -102,6 +127,32 @@ export default {
         )
         this.personajes.push(pj)
       }
+    },
+    async updateInventario() {
+      const response = await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/actualizarInventario',
+        {
+          _id: this.currentUser._id,
+          inventario: this.currentUser.inventario,
+        }
+      )
+      console.log(response)
+    },
+    handleFamilyChanged(content) {
+      // console.log(content.nombre)
+      this.selectedSet = content
+    },
+    handleItemChanged(content) {
+      // console.log(content.nombre)
+      this.selectedItem = content
+    },
+    handleUpdateInventory(event) {
+      const newItem = {
+        item: this.selectedItem._id,
+        set: this.selectedSet._id,
+      }
+      this.currentUser.inventario.push(newItem)
+      this.updateInventario()
     },
   },
 }
