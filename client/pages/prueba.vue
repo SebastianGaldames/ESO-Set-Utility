@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="480" persistent>
+    <v-dialog v-model="dialog" width="480">
       <CreacionPersonaje
         @newCharacterEvent="newCharacterEvent"
         @closeNewCharacterDialogEvent="closeNewCharacterDialogHandler"
@@ -26,7 +26,7 @@ export default {
       console.log(content.characterDescription)
       // this.character = content
     },
-    closeNewCharacterDialogHandler() {
+    closeNewCharacterDialogHandler(clearable) {
       this.dialog = false
     },
   },

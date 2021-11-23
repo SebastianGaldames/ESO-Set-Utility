@@ -40,6 +40,8 @@ export default {
       this.$emit('newCharacterEvent', this.character)
     },
     closeDialogEvent() {
+      this.character.characterName = ''
+      this.character.characterDescription = ''
       this.$emit('closeNewCharacterDialogEvent')
     },
   },
