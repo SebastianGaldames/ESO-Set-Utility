@@ -1,6 +1,7 @@
 <template>
   <div>
     {{ item === undefined ? 'none' : item.nombre }}
+    {{ set === undefined ? 'none' : set.nombre }}
     {{ selectedSlot === undefined ? 'none' : selectedSlot }}
     <h1 style="text-align: center">{{ nombre }}</h1>
     <div class="d-flex flex-direction:column">
@@ -11,18 +12,17 @@
             <v-col align="center" justify="center" no-gutters>
               <h4 style="text-align: center">Head</h4>
               <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
+                <v-card
+                  outlined
+                  width="90"
+                  height="90"
+                  style="padding: 5%"
+                  @click="toggle"
+                >
                   <itemSlot
-                    v-if="!(item === undefined) && item.categoria == 'Head'"
+                    v-if="isValid('Head')"
                     :id="'Head'"
-                    :slot-prop="newSlot"
-                    style="padding: 5%"
-                  ></itemSlot>
-                  <itemSlot
-                    v-else
-                    :id="'Head'"
-                    :slot-prop="emptySlot"
-                    style="padding: 5%"
+                    :slot-prop="findSlot('Head')"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -30,66 +30,53 @@
           </v-row>
           <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="n in 6"
-              :key="n"
+              v-for="category in equipamiento"
+              :key="category"
               align="center"
               justify="center"
               md="4"
               no-gutters
             >
-              <h4 style="text-align: center">{{ equipamiento[n] }}</h4>
+              <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
                 <v-card
-                  class="d-flex align-center"
                   outlined
                   width="90"
                   height="90"
+                  style="padding: 5%"
                   @click="toggle"
                 >
                   <itemSlot
-                    v-if="
-                      !(item === undefined) &&
-                      item.categoria === equipamiento[n]
-                    "
-                    :id="equipamiento[n]"
+                    v-if="isValid(category)"
+                    :id="category"
                     :slot-prop="newSlot"
-                    style="padding: 5%"
-                  ></itemSlot>
-                  <itemSlot
-                    v-else
-                    :id="equipamiento[n]"
-                    :slot-prop="emptySlot"
-                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
             </v-col>
           </v-row>
-          <h2 style="text-align: center">Accesories</h2>
+          <h2 style="text-align: center">Accessories</h2>
           <v-row align="center" justify="center">
             <v-col
-              v-for="n in 3"
-              :key="n"
+              v-for="category in accesorios"
+              :key="category"
               align="center"
               justify="center"
               md="4"
             >
-              <h4 style="text-align: center">{{ accesorios[n] }}</h4>
+              <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
+                <v-card
+                  outlined
+                  width="90"
+                  height="90"
+                  style="padding: 5%"
+                  @click="toggle"
+                >
                   <itemSlot
-                    v-if="
-                      !(item === undefined) && item.categoria == accesorios[n]
-                    "
-                    :id="accesorios[n]"
+                    v-if="isValid(category)"
+                    :id="category"
                     :slot-prop="newSlot"
-                    style="padding: 5%"
-                  ></itemSlot>
-                  <itemSlot
-                    v-else
-                    :id="accesorios[n]"
-                    :slot-prop="emptySlot"
-                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -98,27 +85,27 @@
           <h2 style="text-align: center">Weapons</h2>
           <v-row align="center" justify="center">
             <v-col
-              v-for="n in 3"
-              :key="n"
+              v-for="category in armas"
+              :key="category"
               align="center"
               justify="center"
               md="4"
             >
-              <h4 style="text-align: center">{{ armas[n] }}</h4>
+              <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
+                <v-card
+                  outlined
+                  width="90"
+                  height="90"
+                  style="padding: 5%"
+                  @click="toggle"
+                >
                   <itemSlot
-                    v-if="!(item === undefined) && item.categoria == armas[n]"
-                    :id="armas[n]"
+                    v-if="isValid(category)"
+                    :id="category"
                     :slot-prop="newSlot"
-                    style="padding: 5%"
-                  ></itemSlot>
-                  <itemSlot
-                    v-else
-                    :id="armas[n]"
-                    :slot-prop="emptySlot"
-                    style="padding: 5%"
-                  ></itemSlot>
+                  >
+                  </itemSlot>
                 </v-card>
               </v-item>
             </v-col>
@@ -156,21 +143,28 @@ export default {
     return {
       // Datos de prueba
       selectedSlot: {},
-      equipamiento: [
-        '',
-        'Shoulders',
-        'Chest',
-        'Hands',
-        'Legs',
-        'Waist',
-        'Feet',
+      equipamiento: ['Shoulders', 'Chest', 'Hands', 'Legs', 'Waist', 'Feet'],
+      accesorios: ['Cuello', 'Anillo1', 'Anillo2'],
+      armas: ['One-Handed', 'Two-Handed', 'Off Hand'],
+      slotsInv: [
+        ['Head'],
+        ['Shoulders'],
+        ['Chest'],
+        ['Hands'],
+        ['Legs'],
+        ['Waist'],
+        ['Feet'],
       ],
-      accesorios: ['', 'Cuello', 'Anillo', 'Anillo'],
-      armas: ['', 'Arma1', 'Arma2', 'Arma3'],
     }
   },
   computed: {
     newSlot() {
+      const empty = {
+        item: undefined,
+        glyph: undefined,
+        trait: undefined,
+        set: undefined,
+      }
       if (!(this.item === undefined && this.set === undefined)) {
         const tempSlot = {
           item: this.item,
@@ -180,19 +174,32 @@ export default {
         }
         return tempSlot
       }
-      return ''
+      return empty
     },
-    emptySlot() {
-      if (this.item === undefined && this.set === undefined) {
-        const empty = {
-          item: undefined,
-          glyph: undefined,
-          trait: undefined,
-          set: undefined,
+  },
+  methods: {
+    findSlot(val) {
+      this.slotsInv.forEach((element) => {
+        if (element[0] === val) {
+          element[0].append(this.item)
+          element[0].append(this.set)
         }
-        return empty
-      }
-      return ''
+      })
+    },
+    isValid(val) {
+      return (
+        !(this.item === undefined && this.set === undefined) &&
+        this.item.categoria === val
+      )
+    },
+    addSlotEq(val) {
+      this.slotsEq.append(val)
+    },
+    addSlotAcc(val) {
+      this.slotsAcc.append(val)
+    },
+    addSlotArm(val) {
+      this.slotsArm.append(val)
     },
   },
 }
