@@ -1,7 +1,7 @@
 <template>
   <v-sheet
     color="transparent"
-    min-height="96"
+    min-height="80"
     width="100%"
     class="d-flex flex-direction:column align-center py-4 px-2"
   >

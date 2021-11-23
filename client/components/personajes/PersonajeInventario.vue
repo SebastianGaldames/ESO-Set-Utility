@@ -1,14 +1,8 @@
 <template>
   <div class="pa-2">
-    <div>inventario</div>
-    <!-- selected item Inner:
-    {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
-    <br />
-    selected set Inner:
-    {{ selectedFamilia === undefined ? 'none' : selectedFamilia.nombre }}<br /> -->
-    <!-- items Ids: {{ items }} -->
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
+        <h3>Sets</h3>
         <v-text-field
           v-model="setFilter"
           label="Buscar Set"
@@ -16,33 +10,66 @@
           clearable
           append-icon="fas fa-lock"
         ></v-text-field>
-        <v-item-group v-model="selectedFamilia" class="scrollable" mandatory>
+        <v-list nav dense>
+          <v-list-item-group
+            v-model="selectedFamilia"
+            class="scrollable"
+            mandatory
+          >
+            <v-list-item
+              v-for="(familia, nombre) in filteredSets"
+              :key="nombre"
+              :value="familia"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="familia.nombre"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+      <v-card width="70%">
+        <!-- {{ inventarioViewModel }} <br /> -->
+        <!-- <item-box :item="items[0]"></item-box> -->
+        <h3>Inventario</h3>
+        <v-item-group @change="handleSelectionInventory">
           <v-container fluid>
             <v-row no-gutters>
               <v-col
-                v-for="familia in filteredSets"
-                :key="familia.nombre"
+                v-for="inventarioItem in inventarioViewModel"
+                :key="inventarioItem._id"
                 cols="12"
-                md="12"
+                md="3"
                 no-gutters
               >
-                <v-sheet min-height="10" color="transparent">
-                  <v-lazy>
-                    <v-item v-slot="{ toggle }" class="mb-1" :value="familia">
-                      <v-card @click="toggle">
-                        {{ familia.nombre }}
-                      </v-card>
-                    </v-item>
-                  </v-lazy>
-                </v-sheet>
+                <v-item v-slot="{ active, toggle }" :value="inventarioItem">
+                  <v-sheet class="d-flex align-center pa-1" @click="toggle">
+                    <v-card
+                      v-if="active"
+                      width="100%"
+                      color="acentuado1"
+                      outlined
+                    >
+                      <v-sheet rounded class="pa-2">
+                        <!-- <item-box :item="item.item"></item-box> -->
+                        {{ inventarioItem.item.nombre }}<br />
+                        <h5>{{ inventarioItem.set.nombre }}</h5>
+                      </v-sheet>
+                    </v-card>
+                    <v-card v-else width="100%" outlined class="pa-2">
+                      {{ inventarioItem.item.nombre }}<br />
+                      <h5>{{ inventarioItem.set.nombre }}</h5>
+                      <!-- <item-box :item="item.item"></item-box> -->
+                    </v-card>
+                  </v-sheet>
+                </v-item>
               </v-col>
             </v-row>
           </v-container>
         </v-item-group>
-      </v-card>
-      <v-card width="70%">
-        <!-- <item-box :item="items[0]"></item-box> -->
+        <v-divider></v-divider>
         <div id="itemsPanel">
+          <h3>Items</h3>
           <div class="d-flex pa-2">
             <v-text-field
               id="buscador"
@@ -63,6 +90,7 @@
               hide-selected
             ></v-combobox>
           </div>
+          <v-btn @click="updateInventoryEvent()">Agregar a Inventario</v-btn>
           <v-item-group v-model="selectedItem">
             <v-container fluid>
               <v-row no-gutters>
@@ -110,6 +138,11 @@ export default {
       default: () => [],
       required: true,
     },
+    allItems: {
+      type: Array,
+      default: () => [],
+      required: true,
+    },
     familias: {
       type: Array,
       default: () => [],
@@ -142,6 +175,24 @@ export default {
         cats.add(item.categoria)
       }
       return [...cats]
+    },
+    inventarioViewModel() {
+      const tempVM = []
+      try {
+        for (const inventoryItem of this.inventario) {
+          const targetSet = this.familias.find(
+            (set) => set._id === inventoryItem.set
+          )
+
+          const targetItem = this.allItems.find(
+            (item) => item._id === inventoryItem.item
+          )
+          tempVM.push({ set: targetSet, item: targetItem })
+          // tempVM.push({ itemId: inventoryItem.item, setId: inventoryItem.set })
+        }
+      } catch {}
+
+      return tempVM
     },
   },
   watch: {
@@ -202,15 +253,22 @@ export default {
     selectedItemChanged() {
       this.$emit('itemChanged', this.selectedItem)
     },
+    updateInventoryEvent() {
+      this.$emit('updateInventory')
+    },
+    handleSelectionInventory(event) {
+      if (event === undefined) {
+      } else {
+        this.selectedItem = event.item
+        this.selectedFamilia = event.set
+      }
+    },
   },
 }
 </script>
 <style>
 .scrollable {
   overflow-y: scroll;
-  height: 50vh;
-}
-.selected {
-  background-color: #ffe34d;
+  height: 60vh;
 }
 </style>
