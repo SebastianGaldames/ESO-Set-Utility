@@ -12,17 +12,15 @@
             <v-col align="center" justify="center" no-gutters>
               <h4 style="text-align: center">Head</h4>
               <v-item v-slot="{ toggle }">
-                <v-card
-                  outlined
-                  width="90"
-                  height="90"
-                  style="padding: 5%"
-                  @click="toggle"
-                >
+                <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isValid('Head')"
+                    v-if="isAgregarItem('Head')"
                     :id="'Head'"
-                    :slot-prop="findSlot('Head')"
+                    :slot-prop="newSlot"
+                    :enable-item="isAgregarItem('Head')"
+                    :enable-glyph="isAgregarGlyph('Armor')"
+                    :enable-trait="isAgregarTrait('Armor')"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -39,17 +37,15 @@
             >
               <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
-                <v-card
-                  outlined
-                  width="90"
-                  height="90"
-                  style="padding: 5%"
-                  @click="toggle"
-                >
+                <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isValid(category)"
+                    v-if="isAgregarItem(category)"
                     :id="category"
+                    :enable-item="isAgregarItem(category)"
+                    :enable-glyph="isAgregarGlyph('Armor')"
+                    :enable-trait="isAgregarTrait('Armor')"
                     :slot-prop="newSlot"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -66,17 +62,15 @@
             >
               <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
-                <v-card
-                  outlined
-                  width="90"
-                  height="90"
-                  style="padding: 5%"
-                  @click="toggle"
-                >
+                <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isValid(category)"
+                    v-if="isAgregarItem(category)"
                     :id="category"
                     :slot-prop="newSlot"
+                    :enable-item="isAgregarItem(category)"
+                    :enable-glyph="isAgregarGlyph('Jewelry')"
+                    :enable-trait="isAgregarTrait('Jewelry')"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -93,17 +87,15 @@
             >
               <h4 style="text-align: center">{{ category }}</h4>
               <v-item v-slot="{ toggle }">
-                <v-card
-                  outlined
-                  width="90"
-                  height="90"
-                  style="padding: 5%"
-                  @click="toggle"
-                >
+                <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isValid(category)"
+                    v-if="isAgregarItem(category)"
                     :id="category"
                     :slot-prop="newSlot"
+                    :enable-item="isAgregarItem(category)"
+                    :enable-glyph="isAgregarGlyph('Weapon')"
+                    :enable-trait="isAgregarTrait('Weapon')"
+                    style="padding: 5%"
                   >
                   </itemSlot>
                 </v-card>
@@ -178,28 +170,25 @@ export default {
     },
   },
   methods: {
-    findSlot(val) {
+    /* findSlot(val) {
       this.slotsInv.forEach((element) => {
         if (element[0] === val) {
           element[0].append(this.item)
           element[0].append(this.set)
         }
       })
-    },
-    isValid(val) {
+    }, */
+    isAgregarItem(val) {
       return (
         !(this.item === undefined && this.set === undefined) &&
         this.item.categoria === val
       )
     },
-    addSlotEq(val) {
-      this.slotsEq.append(val)
+    isAgregarGlyph(val) {
+      return !(this.glyph === undefined) && this.glyph.tipo === val
     },
-    addSlotAcc(val) {
-      this.slotsAcc.append(val)
-    },
-    addSlotArm(val) {
-      this.slotsArm.append(val)
+    isAgregarTrait(val) {
+      return !(this.trait === undefined) && this.trait.tipo === val
     },
   },
 }
