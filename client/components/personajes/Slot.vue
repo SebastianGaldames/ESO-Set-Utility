@@ -7,7 +7,7 @@
         class="texto1--text"
         :height="defaultItemHeight"
         :width="defaultItemWidth"
-        @click="test"
+        @click="agregarSlotItem"
       >
         +
       </v-btn>
@@ -27,7 +27,7 @@
           x-small
           :height="defaultGlyphTraitHeight"
           :width="defaultGlyphTraitWidth"
-          @click="test"
+          @click="agregarSlotTrait"
         >
           +
         </v-btn>
@@ -37,7 +37,6 @@
           :src="traitImage"
           :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
-          @click="test"
         ></v-img>
         <v-btn
           v-if="enableGlyph"
@@ -46,7 +45,7 @@
           x-small
           :height="defaultGlyphTraitHeight"
           :width="defaultGlyphTraitWidth"
-          @click="test"
+          @click="agregarSlotGlyph"
         >
           +
         </v-btn>
@@ -57,7 +56,6 @@
           :src="glyphImage"
           :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
-          @click="test"
         ></v-img>
       </div>
     </div>
@@ -117,8 +115,17 @@ export default {
     },
   },
   methods: {
-    test(event) {
-      console.log('evento capturado')
+    // test(event) {
+    //   console.log('evento capturado')
+    // },
+    agregarSlotItem() {
+      this.$emit('agregarSlotItem', this.id)
+    },
+    agregarSlotTrait() {
+      this.$emit('agregarSlotTrait', this.id)
+    },
+    agregarSlotGlyph() {
+      this.$emit('agregarSlotGlyph', this.id)
     },
   },
 }
