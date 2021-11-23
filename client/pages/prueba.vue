@@ -1,9 +1,11 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="30%" persistent>
-      <CreacionPersonaje @addCharacter="newCharacterEvent"></CreacionPersonaje>
+    <v-dialog v-model="dialog" width="480" persistent>
+      <CreacionPersonaje
+        @newCharacterEvent="newCharacterEvent"
+        @closeNewCharacterDialogEvent="closeNewCharacterDialogHandler"
+      ></CreacionPersonaje>
     </v-dialog>
-    <div>{{ characterDescription }} // {{ characterName }}</div>
     <v-btn @click="dialog = true">llamar Dialogo</v-btn>
   </div>
 </template>
@@ -14,7 +16,19 @@ export default {
   data() {
     return {
       dialog: false,
+      character: {},
     }
+  },
+
+  methods: {
+    newCharacterEvent(content) {
+      console.log(content.characterName)
+      console.log(content.characterDescription)
+      // this.character = content
+    },
+    closeNewCharacterDialogHandler() {
+      this.dialog = false
+    },
   },
 }
 </script>
