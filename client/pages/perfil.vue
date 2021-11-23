@@ -18,23 +18,20 @@
                 Informacion Personal
               </h2>
               <div class="secundario--text pt-5 pl-5">
-                <v-icon color="grey darken-1"> mdi-account </v-icon>Usuario:{{
-                  user.usuario
-                }}
+                <v-icon color="grey darken-1"> mdi-account </v-icon
+                ><v-text>Usuario: </v-text>{{ user.usuario }}
               </div>
               <div class="secundario--text pt-2 pl-5">
-                <v-icon color="grey darken-1"> mdi-earth </v-icon>País:{{
-                  user.pais
-                }}
+                <v-icon color="grey darken-1"> mdi-earth </v-icon
+                ><v-text>País: </v-text>{{ user.pais }}
               </div>
               <div class="secundario--text pt-2 pl-5">
-                <v-icon color="grey darken-1"> mdi-email </v-icon>Correo:{{
-                  user.email
-                }}
+                <v-icon color="grey darken-1"> mdi-email </v-icon
+                ><v-text>Correo: </v-text>{{ user.email }}
               </div>
               <div class="secundario--text pt-2 pl-5 pb-5">
                 <v-icon color="grey darken-1"> mdi-gender-male-female </v-icon
-                >Sexo:{{ user.sexo }}
+                ><v-text>Sexo: </v-text>{{ user.sexo }}
               </div>
             </v-card-text>
           </v-card>
@@ -46,68 +43,92 @@
                 Cambiar datos existentes
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
-                <v-row align="center" class="pt-4 pl-2">
-                  <v-checkbox
-                    v-model="checkbox1"
-                    hide-details
-                    class="shrink mr-2 mt-0"
-                    color="secundario"
-                  ></v-checkbox>
-                  <v-autocomplete
-                    ref="pais"
-                    v-model="pais"
-                    :disabled="!checkbox1"
-                    :items="paises"
-                    label="País"
-                    color="goldenrod"
-                    placeholder="Selecciona..."
-                    clearable
-                    class="
-                      secundario--text
-                      text-input-goldenrod
-                      custom-label-color custom-placeholer-color
-                    "
-                  ></v-autocomplete>
-                </v-row>
-                <v-row align="center" class="pl-2">
-                  <v-checkbox
-                    v-model="checkbox2"
-                    hide-details
-                    class="shrink mr-2 mt-0"
-                    color="secundario"
-                  ></v-checkbox>
-                  <v-text-field
-                    v-model="usuario"
-                    :disabled="!checkbox2"
-                    :rules="[rules.usermin]"
-                    label="Ingresa tu usuario"
-                    class="
-                      secundario--text
-                      text-input-goldenrod
-                      custom-label-color custom-placeholer-color
-                    "
-                  ></v-text-field>
-                </v-row>
-                <v-row align="center" class="pl-2">
-                  <v-checkbox
-                    v-model="checkbox3"
-                    hide-details
-                    class="shrink mr-2 mt-0"
-                    color="secundario"
-                  ></v-checkbox>
-                  <v-text-field
-                    v-model="email"
-                    :disabled="!checkbox3"
-                    :rules="[emailrules.syntax]"
-                    label="Email"
-                    clearable
-                    class="
-                      secundario--text
-                      text-input-goldenrod
-                      custom-label-color custom-placeholer-color
-                    "
-                  ></v-text-field>
-                </v-row>
+                <v-tooltip v-model="show" right color="transparent">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-row
+                      align="center"
+                      class="pt-4 pl-2"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-checkbox
+                        v-model="checkbox1"
+                        hide-details
+                        class="shrink mr-2 mt-0"
+                        color="secundario"
+                        @click="show = !show"
+                      ></v-checkbox>
+
+                      <v-autocomplete
+                        ref="pais"
+                        v-model="pais"
+                        :disabled="!checkbox1"
+                        :items="paises"
+                        label="País"
+                        color="goldenrod"
+                        placeholder="Selecciona..."
+                        clearable
+                        class="
+                          secundario--text
+                          text-input-goldenrod
+                          custom-label-color custom-placeholer-color
+                        "
+                      ></v-autocomplete>
+                    </v-row>
+                  </template>
+                  <span>Marcar opcion para realizar cambios</span>
+                </v-tooltip>
+                <v-tooltip v-model="show1" right color="transparent">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
+                      <v-checkbox
+                        v-model="checkbox2"
+                        hide-details
+                        class="shrink mr-2 mt-0"
+                        color="secundario"
+                        @click="show1 = !show1"
+                      ></v-checkbox>
+                      <v-text-field
+                        v-model="usuario"
+                        :disabled="!checkbox2"
+                        :rules="[rules.usermin]"
+                        label="Ingresa tu usuario"
+                        class="
+                          secundario--text
+                          text-input-goldenrod
+                          custom-label-color custom-placeholer-color
+                        "
+                      ></v-text-field>
+                    </v-row>
+                  </template>
+                  <span>Marcar opcion para realizar cambios</span>
+                </v-tooltip>
+                <v-tooltip v-model="show2" right color="transparent">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
+                      <v-checkbox
+                        v-model="checkbox3"
+                        hide-details
+                        class="shrink mr-2 mt-0"
+                        color="secundario"
+                        @click="show2 = !show2"
+                      ></v-checkbox>
+                      <v-text-field
+                        v-model="email"
+                        :disabled="!checkbox3"
+                        :rules="[emailrules.syntax]"
+                        label="Email"
+                        clearable
+                        class="
+                          secundario--text
+                          text-input-goldenrod
+                          custom-label-color custom-placeholer-color
+                        "
+                      ></v-text-field>
+                    </v-row>
+                  </template>
+                  <span>Marcar opcion para realizar cambios</span>
+                </v-tooltip>
                 <v-row align="center" class="pl-2">
                   <v-checkbox
                     light
@@ -128,29 +149,35 @@
                     "
                   ></v-text-field>
                 </v-row>
-                <v-row align="center" class="pl-2">
-                  <v-checkbox
-                    v-model="checkbox4"
-                    hide-details
-                    class="shrink mr-2 mt-0"
-                    color="secundario"
-                  ></v-checkbox>
-                  <v-text-field
-                    v-model="password"
-                    :disabled="!checkbox4"
-                    :rules="[rules.min]"
-                    :type="show ? 'text' : 'password'"
-                    name="input-10-2"
-                    label="Ingresa contraseña"
-                    hint=" "
-                    class="
-                      input-group--focused
-                      secundario--text
-                      text-input-goldenrod
-                      custom-label-color custom-placeholer-color
-                    "
-                  ></v-text-field>
-                </v-row>
+                <v-tooltip v-model="show3" right color="transparent">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
+                      <v-checkbox
+                        v-model="checkbox4"
+                        hide-details
+                        class="shrink mr-2 mt-0"
+                        color="secundario"
+                        @click="show3 = !show3"
+                      ></v-checkbox>
+                      <v-text-field
+                        v-model="password"
+                        :disabled="!checkbox4"
+                        :rules="[rules.min]"
+                        :type="show ? 'text' : 'password'"
+                        name="input-10-2"
+                        label="Ingresa contraseña"
+                        hint=" "
+                        class="
+                          input-group--focused
+                          secundario--text
+                          text-input-goldenrod
+                          custom-label-color custom-placeholer-color
+                        "
+                      ></v-text-field>
+                    </v-row>
+                  </template>
+                  <span>Marcar opcion para realizar cambios</span>
+                </v-tooltip>
                 <v-row align="center" class="pl-2">
                   <v-checkbox
                     light
@@ -246,6 +273,9 @@ export default {
         'Venezuela',
       ],
       show: false,
+      show1: false,
+      show2: false,
+      show3: false,
       usuario: '',
       password: '',
       rePassword: '',
@@ -285,14 +315,8 @@ export default {
       }
     },
     comprobaciones() {
-      console.log(this.user._id)
-      console.log(this.password)
-      console.log(this.rePassword)
-      console.log(this.email)
-      console.log(this.reEmail)
       if (this.password === this.rePassword && this.email === this.reEmail) {
         if (this.usuario.length >= 8 || this.usuario === '') {
-          console.log('comprobaciones exitosas')
           this.cambioDatos()
         }
       } else if (
@@ -328,19 +352,15 @@ export default {
     async cambioDatos() {
       if (this.pais !== '') {
         this.user.pais = this.pais
-        console.log(this.user.pais)
       }
       if (this.usuario !== '') {
         this.user.usuario = this.usuario
-        console.log(this.user.usuario)
       }
       if (this.email !== '') {
         this.user.email = this.email
-        console.log(this.user.email)
       }
       if (this.password !== '') {
         this.user.password = this.password
-        console.log(this.user.password)
       }
       const datos = {
         _id: this.user._id,
@@ -352,7 +372,6 @@ export default {
         _id: this.user._id,
         password: this.user.password,
       }
-      console.log(datos)
       const updated = await this.$axios.put(
         process.env.VUE_APP_SERVER_URL + '/Usuario/update',
         datos
@@ -362,13 +381,15 @@ export default {
           process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
           newPassword
         )
+        // eslint-disable-next-line no-console
         console.log(passwordUpdated)
       }
 
       if (updated) {
+        // eslint-disable-next-line no-console
         console.log(updated.data)
       } else {
-        console.log('fallo')
+        alert('fallo')
       }
     },
   },
