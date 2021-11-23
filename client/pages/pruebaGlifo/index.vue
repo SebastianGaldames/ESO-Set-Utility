@@ -2,14 +2,16 @@
   <section class="contenedor">
     <div class="w-100 mx-auto">
       <gliphs-comp :lista-glifos="listaGlifos"></gliphs-comp>
+      <traits-comp :lista-rasgos="listaGlifos"></traits-comp>
     </div>
   </section>
 </template>
 
 <script>
+import TraitsComp from '../../components/Traits/traitsComp.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 export default {
-  components: { gliphsComp },
+  components: { gliphsComp, TraitsComp },
   async asyncData({ $axios }) {
     const post = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Glyph/list'
@@ -27,7 +29,7 @@ export default {
 
 <style>
 .contenedor {
-  max-width: 600px;
+  max-width: 1000px;
 }
 .w-100 {
   width: 100%;
