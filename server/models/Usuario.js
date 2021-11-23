@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose')
 
 const inventarioSchema = new Schema({
-  item: { type: [Schema.ObjectId], ref: 'Item' },
-  set: { type: [Schema.ObjectId], ref: 'Familia' },
+  item: { type: Schema.ObjectId, ref: 'Item' },
+  set: { type: Schema.ObjectId, ref: 'Familia' },
 })
 
 const usuarioSchema = new Schema({
