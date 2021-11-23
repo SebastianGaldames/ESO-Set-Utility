@@ -4,33 +4,29 @@
       <h3>Lista de Glifos</h3>
     </div>
     <div class="w-100 mx-auto">
-      <v-responsive class="overflow-y-auto" max-height="400">
+      <v-responsive class="overflow-y-auto" max-height="600">
         <v-row class="galery">
           <v-col v-for="n in glifos" :key="n" md="3">
             <v-card v-ripple outlined @click="selectGlyph(n)">
               <v-row>
                 <v-col>
-                  <h5 class="centro">{{ n.Para }}</h5>
+                  <h5 class="centro">{{ n.tipo }}</h5>
                 </v-col>
               </v-row>
               <hr class="linea" />
               <v-spacer />
               <v-row>
                 <v-col md="2">
-                  <img
-                    class="img"
-                    src="https://elderscrollsonline.wiki.fextralife.com/file/Elder-Scrolls-Online/glyph_of_health-eso-wiki-guide.png"
-                    alt=""
-                  />
+                  <img :src="n.imagen" class="img" alt="" />
                 </v-col>
                 <v-col>
-                  <h4 class="centro">{{ n.Nombre }}</h4>
+                  <h4 class="centro">{{ n.nombre }}</h4>
                 </v-col>
               </v-row>
 
               <hr class="linea" />
               <v-spacer />
-              <h5 class="centro">{{ n.Efecto }}</h5>
+              <h5 class="centro">{{ n.efectoDescripcion }}</h5>
             </v-card>
           </v-col>
         </v-row>

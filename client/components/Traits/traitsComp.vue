@@ -4,32 +4,28 @@
       <h3>Lista de Rasgos</h3>
     </div>
     <div class="w-100 mx-auto">
-      <v-responsive class="overflow-y-auto" max-height="400">
+      <v-responsive class="overflow-y-auto" max-height="600">
         <v-row class="galery">
-          <v-col v-for="n in 27" :key="n" md="3">
+          <v-col v-for="n in Rasgos" :key="n" md="3">
             <v-card v-ripple outlined @click="selectTrait(n)">
-              <h5 class="centro">Para</h5>
+              <h5 class="centro">{{ n.tipo }}</h5>
               <v-spacer />
               <hr class="linea" />
 
               <v-row>
                 <v-col md="3">
-                  <img
-                    class="img"
-                    src="https://elderscrollsonline.wiki.fextralife.com/file/Elder-Scrolls-Online/Amethyst.png"
-                    alt=""
-                  />
+                  <img :src="n.imagen" class="img" alt="" />
                 </v-col>
                 <v-col>
-                  <h4 class="centro">Nombre Trair</h4>
+                  <h4 class="centro">{{ n.nombre }}</h4>
 
-                  <h5 class="centro">Nombre Gema</h5>
+                  <h5 class="centro">{{ n.gema }}</h5>
                 </v-col>
               </v-row>
 
               <hr class="linea" />
               <v-spacer />
-              <h5 class="centro">Efecto</h5>
+              <h5 v-for="e in n.efectos" :key="e" class="centro">{{ e }}</h5>
             </v-card>
           </v-col>
         </v-row>
@@ -54,8 +50,8 @@ export default {
   },
   methods: {
     // selecciona y envia el rasgo, para despues usarlo
-    selectGlyph(glifo) {
-      console.log(this.glifo)
+    selectTrair(trait) {
+      console.log(this.trait)
       this.$emit('input', this.value)
     },
   },
