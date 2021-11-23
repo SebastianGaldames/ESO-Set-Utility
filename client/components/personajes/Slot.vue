@@ -1,26 +1,61 @@
 <template>
   <div>
     <div>
+      <v-btn
+        v-if="enableItem"
+        color="acentuado3"
+        class="texto1--text"
+        :height="defaultItemHeight"
+        :width="defaultItemWidth"
+        @click="agregarSlotItem"
+      >
+        +
+      </v-btn>
       <v-img
+        v-else
         class="mx-1"
+        contain
         :height="defaultItemHeight"
         :src="itemImage"
         :width="defaultItemWidth"
-        @click="test"
       ></v-img>
       <div class="d-flex py-2">
+        <v-btn
+          v-if="enableTrait"
+          color="acentuado3"
+          class="texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="agregarSlotTrait"
+        >
+          +
+        </v-btn>
         <v-img
-          :max-height="defaultGlyphTraitHeight"
+          v-else
+          contain
           :src="traitImage"
-          :max-width="defaultGlyphTraitWidth"
-          @click="test"
-        ></v-img>
-        <v-img
-          class="mx-2"
           :max-height="defaultGlyphTraitHeight"
-          :src="glyphImage"
           :max-width="defaultGlyphTraitWidth"
-          @click="test"
+        ></v-img>
+        <v-btn
+          v-if="enableGlyph"
+          color="acentuado3"
+          class="mx-2 texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="agregarSlotGlyph"
+        >
+          +
+        </v-btn>
+        <v-img
+          v-else
+          contain
+          class="mx-2"
+          :src="glyphImage"
+          :max-height="defaultGlyphTraitHeight"
+          :max-width="defaultGlyphTraitWidth"
         ></v-img>
       </div>
     </div>
@@ -38,15 +73,15 @@ export default {
       type: Object,
       required: true,
     },
-    agregarItem: {
+    enableItem: {
       type: Boolean,
       default: false,
     },
-    agregarGlyph: {
+    enableGlyph: {
       type: Boolean,
       default: false,
     },
-    agregarTrait: {
+    enableTrait: {
       type: Boolean,
       default: false,
     },
@@ -80,8 +115,17 @@ export default {
     },
   },
   methods: {
-    test(event) {
-      console.log('evento capturado')
+    // test(event) {
+    //   console.log('evento capturado')
+    // },
+    agregarSlotItem() {
+      this.$emit('agregarSlotItem', this.id)
+    },
+    agregarSlotTrait() {
+      this.$emit('agregarSlotTrait', this.id)
+    },
+    agregarSlotGlyph() {
+      this.$emit('agregarSlotGlyph', this.id)
     },
   },
 }
