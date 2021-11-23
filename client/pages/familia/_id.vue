@@ -31,6 +31,17 @@
               <h3>DLC Requirement:</h3>
               <p class="secundario--text">• {{ miFamilia.dlc }}</p>
             </div>
+            <div>
+              <h3>Contains:</h3>
+              <p
+                v-for="pesos in miFamilia.pesos"
+                :key="pesos"
+                md="2"
+                class="secundario--text"
+              >
+                • {{ pesos }}
+              </p>
+            </div>
           </v-container>
         </v-col>
         <v-col class="mx-auto" md="6" sm="8" color="primario">
