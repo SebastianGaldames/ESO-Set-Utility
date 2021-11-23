@@ -1,24 +1,61 @@
 <template>
   <div>
     <div>
+      <v-btn
+        v-if="enableItem"
+        color="acentuado3"
+        class="texto1--text"
+        :height="defaultItemHeight"
+        :width="defaultItemWidth"
+        @click="test"
+      >
+        +
+      </v-btn>
       <v-img
+        v-else
         class="mx-1"
+        contain
         :height="defaultItemHeight"
         :src="itemImage"
         :width="defaultItemWidth"
-        @click="test"
       ></v-img>
       <div class="d-flex py-2">
+        <v-btn
+          v-if="enableTrait"
+          color="acentuado3"
+          class="texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="test"
+        >
+          +
+        </v-btn>
         <v-img
-          :max-height="defaultGlyphTraitHeight"
+          v-else
+          contain
           :src="traitImage"
+          :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
           @click="test"
         ></v-img>
+        <v-btn
+          v-if="enableGlyph"
+          color="acentuado3"
+          class="mx-2 texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="test"
+        >
+          +
+        </v-btn>
         <v-img
+          v-else
+          contain
           class="mx-2"
-          :max-height="defaultGlyphTraitHeight"
           :src="glyphImage"
+          :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
           @click="test"
         ></v-img>
