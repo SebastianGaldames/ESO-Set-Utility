@@ -40,95 +40,76 @@
           <v-expansion-panels focusable>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Cambiar datos existentes
+                <v-text class="pl-4">Cambio de datos</v-text>
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
-                <v-tooltip v-model="show" right color="transparent">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-row
-                      align="center"
-                      class="pt-4 pl-2"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <v-checkbox
-                        v-model="checkbox1"
-                        hide-details
-                        class="shrink mr-2 mt-0"
-                        color="secundario"
-                        @click="show = !show"
-                      ></v-checkbox>
-
-                      <v-autocomplete
-                        ref="pais"
-                        v-model="pais"
-                        :disabled="!checkbox1"
-                        :items="paises"
-                        label="País"
-                        color="goldenrod"
-                        placeholder="Selecciona..."
-                        clearable
-                        class="
-                          secundario--text
-                          text-input-goldenrod
-                          custom-label-color custom-placeholer-color
-                        "
-                      ></v-autocomplete>
-                    </v-row>
-                  </template>
-                  <span>Marcar opcion para realizar cambios</span>
-                </v-tooltip>
-                <v-tooltip v-model="show1" right color="transparent">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
-                      <v-checkbox
-                        v-model="checkbox2"
-                        hide-details
-                        class="shrink mr-2 mt-0"
-                        color="secundario"
-                        @click="show1 = !show1"
-                      ></v-checkbox>
-                      <v-text-field
-                        v-model="usuario"
-                        :disabled="!checkbox2"
-                        :rules="[rules.usermin]"
-                        label="Ingresa tu usuario"
-                        class="
-                          secundario--text
-                          text-input-goldenrod
-                          custom-label-color custom-placeholer-color
-                        "
-                      ></v-text-field>
-                    </v-row>
-                  </template>
-                  <span>Marcar opcion para realizar cambios</span>
-                </v-tooltip>
-                <v-tooltip v-model="show2" right color="transparent">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
-                      <v-checkbox
-                        v-model="checkbox3"
-                        hide-details
-                        class="shrink mr-2 mt-0"
-                        color="secundario"
-                        @click="show2 = !show2"
-                      ></v-checkbox>
-                      <v-text-field
-                        v-model="email"
-                        :disabled="!checkbox3"
-                        :rules="[emailrules.syntax]"
-                        label="Email"
-                        clearable
-                        class="
-                          secundario--text
-                          text-input-goldenrod
-                          custom-label-color custom-placeholer-color
-                        "
-                      ></v-text-field>
-                    </v-row>
-                  </template>
-                  <span>Marcar opcion para realizar cambios</span>
-                </v-tooltip>
+                <v-toolbar color="primario">
+                  <v-toolbar-title
+                    >Marque casilla para efectuar cambios</v-toolbar-title
+                  >
+                </v-toolbar>
+                <v-row align="center" class="pt-4 pl-2">
+                  <v-checkbox
+                    v-model="checkbox1"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-autocomplete
+                    ref="pais"
+                    v-model="pais"
+                    :disabled="!checkbox1"
+                    :items="paises"
+                    label="País"
+                    color="goldenrod"
+                    placeholder="Selecciona..."
+                    clearable
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-autocomplete>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox2"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="usuario"
+                    :disabled="!checkbox2"
+                    :rules="[rules.usermin]"
+                    label="Ingresa tu usuario"
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox3"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="email"
+                    :disabled="!checkbox3"
+                    :rules="[emailrules.syntax]"
+                    label="Email"
+                    clearable
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
                 <v-row align="center" class="pl-2">
                   <v-checkbox
                     light
@@ -149,35 +130,29 @@
                     "
                   ></v-text-field>
                 </v-row>
-                <v-tooltip v-model="show3" right color="transparent">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-row align="center" class="pl-2" v-bind="attrs" v-on="on">
-                      <v-checkbox
-                        v-model="checkbox4"
-                        hide-details
-                        class="shrink mr-2 mt-0"
-                        color="secundario"
-                        @click="show3 = !show3"
-                      ></v-checkbox>
-                      <v-text-field
-                        v-model="password"
-                        :disabled="!checkbox4"
-                        :rules="[rules.min]"
-                        :type="show ? 'text' : 'password'"
-                        name="input-10-2"
-                        label="Ingresa contraseña"
-                        hint=" "
-                        class="
-                          input-group--focused
-                          secundario--text
-                          text-input-goldenrod
-                          custom-label-color custom-placeholer-color
-                        "
-                      ></v-text-field>
-                    </v-row>
-                  </template>
-                  <span>Marcar opcion para realizar cambios</span>
-                </v-tooltip>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox4"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="password"
+                    :disabled="!checkbox4"
+                    :rules="[rules.min]"
+                    :type="show ? 'text' : 'password'"
+                    name="input-10-2"
+                    label="Ingresa contraseña"
+                    hint=" "
+                    class="
+                      input-group--focused
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
                 <v-row align="center" class="pl-2">
                   <v-checkbox
                     light
@@ -201,7 +176,6 @@
                     "
                   ></v-text-field>
                 </v-row>
-
                 <v-row>
                   <v-col>
                     <div class="text-xs-center">
@@ -272,10 +246,7 @@ export default {
         'Perú',
         'Venezuela',
       ],
-      show: false,
-      show1: false,
-      show2: false,
-      show3: false,
+      show: true,
       usuario: '',
       password: '',
       rePassword: '',
