@@ -10,12 +10,18 @@
           <div>
             {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
             {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
+            <br />
+            <!-- {{ currentUser.inventario }} -->
           </div>
+          <v-divider></v-divider>
           <personaje-inventario
             :familias="familias"
             :items="itemsSingleSet"
+            :inventario="currentUser.inventario"
+            :all-items="items"
             @familyChanged="handleFamilyChanged"
             @itemChanged="handleItemChanged"
+            @updateInventory="handleUpdateInventory"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -127,10 +133,7 @@ export default {
         process.env.VUE_APP_SERVER_URL + '/Usuario/actualizarInventario',
         {
           _id: this.currentUser._id,
-          inventario: {
-            item: this.selectedItem._id,
-            set: this.selectedSet._id,
-          },
+          inventario: this.currentUser.inventario,
         }
       )
       console.log(response)
@@ -142,6 +145,14 @@ export default {
     handleItemChanged(content) {
       // console.log(content.nombre)
       this.selectedItem = content
+    },
+    handleUpdateInventory(event) {
+      const newItem = {
+        item: this.selectedItem._id,
+        set: this.selectedSet._id,
+      }
+      this.currentUser.inventario.push(newItem)
+      this.updateInventario()
     },
   },
 }

@@ -28,7 +28,44 @@
         </v-list>
       </v-card>
       <v-card width="70%">
+        <!-- {{ inventarioViewModel }} <br /> -->
         <!-- <item-box :item="items[0]"></item-box> -->
+        <v-item-group @change="handleSelectionInventory">
+          <v-container fluid>
+            <v-row no-gutters>
+              <v-col
+                v-for="inventarioItem in inventarioViewModel"
+                :key="inventarioItem._id"
+                cols="12"
+                md="3"
+                no-gutters
+              >
+                <v-item v-slot="{ active, toggle }" :value="inventarioItem">
+                  <v-sheet class="d-flex align-center pa-1" @click="toggle">
+                    <v-card
+                      v-if="active"
+                      width="100%"
+                      color="acentuado1"
+                      outlined
+                    >
+                      <v-sheet rounded>
+                        <!-- <item-box :item="item.item"></item-box> -->
+                        {{ inventarioItem.item.nombre }}<br />
+                        <h5>{{ inventarioItem.set.nombre }}</h5>
+                      </v-sheet>
+                    </v-card>
+                    <v-card v-else width="100%" outlined>
+                      {{ inventarioItem.item.nombre }}<br />
+                      <h5>{{ inventarioItem.set.nombre }}</h5>
+                      <!-- <item-box :item="item.item"></item-box> -->
+                    </v-card>
+                  </v-sheet>
+                </v-item>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-item-group>
+        <v-divider></v-divider>
         <div id="itemsPanel">
           <div class="d-flex pa-2">
             <v-text-field
@@ -50,6 +87,7 @@
               hide-selected
             ></v-combobox>
           </div>
+          <v-btn @click="updateInventoryEvent()">Agregar a Inventario</v-btn>
           <v-item-group v-model="selectedItem">
             <v-container fluid>
               <v-row no-gutters>
@@ -97,6 +135,11 @@ export default {
       default: () => [],
       required: true,
     },
+    allItems: {
+      type: Array,
+      default: () => [],
+      required: true,
+    },
     familias: {
       type: Array,
       default: () => [],
@@ -129,6 +172,24 @@ export default {
         cats.add(item.categoria)
       }
       return [...cats]
+    },
+    inventarioViewModel() {
+      const tempVM = []
+      try {
+        for (const inventoryItem of this.inventario) {
+          const targetSet = this.familias.find(
+            (set) => set._id === inventoryItem.set
+          )
+
+          const targetItem = this.allItems.find(
+            (item) => item._id === inventoryItem.item
+          )
+          tempVM.push({ set: targetSet, item: targetItem })
+          // tempVM.push({ itemId: inventoryItem.item, setId: inventoryItem.set })
+        }
+      } catch {}
+
+      return tempVM
     },
   },
   watch: {
@@ -188,6 +249,16 @@ export default {
     },
     selectedItemChanged() {
       this.$emit('itemChanged', this.selectedItem)
+    },
+    updateInventoryEvent() {
+      this.$emit('updateInventory')
+    },
+    handleSelectionInventory(event) {
+      if (event === undefined) {
+      } else {
+        this.selectedItem = event.item
+        this.selectedFamilia = event.set
+      }
     },
   },
 }
