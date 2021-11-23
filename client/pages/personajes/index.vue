@@ -28,6 +28,11 @@
         <v-tab-item key="glifos">
           <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
         ></v-tab-item>
+        <v-tab key="traits"> traits </v-tab>
+        <v-tab-item key="traits">
+          <!-- <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
+        >--->
+        </v-tab-item>
       </v-tabs>
     </div>
     <div style="width: 30%">
