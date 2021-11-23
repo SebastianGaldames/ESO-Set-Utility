@@ -9,12 +9,14 @@
         <v-card-title primary-title> Agregar Personaje </v-card-title>
         <v-text-field
           v-model="character.characterName"
+          clearable
           label="Nombre del personaje"
           :rules="rules"
           hide-details="auto"
         ></v-text-field>
         <v-textarea
           v-model="character.characterDescription"
+          clearable
           label="Descripción del personaje"
           auto-grow
           row="2"

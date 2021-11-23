@@ -26,7 +26,7 @@ export default {
       console.log(content.characterDescription)
       // this.character = content
     },
-    closeNewCharacterDialogHandler(clearable) {
+    closeNewCharacterDialogHandler() {
       this.dialog = false
     },
   },
