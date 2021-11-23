@@ -69,10 +69,15 @@ export default {
       process.env.VUE_APP_SERVER_URL + '/Glyph/list'
     )
 
+    const traitsResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Trait/listSmall'
+    )
+
     return {
       items: itemsResponse,
       familias: familiasResponse,
       glyphs: glifosResponse,
+      traits: traitsResponse,
     }
   },
   data() {
