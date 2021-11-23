@@ -2,6 +2,10 @@
   <v-form ref="form" v-model="valid">
     <v-card>
       <v-col cols="12">
+        <v-snackbar v-model="snackbar" timeout="3000" top>
+          <span>¡Personaje agregado exitosamente!</span>
+          <v-btn @click="snackbar = false">Cerrar</v-btn>
+        </v-snackbar>
         <v-card-title primary-title> Agregar Personaje </v-card-title>
         <v-text-field
           v-model="character.characterName"
@@ -35,6 +39,7 @@
 <script>
 export default {
   data: () => ({
+    snackbar: false,
     valid: true,
     rules: [
       (value) => !!value || 'Campo obligatorio',
@@ -46,11 +51,12 @@ export default {
     addCharacter() {
       this.$refs.form.validate()
       this.$emit('newCharacterEvent', this.character)
+      this.snackbar = true
+      this.$refs.form.reset()
     },
     closeDialogEvent() {
-      this.character.characterName = ''
-      this.character.characterDescription = ''
       this.$emit('closeNewCharacterDialogEvent')
+      this.$refs.form.reset()
     },
   },
 }
