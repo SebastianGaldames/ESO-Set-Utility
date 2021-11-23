@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
 router.get('/query', TraitController.query)
 router.get('/queryNombre', TraitController.queryNombre)
 router.get('/list', TraitController.list)
+router.get('/listsmall', TraitController.listSmall)
 
 module.exports = router

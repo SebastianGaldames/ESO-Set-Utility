@@ -51,4 +51,27 @@ const list = async (req, res, next) => {
   }
 }
 
-module.exports = { query, list, queryNombre }
+//Metodo para listar todos los Trait actuales en la BD sin sus calidades
+const listSmall = async (req, res, next) => {
+  console.log('in controller')
+  try {
+    const reg = await models.Trait.find({})
+
+    var jsonReg = JSON.parse(JSON.stringify(reg))
+
+    jsonReg.forEach((trait) => {
+      trait.calidades = {}
+      trait.calidades2h = {}
+      console.log(trait)
+    })
+
+    res.status(200).json(jsonReg)
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+
+module.exports = { query, list, listSmall, queryNombre }
