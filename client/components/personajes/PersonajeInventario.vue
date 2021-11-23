@@ -2,6 +2,7 @@
   <div class="pa-2">
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
+        <h3>Sets</h3>
         <v-text-field
           v-model="setFilter"
           label="Buscar Set"
@@ -30,6 +31,7 @@
       <v-card width="70%">
         <!-- {{ inventarioViewModel }} <br /> -->
         <!-- <item-box :item="items[0]"></item-box> -->
+        <h3>Inventario</h3>
         <v-item-group @change="handleSelectionInventory">
           <v-container fluid>
             <v-row no-gutters>
@@ -48,13 +50,13 @@
                       color="acentuado1"
                       outlined
                     >
-                      <v-sheet rounded>
+                      <v-sheet rounded class="pa-2">
                         <!-- <item-box :item="item.item"></item-box> -->
                         {{ inventarioItem.item.nombre }}<br />
                         <h5>{{ inventarioItem.set.nombre }}</h5>
                       </v-sheet>
                     </v-card>
-                    <v-card v-else width="100%" outlined>
+                    <v-card v-else width="100%" outlined class="pa-2">
                       {{ inventarioItem.item.nombre }}<br />
                       <h5>{{ inventarioItem.set.nombre }}</h5>
                       <!-- <item-box :item="item.item"></item-box> -->
@@ -67,6 +69,7 @@
         </v-item-group>
         <v-divider></v-divider>
         <div id="itemsPanel">
+          <h3>Items</h3>
           <div class="d-flex pa-2">
             <v-text-field
               id="buscador"

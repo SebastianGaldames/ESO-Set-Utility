@@ -8,9 +8,9 @@
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
           <div>
-            {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
+            <!-- {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
             {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
-            <br />
+            <br /> -->
             <!-- {{ currentUser.inventario }} -->
           </div>
           <v-divider></v-divider>
