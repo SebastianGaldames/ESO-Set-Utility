@@ -27,7 +27,7 @@
               </div>
               <div class="secundario--text pt-2 pl-5">
                 <v-icon color="grey darken-1"> mdi-email </v-icon
-                ><v-text>Correo: </v-text>{{ user.email }}
+                ><v-text>Email: </v-text>{{ user.email }}
               </div>
               <div class="secundario--text pt-2 pl-5 pb-5">
                 <v-icon color="grey darken-1"> mdi-gender-male-female </v-icon
@@ -286,26 +286,91 @@ export default {
       }
     },
     comprobaciones() {
-      if (this.password === this.rePassword && this.email === this.reEmail) {
-        if (this.usuario.length >= 8 || this.usuario === '') {
-          this.cambioDatos()
+      if (
+        this.password === '' &&
+        this.email === '' &&
+        this.usuario === '' &&
+        this.pais === ''
+      ) {
+        this.sinDatos()
+      } else if (
+        this.password === this.rePassword &&
+        (this.password.length >= 8 ||
+          this.password === '' ||
+          this.password === null)
+      ) {
+        if (this.password === null) {
+          this.password = ''
         }
+        console.log('password exitosa')
+        if (
+          this.usuario.length >= 8 ||
+          this.usuario === '' ||
+          this.usuario === null
+        ) {
+          if (this.usuario === null) {
+            this.usuario = ''
+          }
+          console.log('usuario exitosa')
+          if (this.email === this.reEmail) {
+            console.log('email clear' + this.email)
+            if (this.email === '' || this.email === null) {
+              if (this.email === null) {
+                this.email = ''
+              }
+              console.log('email exitoso vacio')
+              this.cambioDatos()
+            }
+            const bol = /.+@.+\..+/.test(this.email)
+            if (bol === true) {
+              console.log('email exitosa')
+              this.cambioDatos()
+            }
+          }
+        }
+      } else if (
+        this.password !== this.rePassword &&
+        this.email !== this.reEmail &&
+        this.usuario.length < 8 &&
+        this.usuario !== ''
+      ) {
+        alert(
+          'Error de email y contraseña no coinciden con su confirmacion, usuario invalido'
+        )
       } else if (
         this.password !== this.rePassword &&
         this.email !== this.reEmail
       ) {
         alert('Error de email y contraseña no coinciden con su confirmacion')
-      } else if (this.email !== this.reEmail && this.usuario.length < 8) {
-        alert('Error usuario invalido y email no coincide con su confirmacion')
-      } else if (this.password !== this.rePassword && this.usuario.length < 8) {
+      } else if (
+        this.password === this.rePassword &&
+        this.email !== this.reEmail
+      ) {
+        alert('Error de email')
+      } else if (
+        this.password !== this.rePassword &&
+        this.email === this.reEmail
+      ) {
+        alert('Contraseña no coincide con su confirmacion')
+      } else if (
+        this.password !== this.rePassword &&
+        this.usuario.length < 8 &&
+        this.usuario !== ''
+      ) {
         alert(
           'Error usuario invalido y contraseña no coincide con su confirmacion'
         )
+      } else if (
+        this.email !== this.reEmail &&
+        this.usuario.length < 8 &&
+        this.usuario !== ''
+      ) {
+        alert('Error usuario invalido y email no coincide con su confirmacion')
       } else if (this.email !== this.reEmail) {
         alert('Emails no coinciden')
       } else if (this.password !== this.rePassword) {
         alert('Contraseñas no coinciden')
-      } else if (this.usuario.length < 8 && this.usuario !== '') {
+      } else if (this.usuario.length < 8) {
         alert('Usuario invalido')
       } else {
         alert('algo ocurrio')
@@ -320,9 +385,14 @@ export default {
       )
       this.user = userLogued.data
     },
+    sinDatos() {
+      alert('No hay entrada de datos')
+    },
     async cambioDatos() {
       if (this.pais !== '') {
-        this.user.pais = this.pais
+        if (this.pais !== null) {
+          this.user.pais = this.pais
+        }
       }
       if (this.usuario !== '') {
         this.user.usuario = this.usuario
@@ -358,11 +428,32 @@ export default {
 
       if (updated) {
         // eslint-disable-next-line no-console
+        // this.reLog()
+        this.$store.dispatch('setUsuarioUp', this.user.usuario)
+        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
         console.log(updated.data)
+        alert('Cambio exitoso')
       } else {
         alert('fallo')
       }
     },
+    // async reLog() {
+    //   console.log(this.user.usuario)
+    //   console.log(this.user.password)
+    //   this.$store.dispatch('salir')
+    //   const datos2 = {
+    //     usuario: this.user.usuario,
+    //     password: this.user.password,
+    //   }
+    //   await this.$axios
+    //     .post(process.env.VUE_APP_SERVER_URL + '/Usuario/login', datos2)
+    //     .then((respuesta) => {
+    //       return respuesta.data
+    //     })
+    //     .then((data) => {
+    //       this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
+    //     })
+    // },
   },
 }
 </script>
