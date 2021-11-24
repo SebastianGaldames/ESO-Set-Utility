@@ -80,15 +80,55 @@
         @click:append="show = !show"
       ></v-text-field>
 
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[rules.required]"
-        class="secundario--text"
-      >
-        <template v-slot:label>
-          Estoy de acuerdo con los términos y condiciones
-        </template>
-      </v-checkbox>
+      <v-row align="center">
+        <v-checkbox v-model="checkbox"> </v-checkbox>
+        acepto los&nbsp;
+        <v-dialog v-model="dialog" persistent max-width="400px">
+          <template v-slot:activator="{ on, attrs }">
+            <a v-bind="attrs" v-on="on">términos y condiciones</a>
+          </template>
+          <v-card height="10%">
+            <v-card-title> Términos y condiciones (plantilla) </v-card-title>
+            <v-card-text
+              >Bienvenido a (Nombre de la tienda). Estos términos y condiciones
+              describen las reglas y regulaciones para el uso del sitio web
+              (Nombre de la tienda). (Nombre de la tienda) se encuentra en
+              (Dirección). Al acceder a este sitio web, asumimos que aceptas
+              estos términos y condiciones en su totalidad. No continúes usando
+              el sitio web (Nombre de la tienda) si no aceptas todos los
+              términos y condiciones establecidos en esta página. La siguiente
+              terminología se aplica a estos Términos y Condiciones, Declaración
+              de Privacidad y Aviso legal y cualquiera o todos los Acuerdos: el
+              Cliente, Usted y Su se refieren a usted, la persona que accede a
+              este sitio web y acepta los términos y condiciones de la Compañía.
+              La Compañía, Nosotros mismos, Nosotros y Nuestro, se refiere a
+              nuestra Compañía. Parte, Partes o Nosotros, se refiere en conjunto
+              al Cliente y a nosotros mismos, o al Cliente o a nosotros mismos.
+              Todos los términos se refieren a la oferta, aceptación y
+              consideración del pago necesario para efectuar el proceso de
+              nuestra asistencia al Cliente de la manera más adecuada, ya sea
+              mediante reuniones formales de una duración fija, o por cualquier
+              otro medio, con el propósito expreso de conocer las necesidades
+              del Cliente con respecto a la provisión de los servicios/productos
+              declarados de la Compañía, de acuerdo con y sujeto a la ley
+              vigente de (Dirección). Cualquier uso de la terminología anterior
+              u otras palabras en singular, plural, mayúsculas y/o, él/ella o
+              ellos, se consideran intercambiables y, por lo tanto, se refieren
+              a lo mismo.
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="yellow darken-1" text @click="aceptarTerminos()">
+                Acepto
+              </v-btn>
+              <v-btn color="yellow darken-1" text @click="cancelarTerminos()">
+                No acepto
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+
       <v-row>
         <v-col>
           <div class="text-xs-center">
@@ -99,7 +139,7 @@
         </v-col>
         <v-col>
           <div class="text-xs-center">
-            <v-btn rounded dark>cancelar</v-btn>
+            <v-btn rounded dark @click="cancelar()">cancelar</v-btn>
           </div>
         </v-col>
       </v-row>
@@ -107,7 +147,13 @@
   </v-main>
 </template>
 
-<style></style>
+<style>
+.flexcard {
+  display: flex;
+  flex-direction: column;
+  column-width: 800px;
+}
+</style>
 
 <script>
 import axios from 'axios'
@@ -141,6 +187,7 @@ export default {
       countries: [],
       sexos: ['Masculino', 'Femenino', 'Otro'],
       show: false,
+      dialog: false,
       usuario: '',
       password: '',
       rePassword: '',
@@ -186,16 +233,28 @@ export default {
   },
 
   methods: {
+    aceptarTerminos() {
+      this.checkbox = true
+      this.dialog = false
+    },
+    cancelarTerminos() {
+      this.checkbox = false
+      this.dialog = false
+    },
+    cancelar() {
+      this.$router.push('/')
+    },
     registroNuevoUsuario() {
       if (
         this.usuario === '' ||
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.checkbox === false ||
         this.sexo === ''
       ) {
-        alert('Datos faltantes')
+        alert('Debe ingresar todos los datos')
+      } else if (this.checkbox === false) {
+        alert('Debe confirmar que acepta los terminos y condiciones')
       } else if (
         this.email === this.reEmail &&
         /.+@.+\..+/.test(this.email) &&
