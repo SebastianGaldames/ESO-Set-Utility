@@ -40,6 +40,7 @@
     </div>
     <div style="width: 30%">
       <personaje
+        v-if="selectedPersonaje !== undefined"
         :nombre="selectedPersonaje.nombre"
         :item="selectedItem"
         :set="selectedSet"
