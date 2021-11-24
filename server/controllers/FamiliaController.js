@@ -16,7 +16,7 @@ const add = async (req, res, next) => {
 //Metodo para obtener una Familia mediante _id
 const query = async (req, res, next) => {
   try {
-    const reg = await models.Familia.findOne({ _id: req.body._id })
+    const reg = await models.Familia.findOne({ _id: req.query._id })
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
@@ -35,7 +35,7 @@ const query = async (req, res, next) => {
 //Metodo para obtener una Familia mediante _id
 const queryNombre = async (req, res, next) => {
   try {
-    const reg = await models.Familia.findOne({ nombre: req.body.nombre })
+    const reg = await models.Familia.findOne({ nombre: req.query.nombre })
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
@@ -131,9 +131,10 @@ const getItems = async (req, res, next) => {
 //Metodo para agregar un item a la familia
 const addItemFamilia = async (req, res, next) => {
   try {
+    console.log(req.body)
     const reg = await models.Familia.findByIdAndUpdate(
       { _id: req.body._id },
-      { itemsFamilia: req.itemsFamilia }
+      { itemsFamilia: req.body.itemsFamilia }
     )
     res.status(200).json(reg)
   } catch (e) {
