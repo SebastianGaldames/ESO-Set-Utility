@@ -32,6 +32,10 @@
         <v-tab-item key="glifos">
           <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
         ></v-tab-item>
+        <v-tab key="traits"> traits </v-tab>
+        <v-tab-item key="traits">
+          <traits-comp :lista-rasgos="traits"></traits-comp
+        ></v-tab-item>
       </v-tabs>
     </div>
     <div style="width: 30%">
@@ -53,12 +57,14 @@ import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 import Personaje from '~/components/personajes/Personaje.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
+import traitsComp from '~/components/Traits/traitsComp.vue'
 export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
     Personaje,
     gliphsComp,
+    traitsComp,
   },
   async asyncData({ store, $axios }) {
     const itemsResponse = await $axios.$get(
@@ -72,10 +78,15 @@ export default {
       process.env.VUE_APP_SERVER_URL + '/Glyph/list'
     )
 
+    const traitsResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Trait/list'
+    )
+
     return {
       items: itemsResponse,
       familias: familiasResponse,
       glyphs: glifosResponse,
+      traits: traitsResponse,
     }
   },
   data() {

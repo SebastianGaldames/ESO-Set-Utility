@@ -11,6 +11,7 @@ const familiaSchema = new Schema({
   //hash: { type: String, unique: true },
   tipo: { type: String },
   estilo: { type: String },
+  pesos: { type: [String] },
   dlc: { type: String },
   ubicacion: { type: [String], required: true },
   itemsFamilia: { type: [Schema.ObjectId], ref: 'Item' },
