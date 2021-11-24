@@ -5,7 +5,13 @@ const scrapperService = require('../services/scrapperService')
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
 const test = async (req, res) => {
-  res.send(scrapperService.testService())
+  console.log('scrapping main page')
+  const url = scrapperService.url
+  const response = await axios.get(url)
+  console.log('scrapping urls')
+  const setListUrls = scrapperService.scrapSetsTable(response.data)
+  await scrapperService.scrapAllJewels(setListUrls)
+  res.send('ok')
 }
 
 const scrap = async (req, res) => {

@@ -1,15 +1,8 @@
 <template>
   <section>
     <div class="w-100 mx-auto">
-      <h3>Lista de Glifos</h3>
+      <h3>Lista de Rasgos</h3>
       <v-row>
-        <v-col cols="5">
-          <v-select
-            v-model="selectedCalidad"
-            :items="optionsCalidad"
-            label="Calidad"
-          ></v-select>
-        </v-col>
         <v-col cols="5">
           <v-select
             v-model="selectedPotencia"
@@ -21,27 +14,26 @@
     </div>
     <div class="w-100 mx-auto scrollable">
       <v-row class="galery">
-        <v-col v-for="n in glifos" :key="n._id" md="3">
-          <v-card v-ripple outlined @click="selectGlyph(n)">
-            <v-row>
-              <v-col>
-                <h5 class="centro">{{ n.tipo }}</h5>
-              </v-col>
-            </v-row>
-            <hr class="linea" />
+        <v-col v-for="n in Rasgos" :key="n._id" md="3">
+          <v-card v-ripple outlined @click="selectTrait(n)">
+            <h5 class="centro">{{ n.tipo }}</h5>
             <v-spacer />
+            <hr class="linea" />
+
             <v-row>
-              <v-col md="2">
+              <v-col md="3">
                 <img :src="n.imagen" class="img" alt="" />
               </v-col>
               <v-col>
                 <h4 class="centro">{{ n.nombre }}</h4>
+
+                <h5 class="centro">{{ n.gema }}</h5>
               </v-col>
             </v-row>
 
             <hr class="linea" />
             <v-spacer />
-            <h5 class="centro">{{ n.efectoDescripcion }}</h5>
+            <h5 v-for="e in n.efectos" :key="e" class="centro">{{ e }}</h5>
           </v-card>
         </v-col>
       </v-row>
@@ -52,57 +44,35 @@
 <script>
 export default {
   props: {
-    listaGlifos: {
+    listaRasgos: {
       type: Array,
       default: () => [],
     },
   },
   data() {
     return {
-      selectedGlyph: undefined,
+      selectedTrait: undefined,
       selectedPotencia: undefined,
-      selectedCalidad: undefined,
-      glifos: this.listaGlifos,
+      Rasgos: this.listaRasgos,
 
-      optionsCalidad: [
-        'Trifling',
-        'Inferior',
-        'Petty',
-        'Slight',
-        'Minor',
-        'Lesser',
-        'Moderate',
-        'Average',
-        'Strong',
-        'Major',
-        'Greater',
-        'Grand',
-        'Splendid',
-        'Monumental',
-        'Superb',
-        'Truly Superb',
-      ],
       optionsPotencia: ['normal', 'fine', 'superior', 'epic', 'legendary'],
     }
   },
   methods: {
-    // selecciona y envia el glifo, para despues usarlo
-    selectGlyph(glifo) {
-      this.selectedGlyph = glifo
-      // console.log(this.selectGlyph)
-      // const potenciaTemp = this.selectGlyph.potencias[15]
+    // selecciona y envia el rasgo, para despues usarlo
+    selectTrait(trait) {
+      // console.log(this.selectedTrait)
+      this.selectedTrait = trait
+      // console.log(this.trait)
       const eventData = {
-        glyph: this.selectedGlyph,
+        trait: this.selectedTrait,
         potencia: this.selectedPotencia,
-        calidad: this.selectedCalidad,
       }
-
       if (
-        this.selectedPotencia !== undefined &&
         this.selectedCalidad !== undefined &&
-        this.selectedGlyph !== undefined
+        this.selectedTrait !== undefined
       ) {
-        this.$emit('selectionGlyphChanged', eventData)
+        this.$emit('selectionTraitChanged', eventData)
         // console.log(eventData)
       }
     },
@@ -119,7 +89,7 @@ export default {
   margin: 0 auto;
 }
 .linea {
-  width: 75%;
+  width: 100%;
   align-content: center;
 }
 .centro {
@@ -133,6 +103,9 @@ export default {
   display: block;
   margin: 0 auto;
   padding: 10px;
+}
+.centrar {
+  align-content: center;
 }
 .scrollable {
   overflow-y: scroll;

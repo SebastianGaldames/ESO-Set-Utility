@@ -38,6 +38,49 @@ const scrapAllSets = async (setUrls) => {
   return { message: 'Agregados ' + i + ' familias' }
 }
 
+const scrapAllJewels = async (setUrls) => {
+  //const allSets = []
+  var i = 0
+  for (const url of setUrls) {
+    await scrapJewels(url)
+    //allSets.push(contents)
+    console.log('scrapping: ' + i)
+    i += 1
+  }
+
+  return { message: 'Agregados ' + i + ' familias' }
+}
+
+const scrapJewels = async (setUrl) => {
+  const ringId = '619db0c0fe298390f31874f6'
+  const necklaceId = '619db111fe298390f31874f8'
+
+  const html = await getHtmlFromSetUrl(setUrl) //set html
+  const dom = new JSDOM(html)
+  const set = dom.window.document.getElementById('content') //extract html from items block
+  const dataItemsPanel = set.querySelector('.col-md-8')
+  const stronk = dataItemsPanel.querySelectorAll('strong')
+  var setData = scrapSetMeta(stronk, set)
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  const jewels = []
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      jewels.push(ringId)
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      jewels.push(necklaceId)
+    }
+  }
+  const scrapped = { setName: setData.name, items: jewels }
+  console.log(scrapped)
+
+  scrapperAdapter.apendItems(scrapped)
+
+  return scrapped
+}
+
 const scrapSet = async (setUrl) => {
   console.log('scrapping: ' + setUrl)
   const html = await getHtmlFromSetUrl(setUrl) // test url to save time
@@ -232,4 +275,6 @@ module.exports = {
   scrapSet,
   scrapAllSets,
   scrapItemType,
+  scrapJewels,
+  scrapAllJewels,
 }

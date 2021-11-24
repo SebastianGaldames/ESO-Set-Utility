@@ -20,7 +20,7 @@
           <v-col class="d-flex">
             <v-select
               v-model="selectedUbi"
-              :items="ubicaciones"
+              :items="computed_ubi"
               label="Ubicacion"
               color="primario"
               solo
@@ -30,7 +30,7 @@
           <v-col class="d-flex">
             <v-select
               v-model="selectedTipo"
-              :items="tipos"
+              :items="computed_tipo"
               label="Tipo"
               solo
               @change="selected3 = true"
@@ -38,9 +38,9 @@
           </v-col>
           <v-col class="d-flex">
             <v-select
-              v-model="selectedEstilo"
-              :items="estilos"
-              label="Estilo"
+              v-model="selectedPeso"
+              :items="computed_pesos"
+              label="Peso"
               solo
               @change="selected2 = true"
             ></v-select>
@@ -61,13 +61,12 @@
           >{{ selectedTipo }} x</v-btn
         >
         <v-btn
-          v-if="(selected2, selectedEstilo !== '')"
+          v-if="(selected2, selectedPeso !== '')"
           elevation="2"
-          @click=";(selectedEstilo = ''), (select2 = false)"
-          >{{ selectedEstilo }} x</v-btn
+          @click=";(selectedPeso = ''), (select2 = false)"
+          >{{ selectedPeso }} x</v-btn
         >
       </div>
-      <p>Familias</p>
       <v-data-table
         :headers="columnas"
         :items="computed_items"
@@ -123,12 +122,12 @@ export default {
       selected3: false,
       ubicaciones: [],
       tipos: [],
-      estilos: [],
+      pesos: [],
       tipo: [],
       search: '',
       selectedUbi: '',
       selectedTipo: '',
-      selectedEstilo: '',
+      selectedPeso: '',
       auxNombre: '',
       columnas: [
         { value: 'imagen', sortable: false, width: '1%' },
@@ -152,9 +151,9 @@ export default {
         },
         {
           sortable: true,
-          value: 'estilo',
+          value: 'pesos',
           width: '30%',
-          text: 'Estilo',
+          text: 'Peso',
         },
       ],
     }
@@ -163,7 +162,7 @@ export default {
     computed_items() {
       const filtroUbi = this.selectedUbi
       const filtroTipo = this.selectedTipo
-      const filtroEstilo = this.selectedEstilo
+      const filtroPeso = this.selectedPeso
       const aux = this.auxNombre
       return this.families.filter(function (item) {
         let filtered = true
@@ -178,11 +177,13 @@ export default {
                 if (element === filtroUbi) {
                   if (item.tipo === filtroTipo) {
                     // console.log(item.nombre)
-                    // Cuando hay ubicacion, tipo y estilo
-                    if (filtroEstilo) {
-                      if (item.estilo === filtroEstilo) {
-                        filtered += item
-                      }
+                    // Cuando hay ubicacion, tipo y peso
+                    if (filtroPeso) {
+                      item.pesos.forEach((element2) => {
+                        if (element2 === filtroPeso) {
+                          filtered += item
+                        }
+                      })
                     } else {
                       // Cuando hay ubicacion y tipo solamente
                       filtered += item
@@ -190,22 +191,24 @@ export default {
                   }
                 }
               })
-              // Cuando hay ubicacion y estilo
-            } else if (filtroEstilo) {
+              // Cuando hay ubicacion y peso
+            } else if (filtroPeso) {
               item.ubicacion.forEach((element) => {
                 if (element === filtroUbi) {
-                  if (item.estilo === filtroEstilo) {
-                    // console.log(item.nombre)
-                    // Cuando hay ubicaicon, estilo y tipo
-                    if (filtroTipo) {
-                      if (item.tipo === filtroTipo) {
+                  item.pesos.forEach((element2) => {
+                    if (element2 === filtroPeso) {
+                      // console.log(item.nombre)
+                      // Cuando hay ubicaicon, peso y tipo
+                      if (filtroTipo) {
+                        if (item.tipo === filtroTipo) {
+                          filtered += item
+                        }
+                      } else {
+                        // Cuando hay ubicacion y peso
                         filtered += item
                       }
-                    } else {
-                      // Cuando hay ubicacion y estilo
-                      filtered += item
                     }
-                  }
+                  })
                 }
               })
             } else {
@@ -219,21 +222,25 @@ export default {
             // console.log(filtroTipo)
             filtered = item.nombre === aux
             if (item.tipo === filtroTipo) {
-              // Cuando es tipo y estilo
-              if (filtroEstilo) {
-                if (item.estilo === filtroEstilo) {
-                  filtered += item
-                }
+              // Cuando es tipo y peso
+              if (filtroPeso) {
+                item.pesos.forEach((element2) => {
+                  if (element2 === filtroPeso) {
+                    filtered += item
+                  }
+                })
               } else {
                 // Cuando es tipo
                 filtered += item.tipo === filtroTipo
               }
             }
-          } else if (filtroEstilo) {
-            // Cuando es estilo
-            // console.log(filtroEstilo)
+          } else if (filtroPeso) {
+            // Cuando es peso
+            // console.log(filtroPeso)
             filtered = item.nombre === aux
-            filtered += item.estilo === filtroEstilo
+            item.pesos.forEach((element2) => {
+              filtered += element2 === filtroPeso
+            })
           } else {
             // cuando no hay filtros
             // console.log('entree xdd')
@@ -243,11 +250,158 @@ export default {
         return filtered
       })
     },
+    computed_tipo() {
+      const filtroUbi = this.selectedUbi
+      const filtroPeso = this.selectedPeso
+      const selectedTipo = []
+      const selectedTipo2 = []
+      const tipoUbiPeso = []
+      if (filtroPeso && !filtroUbi) {
+        this.families.forEach((element) => {
+          element.pesos.forEach((peso) => {
+            if (filtroPeso === peso) {
+              selectedTipo.push(element.tipo)
+            }
+          })
+        })
+        return selectedTipo.sort()
+      }
+      if (filtroUbi) {
+        this.families.forEach((element) => {
+          element.ubicacion.forEach((element2) => {
+            if (filtroUbi === element2) {
+              selectedTipo.push(element.tipo)
+              const aux = [element.tipo, filtroUbi, element.pesos]
+              tipoUbiPeso.push(aux)
+            }
+          })
+        })
+        if (filtroPeso) {
+          tipoUbiPeso.forEach((filaTabla) => {
+            filaTabla[2].forEach((peso) => {
+              if (filtroPeso === peso) {
+                selectedTipo2.push(filaTabla[0])
+              }
+            })
+          })
+
+          return selectedTipo2.sort()
+        }
+      } else {
+        this.families.forEach((element) => {
+          selectedTipo.push(element.tipo)
+        })
+      }
+      return selectedTipo.sort()
+    },
+    computed_ubi() {
+      const filtroTipo = this.selectedTipo
+      const filtroPeso = this.selectedPeso
+      const selectedUbi = []
+      const selectedUbi2 = []
+      const tipoUbiPeso = []
+      if (filtroPeso && !filtroTipo) {
+        this.families.forEach((element) => {
+          element.pesos.forEach((peso) => {
+            if (filtroPeso === peso) {
+              element.ubicacion.forEach((ubi) => {
+                selectedUbi.push(ubi)
+              })
+            }
+          })
+        })
+        return selectedUbi
+      }
+      if (filtroTipo) {
+        this.families.forEach((element) => {
+          if (filtroTipo === element.tipo) {
+            element.ubicacion.forEach((element2) => {
+              selectedUbi.push(element2)
+              if (element.pesos.length > 0) {
+                const aux = [filtroTipo, element.ubicacion, element.pesos]
+                tipoUbiPeso.push(aux)
+              }
+            })
+          }
+        })
+        if (filtroPeso) {
+          tipoUbiPeso.forEach((filaTabla) => {
+            filaTabla[2].forEach((peso) => {
+              if (filtroPeso === peso) {
+                filaTabla[1].forEach((ubi) => {
+                  selectedUbi2.push(ubi)
+                })
+              }
+            })
+          })
+          // console.log(selectedUbi2)
+          return selectedUbi2.sort()
+        }
+      } else {
+        this.families.forEach((element) => {
+          element.ubicacion.forEach((element2) => {
+            selectedUbi.push(element2)
+          })
+        })
+      }
+
+      return selectedUbi.sort()
+    },
+    computed_pesos() {
+      const filtroUbi = this.selectedUbi
+      const filtroTipo = this.selectedTipo
+      const selectedPeso = []
+      const selectedPeso2 = []
+      const tipoUbiPeso = []
+      if (filtroTipo && !filtroUbi) {
+        this.families.forEach((element) => {
+          if (filtroTipo === element.tipo) {
+            element.pesos.forEach((peso) => {
+              selectedPeso.push(peso)
+            })
+          }
+        })
+        return selectedPeso
+      }
+      if (filtroUbi) {
+        this.families.forEach((element) => {
+          element.ubicacion.forEach((ubi) => {
+            if (filtroUbi === ubi) {
+              element.pesos.forEach((peso) => {
+                selectedPeso.push(peso)
+                if (element.pesos.length > 0) {
+                  const aux = [element.tipo, filtroUbi, element.pesos]
+                  tipoUbiPeso.push(aux)
+                }
+              })
+            }
+          })
+        })
+        if (filtroTipo) {
+          tipoUbiPeso.forEach((element) => {
+            if (element[0] === filtroTipo) {
+              element[2].forEach((peso) => {
+                selectedPeso2.push(peso)
+              })
+            }
+          })
+          return selectedPeso2
+        }
+      } else {
+        this.families.forEach((element) => {
+          element.pesos.forEach((peso) => {
+            selectedPeso.push(peso)
+          })
+        })
+      }
+
+      return selectedPeso
+    },
   },
   created() {
     this.transformarUbis()
     this.transformarTipos()
-    this.transformarEstilos()
+    this.transformarPesos()
   },
   methods: {
     familiaToJson(item) {
@@ -266,12 +420,10 @@ export default {
         this.tipos.push(this.families[i].tipo)
       }
     },
-    transformarEstilos() {
-      for (let i = 0; i < this.families.length; i++) {
-        if (this.families[i].estilo !== '') {
-          this.estilos.push(this.families[i].estilo)
-        }
-      }
+    transformarPesos() {
+      this.pesos.push('Light')
+      this.pesos.push('Medium')
+      this.pesos.push('Heavy')
     },
   },
 }

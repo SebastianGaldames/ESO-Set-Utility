@@ -10,7 +10,7 @@
               <h1>Set: {{ miFamilia.nombre }}</h1>
             </div>
             <div class="ubicacion">
-              <h3>Ubicación:</h3>
+              <h3>Location:</h3>
               <div
                 v-for="ubicacion in miFamilia.ubicacion"
                 :key="ubicacion"
@@ -20,16 +20,27 @@
               </div>
             </div>
             <div v-if="miFamilia.estilo !== ''">
-              <h3>Estilo:</h3>
+              <h3>Style:</h3>
               <p class="secundario--text">• {{ miFamilia.estilo }}</p>
             </div>
             <div v-if="miFamilia.tipo !== ''">
-              <h3>Tipo:</h3>
+              <h3>Type:</h3>
               <p class="secundario--text">• {{ miFamilia.tipo }}</p>
             </div>
             <div v-if="miFamilia.dlc !== ''">
-              <h3>DLC:</h3>
+              <h3>DLC Requirement:</h3>
               <p class="secundario--text">• {{ miFamilia.dlc }}</p>
+            </div>
+            <div>
+              <h3>Contains:</h3>
+              <p
+                v-for="pesos in miFamilia.pesos"
+                :key="pesos"
+                md="2"
+                class="secundario--text"
+              >
+                • {{ pesos }}
+              </p>
             </div>
           </v-container>
         </v-col>
@@ -40,7 +51,7 @@
                 <v-card dark outlined tile>
                   <v-row class="galery">
                     <v-col md="4">
-                      <h5 class="texto1--text">"obtención"</h5>
+                      <h5 class="texto1--text">"{{ miFamilia.tipo }}"</h5>
                     </v-col>
 
                     <v-col md="8">
@@ -51,7 +62,7 @@
                   <v-row>
                     <v-col>
                       <v-img
-                        :src="this.miFamilia.imagen"
+                        :src="miFamilia.imagen"
                         height="64px"
                         width="64px"
                         class="test"
