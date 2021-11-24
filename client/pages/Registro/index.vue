@@ -92,6 +92,10 @@
             <v-btn rounded dark>cancelar</v-btn>
           </div>
         </v-col>
+        <v-snackbar v-model="snackbar" timeout="3000" top>
+          <span>¡{{ snackbarText }}!</span>
+          <v-btn @click="snackbar = false">Cerrar</v-btn>
+        </v-snackbar>
       </v-row>
     </v-card>
   </v-main>
@@ -148,6 +152,8 @@ export default {
         equals: (v) => v === this.email || 'Los e-mails no coinciden',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
+      snackbar: false,
+      snackbarText: '',
     }
   },
   computed: {
@@ -168,7 +174,8 @@ export default {
         this.password === '' ||
         this.checkbox === false
       ) {
-        alert('Datos faltantes')
+        this.snackbar = true
+        this.snackbarText = 'Existen campos incompletos'
       } else if (
         this.email === this.reEmail &&
         this.password === this.rePassword &&
@@ -199,8 +206,11 @@ export default {
           .then((data) => {
             this.$router.push('/')
           })
+        this.snackbar = true
+        this.snackbarText = 'Usuario creado exitosamente'
       } else {
-        alert('Los datos no son iguales o son incorrectos')
+        this.snackbar = true
+        this.snackbarText = 'Los datos no son iguales o son incorrectos'
       }
     },
   },

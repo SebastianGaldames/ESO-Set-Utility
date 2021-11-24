@@ -46,6 +46,10 @@
         </div>
         <div class="ajustes2"></div>
       </v-card>
+      <v-snackbar v-model="snackbar" timeout="3000" top>
+        <span>¡Sesión iniciada con éxito!</span>
+        <v-btn @click="snackbar = false">Cerrar</v-btn>
+      </v-snackbar>
     </v-container>
   </v-main>
 </template>
@@ -60,6 +64,7 @@ export default {
       nombreUsuario: '',
       password: '',
       errorM: '',
+      snackbar: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
@@ -79,6 +84,7 @@ export default {
         .then((data) => {
           this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
           this.$router.push({ name: 'index' }) // vamos hacia la ruta de home
+          this.snackbar = true
         })
         .catch((error) => {
           this.errorM = null
