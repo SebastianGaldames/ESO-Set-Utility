@@ -2,10 +2,19 @@
   <section>
     <div class="w-100 mx-auto">
       <h3>Lista de Rasgos</h3>
+      <v-row>
+        <v-col cols="5">
+          <v-select
+            v-model="selectedPotencia"
+            :items="optionsPotencia"
+            label="Potencia"
+          ></v-select>
+        </v-col>
+      </v-row>
     </div>
     <div class="w-100 mx-auto scrollable">
       <v-row class="galery">
-        <v-col v-for="n in Rasgos" :key="n" md="3">
+        <v-col v-for="n in Rasgos" :key="n._id" md="3">
           <v-card v-ripple outlined @click="selectTrait(n)">
             <h5 class="centro">{{ n.tipo }}</h5>
             <v-spacer />
@@ -42,15 +51,30 @@ export default {
   },
   data() {
     return {
-      selectedTrait: this.value,
+      selectedTrait: undefined,
+      selectedPotencia: undefined,
       Rasgos: this.listaRasgos,
+
+      optionsPotencia: ['normal', 'fine', 'superior', 'epic', 'legendary'],
     }
   },
   methods: {
     // selecciona y envia el rasgo, para despues usarlo
-    selectTrair(trait) {
-      console.log(this.trait)
-      this.$emit('input', this.value)
+    selectTrait(trait) {
+      console.log(this.selectedTrait)
+      this.selectedTrait = trait
+      // console.log(this.trait)
+      const eventData = {
+        trait: this.selectedTrait,
+        potencia: this.selectedPotencia,
+      }
+      if (
+        this.selectedCalidad !== undefined &&
+        this.selectedTrait !== undefined
+      ) {
+        this.$emit('selectionTraitChanged', eventData)
+        console.log(eventData)
+      }
     },
   },
 }
