@@ -41,7 +41,7 @@
     <div style="width: 30%">
       <personaje
         v-if="selectedPersonaje !== undefined"
-        :nombre="selectedPersonaje.nombre"
+        :personaje="selectedPersonaje"
         :item="selectedItem"
         :set="selectedSet"
         :all-items="items"

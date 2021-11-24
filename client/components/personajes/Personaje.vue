@@ -1,10 +1,9 @@
 <template>
   <div>
-    {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
-    {{ set === undefined ? 'none' : set.nombre }}
-    {{ selectedSlot === undefined ? 'none' : selectedSlot }}
-    <h1 style="text-align: center">{{ nombre }}</h1>
-    <div class="d-flex flex-direction:column">
+    <h1 style="text-align: center">
+      {{ personaje === undefined ? 'Personaje' : personaje.nombre }}
+    </h1>
+    <div class="">
       <v-item-group v-model="selectedSlot" mandatory>
         <v-container fluid>
           <h2 style="text-align: center">Equipment</h2>
@@ -279,9 +278,9 @@ export default {
       type: Object,
       required: true,
     },
-    nombre: {
-      type: String,
-      default: '',
+    personaje: {
+      type: Object,
+      default: undefined,
     },
   },
   data() {
