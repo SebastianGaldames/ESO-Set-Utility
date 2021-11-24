@@ -38,6 +38,33 @@ const scrapAllSets = async (setUrls) => {
   return { message: 'Agregados ' + i + ' familias' }
 }
 
+const scrapJewels = async (setUrl) => {
+  const ringId = '619db0c0fe298390f31874f6'
+  const necklaceId = '619db111fe298390f31874f8'
+
+  const html = await getHtmlFromSetUrl(setUrl) //set html
+  const dom = new JSDOM(html)
+  const set = dom.window.document.getElementById('content') //extract html from items block
+  const dataItemsPanel = set.querySelector('.col-md-8')
+  // const necc = dataItemsPanel.querySelector('picture img')
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  const jewels = []
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      jewels.push(ringId)
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      jewels.push(necklaceId)
+    }
+  }
+  return jewels
+  // jewels.forEach((item) => {
+  //   console.log(item)
+  // })
+}
+
 const scrapSet = async (setUrl) => {
   console.log('scrapping: ' + setUrl)
   const html = await getHtmlFromSetUrl(setUrl) // test url to save time
@@ -232,4 +259,5 @@ module.exports = {
   scrapSet,
   scrapAllSets,
   scrapItemType,
+  scrapJewels,
 }
