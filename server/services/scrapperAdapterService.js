@@ -192,6 +192,51 @@ const sandbox = async () => {
   addItem(item)
 }
 
+const addFamilyWeights = async () => {
+  const res = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  var jsonReg = JSON.parse(JSON.stringify(res.data))
+
+  for (const familia of jsonReg) {
+    var pesosFamilia = []
+
+    for (const itemId of familia.itemsFamilia) {
+      const resItem = await axios
+        .get(process.env.VUE_APP_SERVER_URL + '/item/query?_id=' + itemId)
+        .catch(function (err) {
+          //console.log(err)
+        })
+      var jsonItem = JSON.parse(JSON.stringify(resItem.data))
+      pesosFamilia.push(jsonItem.peso)
+    }
+
+    var setPesos = new Set(pesosFamilia)
+    pesosFamilia = Array.from(setPesos)
+
+    for (const index in pesosFamilia) {
+      if (pesosFamilia[index] === '') {
+        pesosFamilia.splice(index, 1)
+        break
+      }
+    }
+
+    const weights = {
+      _id: familia._id,
+      pesos: pesosFamilia,
+    }
+
+    const resItem = await axios
+      .put(process.env.VUE_APP_SERVER_URL + '/familia/update', weights)
+      .catch(function (err) {
+        //console.log(err)
+      })
+  }
+}
+
 module.exports = {
   addFamily,
   addItem,
@@ -201,4 +246,5 @@ module.exports = {
   parseItemType,
   testAddProperty,
   sandbox,
+  addFamilyWeights,
 }
