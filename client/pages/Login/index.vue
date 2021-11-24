@@ -39,10 +39,9 @@
         </div>
         <div class="ajustes2">
           <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
-          <v-btn text small
-            >¿No tienes cuenta?
-            <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
-          >
+          <h5>
+            ¿No tienes cuenta? <NuxtLink to="/Registro">Registrarse</NuxtLink>
+          </h5>
         </div>
       </v-card>
       <v-snackbar v-model="snackbar" timeout="6000" top>
