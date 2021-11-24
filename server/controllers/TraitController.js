@@ -1,17 +1,5 @@
 const models = require('../models')
 
-//Metodo para añadir un Trait
-const add = async (req, res, next) => {
-  try {
-    const reg = await models.Trait.create(req.body)
-    res.status(200).json(reg)
-  } catch (e) {
-    res.status(500).send({
-      message: 'Ocurrio un error',
-    })
-    next(e)
-  }
-}
 //Metodo para obtener un Trait mediante _id
 const query = async (req, res, next) => {
   try {
@@ -63,24 +51,21 @@ const list = async (req, res, next) => {
   }
 }
 
-//Metodo para actualizar un Trait en concreto mediante el _id
-const update = async (req, res, next) => {
+//Metodo para listar todos los Trait actuales en la BD sin sus calidades
+const listSmall = async (req, res, next) => {
+  console.log('in controller')
   try {
-    const reg = await models.Trait.findByIdAndUpdate({ _id: req.body._id }, {})
-    res.status(200).json(reg)
-  } catch (e) {
-    res.status(500).send({
-      message: 'Ocurrio un error',
+    const reg = await models.Trait.find({})
+
+    var jsonReg = JSON.parse(JSON.stringify(reg))
+
+    jsonReg.forEach((trait) => {
+      trait.calidades = {}
+      trait.calidades2h = {}
+      console.log(trait)
     })
-    next(e)
-  }
-}
-//Metodo para eliminar un Trait mediante _id
-const remove = async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const reg = await models.Trait.findByIdAndDelete({ _id: id })
-    res.status(200).json(reg)
+
+    res.status(200).json(jsonReg)
   } catch (e) {
     res.status(500).send({
       message: 'Ocurrio un error',
@@ -89,4 +74,4 @@ const remove = async (req, res, next) => {
   }
 }
 
-module.exports = { add, query, list, update, remove, queryNombre }
+module.exports = { query, list, listSmall, queryNombre }
