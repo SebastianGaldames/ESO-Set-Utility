@@ -12,6 +12,7 @@ const add = async (req, res, next) => {
     next(e)
   }
 }
+
 //Metodo para obtener una Familia mediante _id
 const query = async (req, res, next) => {
   try {
@@ -30,6 +31,26 @@ const query = async (req, res, next) => {
     next(e)
   }
 }
+
+//Metodo para obtener una Familia mediante _id
+const queryNombre = async (req, res, next) => {
+  try {
+    const reg = await models.Familia.findOne({ nombre: req.query.nombre })
+    if (!reg) {
+      res.status(404).send({
+        message: 'El registro no existe',
+      })
+    } else {
+      res.status(200).json(reg)
+    }
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+
 //Metodo para obtener una Familia mediante hash
 const queryHash = async (req, res, next) => {
   try {
@@ -48,6 +69,7 @@ const queryHash = async (req, res, next) => {
     next(e)
   }
 }
+
 //Metodo para listar todos las Familias actuales en la BD
 const list = async (req, res, next) => {
   try {
@@ -109,9 +131,10 @@ const getItems = async (req, res, next) => {
 //Metodo para agregar un item a la familia
 const addItemFamilia = async (req, res, next) => {
   try {
+    console.log(req.body)
     const reg = await models.Familia.findByIdAndUpdate(
       { _id: req.body._id },
-      { itemsFamilia: req.itemsFamilia }
+      { itemsFamilia: req.body.itemsFamilia }
     )
     res.status(200).json(reg)
   } catch (e) {
@@ -131,4 +154,5 @@ module.exports = {
   getItems,
   addItemFamilia,
   queryHash,
+  queryNombre,
 }
