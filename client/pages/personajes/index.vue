@@ -43,6 +43,8 @@
         :nombre="selectedPersonaje.nombre"
         :item="selectedItem"
         :set="selectedSet"
+        :all-items="items"
+        :all-sets="familias"
       ></personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
