@@ -39,11 +39,11 @@ const scrapAllSets = async (setUrls) => {
 }
 
 const scrapAllJewels = async (setUrls) => {
-  const allSets = []
+  //const allSets = []
   var i = 0
   for (const url of setUrls) {
-    const contents = await scrapJewels(url)
-    allSets.push(contents)
+    await scrapJewels(url)
+    //allSets.push(contents)
     console.log('scrapping: ' + i)
     i += 1
   }
@@ -75,10 +75,10 @@ const scrapJewels = async (setUrl) => {
   }
   const scrapped = { setName: setData.name, items: jewels }
   console.log(scrapped)
+
+  scrapperAdapter.apendItems(scrapped)
+
   return scrapped
-  // jewels.forEach((item) => {
-  //   console.log(item)
-  // })
 }
 
 const scrapSet = async (setUrl) => {
@@ -276,4 +276,5 @@ module.exports = {
   scrapAllSets,
   scrapItemType,
   scrapJewels,
+  scrapAllJewels,
 }
