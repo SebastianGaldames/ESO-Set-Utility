@@ -11,11 +11,19 @@
       class="pr-2"
       @input="triggerUpdate"
     ></v-combobox>
-    <v-btn> Agregar Personaje </v-btn>
+    <v-dialog v-model="dialog" width="480">
+      <CreacionPersonaje
+        @closeNewCharacterDialogEvent="closeNewCharacterDialogHandler"
+        @newCharacterEvent="createPersonajeEmit"
+      ></CreacionPersonaje>
+    </v-dialog>
+    <v-btn @click="dialog = true"> Agregar Personaje </v-btn>
   </div>
 </template>
 <script>
+import CreacionPersonaje from '~/components/personajes/CreacionPersonaje.vue'
 export default {
+  components: { CreacionPersonaje },
   props: {
     personajes: {
       type: Array,
@@ -30,6 +38,7 @@ export default {
   data() {
     return {
       selectedPersonaje: this.value,
+      dialog: false,
     }
   },
   methods: {
@@ -37,8 +46,15 @@ export default {
     triggerUpdate(event) {
       this.$emit('input', this.value)
     },
-    createPersonajeEmit() {
-      //
+    createPersonajeEmit(content) {
+      this.dialog = false
+      this.$emit('createNewCharacterEvent', {
+        nombre: content.characterName,
+        descripcion: content.characterDescription,
+      })
+    },
+    closeNewCharacterDialogHandler() {
+      this.dialog = false
     },
   },
 }
