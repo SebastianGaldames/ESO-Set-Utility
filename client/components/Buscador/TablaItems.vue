@@ -282,9 +282,8 @@ export default {
                 selectedTipo2.push(filaTabla[0])
               }
             })
-            selectedTipo2.push(filaTabla[0])
           })
-          // console.log(selectedTipo2)
+
           return selectedTipo2.sort()
         }
       } else {
