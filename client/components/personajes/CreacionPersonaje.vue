@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <v-card>
+    <v-card outlined>
       <v-col cols="12">
         <v-snackbar v-model="snackbar" timeout="3000" top>
           <span>¡Personaje agregado exitosamente!</span>
@@ -10,6 +10,7 @@
         <v-text-field
           v-model="character.characterName"
           clearable
+          color="acentuado1"
           label="Nombre del personaje"
           :rules="rules"
           hide-details="auto"
@@ -20,6 +21,7 @@
           label="Descripción del personaje"
           auto-grow
           row="2"
+          color="acentuado1"
           row-height="20"
         ></v-textarea>
       </v-col>
