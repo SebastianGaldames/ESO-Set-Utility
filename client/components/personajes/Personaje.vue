@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ item === undefined ? 'none' : item.nombre }}
+    {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
     {{ set === undefined ? 'none' : set.nombre }}
     {{ selectedSlot === undefined ? 'none' : selectedSlot }}
     <h1 style="text-align: center">{{ nombre }}</h1>
@@ -16,11 +16,12 @@
                   <itemSlot
                     v-if="isAgregarItem('Head')"
                     :id="'Head'"
-                    :enable-item="isAgregarItem('Head')"
+                    :enable-item="enableAgregarItem"
                     :enable-glyph="isAgregarGlyph('Armor')"
                     :enable-trait="isAgregarTrait('Armor')"
-                    :slot-prop="newSlot"
+                    :slot-prop="headSlot"
                     style="padding: 5%"
+                    @agregarSlotItem="handleAgregarSlotItem"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -28,25 +29,24 @@
           </v-row>
           <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="category in equipamiento"
-              :key="category"
+              v-for="(slotArmor, index) in slotsEq"
+              :key="index"
               align="center"
               justify="center"
               md="4"
               no-gutters
             >
-              <h4 style="text-align: center">{{ category }}</h4>
+              <h4 style="text-align: center">{{ slotArmor.categoria }}</h4>
               <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
+                    v-if="isAgregarItem(slotArmor.categoria)"
+                    :id="slotArmor.categoria"
+                    :enable-item="isAgregarItem(slotArmor.categoria)"
                     :enable-glyph="isAgregarGlyph('Armor')"
                     :enable-trait="isAgregarTrait('Armor')"
-                    :slot-prop="newSlot"
+                    :slot-prop="slotArmor"
                     style="padding: 5%"
-                    @agregarSlotItem="setImagen"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -55,22 +55,22 @@
           <h2 style="text-align: center">Accessories</h2>
           <v-row align="center" justify="center">
             <v-col
-              v-for="category in accesorios"
-              :key="category"
+              v-for="(slotAcc, index) in slotsAcc"
+              :key="index"
               align="center"
               justify="center"
               md="4"
             >
-              <h4 style="text-align: center">{{ category }}</h4>
+              <h4 style="text-align: center">{{ slotAcc.categoria }}</h4>
               <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
+                    v-if="isAgregarItem(slotAcc.categoria)"
+                    :id="slotAcc.categoria"
+                    :enable-item="isAgregarItem(slotAcc.categoria)"
                     :enable-glyph="isAgregarGlyph('Jewelry')"
                     :enable-trait="isAgregarTrait('Jewelry')"
-                    :slot-prop="newSlot"
+                    :slot-prop="slotAcc"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -80,22 +80,22 @@
           <h2 style="text-align: center">Weapons</h2>
           <v-row align="center" justify="center">
             <v-col
-              v-for="category in armas"
-              :key="category"
+              v-for="(slotWpn, index) in slotsArm"
+              :key="index"
               align="center"
               justify="center"
               md="4"
             >
-              <h4 style="text-align: center">{{ category }}</h4>
+              <h4 style="text-align: center">{{ slotWpn.categoria }}</h4>
               <v-item v-slot="{ toggle }">
                 <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
+                    v-if="isAgregarItem(slotWpn.categoria)"
+                    :id="slotWpn.categoria"
+                    :enable-item="isAgregarItem(slotWpn.categoria)"
                     :enable-glyph="isAgregarGlyph('Weapon')"
                     :enable-trait="isAgregarTrait('Weapon')"
-                    :slot-prop="newSlot"
+                    :slot-prop="slotWpn"
                     style="padding: 5%"
                   >
                   </itemSlot>
@@ -156,14 +156,131 @@ export default {
         ['Waist'],
         ['Feet'],
       ],
+      selectedItem: this.item,
+      headSlot: {
+        categoria: 'Head',
+        item: undefined,
+        glyph: undefined,
+        trait: undefined,
+        set: undefined,
+      },
+      slotsEq: {
+        shouldersSlot: {
+          categoria: 'Shoulders',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        chestSlot: {
+          categoria: 'Chest',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        handsSlot: {
+          categoria: 'Hands',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        legsSlot: {
+          categoria: 'Legs',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        waistSlot: {
+          categoria: 'Waist',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        feetSlot: {
+          categoria: 'Feet',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+      },
+      slotsAcc: {
+        neckSlot: {
+          categoria: 'Neck',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        ring1Slot: {
+          categoria: 'Ring',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        ring2Slot: {
+          categoria: 'Ring',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+      },
+      slotsArm: {
+        oneHSlot: {
+          categoria: 'One-Handed',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        twoHSlot: {
+          categoria: 'Two-Handed',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+        offHSlot: {
+          categoria: 'Off Hand',
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        },
+      },
+      enableAgregarItem: true,
     }
   },
-  computed: {
-    newSlot() {
+  watch: {
+    item() {
+      this.selectedItem = this.item
+    },
+    selectedItem() {
+      if (this.isAgregarItem('Head')) {
+        this.enableAgregarItem = true
+      }
+    },
+  },
+  methods: {
+    /* findSlot(val) {
+      this.slotsInv.forEach((element) => {
+        if (element[0] === val) {
+          element[0].append(this.item)
+          element[0].append(this.set)
+        }
+      })
+    }, */
+    /* newSlot(posicion) {
       let slotVal = {}
-      if (!(this.item === undefined || this.set === undefined)) {
+      if (!(this.selectedItem === undefined || this.set === undefined)) {
         const tempSlot = {
-          item: this.item,
+          item: this.selectedItem,
           glyph: undefined,
           trait: undefined,
           set: this.set,
@@ -179,24 +296,29 @@ export default {
         slotVal = empty
       }
       return slotVal
-    },
-  },
-  methods: {
-    /* findSlot(val) {
-      this.slotsInv.forEach((element) => {
-        if (element[0] === val) {
-          element[0].append(this.item)
-          element[0].append(this.set)
-        }
-      })
     }, */
-    setImagen() {
-      return this.item.imagen
+    handleAgregarSlotItem(id) {
+      const targetItem = this.allItems.find(
+        (itemTemp) => itemTemp._id === this.selectedItem._id
+      )
+      this.headSlot.item = targetItem
+      this.enableAgregarItem = false
+      console.log(this.headSlot.item)
     },
     isAgregarItem(val) {
       return (
-        !(this.item === undefined || this.set === undefined) &&
-        this.item.categoria === val
+        !(this.selectedItem === undefined) &&
+        this.selectedItem.categoria === val
+      )
+    },
+    test(val) {
+      console.log(
+        !(this.selectedItem === undefined) &&
+          this.selectedItem.categoria === val
+      )
+      return (
+        !(this.selectedItem === undefined) &&
+        this.selectedItem.categoria === val
       )
     },
     isAgregarGlyph(val) {
