@@ -16,10 +16,10 @@
                   <itemSlot
                     v-if="isAgregarItem('Head')"
                     :id="'Head'"
-                    :slot-prop="newSlot"
                     :enable-item="isAgregarItem('Head')"
                     :enable-glyph="isAgregarGlyph('Armor')"
                     :enable-trait="isAgregarTrait('Armor')"
+                    :slot-prop="newSlot"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -46,6 +46,7 @@
                     :enable-trait="isAgregarTrait('Armor')"
                     :slot-prop="newSlot"
                     style="padding: 5%"
+                    @agregarSlotItem="setImagen"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -66,10 +67,10 @@
                   <itemSlot
                     v-if="isAgregarItem(category)"
                     :id="category"
-                    :slot-prop="newSlot"
                     :enable-item="isAgregarItem(category)"
                     :enable-glyph="isAgregarGlyph('Jewelry')"
                     :enable-trait="isAgregarTrait('Jewelry')"
+                    :slot-prop="newSlot"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -91,10 +92,10 @@
                   <itemSlot
                     v-if="isAgregarItem(category)"
                     :id="category"
-                    :slot-prop="newSlot"
                     :enable-item="isAgregarItem(category)"
                     :enable-glyph="isAgregarGlyph('Weapon')"
                     :enable-trait="isAgregarTrait('Weapon')"
+                    :slot-prop="newSlot"
                     style="padding: 5%"
                   >
                   </itemSlot>
@@ -151,22 +152,25 @@ export default {
   },
   computed: {
     newSlot() {
-      const empty = {
-        item: undefined,
-        glyph: undefined,
-        trait: undefined,
-        set: undefined,
-      }
-      if (!(this.item === undefined && this.set === undefined)) {
+      let slotVal = {}
+      if (!(this.item === undefined || this.set === undefined)) {
         const tempSlot = {
           item: this.item,
           glyph: undefined,
           trait: undefined,
           set: this.set,
         }
-        return tempSlot
+        slotVal = tempSlot
+      } else {
+        const empty = {
+          item: undefined,
+          glyph: undefined,
+          trait: undefined,
+          set: undefined,
+        }
+        slotVal = empty
       }
-      return empty
+      return slotVal
     },
   },
   methods: {
@@ -178,9 +182,12 @@ export default {
         }
       })
     }, */
+    setImagen() {
+      return this.item.imagen
+    },
     isAgregarItem(val) {
       return (
-        !(this.item === undefined && this.set === undefined) &&
+        !(this.item === undefined || this.set === undefined) &&
         this.item.categoria === val
       )
     },
