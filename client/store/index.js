@@ -32,6 +32,9 @@ export const actions = {
     commit('setUsuario', null)
     localStorage.removeItem('token')
   },
+  setUsuarioUp({ commit }, usuario) {
+    commit('setUsuario', usuario)
+  },
 }
 
 // Se utilizan para obtener datos del state

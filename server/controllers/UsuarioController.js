@@ -56,10 +56,28 @@ const queryNombre = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    console.log(req.body)
+    //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
-      { usuario: req.body.usuario, password: req.body.password }
+      { usuario: req.body.usuario, email: req.body.email, pais: req.body.pais}
+    )
+    res.status(200).json(reg)
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+const updatePassword = async (req, res, next) => {
+  try {
+    console.log(req.body)
+    //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    const encryptedPassword = await bcrypt.hash(req.body.password, 10)
+    const reg = await models.Usuario.findByIdAndUpdate(
+      { _id: req.body._id },
+      {password: encryptedPassword}
     )
     res.status(200).json(reg)
   } catch (e) {
@@ -235,4 +253,5 @@ module.exports = {
   addPersonaje,
   getPersonajes,
   actualizarPersonajes,
+  updatePassword,
 }
