@@ -119,6 +119,14 @@ export default {
     itemSlot,
   },
   props: {
+    allItems: {
+      type: Array,
+      required: true,
+    },
+    allSets: {
+      type: Array,
+      required: true,
+    },
     item: {
       type: Object,
       required: true,
