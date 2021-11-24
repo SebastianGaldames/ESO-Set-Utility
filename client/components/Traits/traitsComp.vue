@@ -61,7 +61,7 @@ export default {
   methods: {
     // selecciona y envia el rasgo, para despues usarlo
     selectTrait(trait) {
-      console.log(this.selectedTrait)
+      // console.log(this.selectedTrait)
       this.selectedTrait = trait
       // console.log(this.trait)
       const eventData = {
@@ -73,7 +73,7 @@ export default {
         this.selectedTrait !== undefined
       ) {
         this.$emit('selectionTraitChanged', eventData)
-        console.log(eventData)
+        // console.log(eventData)
       }
     },
   },
