@@ -142,6 +142,10 @@
             <v-btn rounded dark @click="cancelar()">cancelar</v-btn>
           </div>
         </v-col>
+        <v-snackbar v-model="snackbar" timeout="3000" top>
+          <span>¡{{ snackbarText }}!</span>
+          <v-btn @click="snackbar = false">Cerrar</v-btn>
+        </v-snackbar>
       </v-row>
     </v-card>
   </v-main>
@@ -204,6 +208,13 @@ export default {
         usermin: () =>
           this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
+      emailrules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        equals: (v) => v === this.email || 'Los e-mails no coinciden',
+        syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
+      },
+      snackbar: false,
+      snackbarText: '',
     }
   },
   computed: {
@@ -252,9 +263,8 @@ export default {
         this.password === '' ||
         this.sexo === ''
       ) {
-        alert('Debe ingresar todos los datos')
-      } else if (this.checkbox === false) {
-        alert('Debe confirmar que acepta los terminos y condiciones')
+        this.snackbar = true
+        this.snackbarText = 'Existen campos incompletos'
       } else if (
         this.email === this.reEmail &&
         /.+@.+\..+/.test(this.email) &&
@@ -286,8 +296,11 @@ export default {
           .then((data) => {
             this.$router.push('/')
           })
+        this.snackbar = true
+        this.snackbarText = 'Usuario creado exitosamente'
       } else {
-        alert('Los datos no son iguales o son incorrectos')
+        this.snackbar = true
+        this.snackbarText = 'Los datos no son iguales o son incorrectos'
       }
     },
   },
