@@ -41,6 +41,10 @@
         :set="selectedSet"
       ></personaje>
     </div>
+    <v-snackbar v-model="snackbar" timeout="3000" top>
+      <span>¡Personaje agregado exitosamente!</span>
+      <v-btn @click="snackbar = false">Cerrar</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -87,6 +91,7 @@ export default {
       selectedSet: undefined,
       selectedItem: {},
       currentUser: {},
+      snackbar: false,
     }
   },
   computed: {
@@ -186,7 +191,8 @@ export default {
       // call fetch personajes
       this.fetchPersonajes(this.currentUser.personajes)
 
-      console.log(user.usuario)
+      // console.log(user.usuario)
+      this.snackbar = true
     },
   },
 }
