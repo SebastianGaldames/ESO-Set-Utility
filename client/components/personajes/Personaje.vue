@@ -78,138 +78,7 @@ export default {
     return {
       selectedSlot: {},
       selectedItem: {},
-      inventario: [
-        {
-          enable: true,
-          categoria: 'Head',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Shoulders',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Chest',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Hands',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Legs',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Waist',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Feet',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Neck',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Ring 1',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Ring 2',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'One-Handed',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Two-Handed',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-        {
-          enable: true,
-          categoria: 'Off Hand',
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
-        },
-      ],
+      inventario: [],
     }
   },
   watch: {
@@ -217,7 +86,40 @@ export default {
       this.selectedItem = this.item
     },
   },
+  mounted() {
+    this.buildPJ()
+  },
   methods: {
+    buildPJ() {
+      const partes = [
+        'Head',
+        'Shoulders',
+        'Chest',
+        'Hands',
+        'Legs',
+        'Waist',
+        'Feet',
+        'Neck',
+        'Ring 1',
+        'Ring 2',
+        'One-Handed',
+        'Two-Handed',
+        'Off Hand',
+      ]
+      for (let index = 0; index < partes.length; index++) {
+        const parte = {
+          enable: true,
+          categoria: partes[index],
+          slotPJ: {
+            item: undefined,
+            glyph: undefined,
+            trait: undefined,
+            set: undefined,
+          },
+        }
+        this.inventario.push(parte)
+      }
+    },
     handleAgregarSlotItem(slotItem, index) {
       slotItem.item = this.allItems.find(
         (itemTemp) => itemTemp._id === this.selectedItem._id
