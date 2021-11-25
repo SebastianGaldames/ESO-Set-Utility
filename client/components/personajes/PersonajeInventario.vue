@@ -91,6 +91,10 @@
             ></v-combobox>
           </div>
           <v-btn @click="updateInventoryEvent()">Agregar a Inventario</v-btn>
+          <v-snackbar v-model="snackbar" timeout="3000" top>
+            <span>¡Item agregado al inventario exitosamente!</span>
+            <v-btn @click="snackbar = false">Cerrar</v-btn>
+          </v-snackbar>
           <v-item-group v-model="selectedItem">
             <v-container fluid>
               <v-row no-gutters>
@@ -160,6 +164,7 @@ export default {
       busqueda: '',
       categoriaFilterValue: '',
       setFilter: '',
+      snackbar: false,
     }
   },
   computed: {
@@ -255,6 +260,7 @@ export default {
     },
     updateInventoryEvent() {
       this.$emit('updateInventory')
+      this.snackbar = true
     },
     handleSelectionInventory(event) {
       if (event === undefined) {
