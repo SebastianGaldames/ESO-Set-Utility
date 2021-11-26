@@ -9,7 +9,7 @@
           <h2 style="text-align: center">Equipment</h2>
           <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="(slotI, index) in inventario"
+              v-for="(itemInv, index) in inventario"
               :key="index"
               align="center"
               justify="center"
@@ -18,20 +18,33 @@
             >
               <h2 v-if="index === 7" style="text-align: center">Accessories</h2>
               <h2 v-if="index === 10" style="text-align: center">Weapons</h2>
-              <h4 style="text-align: center">{{ slotI.categoria }}</h4>
-              <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
+              <h4
+                v-if="index === 10 || index === 11"
+                style="text-align: center"
+              >
+                Hand
+              </h4>
+              <h4 v-else style="text-align: center">{{ itemInv.categoria }}</h4>
+              <v-item>
+                <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isItem(slotI.categoria)"
-                    :id="slotI.categoria"
-                    :enable-item="slotI.enable"
+                    v-if="isItem(itemInv.categoria)"
+                    :id="itemInv.categoria"
+                    :enable-item="itemInv.enableItem"
                     :enable-glyph="isAgregarGlyph('Armor')"
                     :enable-trait="isAgregarTrait('Armor')"
-                    :slot-prop="slotI.slotPJ"
+                    :slot-prop="itemInv.slotPJ"
                     style="padding: 5%"
-                    @agregarSlotItem="
-                      handleAgregarSlotItem(slotI.slotPJ, index)
-                    "
+                    @agregarSlotItem="handleAgregarSlotItem(index)"
+                  ></itemSlot>
+                  <itemSlot
+                    v-else
+                    :id="itemInv.categoria"
+                    :enable-item="false"
+                    :enable-glyph="false"
+                    :enable-trait="false"
+                    :slot-prop="itemInv.slotPJ"
+                    style="padding: 5%"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -78,15 +91,24 @@ export default {
     return {
       selectedSlot: {},
       selectedItem: {},
+      selectedSet: {},
       inventario: [],
     }
   },
   watch: {
+    set() {
+      this.selectedSet = this.set
+    },
     item() {
       this.selectedItem = this.item
     },
+    selectedItem() {
+      for (let index = 0; index < this.inventario.length; index++) {
+        this.inventario[index].enableItem = true
+      }
+    },
   },
-  mounted() {
+  beforeMount() {
     this.buildPJ()
   },
   methods: {
@@ -99,16 +121,16 @@ export default {
         'Legs',
         'Waist',
         'Feet',
-        'Neck',
-        'Ring 1',
-        'Ring 2',
+        'Necklace',
+        'Ring',
+        'Ring',
         'One-Handed',
         'Two-Handed',
         'Off Hand',
       ]
       for (let index = 0; index < partes.length; index++) {
         const parte = {
-          enable: true,
+          enableItem: true,
           categoria: partes[index],
           slotPJ: {
             item: undefined,
@@ -120,17 +142,20 @@ export default {
         this.inventario.push(parte)
       }
     },
-    handleAgregarSlotItem(slotItem, index) {
-      slotItem.item = this.allItems.find(
+    handleAgregarSlotItem(index) {
+      const itemAux = this.allItems.find(
         (itemTemp) => itemTemp._id === this.selectedItem._id
       )
-      this.inventario[index].slotPJ.item = slotItem.item
-      this.inventario[index].enable = false
-      console.log(this.inventario[index].slotPJ.item)
+      const setAux = this.allSets.find(
+        (setTemp) => setTemp._id === this.selectedSet._id
+      )
+      this.inventario[index].slotPJ.item = itemAux
+      this.inventario[index].slotPJ.set = setAux
+      this.inventario[index].enableItem = false
     },
     isItem(val) {
       return (
-        !(this.selectedItem === undefined) &&
+        !(this.selectedItem === undefined || this.selectedSet === undefined) &&
         this.selectedItem.categoria === val
       )
     },
