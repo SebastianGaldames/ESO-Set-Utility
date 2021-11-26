@@ -12,27 +12,37 @@
       </div>
 
       <v-autocomplete
-        ref="pais"
         v-model="pais"
         :rules="[rules.required]"
-        :items="paises"
+        :items="countries"
         label="Pais"
         placeholder="Selecciona..."
         clearable
         class="secundario--text"
+        full-width
       ></v-autocomplete>
 
       <v-text-field
         v-model="usuario"
         :rules="[rules.required, rules.usermin]"
         label="Ingresa tu usuario"
-        clearable
         class="secundario--text"
       ></v-text-field>
 
+      <v-autocomplete
+        v-model="sexo"
+        :rules="[rules.required]"
+        :items="sexos"
+        label="Sexo"
+        placeholder="Selecciona..."
+        clearable
+        class="secundario--text"
+        full-width
+      ></v-autocomplete>
+
       <v-text-field
         v-model="email"
-        :rules="[emailrules.required, emailrules.syntax]"
+        :rules="[emailConfirmationRule(), emailSyntaxRule]"
         label="Email"
         clearable
         class="secundario--text"
@@ -40,7 +50,7 @@
 
       <v-text-field
         v-model="reEmail"
-        :rules="[emailrules.required, emailrules.equals]"
+        :rules="[emailConfirmationRule(), email2SyntaxRule]"
         label="Confirma tu email"
         clearable
         class="secundario--text"
@@ -48,19 +58,19 @@
 
       <v-text-field
         v-model="password"
-        :rules="[rules.required, rules.min]"
+        :rules="[largoMinimoContrasenna(), passwordConfirmationRule()]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Ingresa contraseña"
-        hint="Debe tener al menos 8 caracteres"
-        value="wqfasds"
+        hint="Contraseña ingresada con exito"
+        value=""
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
 
       <v-text-field
         v-model="rePassword"
-        :rules="[rules.required, rules.min, rules.equals]"
+        :rules="[largoMinimoContrasenna2(), passwordConfirmationRule()]"
         :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Confirma tu contraseña"
@@ -70,15 +80,55 @@
         @click:append="show = !show"
       ></v-text-field>
 
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[rules.required]"
-        class="secundario--text"
-      >
-        <template v-slot:label>
-          Estoy de acuerdo con los términos y condiciones
-        </template>
-      </v-checkbox>
+      <v-row align="center">
+        <v-checkbox v-model="checkbox"> </v-checkbox>
+        acepto los&nbsp;
+        <v-dialog v-model="dialog" persistent max-width="400px">
+          <template v-slot:activator="{ on, attrs }">
+            <a v-bind="attrs" v-on="on">términos y condiciones</a>
+          </template>
+          <v-card height="10%">
+            <v-card-title> Términos y condiciones (plantilla) </v-card-title>
+            <v-card-text
+              >Bienvenido a (Nombre de la tienda). Estos términos y condiciones
+              describen las reglas y regulaciones para el uso del sitio web
+              (Nombre de la tienda). (Nombre de la tienda) se encuentra en
+              (Dirección). Al acceder a este sitio web, asumimos que aceptas
+              estos términos y condiciones en su totalidad. No continúes usando
+              el sitio web (Nombre de la tienda) si no aceptas todos los
+              términos y condiciones establecidos en esta página. La siguiente
+              terminología se aplica a estos Términos y Condiciones, Declaración
+              de Privacidad y Aviso legal y cualquiera o todos los Acuerdos: el
+              Cliente, Usted y Su se refieren a usted, la persona que accede a
+              este sitio web y acepta los términos y condiciones de la Compañía.
+              La Compañía, Nosotros mismos, Nosotros y Nuestro, se refiere a
+              nuestra Compañía. Parte, Partes o Nosotros, se refiere en conjunto
+              al Cliente y a nosotros mismos, o al Cliente o a nosotros mismos.
+              Todos los términos se refieren a la oferta, aceptación y
+              consideración del pago necesario para efectuar el proceso de
+              nuestra asistencia al Cliente de la manera más adecuada, ya sea
+              mediante reuniones formales de una duración fija, o por cualquier
+              otro medio, con el propósito expreso de conocer las necesidades
+              del Cliente con respecto a la provisión de los servicios/productos
+              declarados de la Compañía, de acuerdo con y sujeto a la ley
+              vigente de (Dirección). Cualquier uso de la terminología anterior
+              u otras palabras en singular, plural, mayúsculas y/o, él/ella o
+              ellos, se consideran intercambiables y, por lo tanto, se refieren
+              a lo mismo.
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="yellow darken-1" text @click="aceptarTerminos()">
+                Acepto
+              </v-btn>
+              <v-btn color="yellow darken-1" text @click="cancelarTerminos()">
+                No acepto
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+
       <v-row>
         <v-col>
           <div class="text-xs-center">
@@ -89,7 +139,7 @@
         </v-col>
         <v-col>
           <div class="text-xs-center">
-            <v-btn rounded dark>cancelar</v-btn>
+            <v-btn rounded dark @click="cancelar()">cancelar</v-btn>
           </div>
         </v-col>
         <v-snackbar v-model="snackbar" timeout="3000" top>
@@ -101,10 +151,17 @@
   </v-main>
 </template>
 
-<style></style>
+<style>
+.flexcard {
+  display: flex;
+  flex-direction: column;
+  column-width: 800px;
+}
+</style>
 
 <script>
 import axios from 'axios'
+
 class Usuario {
   constructor(usuario, email, pais, password, sexo, personajes, inventario) {
     this.usuario = usuario
@@ -116,22 +173,29 @@ class Usuario {
     this.inventario = inventario
   }
 }
+
 export default {
+  async asyncData({ $axios }) {
+    const post = await $axios.$get(
+      'https://countriesnode.herokuapp.com/v1/countries/'
+    )
+    const nombrePaises = []
+    for (let i = 0; i < post.length; i++) {
+      nombrePaises.push(post[i].name)
+    }
+    nombrePaises.sort()
+    return { countries: nombrePaises }
+  },
   data() {
     return {
-      paises: [
-        'Argentina',
-        'Bolivia',
-        'Chile',
-        'Colombia',
-        'Perú',
-        'Venezuela',
-      ],
+      countries: [],
+      sexos: ['Masculino', 'Femenino', 'Otro'],
       show: false,
+      dialog: false,
       usuario: '',
       password: '',
       rePassword: '',
-      sexo: 'masculino',
+      sexo: '',
       email: '',
       reEmail: '',
       personajes: [],
@@ -141,9 +205,6 @@ export default {
       checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
-        min: () =>
-          this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
-        equals: (v) => v === this.password || 'Las contraseñas no coinciden',
         usermin: () =>
           this.usuario.length >= 8 || 'Debe tener al menos 8 caracteres',
       },
@@ -159,25 +220,54 @@ export default {
   computed: {
     passwordConfirmationRule() {
       return () =>
-        this.password === this.rePassword || 'Las contraseÃ±as no coinciden'
+        this.password === this.rePassword || 'Las contraseñas no coinciden'
     },
     emailConfirmationRule() {
       return () => this.email === this.reEmail || 'Los email no coinciden'
     },
+    emailSyntaxRule() {
+      const re = /.+@.+\..+/
+      return re.test(this.email) || 'E-mail no es valido'
+    },
+    email2SyntaxRule() {
+      const re = /.+@.+\..+/
+      return re.test(this.reEmail) || 'E-mail no es valido'
+    },
+    largoMinimoContrasenna() {
+      return () =>
+        this.password.length === 8 || 'Debe tener al menos 8 caracteres'
+    },
+    largoMinimoContrasenna2() {
+      return () =>
+        this.rePassword.length === 8 || 'Debe tener al menos 8 caracteres'
+    },
   },
+
   methods: {
+    aceptarTerminos() {
+      this.checkbox = true
+      this.dialog = false
+    },
+    cancelarTerminos() {
+      this.checkbox = false
+      this.dialog = false
+    },
+    cancelar() {
+      this.$router.push('/')
+    },
     registroNuevoUsuario() {
       if (
         this.usuario === '' ||
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.checkbox === false
+        this.sexo === ''
       ) {
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
       } else if (
         this.email === this.reEmail &&
+        /.+@.+\..+/.test(this.email) &&
         this.password === this.rePassword &&
         this.usuario.length >= 8
       ) {

@@ -31,20 +31,18 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-flex v-if="errorM" class="red--text">
+        <!-- <v-flex v-if="errorM" class="red--text">
           {{ errorM }}
-        </v-flex>
+        </v-flex> -->
         <div class="ajustes1">
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
         <div class="ajustes2">
           <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
-          <v-btn text small
-            >¿No tienes cuenta?
-            <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
-          >
+          <h5>
+            ¿No tienes cuenta? <NuxtLink to="/Registro">Registrarse</NuxtLink>
+          </h5>
         </div>
-        <div class="ajustes2"></div>
       </v-card>
       <v-snackbar v-model="snackbar" timeout="6000" top>
         <span>¡{{ snackbarText }}!</span>

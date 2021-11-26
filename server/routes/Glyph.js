@@ -7,5 +7,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/list', GlyphController.list)
+router.get('/listSmall', GlyphController.listSmall)
+router.get('/query', GlyphController.query)
+router.get('/querypotencia', GlyphController.queryPotencia)
 
 module.exports = router

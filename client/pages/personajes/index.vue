@@ -2,7 +2,11 @@
   <div class="d-flex">
     <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
     <div style="width: 70%" class="pa-3">
-      <seleccion-personaje v-model="selectedPersonaje" :personajes="personajes">
+      <seleccion-personaje
+        v-model="selectedPersonaje"
+        :personajes="personajes"
+        @createNewCharacterEvent="handleCreateCharacter"
+      >
       </seleccion-personaje>
       <v-tabs color="acentuado1">
         <v-tab key="items"> items </v-tab>
@@ -28,15 +32,26 @@
         <v-tab-item key="glifos">
           <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
         ></v-tab-item>
+        <v-tab key="traits"> traits </v-tab>
+        <v-tab-item key="traits">
+          <traits-comp :lista-rasgos="traits"></traits-comp
+        ></v-tab-item>
       </v-tabs>
     </div>
     <div style="width: 30%">
       <personaje
-        :nombre="selectedPersonaje.nombre"
+        v-if="selectedPersonaje !== undefined"
+        :personaje="selectedPersonaje"
         :item="selectedItem"
         :set="selectedSet"
+        :all-items="items"
+        :all-sets="familias"
       ></personaje>
     </div>
+    <v-snackbar v-model="snackbar" timeout="3000" top>
+      <span>¡Personaje agregado exitosamente!</span>
+      <v-btn @click="snackbar = false">Cerrar</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -45,12 +60,14 @@ import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 import Personaje from '~/components/personajes/Personaje.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
+import traitsComp from '~/components/Traits/traitsComp.vue'
 export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
     Personaje,
     gliphsComp,
+    traitsComp,
   },
   async asyncData({ store, $axios }) {
     const itemsResponse = await $axios.$get(
@@ -64,10 +81,15 @@ export default {
       process.env.VUE_APP_SERVER_URL + '/Glyph/list'
     )
 
+    const traitsResponse = await $axios.$get(
+      process.env.VUE_APP_SERVER_URL + '/Trait/list'
+    )
+
     return {
       items: itemsResponse,
       familias: familiasResponse,
       glyphs: glifosResponse,
+      traits: traitsResponse,
     }
   },
   data() {
@@ -83,6 +105,7 @@ export default {
       selectedSet: undefined,
       selectedItem: {},
       currentUser: {},
+      snackbar: false,
     }
   },
   computed: {
@@ -157,6 +180,33 @@ export default {
       }
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
+    },
+    async handleCreateCharacter(event) {
+      console.log(event)
+
+      const newPj = {
+        _id: this.currentUser._id,
+        nombre: event.nombre,
+        description: event.description,
+      }
+
+      // crear personaje
+      await this.$axios.$post(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/addPersonaje',
+        newPj
+      )
+
+      // actualizar current user characters
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: this.currentUser.usuario } }
+      )
+      this.currentUser.personajes = user.personajes
+      // call fetch personajes
+      this.fetchPersonajes(this.currentUser.personajes)
+
+      // console.log(user.usuario)
+      this.snackbar = true
     },
   },
 }
