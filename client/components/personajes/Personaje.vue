@@ -28,7 +28,7 @@
               <v-item>
                 <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isItem(itemInv.categoria)"
+                    v-if="isItem(itemInv.categoria, index)"
                     :id="itemInv.categoria"
                     :enable-item="itemInv.enableItem"
                     :enable-glyph="isAgregarGlyph('Armor')"
@@ -125,7 +125,7 @@ export default {
         'Ring',
         'Ring',
         'One-Handed',
-        'Two-Handed',
+        'One-Handed',
         'Off Hand',
       ]
       for (let index = 0; index < partes.length; index++) {
@@ -152,12 +152,38 @@ export default {
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.set = setAux
       this.inventario[index].enableItem = false
+      if (this.isTwoHanded()) {
+        this.inventario[index - 1].slotPJ.item = itemAux
+        this.inventario[index - 1].slotPJ.set = setAux
+        this.inventario[index - 1].enableItem = false
+      }
+      if (
+        this.inventario[index].categoria === 'One-Handed' &&
+        this.inventario[index + 1].slotPJ.item !== undefined
+      ) {
+        this.inventario[index + 1].slotPJ.item = undefined
+        this.inventario[index + 1].slotPJ.set = undefined
+        this.inventario[index + 1].enableItem = false
+      }
     },
-    isItem(val) {
+    isItem(val, index) {
+      if (index === 11 && this.isTwoHanded()) {
+        return (
+          !(
+            this.selectedItem === undefined || this.selectedSet === undefined
+          ) && this.selectedItem.categoria === 'Two-Handed'
+        )
+      }
       return (
         !(this.selectedItem === undefined || this.selectedSet === undefined) &&
         this.selectedItem.categoria === val
       )
+    },
+    isTwoHanded() {
+      if (this.selectedItem.categoria === 'Two-Handed') {
+        return true
+      }
+      return false
     },
     isAgregarGlyph(val) {
       return !(this.glyph === undefined) && this.glyph.tipo === val
