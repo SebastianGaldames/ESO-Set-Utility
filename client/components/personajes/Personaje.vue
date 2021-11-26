@@ -1,104 +1,51 @@
 <template>
   <div>
-    {{ item === undefined ? 'none' : item.nombre }}
-    {{ set === undefined ? 'none' : set.nombre }}
-    {{ selectedSlot === undefined ? 'none' : selectedSlot }}
-    <h1 style="text-align: center">{{ nombre }}</h1>
-    <div class="d-flex flex-direction:column">
+    <h1 style="text-align: center">
+      {{ personaje === undefined ? 'Personaje' : personaje.nombre }}
+    </h1>
+    <div class="">
       <v-item-group v-model="selectedSlot" mandatory>
         <v-container fluid>
           <h2 style="text-align: center">Equipment</h2>
           <v-row align="center" justify="center" no-gutters>
-            <v-col align="center" justify="center" no-gutters>
-              <h4 style="text-align: center">Head</h4>
-              <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
-                  <itemSlot
-                    v-if="isAgregarItem('Head')"
-                    :id="'Head'"
-                    :enable-item="isAgregarItem('Head')"
-                    :enable-glyph="isAgregarGlyph('Armor')"
-                    :enable-trait="isAgregarTrait('Armor')"
-                    :slot-prop="newSlot"
-                    style="padding: 5%"
-                  ></itemSlot>
-                </v-card>
-              </v-item>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="category in equipamiento"
-              :key="category"
+              v-for="(itemInv, index) in inventario"
+              :key="index"
               align="center"
               justify="center"
-              md="4"
               no-gutters
+              md="4"
             >
-              <h4 style="text-align: center">{{ category }}</h4>
-              <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
+              <h2 v-if="index === 7" style="text-align: center">Accessories</h2>
+              <h2 v-if="index === 10" style="text-align: center">Weapons</h2>
+              <h4
+                v-if="index === 10 || index === 11"
+                style="text-align: center"
+              >
+                Hand
+              </h4>
+              <h4 v-else style="text-align: center">{{ itemInv.categoria }}</h4>
+              <v-item>
+                <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
+                    v-if="isItem(itemInv.categoria, index)"
+                    :id="itemInv.categoria"
+                    :enable-item="itemInv.enableItem"
                     :enable-glyph="isAgregarGlyph('Armor')"
                     :enable-trait="isAgregarTrait('Armor')"
-                    :slot-prop="newSlot"
+                    :slot-prop="itemInv.slotPJ"
                     style="padding: 5%"
-                    @agregarSlotItem="setImagen"
+                    @agregarSlotItem="handleAgregarSlotItem(index)"
                   ></itemSlot>
-                </v-card>
-              </v-item>
-            </v-col>
-          </v-row>
-          <h2 style="text-align: center">Accessories</h2>
-          <v-row align="center" justify="center">
-            <v-col
-              v-for="category in accesorios"
-              :key="category"
-              align="center"
-              justify="center"
-              md="4"
-            >
-              <h4 style="text-align: center">{{ category }}</h4>
-              <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
                   <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
-                    :enable-glyph="isAgregarGlyph('Jewelry')"
-                    :enable-trait="isAgregarTrait('Jewelry')"
-                    :slot-prop="newSlot"
+                    v-else
+                    :id="itemInv.categoria"
+                    :enable-item="false"
+                    :enable-glyph="false"
+                    :enable-trait="false"
+                    :slot-prop="itemInv.slotPJ"
                     style="padding: 5%"
                   ></itemSlot>
-                </v-card>
-              </v-item>
-            </v-col>
-          </v-row>
-          <h2 style="text-align: center">Weapons</h2>
-          <v-row align="center" justify="center">
-            <v-col
-              v-for="category in armas"
-              :key="category"
-              align="center"
-              justify="center"
-              md="4"
-            >
-              <h4 style="text-align: center">{{ category }}</h4>
-              <v-item v-slot="{ toggle }">
-                <v-card outlined width="90" height="90" @click="toggle">
-                  <itemSlot
-                    v-if="isAgregarItem(category)"
-                    :id="category"
-                    :enable-item="isAgregarItem(category)"
-                    :enable-glyph="isAgregarGlyph('Weapon')"
-                    :enable-trait="isAgregarTrait('Weapon')"
-                    :slot-prop="newSlot"
-                    style="padding: 5%"
-                  >
-                  </itemSlot>
                 </v-card>
               </v-item>
             </v-col>
@@ -119,6 +66,14 @@ export default {
     itemSlot,
   },
   props: {
+    allItems: {
+      type: Array,
+      required: true,
+    },
+    allSets: {
+      type: Array,
+      required: true,
+    },
     item: {
       type: Object,
       required: true,
@@ -127,69 +82,108 @@ export default {
       type: Object,
       required: true,
     },
-    nombre: {
-      type: String,
-      default: '',
+    personaje: {
+      type: Object,
+      default: undefined,
     },
   },
   data() {
     return {
-      // Datos de prueba
       selectedSlot: {},
-      equipamiento: ['Shoulders', 'Chest', 'Hands', 'Legs', 'Waist', 'Feet'],
-      accesorios: ['Cuello', 'Anillo1', 'Anillo2'],
-      armas: ['One-Handed', 'Two-Handed', 'Off Hand'],
-      slotsInv: [
-        ['Head'],
-        ['Shoulders'],
-        ['Chest'],
-        ['Hands'],
-        ['Legs'],
-        ['Waist'],
-        ['Feet'],
-      ],
+      selectedItem: {},
+      selectedSet: {},
+      inventario: [],
     }
   },
-  computed: {
-    newSlot() {
-      let slotVal = {}
-      if (!(this.item === undefined || this.set === undefined)) {
-        const tempSlot = {
-          item: this.item,
-          glyph: undefined,
-          trait: undefined,
-          set: this.set,
-        }
-        slotVal = tempSlot
-      } else {
-        const empty = {
-          item: undefined,
-          glyph: undefined,
-          trait: undefined,
-          set: undefined,
-        }
-        slotVal = empty
+  watch: {
+    set() {
+      this.selectedSet = this.set
+    },
+    item() {
+      this.selectedItem = this.item
+    },
+    selectedItem() {
+      for (let index = 0; index < this.inventario.length; index++) {
+        this.inventario[index].enableItem = true
       }
-      return slotVal
     },
   },
+  beforeMount() {
+    this.buildPJ()
+  },
   methods: {
-    /* findSlot(val) {
-      this.slotsInv.forEach((element) => {
-        if (element[0] === val) {
-          element[0].append(this.item)
-          element[0].append(this.set)
+    buildPJ() {
+      const partes = [
+        'Head',
+        'Shoulders',
+        'Chest',
+        'Hands',
+        'Legs',
+        'Waist',
+        'Feet',
+        'Necklace',
+        'Ring',
+        'Ring',
+        'One-Handed',
+        'One-Handed',
+        'Off Hand',
+      ]
+      for (let index = 0; index < partes.length; index++) {
+        const parte = {
+          enableItem: true,
+          categoria: partes[index],
+          slotPJ: {
+            item: undefined,
+            glyph: undefined,
+            trait: undefined,
+            set: undefined,
+          },
         }
-      })
-    }, */
-    setImagen() {
-      return this.item.imagen
+        this.inventario.push(parte)
+      }
     },
-    isAgregarItem(val) {
-      return (
-        !(this.item === undefined || this.set === undefined) &&
-        this.item.categoria === val
+    handleAgregarSlotItem(index) {
+      const itemAux = this.allItems.find(
+        (itemTemp) => itemTemp._id === this.selectedItem._id
       )
+      const setAux = this.allSets.find(
+        (setTemp) => setTemp._id === this.selectedSet._id
+      )
+      this.inventario[index].slotPJ.item = itemAux
+      this.inventario[index].slotPJ.set = setAux
+      this.inventario[index].enableItem = false
+      if (this.isTwoHanded()) {
+        this.inventario[index - 1].slotPJ.item = itemAux
+        this.inventario[index - 1].slotPJ.set = setAux
+        this.inventario[index - 1].enableItem = false
+      }
+      if (
+        this.inventario[index].categoria === 'One-Handed' &&
+        this.inventario[index + 1].slotPJ.item !== undefined
+      ) {
+        this.inventario[index + 1].slotPJ.item = undefined
+        this.inventario[index + 1].slotPJ.set = undefined
+        this.inventario[index + 1].enableItem = false
+      }
+    },
+    isItem(val, index) {
+      if (index === 11 && this.isTwoHanded()) {
+        return (
+          !(
+            this.selectedItem === undefined || this.selectedSet === undefined
+          ) && this.selectedItem.categoria === 'Two-Handed'
+        )
+      }
+      return (
+        !(this.selectedItem === undefined || this.selectedSet === undefined) &&
+        this.selectedItem.categoria === val
+      )
+    },
+    isTwoHanded() {
+      if (this.selectedItem.categoria === 'Two-Handed') {
+        return true
+      }
+      return false
     },
     isAgregarGlyph(val) {
       return !(this.glyph === undefined) && this.glyph.tipo === val

@@ -35,6 +35,10 @@
           </div>
         </v-menu>
       </div>
+      <v-snackbar v-model="snackbar" timeout="3000" top>
+        <span>¡Sesión cerrada con éxito!</span>
+        <v-btn @click="snackbar = false">Cerrar</v-btn>
+      </v-snackbar>
     </div>
   </client-only>
 </template>
@@ -45,6 +49,7 @@ export default {
     return {
       usuarioLogeado: false,
       usuario: null,
+      snackbar: false,
     }
   },
   methods: {
@@ -66,6 +71,7 @@ export default {
       }
     },
     salir() {
+      this.snackbar = true
       this.$store.dispatch('salir')
       this.$router.push({ name: 'index' })
     },
