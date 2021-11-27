@@ -228,7 +228,6 @@ const getInventario = async (req, res, next) => {
 //Metodo para agregar items al inventario
 const actualizarInventario = async (req, res, next) => {
   try {
-    const reg0 = await models.Usuario.findOne({ _id: req.body._id })
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
       { inventario: req.body.inventario }
