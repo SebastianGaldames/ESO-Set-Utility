@@ -76,11 +76,11 @@ export default {
     },
     item: {
       type: Object,
-      required: true,
+      default: undefined,
     },
     set: {
       type: Object,
-      required: true,
+      default: undefined,
     },
     personaje: {
       type: Object,
@@ -118,8 +118,8 @@ export default {
         'Shoulders',
         'Chest',
         'Hands',
-        'Legs',
         'Waist',
+        'Legs',
         'Feet',
         'Necklace',
         'Ring',
@@ -180,7 +180,10 @@ export default {
       )
     },
     isTwoHanded() {
-      if (this.selectedItem.categoria === 'Two-Handed') {
+      if (
+        this.selectedItem !== undefined &&
+        this.selectedItem.categoria === 'Two-Handed'
+      ) {
         return true
       }
       return false
