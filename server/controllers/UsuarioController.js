@@ -132,6 +132,30 @@ const login = async (req, res, next) => {
   }
 }
 
+const answers = async (req, res, next) => {
+  try {
+    let user = await models.Usuario.findOne({ usuario: req.body.nombreUsuario })
+    if(user){
+      
+      let match1 = await bcrypt.compare(req.body.securityAnswer1,user.securityAnswerList[0])
+      let match2 = await bcrypt.compare(req.body.securityAnswer2,user.securityAnswerList[1])
+      let match3 = await bcrypt.compare(req.body.securityAnswer2,user.securityAnswerList[2])
+      if (match1 && match2 && match3) {
+        res.status(200).json({ match1 })
+      } else {
+        res.status(404).send({
+          message: 'Respuestas incorrectas',
+        })
+      }
+    }
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+
 //Metodo para crear un personaje y guardar su referencia en el usuario
 const addPersonaje = async (req, res, next) => {
   try {
@@ -259,4 +283,5 @@ module.exports = {
   getPersonajes,
   actualizarPersonajes,
   updatePassword,
+  answers,
 }

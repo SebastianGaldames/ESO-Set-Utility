@@ -169,6 +169,9 @@ export default {
     errorM: '',
     snackbar: false,
     snackbarText: '',
+    securityAnswer1: '',
+    securityAnswer2: '',
+    securityAnswer3: '',
   }),
   computed: {
     passwordConfirmationRule() {
@@ -215,29 +218,35 @@ export default {
           }
         })
     },
-    verificaInfo() {
-      console.log(this.user)
-      this.lista = this.user.securityAnswerList
-      console.log(this.lista)
+    async verificaInfo() {
+      console.log(this.user.usuario)
       console.log(this.securityAnswer1)
       console.log(this.securityAnswer2)
       console.log(this.securityAnswer3)
-      if (
-        this.lista[0] === this.securityAnswer1 &&
-        this.lista[1] === this.securityAnswer2 &&
-        this.lista[2] === this.securityAnswer3
-      ) {
-        console.log('Respuestas correctas')
-        this.confirmation1 = true
-        this.snackbar = true
-        this.snackbarText = '¡¡Respuestas validadas correctamente!!'
-      } else {
-        console.log('fallo')
-        this.confirmation1 = false
-        this.snackbar = true
-        this.snackbarText =
-          '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
-      }
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/answers', {
+          nombreUsuario: this.user.usuario,
+          securityAnswer1: this.securityAnswer1,
+          securityAnswer2: this.securityAnswer2,
+          securityAnswer3: this.securityAnswer3,
+        })
+        .then((respuesta) => {
+          this.confirmation1 = true
+          this.snackbar = true
+          this.snackbarText = '¡¡Respuestas validadas correctamente!!'
+          return respuesta.data
+        })
+        .catch((error) => {
+          this.errorM = null
+          if (error.response.status === 404) {
+            this.confirmation1 = false
+            this.snackbar = true
+            this.snackbarText =
+              '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
+          } else {
+            this.errorM = 'Ocurrio un error con el servidor'
+          }
+        })
     },
     passwordVerificacion() {
       if (this.character.newPassword !== this.character.newRePassword) {
