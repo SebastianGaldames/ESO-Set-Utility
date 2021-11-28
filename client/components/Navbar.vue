@@ -2,11 +2,14 @@
   <v-toolbar dark>
     <v-row class="d-flex justify-center">
       <v-flex class="d-flex">
-        <v-img
-          max-height="100"
-          max-width="250"
-          src="https://i.imgur.com/Hc1mF2k.png"
-        ></v-img>
+        <NuxtLink to="/">
+          <v-img
+            max-height="100"
+            max-width="250"
+            src="https://i.imgur.com/Hc1mF2k.png"
+          >
+          </v-img>
+        </NuxtLink>
       </v-flex>
       <NuxtLink
         to="/"
