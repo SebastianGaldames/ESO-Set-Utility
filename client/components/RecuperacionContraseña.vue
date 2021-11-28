@@ -27,12 +27,7 @@
               </v-col>
             </v-row>
           </v-flex>
-          <v-select
-            v-model="character.securityQuestion1"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-          ></v-select>
+          <v-text class="pt-2"> Nombre de tu ciudad favorita?</v-text>
           <v-text-field
             v-model="character.securityAnswer1"
             clearable
@@ -41,12 +36,7 @@
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
           ></v-text-field>
-          <v-select
-            v-model="character.securityQuestion2"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-          ></v-select>
+          <v-text> Cual es el apellido de tu madre? </v-text>
           <v-text-field
             v-model="character.securityAnswer2"
             clearable
@@ -55,12 +45,7 @@
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
           ></v-text-field>
-          <v-select
-            v-model="character.securityQuestion3"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-          ></v-select>
+          <v-text> Cual es el nombre de tu primera escuela? </v-text>
           <v-text-field
             v-model="character.securityAnswer3"
             clearable
@@ -74,8 +59,8 @@
               <v-btn
                 color="acentuado2"
                 class="mx-10"
-                :disabled="!valid"
-                @click="addCharacter"
+                :disabled="valid"
+                @click="verificaInfo"
                 >Validar Información</v-btn
               >
               <v-text-field
@@ -88,7 +73,7 @@
                 hide-details="auto"
               ></v-text-field>
 
-              <v-btn outlined blame @click="closeDialogEvent"
+              <v-btn outlined blame @click="cambioDatos"
                 >Cambiar Contraseña</v-btn
               >
             </v-flex>
@@ -99,6 +84,27 @@
   </v-form>
 </template>
 <script>
+class Usuario {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    answerList
+  ) {
+    this.usuario = usuario
+    this.email = email
+    this.pais = pais
+    this.password = password
+    this.sexo = sexo
+    this.personajes = personajes
+    this.inventario = inventario
+    this.answerList = answerList
+  }
+}
 export default {
   data: () => ({
     select: null,
@@ -125,7 +131,56 @@ export default {
       securityQuestion3: '',
       securityAnswer3: '',
       newPassword: '',
+      newRePassword: 'hola12345',
     },
+    user: new Usuario(),
+    lista: [],
   }),
+  methods: {
+    async userValidation() {
+      const userparam = this.character.characterName
+      const userConfirmation = await this.$axios.get(
+        process.env.VUE_APP_SERVER_URL +
+          '/Usuario/querynombre?usuario=' +
+          userparam
+      )
+      this.user = userConfirmation.data
+    },
+    verificaInfo() {
+      console.log(this.user)
+      this.lista = this.user.answerList
+      console.log(this.lista)
+      if (
+        this.lista[0] === this.character.securityAnswer1 &&
+        this.lista[1] === this.character.securityAnswer2 &&
+        this.lista[2] === this.character.securityAnswer3
+      ) {
+        console.log('Respuestas correctas')
+      }
+    },
+    passwordVerificacion() {
+      if (this.character.newPassword !== this.character.newRePassword) {
+        alert('Contraseña no coincide con su confirmacion')
+      }
+    },
+
+    async cambioDatos() {
+      if (this.passwordVerificacion() && this.character.newPassword !== '') {
+        this.user.password = this.character.newPassword
+        const newPassword = {
+          _id: this.user._id,
+          password: this.user.password,
+        }
+        if (this.password !== '') {
+          const passwordUpdated = await this.$axios.put(
+            process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
+            newPassword
+          )
+          // eslint-disable-next-line no-console
+          console.log(passwordUpdated)
+        }
+      }
+    },
+  },
 }
 </script>
