@@ -3,7 +3,7 @@
     <v-card
       dark
       class="mx-auto pa-10 ma-10 margenCarta"
-      max-width="380"
+      max-width="450"
       max-height="2000"
       style="border: 2px solid #a68f7b"
     >
@@ -79,7 +79,45 @@
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
-
+      <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
+      <v-text-field
+        v-model="securityAnswerList[0]"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hidedetails="auto"
+      ></v-text-field>
+      <v-text>¿Cuál es el apellido de tu madre? </v-text>
+      <v-text-field
+        v-model="securityAnswerList[1]"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
+      <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
+      <v-text-field
+        v-model="securityAnswerList[2]"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
       <v-row align="center">
         <v-checkbox v-model="checkbox"> </v-checkbox>
         acepto los&nbsp;
@@ -163,7 +201,16 @@
 import axios from 'axios'
 
 class Usuario {
-  constructor(usuario, email, pais, password, sexo, personajes, inventario) {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    securityAnswerList
+  ) {
     this.usuario = usuario
     this.email = email
     this.pais = pais
@@ -171,6 +218,7 @@ class Usuario {
     this.sexo = sexo
     this.personajes = personajes
     this.inventario = inventario
+    this.securityAnswerList = securityAnswerList
   }
 }
 
@@ -202,6 +250,7 @@ export default {
       pais: '',
       inventario: [],
       user: new Usuario(),
+      securityAnswerList: [],
       checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -212,6 +261,12 @@ export default {
         required: (value) => !!value || 'Campo obligatorio',
         equals: (v) => v === this.email || 'Los e-mails no coinciden',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
+      },
+      questionRules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        longMax: (value) =>
+          (value && value.length <= 10) || 'Debe tener máximo 10 caracteres',
+        longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
       },
       snackbar: false,
       snackbarText: '',
@@ -261,7 +316,16 @@ export default {
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.sexo === ''
+        this.sexo === '' ||
+        this.securityAnswerList[0] === '' ||
+        this.securityAnswerList[1] === '' ||
+        this.securityAnswerList[2] === '' ||
+        this.securityAnswerList[0].length < 2 ||
+        this.securityAnswerList[0].length > 10 ||
+        this.securityAnswerList[1].length < 2 ||
+        this.securityAnswerList[1].length > 10 ||
+        this.securityAnswerList[2].length < 2 ||
+        this.securityAnswerList[2].length > 10
       ) {
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
@@ -278,7 +342,8 @@ export default {
           this.password,
           this.sexo,
           this.personajes,
-          this.inventario
+          this.inventario,
+          this.securityAnswerList
         )
         axios
           .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
@@ -289,6 +354,7 @@ export default {
             sexo: this.user.sexo,
             personajes: this.personajes,
             inventario: this.inventario,
+            securityAnswerList: this.securityAnswerList,
           })
           .then((respuesta) => {
             return respuesta.data
