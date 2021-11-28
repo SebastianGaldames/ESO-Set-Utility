@@ -81,7 +81,7 @@
       ></v-text-field>
       <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
       <v-text-field
-        v-model="securityAnswer1"
+        v-model="securityAnswerList[0]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
@@ -94,7 +94,7 @@
       ></v-text-field>
       <v-text>¿Cuál es el apellido de tu madre? </v-text>
       <v-text-field
-        v-model="securityAnswer2"
+        v-model="securityAnswerList[1]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
@@ -107,7 +107,7 @@
       ></v-text-field>
       <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
       <v-text-field
-        v-model="securityAnswer3"
+        v-model="securityAnswerList[2]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
@@ -218,6 +218,7 @@ class Usuario {
     this.sexo = sexo
     this.personajes = personajes
     this.inventario = inventario
+    this.securityAnswerList = securityAnswerList
   }
 }
 
@@ -250,9 +251,6 @@ export default {
       inventario: [],
       user: new Usuario(),
       securityAnswerList: [],
-      securityAnswer1: '',
-      securityAnswer2: '',
-      securityAnswer3: '',
       checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -301,11 +299,6 @@ export default {
   },
 
   methods: {
-    llenarListaRespuestas() {
-      this.securityAnswerList.push(this.securityAnswer1)
-      this.securityAnswerList.push(this.securityAnswer2)
-      this.securityAnswerList.push(this.securityAnswer3)
-    },
     aceptarTerminos() {
       this.checkbox = true
       this.dialog = false
@@ -323,10 +316,17 @@ export default {
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.sexo === ''
+        this.sexo === '' ||
+        this.securityAnswerList[0] === '' ||
+        this.securityAnswerList[1] === '' ||
+        this.securityAnswerList[2] === '' ||
+        this.securityAnswerList[0].length < 2 ||
+        this.securityAnswerList[0].length > 10 ||
+        this.securityAnswerList[1].length < 2 ||
+        this.securityAnswerList[1].length > 10 ||
+        this.securityAnswerList[2].length < 2 ||
+        this.securityAnswerList[2].length > 10
       ) {
-        this.llenarListaRespuestas()
-        console.log(this.securityAnswer1)
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
       } else if (

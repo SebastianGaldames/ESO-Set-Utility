@@ -23,17 +23,11 @@
                 ></v-text-field>
               </v-col>
               <v-col>
-                <v-btn outlined @click="userValidation">Validar</v-btn>
+                <v-btn outlined>Validar</v-btn>
               </v-col>
             </v-row>
           </v-flex>
-          <v-select
-            v-model="securityQuestion1"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-            :disabled="!valid"
-          ></v-select>
+          <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
           <v-text-field
             v-model="securityAnswer1"
             clearable
@@ -43,13 +37,7 @@
             hide-details="auto"
             :disabled="!valid"
           ></v-text-field>
-          <v-select
-            v-model="securityQuestion2"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-            :disabled="!valid"
-          ></v-select>
+          <v-text>¿Cuál es el apellido de tu madre? </v-text>
           <v-text-field
             v-model="securityAnswer2"
             clearable
@@ -59,13 +47,7 @@
             hide-details="auto"
             :disabled="!valid"
           ></v-text-field>
-          <v-select
-            v-model="securityQuestion3"
-            :items="securityQuestionList"
-            label="Selecciona la Pregunta Secreta"
-            :rules="[rules.required]"
-            :disabled="!valid"
-          ></v-select>
+          <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
           <v-text-field
             v-model="securityAnswer3"
             clearable
@@ -108,9 +90,7 @@
                 class="input-group--focused secundario--text"
                 @click:append="show = !show"
               ></v-text-field>
-              <v-btn outlined blame @click="closeDialogEvent"
-                >Cambiar Contraseña</v-btn
-              >
+              <v-btn outlined blame>Cambiar Contraseña</v-btn>
             </v-flex>
           </v-card-actions>
         </div>
