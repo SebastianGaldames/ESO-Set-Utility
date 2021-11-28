@@ -1,26 +1,61 @@
 <template>
   <div>
     <div>
-      <v-img
-        class="mx-1"
+      <v-btn
+        v-if="enableItem"
+        color="acentuado3"
+        class="texto1--text"
         :height="defaultItemHeight"
-        :src="item.imagen"
         :width="defaultItemWidth"
-        @click="test"
+        @click="agregarSlotItem"
+      >
+        +
+      </v-btn>
+      <v-img
+        v-else
+        class="mx-1"
+        contain
+        :height="defaultItemHeight"
+        :src="itemImage"
+        :width="defaultItemWidth"
       ></v-img>
       <div class="d-flex py-2">
+        <v-btn
+          v-if="enableTrait"
+          color="acentuado3"
+          class="texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="agregarSlotTrait"
+        >
+          +
+        </v-btn>
         <v-img
+          v-else
+          contain
+          :src="traitImage"
           :max-height="defaultGlyphTraitHeight"
-          :src="trait.imagen"
           :max-width="defaultGlyphTraitWidth"
-          @click="test"
         ></v-img>
+        <v-btn
+          v-if="enableGlyph"
+          color="acentuado3"
+          class="mx-2 texto1--text"
+          x-small
+          :height="defaultGlyphTraitHeight"
+          :width="defaultGlyphTraitWidth"
+          @click="agregarSlotGlyph"
+        >
+          +
+        </v-btn>
         <v-img
+          v-else
+          contain
           class="mx-2"
+          :src="glyphImage"
           :max-height="defaultGlyphTraitHeight"
-          :src="glyph.imagen"
           :max-width="defaultGlyphTraitWidth"
-          @click="test"
         ></v-img>
       </div>
     </div>
@@ -30,26 +65,23 @@
 <script>
 export default {
   props: {
-    casilla: {
+    id: {
       type: String,
-      default: '',
+      required: true,
     },
-    item: {
+    slotProp: {
       type: Object,
       required: true,
-      default: null,
     },
-    trait: {
-      type: Object,
-      required: true,
-      default: null,
+    enableItem: {
+      type: Boolean,
+      default: false,
     },
-    glyph: {
-      type: Object,
-      required: true,
-      default: null,
+    enableGlyph: {
+      type: Boolean,
+      default: false,
     },
-    arma: {
+    enableTrait: {
       type: Boolean,
       default: false,
     },
@@ -62,9 +94,38 @@ export default {
       defaultGlyphTraitWidth: '25',
     }
   },
+  computed: {
+    itemImage() {
+      if (!(this.slotProp.item === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
+    glyphImage() {
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
+    traitImage() {
+      if (!(this.slotProp.trait === undefined)) {
+        return this.slotProp.item.imagen
+      }
+      return ''
+    },
+  },
   methods: {
-    test(event) {
-      console.log('evento capturado')
+    // test(event) {
+    //   console.log('evento capturado')
+    // },
+    agregarSlotItem() {
+      this.$emit('agregarSlotItem', this.id)
+    },
+    agregarSlotTrait() {
+      this.$emit('agregarSlotTrait', this.id)
+    },
+    agregarSlotGlyph() {
+      this.$emit('agregarSlotGlyph', this.id)
     },
   },
 }

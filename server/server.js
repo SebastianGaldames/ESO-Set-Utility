@@ -38,7 +38,6 @@ app.use('/Personaje', require('./routes/Personaje'))
 app.use('/Item', require('./routes/Item'))
 app.use('/Familia', require('./routes/Familia'))
 app.use('/Glyph', require('./routes/Glyph'))
-app.use('/Glifo', require('./routes/Glifo'))
 app.use('/Trait', require('./routes/Trait'))
 
 // Listening to port

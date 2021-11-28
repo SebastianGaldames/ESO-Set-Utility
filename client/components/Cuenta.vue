@@ -108,6 +108,10 @@
         </v-container>
       </v-item-group>
     </div>
+    <v-snackbar v-model="snackbar" timeout="3000" top>
+      <span>¡Cambios guardados con éxito!</span>
+      <v-btn @click="snackbar = false">Cerrar</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -142,6 +146,7 @@ export default {
         pass: '',
         newPass: '',
       },
+      snackbar: false,
     }
   },
   methods: {
@@ -154,6 +159,7 @@ export default {
         contraseña: this.cuenta.newPass,
       }
       console.log(nuevaInfo.usuario)
+      this.snackbar = true
       /* const response = await this.$axios('/server/users/changeInfo', {
         method: 'post',
         data: nuevaInfo,
