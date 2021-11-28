@@ -290,11 +290,11 @@ export default {
     },
     largoMinimoContrasenna() {
       return () =>
-        this.password.length === 8 || 'Debe tener al menos 8 caracteres'
+        this.password.length >= 8 || 'Debe tener al menos 8 caracteres'
     },
     largoMinimoContrasenna2() {
       return () =>
-        this.rePassword.length === 8 || 'Debe tener al menos 8 caracteres'
+        this.rePassword.length >= 8 || 'Debe tener al menos 8 caracteres'
     },
   },
 
