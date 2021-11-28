@@ -3,7 +3,7 @@
     <v-card
       dark
       class="mx-auto pa-10 ma-10 margenCarta"
-      max-width="380"
+      max-width="450"
       max-height="2000"
       style="border: 2px solid #a68f7b"
     >
@@ -79,12 +79,7 @@
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
-      <v-select
-        v-model="securityQuestion1"
-        :items="securityQuestionList"
-        label="Selecciona la Pregunta Secreta 1"
-        :rules="[rules.required]"
-      ></v-select>
+      <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
       <v-text-field
         v-model="securityAnswer1"
         clearable
@@ -97,12 +92,7 @@
         ]"
         hidedetails="auto"
       ></v-text-field>
-      <v-select
-        v-model="securityQuestion2"
-        :items="securityQuestionList"
-        label="Selecciona la Pregunta Secreta 2"
-        :rules="[rules.required]"
-      ></v-select>
+      <v-text>¿Cuál es el apellido de tu madre? </v-text>
       <v-text-field
         v-model="securityAnswer2"
         clearable
@@ -115,12 +105,7 @@
         ]"
         hide-details="auto"
       ></v-text-field>
-      <v-select
-        v-model="securityQuestion3"
-        :items="securityQuestionList"
-        label="Selecciona la Pregunta Secreta 3"
-        :rules="[rules.required]"
-      ></v-select>
+      <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
       <v-text-field
         v-model="securityAnswer3"
         clearable
@@ -264,12 +249,6 @@ export default {
       pais: '',
       inventario: [],
       user: new Usuario(),
-      securityQuestionList: [
-        '¿Cuál es el nombre de tu ciudad favorita?',
-        '¿Cuál es el apellido de tu madre?',
-        '¿Cuál es el nombre de tu mascota favorita?',
-        '¿Cuál es el nombre de tu primera escuela?',
-      ],
       securityAnswerList: [],
       securityAnswer1: '',
       securityAnswer2: '',
