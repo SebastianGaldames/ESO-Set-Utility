@@ -27,65 +27,66 @@
               </v-col>
             </v-row>
           </v-flex>
-          <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
-          <v-text-field
-            v-model="securityAnswer1"
-            :counter="10"
-            clearable
-            color="acentuado1"
-            label="Respuesta Secreta"
-            :rules="[rules.required, rules.longMax, rules.longMin]"
-            hide-details="auto"
-          ></v-text-field>
-          <v-text>¿Cuál es el apellido de tu madre? </v-text>
-          <v-text-field
-            v-model="securityAnswer2"
-            :counter="10"
-            clearable
-            color="acentuado1"
-            label="Respuesta Secreta"
-            :rules="[rules.required, rules.longMax, rules.longMin]"
-            hide-details="auto"
-          ></v-text-field>
-          <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
-          <v-text-field
-            v-model="securityAnswer3"
-            :counter="10"
-            clearable
-            color="acentuado1"
-            label="Respuesta Secreta"
-            :rules="[rules.required, rules.longMax, rules.longMin]"
-            hide-details="auto"
-          ></v-text-field>
+          <v-card :disabled="!confirmation">
+            <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
+            <v-text-field
+              v-model="securityAnswer1"
+              clearable
+              color="acentuado1"
+              label="Respuesta Secreta"
+              :rules="[rules.required, rules.longMax, rules.longMin]"
+              hide-details="auto"
+            ></v-text-field>
+            <v-text>¿Cuál es el apellido de tu madre? </v-text>
+            <v-text-field
+              v-model="securityAnswer2"
+              clearable
+              color="acentuado1"
+              label="Respuesta Secreta"
+              :rules="[rules.required, rules.longMax, rules.longMin]"
+              hide-details="auto"
+            ></v-text-field>
+            <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
+            <v-text-field
+              v-model="securityAnswer3"
+              clearable
+              color="acentuado1"
+              label="Respuesta Secreta"
+              :rules="[rules.required, rules.longMax, rules.longMin]"
+              hide-details="auto"
+            ></v-text-field>
+            <v-btn color="acentuado2" class="mx-10" @click="verificaInfo"
+              >Validar Información</v-btn
+            >
+          </v-card>
           <v-card-actions class="px-5 pb-4">
-            <v-flex text-center>
-              <v-btn color="acentuado2" class="mx-10" @click="verificaInfo"
-                >Validar Información</v-btn
-              >
-              <v-text-field
-                v-model="character.newPassword"
-                :type="show2 ? 'text' : 'password'"
-                clearable
-                color="acentuado1"
-                label="Ingresa la nueva contraseña"
-                :rules="[rules.required, rules.minPass]"
-                hide-details="auto"
-              ></v-text-field>
-              <v-text-field
-                v-model="character.newRePassword"
-                :rules="[rules.required, rules.minPass]"
-                :type="show ? 'text' : 'password'"
-                name="input-10-2"
-                label="Confirma tu contraseña"
-                hint="Las contraseñas coinciden"
-                value=""
-                class="input-group--focused secundario--text"
-                @click:append="show = !show"
-              ></v-text-field>
-              <v-btn outlined blame @click="cambioDatos"
-                >Cambiar Contraseña</v-btn
-              >
-            </v-flex>
+            <v-card :disabled="!confirmation1">
+              <v-flex text-center>
+                <v-text-field
+                  v-model="character.newPassword"
+                  :type="show2 ? 'text' : 'password'"
+                  clearable
+                  color="acentuado1"
+                  label="Ingresa la nueva contraseña"
+                  :rules="[rules.required, rules.minPass]"
+                  hide-details="auto"
+                ></v-text-field>
+                <v-text-field
+                  v-model="character.newRePassword"
+                  :rules="[rules.required, rules.minPass]"
+                  :type="show ? 'text' : 'password'"
+                  name="input-10-2"
+                  label="Confirma tu contraseña"
+                  hint="Las contraseñas coinciden"
+                  value=""
+                  class="input-group--focused secundario--text"
+                  @click:append="show = !show"
+                ></v-text-field>
+                <v-btn outlined blame @click="cambioDatos"
+                  >Cambiar Contraseña</v-btn
+                >
+              </v-flex>
+            </v-card>
           </v-card-actions>
         </div>
       </v-col>
@@ -166,11 +167,11 @@ export default {
             userparam
         )
         .then((respuesta) => {
-          return respuesta.data
-        })
-        .then((respuesta) => {
+          console.log('entre al then')
           this.confirmation = true
           this.user = respuesta.data
+          console.log(this.user)
+          return respuesta.data
         })
         .catch((error) => {
           this.errorM = null
@@ -196,6 +197,7 @@ export default {
         this.lista[2] === this.securityAnswer3
       ) {
         console.log('Respuestas correctas')
+        this.confirmation1 = true
       } else {
         console.log('fallo')
       }
