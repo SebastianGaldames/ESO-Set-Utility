@@ -1,9 +1,14 @@
 const parsingService = require('../services/parsingService')
 
+/**
+ * referenced from Parsing.js
+ * @param {*} req
+ * @param {*} res
+ */
 const test = async (req, res) => {
-    console.log(req.query)
+  console.log(req.query)
   const parseado = await parsingService.parseLine(req.query.linea)
-  console.log(parseado)
+  // console.log(parseado)
   res.status(200).send(parseado)
 }
 
