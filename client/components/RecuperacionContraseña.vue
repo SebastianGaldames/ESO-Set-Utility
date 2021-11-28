@@ -115,6 +115,10 @@
             </v-card>
           </div>
         </v-col>
+        <v-snackbar v-model="snackbar" timeout="6000" top>
+          <span>{{ snackbarText }}</span>
+          <v-btn @click="snackbar = false">Cerrar</v-btn>
+        </v-snackbar>
       </v-layout>
     </v-container>
   </v-card>
@@ -148,7 +152,7 @@ export default {
     rules: {
       required: (value) => !!value || 'Campo obligatorio',
       longMax: (value) =>
-        (value && value.length <= 10) || 'Debe tener máximo 10 caracteres',
+        (value && value.length <= 20) || 'Debe tener máximo 20 caracteres',
       longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
       minPass: (value) =>
         (value && value.length >= 8) || 'Debe tener al menos 8 caracteres',
@@ -163,12 +167,19 @@ export default {
     confirmation: false,
     confirmation1: false,
     errorM: '',
+    snackbar: false,
+    snackbarText: '',
   }),
   computed: {
     passwordConfirmationRule() {
       return () =>
         this.newPassword === this.newRePassword ||
         'Las contraseñas no coinciden'
+    },
+    passwordLargeConfirmationRule() {
+      return () =>
+        (this.newPassword.length === this.newRePassword.length) >= 8 ||
+        'Las contraseñas no cumplen el mínimo necesario'
     },
   },
   methods: {
@@ -185,6 +196,8 @@ export default {
           this.confirmation = true
           this.user = respuesta.data
           console.log(this.user)
+          this.snackbar = true
+          this.snackbarText = 'Usuario validado correctamente'
           return respuesta.data
         })
         .catch((error) => {
@@ -192,7 +205,11 @@ export default {
           if (error.response.status === 404) {
             this.errorM = 'Datos ingresados incorrectamente'
             this.snackbar = true
-            this.snackbarText = 'Ingrese nuevamente los datos'
+            this.confirmation1 = false
+            this.snackbarText =
+              '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
+            this.confirmation = false
+            this.confirmation1 = false
           } else {
             this.errorM = 'Ocurrio un error con el servidor'
           }
@@ -212,15 +229,25 @@ export default {
       ) {
         console.log('Respuestas correctas')
         this.confirmation1 = true
+        this.snackbar = true
+        this.snackbarText = '¡¡Respuestas validadas correctamente!!'
       } else {
         console.log('fallo')
+        this.confirmation1 = false
+        this.snackbar = true
+        this.snackbarText =
+          '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
       }
     },
     passwordVerificacion() {
       if (this.character.newPassword !== this.character.newRePassword) {
-        alert('Contraseña no coincide con su confirmacion')
+        this.snackbar = true
+        this.snackbarText =
+          '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
         return false
       } else {
+        this.snackbar = true
+        this.snackbarText = '¡¡Clave modificada exitosamente!!'
         return true
       }
     },
