@@ -117,7 +117,7 @@
         </v-col>
         <v-snackbar v-model="snackbar" timeout="6000" top>
           <span>{{ snackbarText }}</span>
-          <v-btn @click="snackbar = false">Cerrar</v-btn>
+          <v-btn @click="mandarAInicio()">Cerrar</v-btn>
         </v-snackbar>
       </v-layout>
     </v-container>
@@ -172,6 +172,7 @@ export default {
     securityAnswer1: '',
     securityAnswer2: '',
     securityAnswer3: '',
+    seCambio: false,
   }),
   computed: {
     passwordConfirmationRule() {
@@ -257,7 +258,15 @@ export default {
       } else {
         this.snackbar = true
         this.snackbarText = '¡¡Clave modificada exitosamente!!'
+        this.seCambio = true
         return true
+      }
+    },
+
+    mandarAInicio() {
+      this.snackbar = false
+      if (this.seCambio) {
+        this.$router.push('/')
       }
     },
 
