@@ -79,7 +79,60 @@
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
-
+      <v-select
+        v-model="securityQuestion1"
+        :items="securityQuestionList"
+        label="Selecciona la Pregunta Secreta 1"
+        :rules="[rules.required]"
+      ></v-select>
+      <v-text-field
+        v-model="securityAnswer1"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hidedetails="auto"
+      ></v-text-field>
+      <v-select
+        v-model="securityQuestion2"
+        :items="securityQuestionList"
+        label="Selecciona la Pregunta Secreta 2"
+        :rules="[rules.required]"
+      ></v-select>
+      <v-text-field
+        v-model="securityAnswer2"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
+      <v-select
+        v-model="securityQuestion3"
+        :items="securityQuestionList"
+        label="Selecciona la Pregunta Secreta 3"
+        :rules="[rules.required]"
+      ></v-select>
+      <v-text-field
+        v-model="securityAnswer3"
+        clearable
+        color="acentuado1"
+        label="Respuesta Secreta"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
       <v-row align="center">
         <v-checkbox v-model="checkbox"> </v-checkbox>
         acepto los&nbsp;
@@ -163,7 +216,16 @@
 import axios from 'axios'
 
 class Usuario {
-  constructor(usuario, email, pais, password, sexo, personajes, inventario) {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    securityAnswerList
+  ) {
     this.usuario = usuario
     this.email = email
     this.pais = pais
@@ -202,6 +264,16 @@ export default {
       pais: '',
       inventario: [],
       user: new Usuario(),
+      securityQuestionList: [
+        '¿Cuál es el nombre de tu ciudad favorita?',
+        '¿Cuál es el apellido de tu madre?',
+        '¿Cuál es el nombre de tu mascota favorita?',
+        '¿Cuál es el nombre de tu primera escuela?',
+      ],
+      securityAnswerList: [],
+      securityAnswer1: '',
+      securityAnswer2: '',
+      securityAnswer3: '',
       checkbox: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
@@ -212,6 +284,12 @@ export default {
         required: (value) => !!value || 'Campo obligatorio',
         equals: (v) => v === this.email || 'Los e-mails no coinciden',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
+      },
+      questionRules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        longMax: (value) =>
+          (value && value.length <= 10) || 'Debe tener máximo 10 caracteres',
+        longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
       },
       snackbar: false,
       snackbarText: '',
@@ -244,6 +322,11 @@ export default {
   },
 
   methods: {
+    llenarListaRespuestas() {
+      this.securityAnswerList.push(this.securityAnswer1)
+      this.securityAnswerList.push(this.securityAnswer2)
+      this.securityAnswerList.push(this.securityAnswer3)
+    },
     aceptarTerminos() {
       this.checkbox = true
       this.dialog = false
@@ -263,6 +346,8 @@ export default {
         this.password === '' ||
         this.sexo === ''
       ) {
+        this.llenarListaRespuestas()
+        console.log(this.securityAnswer1)
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
       } else if (
@@ -278,7 +363,8 @@ export default {
           this.password,
           this.sexo,
           this.personajes,
-          this.inventario
+          this.inventario,
+          this.securityAnswerList
         )
         axios
           .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
@@ -289,6 +375,7 @@ export default {
             sexo: this.user.sexo,
             personajes: this.personajes,
             inventario: this.inventario,
+            securityAnswerList: this.securityAnswerList,
           })
           .then((respuesta) => {
             return respuesta.data

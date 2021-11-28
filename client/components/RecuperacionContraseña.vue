@@ -28,14 +28,14 @@
             </v-row>
           </v-flex>
           <v-select
-            v-model="character.securityQuestion1"
+            v-model="securityQuestion1"
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
             :disabled="!valid"
           ></v-select>
           <v-text-field
-            v-model="character.securityAnswer1"
+            v-model="securityAnswer1"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -44,14 +44,14 @@
             :disabled="!valid"
           ></v-text-field>
           <v-select
-            v-model="character.securityQuestion2"
+            v-model="securityQuestion2"
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
             :disabled="!valid"
           ></v-select>
           <v-text-field
-            v-model="character.securityAnswer2"
+            v-model="securityAnswer2"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -60,14 +60,14 @@
             :disabled="!valid"
           ></v-text-field>
           <v-select
-            v-model="character.securityQuestion3"
+            v-model="securityQuestion3"
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
             :disabled="!valid"
           ></v-select>
           <v-text-field
-            v-model="character.securityAnswer3"
+            v-model="securityAnswer3"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -139,12 +139,7 @@ export default {
     },
     character: {
       characterName: '',
-      securityQuestion1: '',
-      securityAnswer1: '',
-      securityQuestion2: '',
-      securityAnswer2: '',
-      securityQuestion3: '',
-      securityAnswer3: '',
+      securityQuestions: [],
       newPassword: '',
       newRePassword: '',
     },
@@ -152,7 +147,8 @@ export default {
   computed: {
     passwordConfirmationRule() {
       return () =>
-        this.pasççsword === this.newRePassword || 'Las contraseñas no coinciden'
+        this.newPassword === this.newRePassword ||
+        'Las contraseñas no coinciden'
     },
   },
   methods: {
