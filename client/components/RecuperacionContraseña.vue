@@ -32,6 +32,7 @@
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
+            :disabled="!valid"
           ></v-select>
           <v-text-field
             v-model="character.securityAnswer1"
@@ -40,12 +41,14 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
+            :disabled="!valid"
           ></v-text-field>
           <v-select
             v-model="character.securityQuestion2"
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
+            :disabled="!valid"
           ></v-select>
           <v-text-field
             v-model="character.securityAnswer2"
@@ -54,12 +57,14 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
+            :disabled="!valid"
           ></v-text-field>
           <v-select
             v-model="character.securityQuestion3"
             :items="securityQuestionList"
             label="Selecciona la Pregunta Secreta"
             :rules="[rules.required]"
+            :disabled="!valid"
           ></v-select>
           <v-text-field
             v-model="character.securityAnswer3"
@@ -68,6 +73,7 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
+            :disabled="!valid"
           ></v-text-field>
           <v-card-actions class="px-5 pb-4">
             <v-flex text-center>
@@ -75,7 +81,7 @@
                 color="acentuado2"
                 class="mx-10"
                 :disabled="!valid"
-                @click="addCharacter"
+                @click="infoValidation"
                 >Validar Información</v-btn
               >
               <v-text-field
@@ -87,7 +93,21 @@
                 :rules="[rules.required, rules.minPass]"
                 hide-details="auto"
               ></v-text-field>
-
+              <v-text-field
+                v-model="character.newRePassword"
+                :rules="[
+                  rules.required,
+                  rules.minPass,
+                  passwordConfirmationRule(),
+                ]"
+                :type="show ? 'text' : 'password'"
+                name="input-10-2"
+                label="Confirma tu contraseña"
+                hint="Las contraseñas coinciden"
+                value=""
+                class="input-group--focused secundario--text"
+                @click:append="show = !show"
+              ></v-text-field>
               <v-btn outlined blame @click="closeDialogEvent"
                 >Cambiar Contraseña</v-btn
               >
@@ -102,6 +122,7 @@
 export default {
   data: () => ({
     select: null,
+    valid: true,
     securityQuestionList: [
       '¿Cuál es el nombre de tu ciudad favorita?',
       '¿Cuál es el apellido de tu madre?',
@@ -125,7 +146,19 @@ export default {
       securityQuestion3: '',
       securityAnswer3: '',
       newPassword: '',
+      newRePassword: '',
     },
   }),
+  computed: {
+    passwordConfirmationRule() {
+      return () =>
+        this.pasççsword === this.newRePassword || 'Las contraseñas no coinciden'
+    },
+  },
+  methods: {
+    addCharacter() {
+      this.$refs.form.validate()
+    },
+  },
 }
 </script>
