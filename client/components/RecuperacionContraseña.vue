@@ -1,66 +1,87 @@
 <template>
-  <v-form ref="form" v-model="reglas">
-    <v-card
-      class="mx-auto pa-4 ma-10"
-      max-width="500"
-      style="border: 2px solid #a68f7b"
-    >
-      <v-col cols="12">
-        <v-card-title primary-title class="justify-center pb-8">
-          Recuperar Contraseña
-        </v-card-title>
-        <div>
-          <v-flex text-center>
-            <v-row>
-              <v-col
-                ><v-text-field
-                  v-model="character.characterName"
+  <v-card
+    class="mx-auto pa-4 ma-10"
+    max-width="430"
+    style="border: 2px solid #a68f7b"
+    ><v-container grid-list-md>
+      <v-layout row wrap>
+        <v-col cols="12">
+          <v-card-title primary-title class="justify-center pb-8">
+            Recuperar Contraseña
+          </v-card-title>
+          <div>
+            <v-flex text-center>
+              <v-row>
+                <v-col cols="7"
+                  ><v-text-field
+                    v-model="character.characterName"
+                    clearable
+                    color="acentuado2"
+                    label="Nombre de Usuario"
+                    :rules="[rules.required, rules.longMin]"
+                    hide-details="auto"
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    outlined
+                    blame
+                    class="mt-2"
+                    color="acentuado2"
+                    @click="userValidation"
+                    >Validar</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-flex>
+            <v-card
+              style="box-shadow: none !important"
+              :disabled="!confirmation"
+            >
+              <div style="margin-top: 20px">
+                <v-text-field
+                  v-model="securityAnswer1"
                   clearable
                   color="acentuado1"
-                  label="Nombre de Usuario"
-                  :rules="[rules.required, rules.longMin]"
+                  label="¿Cuál es el nombre de tu ciudad favorita?"
+                  :counter="10"
+                  :rules="[rules.required, rules.longMax, rules.longMin]"
                   hide-details="auto"
                 ></v-text-field>
-              </v-col>
-              <v-col>
-                <v-btn outlined @click="userValidation">Validar</v-btn>
-              </v-col>
-            </v-row>
-          </v-flex>
-          <v-card :disabled="!confirmation">
-            <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
-            <v-text-field
-              v-model="securityAnswer1"
-              clearable
-              color="acentuado1"
-              label="Respuesta Secreta"
-              :rules="[rules.required, rules.longMax, rules.longMin]"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text>¿Cuál es el apellido de tu madre? </v-text>
-            <v-text-field
-              v-model="securityAnswer2"
-              clearable
-              color="acentuado1"
-              label="Respuesta Secreta"
-              :rules="[rules.required, rules.longMax, rules.longMin]"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
-            <v-text-field
-              v-model="securityAnswer3"
-              clearable
-              color="acentuado1"
-              label="Respuesta Secreta"
-              :rules="[rules.required, rules.longMax, rules.longMin]"
-              hide-details="auto"
-            ></v-text-field>
-            <v-btn color="acentuado2" class="mx-10" @click="verificaInfo"
-              >Validar Información</v-btn
+              </div>
+
+              <v-text-field
+                v-model="securityAnswer2"
+                clearable
+                color="acentuado1"
+                label="¿Cuál es el apellido de tu madre?"
+                :counter="10"
+                :rules="[rules.required, rules.longMax, rules.longMin]"
+                hide-details="auto"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="securityAnswer3"
+                clearable
+                color="acentuado1"
+                label="¿Cuál es el nombre de tu primera escuela?"
+                :counter="10"
+                :rules="[rules.required, rules.longMax, rules.longMin]"
+                hide-details="auto"
+              ></v-text-field>
+              <v-flex
+                style="width: 100%; display: grid; justify-content: center"
+              >
+                <v-btn outlined color="acentuado2" @click="verificaInfo"
+                  >Validar Información</v-btn
+                >
+              </v-flex>
+            </v-card>
+
+            <v-card
+              style="box-shadow: none !important"
+              :disabled="!confirmation1"
             >
-          </v-card>
-          <v-card-actions class="px-5 pb-4">
-            <v-card :disabled="!confirmation1">
               <v-flex text-center>
                 <v-text-field
                   v-model="character.newPassword"
@@ -82,16 +103,21 @@
                   class="input-group--focused secundario--text"
                   @click:append="show = !show"
                 ></v-text-field>
-                <v-btn outlined blame @click="cambioDatos"
+                <v-btn
+                  class="mt-1"
+                  outlined
+                  blame
+                  color="acentuado2"
+                  @click="cambioDatos"
                   >Cambiar Contraseña</v-btn
                 >
               </v-flex>
             </v-card>
-          </v-card-actions>
-        </div>
-      </v-col>
-    </v-card>
-  </v-form>
+          </div>
+        </v-col>
+      </v-layout>
+    </v-container>
+  </v-card>
 </template>
 <script>
 class Usuario {
@@ -119,12 +145,6 @@ export default {
   data: () => ({
     select: null,
     valid: true,
-    securityQuestionList: [
-      '¿Cuál es el nombre de tu ciudad favorita?',
-      '¿Cuál es el apellido de tu madre?',
-      '¿Cuál es el nombre de tu mascota favorita?',
-      '¿Cuál es el nombre de tu primera escuela?',
-    ],
     rules: {
       required: (value) => !!value || 'Campo obligatorio',
       longMax: (value) =>
@@ -136,13 +156,10 @@ export default {
     character: {
       characterName: '',
       newPassword: '',
-      newRePassword: 'hola1234',
+      newRePassword: '',
     },
     user: new Usuario(),
     lista: [],
-    securityAnswer1: '',
-    securityAnswer2: '',
-    securityAnswer3: '',
     confirmation: false,
     confirmation1: false,
     errorM: '',
@@ -155,9 +172,6 @@ export default {
     },
   },
   methods: {
-    addCharacter() {
-      this.$refs.form.validate()
-    },
     async userValidation() {
       const userparam = this.character.characterName
       await this.$axios
