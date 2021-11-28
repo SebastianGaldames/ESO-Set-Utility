@@ -4,7 +4,9 @@
  * @returns Object with properties: items (Number), stats (array)
  */
 const parseSetBonusLine = async (line) => {
-  const statsList = ['Armor', 'Stamina']
+  //const statsList = ['Armor', 'Stamina']
+  const statsList = ['Armor', 'Healing Done','Healing Taken','Health Recovery','Magicka Recovery','Maximum Health','Maximum Magicka','Maximum Stamina','Offensive Penetration',
+  'Critical Chance','Spell Damage','Stamina Recovery']
   const result = {
     // cantidad
     requiredItems: 0,
