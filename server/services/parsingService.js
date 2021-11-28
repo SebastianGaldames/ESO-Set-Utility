@@ -4,9 +4,20 @@
  * @returns Object with properties: items (Number), stats (array)
  */
 const parseSetBonusLine = async (line) => {
-  //const statsList = ['Armor', 'Stamina']
-  const statsList = ['Armor', 'Healing Done','Healing Taken','Health Recovery','Magicka Recovery','Maximum Health','Maximum Magicka','Maximum Stamina','Offensive Penetration',
-  'Critical Chance','Spell Damage','Stamina Recovery']
+  const statsList = [
+    'Armor',
+    'Healing Done',
+    'Healing Taken',
+    'Health Recovery',
+    'Magicka Recovery',
+    'Maximum Health',
+    'Maximum Magicka',
+    'Maximum Stamina',
+    'Offensive Penetration',
+    'Critical Chance',
+    'Spell Damage',
+    'Stamina Recovery',
+  ]
   const result = {
     // cantidad
     requiredItems: 0,
@@ -32,17 +43,19 @@ const parseSetBonusLine = async (line) => {
     let matches = line.matchAll(regexStats)
     let match = matches.next()
     while (!match.done) {
-        const stat = {
-            type: '',
-            value: 0,
-            operation: '',
-        }
+      const stat = {
+        type: '',
+        value: 0,
+        operation: '',
+      }
       //   console.log('match: ' + match.value)
 
       // llenado del objeto stat por iteracion
       regexSingleMatch = new RegExp(`(Adds)\\s([0-9]+)\\s(${statsList[i]})`)
       stat.type = match.value.toString().replace(regexSingleMatch, '$3')
-      stat.value = parseInt(match.value.toString().replace(regexSingleMatch, '$2'))
+      stat.value = parseInt(
+        match.value.toString().replace(regexSingleMatch, '$2')
+      )
       stat.operation = match.value.toString().replace(regexSingleMatch, '$1')
       result.stats.push(stat)
       match = matches.next()
