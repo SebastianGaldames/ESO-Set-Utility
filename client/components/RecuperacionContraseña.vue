@@ -23,7 +23,7 @@
                 ></v-text-field>
               </v-col>
               <v-col>
-                <v-btn outlined>Validar</v-btn>
+                <v-btn outlined @click="userValidation">Validar</v-btn>
               </v-col>
             </v-row>
           </v-flex>
@@ -36,7 +36,6 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
-            :disabled="!valid"
           ></v-text-field>
           <v-text>¿Cuál es el apellido de tu madre? </v-text>
           <v-text-field
@@ -47,7 +46,6 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
-            :disabled="!valid"
           ></v-text-field>
           <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
           <v-text-field
@@ -58,15 +56,10 @@
             label="Respuesta Secreta"
             :rules="[rules.required, rules.longMax, rules.longMin]"
             hide-details="auto"
-            :disabled="!valid"
           ></v-text-field>
           <v-card-actions class="px-5 pb-4">
             <v-flex text-center>
-              <v-btn
-                color="acentuado2"
-                class="mx-10"
-                :disabled="!valid"
-                @click="infoValidation"
+              <v-btn color="acentuado2" class="mx-10" @click="verificaInfo"
                 >Validar Información</v-btn
               >
               <v-text-field
@@ -80,11 +73,7 @@
               ></v-text-field>
               <v-text-field
                 v-model="character.newRePassword"
-                :rules="[
-                  rules.required,
-                  rules.minPass,
-                  passwordConfirmationRule(),
-                ]"
+                :rules="[rules.required, rules.minPass]"
                 :type="show ? 'text' : 'password'"
                 name="input-10-2"
                 label="Confirma tu contraseña"
@@ -93,7 +82,9 @@
                 class="input-group--focused secundario--text"
                 @click:append="show = !show"
               ></v-text-field>
-              <v-btn outlined blame>Cambiar Contraseña</v-btn>
+              <v-btn outlined blame @click="cambioDatos"
+                >Cambiar Contraseña</v-btn
+              >
             </v-flex>
           </v-card-actions>
         </div>
@@ -102,6 +93,27 @@
   </v-form>
 </template>
 <script>
+class Usuario {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    securityAnswerList
+  ) {
+    this.usuario = usuario
+    this.email = email
+    this.pais = pais
+    this.password = password
+    this.sexo = sexo
+    this.personajes = personajes
+    this.inventario = inventario
+    this.securityAnswerList = securityAnswerList
+  }
+}
 export default {
   data: () => ({
     select: null,
@@ -123,8 +135,16 @@ export default {
     character: {
       characterName: '',
       newPassword: '',
-      newRePassword: '',
+      newRePassword: 'hola1234',
     },
+    user: new Usuario(),
+    lista: [],
+    securityAnswer1: '',
+    securityAnswer2: '',
+    securityAnswer3: '',
+    confirmation: false,
+    confirmation1: false,
+    errorM: '',
   }),
   computed: {
     passwordConfirmationRule() {
@@ -136,6 +156,75 @@ export default {
   methods: {
     addCharacter() {
       this.$refs.form.validate()
+    },
+    async userValidation() {
+      const userparam = this.character.characterName
+      await this.$axios
+        .get(
+          process.env.VUE_APP_SERVER_URL +
+            '/Usuario/querynombre?usuario=' +
+            userparam
+        )
+        .then((respuesta) => {
+          return respuesta.data
+        })
+        .then((respuesta) => {
+          this.confirmation = true
+          this.user = respuesta.data
+        })
+        .catch((error) => {
+          this.errorM = null
+          if (error.response.status === 404) {
+            this.errorM = 'Datos ingresados incorrectamente'
+            this.snackbar = true
+            this.snackbarText = 'Ingrese nuevamente los datos'
+          } else {
+            this.errorM = 'Ocurrio un error con el servidor'
+          }
+        })
+    },
+    verificaInfo() {
+      console.log(this.user)
+      this.lista = this.user.securityAnswerList
+      console.log(this.lista)
+      console.log(this.securityAnswer1)
+      console.log(this.securityAnswer2)
+      console.log(this.securityAnswer3)
+      if (
+        this.lista[0] === this.securityAnswer1 &&
+        this.lista[1] === this.securityAnswer2 &&
+        this.lista[2] === this.securityAnswer3
+      ) {
+        console.log('Respuestas correctas')
+      } else {
+        console.log('fallo')
+      }
+    },
+    passwordVerificacion() {
+      if (this.character.newPassword !== this.character.newRePassword) {
+        alert('Contraseña no coincide con su confirmacion')
+        return false
+      } else {
+        return true
+      }
+    },
+
+    async cambioDatos() {
+      console.log(this.user._id)
+      console.log('cambio dentro')
+      if (this.passwordVerificacion() && this.character.newPassword !== '') {
+        console.log('cambio dentro3')
+        const newPassword = {
+          _id: this.user._id,
+          password: this.character.newPassword,
+        }
+        const passwordUpdated = await this.$axios.put(
+          process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
+          newPassword
+        )
+        // eslint-disable-next-line no-console
+        console.log(passwordUpdated)
+      }
     },
   },
 }
