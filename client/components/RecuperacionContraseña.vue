@@ -30,6 +30,7 @@
           <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
           <v-text-field
             v-model="securityAnswer1"
+            :counter="10"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -40,6 +41,7 @@
           <v-text>¿Cuál es el apellido de tu madre? </v-text>
           <v-text-field
             v-model="securityAnswer2"
+            :counter="10"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -50,6 +52,7 @@
           <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
           <v-text-field
             v-model="securityAnswer3"
+            :counter="10"
             clearable
             color="acentuado1"
             label="Respuesta Secreta"
@@ -119,7 +122,6 @@ export default {
     },
     character: {
       characterName: '',
-      securityQuestions: [],
       newPassword: '',
       newRePassword: '',
     },
