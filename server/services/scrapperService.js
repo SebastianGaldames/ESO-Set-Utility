@@ -3,8 +3,8 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
-//move to ENV variables, change secret then
-const secret = 'hola'
+// move to ENV variables, change secret then
+// const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
   'https://eso-hub.com/en/sets/dreugh-king-slayer',
   'https://eso-hub.com/en/sets/armor-of-the-code',
@@ -17,7 +17,7 @@ function testService() {
 }
 
 function auth(authSecret) {
-  var ok = secret == authSecret
+  var ok = process.env.SCRAPPER_SECRET == authSecret
   return ok
 }
 
@@ -38,7 +38,51 @@ const scrapAllSets = async (setUrls) => {
   return { message: 'Agregados ' + i + ' familias' }
 }
 
+const scrapAllJewels = async (setUrls) => {
+  //const allSets = []
+  var i = 0
+  for (const url of setUrls) {
+    await scrapJewels(url)
+    //allSets.push(contents)
+    console.log('scrapping: ' + i)
+    i += 1
+  }
+
+  return { message: 'Agregados ' + i + ' familias' }
+}
+
+const scrapJewels = async (setUrl) => {
+  const ringId = '619db0c0fe298390f31874f6'
+  const necklaceId = '619db111fe298390f31874f8'
+
+  const html = await getHtmlFromSetUrl(setUrl) //set html
+  const dom = new JSDOM(html)
+  const set = dom.window.document.getElementById('content') //extract html from items block
+  const dataItemsPanel = set.querySelector('.col-md-8')
+  const stronk = dataItemsPanel.querySelectorAll('strong')
+  var setData = scrapSetMeta(stronk, set)
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  const jewels = []
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      jewels.push(ringId)
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      jewels.push(necklaceId)
+    }
+  }
+  const scrapped = { setName: setData.name, items: jewels }
+  console.log(scrapped)
+
+  scrapperAdapter.apendItems(scrapped)
+
+  return scrapped
+}
+
 const scrapSet = async (setUrl) => {
+  console.log('scrapping: ' + setUrl)
   const html = await getHtmlFromSetUrl(setUrl) // test url to save time
   const dom = new JSDOM(html)
   const set = dom.window.document.getElementById('content')
@@ -57,9 +101,20 @@ const scrapSet = async (setUrl) => {
   const imgURL = setBonusPanel.querySelector('picture img')
   setData.imageUrl = 'https://eso-hub.com' + imgURL.getAttribute('src')
 
-  const itemsScrapped = getItemsFromSet(dataItemsPanel)
-  setData.items = itemsScrapped
-  scrapperAdapter.addFamily(setData)
+  const noTypeItems = await getItemNoTypeList(dataItemsPanel)
+  console.log('items no type:')
+  noTypeItems.forEach((item) => {
+    console.log(item.name)
+  })
+  const itemsToScrapType = await scrapperAdapter.filterNewItems(noTypeItems)
+  console.log('items to scrap:')
+  itemsToScrapType.forEach((item) => {
+    console.log(item.name)
+  })
+  const itemsToAdd = await getTypeItem(itemsToScrapType)
+  scrapperAdapter.addItemRange(itemsToAdd)
+  scrapperAdapter.addFamily(setData, noTypeItems)
+
   return setData
 }
 
@@ -68,33 +123,85 @@ const getHtmlFromSetUrl = async (setUrl) => {
   return response.data
 }
 
-function getItemsFromSet(setDomData) {
+const getItemNoTypeList = async (setDomData) => {
   const linksScrapped = [
     ...setDomData.querySelectorAll(
       'a[href*="https://eso-hub.com/en/fashion-outfits"]'
     ),
   ]
   const links = []
-  linksScrapped.forEach((linkNode) => {
+
+  for (const linkNode of linksScrapped) {
     const itemName = linkNode.querySelector('picture img').getAttribute('title')
     const itemImg = linkNode
       .querySelector('picture source[type*="image/png"]')
       .getAttribute('srcset')
+    //const itemType = await scrapItemType(linkNode.href)
     const item = {
       name: itemName,
       img: 'https://eso-hub.com' + itemImg,
       url: linkNode.href,
+      type: '',
     }
     links.push(item)
-    //links.push(linkNode.getAttribute('title'))
-  })
+  }
+
   return links
+}
+
+//completa la property type para cada item in items y retorna la misma lista
+const getTypeItem = async (items) => {
+  for (const item of items) {
+    const itemType = await scrapItemType(item.url)
+    item.type = itemType
+  }
+  return items
+}
+
+//DEPRECATED
+const getItemsFromSet = async (setDomData) => {
+  const linksScrapped = [
+    ...setDomData.querySelectorAll(
+      'a[href*="https://eso-hub.com/en/fashion-outfits"]'
+    ),
+  ]
+  const links = []
+
+  for (const linkNode of linksScrapped) {
+    const itemName = linkNode.querySelector('picture img').getAttribute('title')
+    const itemImg = linkNode
+      .querySelector('picture source[type*="image/png"]')
+      .getAttribute('srcset')
+    const itemType = await scrapItemType(linkNode.href)
+    const item = {
+      name: itemName,
+      img: 'https://eso-hub.com' + itemImg,
+      url: linkNode.href,
+      type: itemType,
+    }
+    links.push(item)
+  }
+
+  return links
+}
+
+const scrapItemType = async (itemUrl) => {
+  const response = await axios.get(itemUrl)
+  const html = response.data
+  const itemDom = new JSDOM(html)
+  const content = itemDom.window.document.getElementById('content')
+
+  const tp = content.querySelector('.col-md-8 strong').nextSibling
+  // console.log(tp.textContent)
+  return tp.textContent.trim()
 }
 
 function scrapSetMeta(data, set) {
   const scrapped = {
     name: '',
     type: '',
+    style: '',
+    dlcRequirement: '',
     imageUrl: '',
     location: [],
     setBonus: [],
@@ -106,6 +213,12 @@ function scrapSetMeta(data, set) {
     }
     if (str.textContent.includes('Type')) {
       scrapped.type = str.nextSibling.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('Style')) {
+      scrapped.style = str.nextSibling.textContent.trim()
+    }
+    if (str.textContent.includes('DLC')) {
+      scrapped.dlcRequirement = str.nextSibling.nextSibling.textContent.trim()
     }
     if (str.textContent === 'Location:') {
       const locationSelection = set.querySelector('ul') //first list
@@ -161,4 +274,7 @@ module.exports = {
   getHtmlFromSetUrl,
   scrapSet,
   scrapAllSets,
+  scrapItemType,
+  scrapJewels,
+  scrapAllJewels,
 }

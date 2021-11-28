@@ -3,70 +3,47 @@ const axios = require('axios')
 const itemController = require('../controllers/ItemController')
 const familiaController = require('../controllers/FamiliaController')
 
-const addFamily = async (family) => {
-  const allItemsNames = []
-  const existingItemsNames = []
-  const existingItemsData = []
-  for (const item of family.items) {
-    allItemsNames.push(item.name)
+// Agrega una familia a la base de datos. Asume que sus items ya existen.
+const addFamily = async (family, items) => {
+  // Se obtiene la id de los items desde la base de datos
+  const itemsId = []
+  for (const item of items) {
     const res = await axios
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
-      .catch(function (err) {})
+      .catch(function (err) {
+        //console.log(err)
+      })
     if (res !== undefined) {
-      existingItemsData.push(res.data)
-      existingItemsNames.push(res.data.nombre)
+      itemsId.push(res.data._id)
     }
   }
 
-  //console.log('existingItemsNames=' + existingItemsNames)
-  const existingitemsSet = new Set(existingItemsNames)
-  //console.log('set=' + [...existingitemsSet])
-  const allItemsSet = new Set(allItemsNames)
-
-  const newItemsNames = []
-  allItemsSet.forEach((itemName) => {
-    if (!existingitemsSet.has(itemName)) {
-      newItemsNames.push(itemName)
-    }
-  })
-  //console.log(newItemsNames)
-
-  newItemsNames.forEach((newItemName) => {
-    const target = family.items.find((ele) => ele.name === newItemName)
-    //console.log(target)
-    addItem(target)
-  })
-
-  for (const itemName of newItemsNames) {
-    const res = await axios
-      .get(
-        process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + itemName
-      )
-      .catch(function (err) {})
-    if (res !== undefined) {
-      existingItemsData.push(res.data)
-      existingItemsNames.push(res.data.nombre)
-    }
-  }
-
-  var itemsId = []
-  existingItemsData.forEach((data) => {
-    itemsId.push(data._id)
-  })
-
+  // Se construye un set para evitar repeticiones de items
   const itemsIdSet = new Set(itemsId)
   const itemsRef = Array.from(itemsIdSet)
-  //console.log(...itemsRef)
 
+  // Se añade la familia a la base de datos
   try {
     const body = {
       nombre: family.name,
+      tipo: family.type,
+      estilo: family.style,
+      dlc: family.dlcRequirement,
       ubicacion: family.location,
-      bonos: family.setBonus,
+      bonos: [],
+      imagen: family.imageUrl,
       itemsFamilia: itemsRef,
     }
+    family.setBonus.forEach((bonusTier) => {
+      const bono = {
+        texto: bonusTier.bonus,
+        cantidad: Number(bonusTier.number),
+      }
+      body.bonos.push(bono)
+    })
+
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/familia/add',
       body
@@ -74,11 +51,18 @@ const addFamily = async (family) => {
   } catch {}
 }
 
+// Añade un item a la base de datos. Asume que no existe un duplicado
 const addItem = async (item) => {
   try {
+    const typeData = await parseItemType(item.type)
+
     const body = {
       nombre: item.name,
       imagen: item.img,
+      tipo: typeData.tipo,
+      categoria: typeData.categoria,
+      peso: typeData.peso,
+      tipoArma: typeData.tipoArma,
     }
     const res = await axios.post(
       process.env.VUE_APP_SERVER_URL + '/item/add',
@@ -87,7 +71,214 @@ const addItem = async (item) => {
   } catch {}
 }
 
+// De una lista de items, retorna aquellos que no están en la base de datos
+const filterNewItems = async (items) => {
+  const newItemsNames = []
+  // Se intenta buscar cada item en la base de datos
+  for (const item of items) {
+    const res = await axios
+      .get(
+        process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
+      )
+      .catch(function (err) {
+        //console.log(err)
+      })
+    // Si la respuesta es undefined, significa que no está en la base de datos
+    if (res === undefined) {
+      newItemsNames.push(item.name)
+    }
+  }
+
+  const noRepetition = []
+  newItemsNamesSet = new Set(newItemsNames)
+  newItemsNamesSet.forEach((itemName) => {
+    const found = items.find((element) => element.name === itemName)
+    noRepetition.push(found)
+  })
+
+  return noRepetition
+}
+
+const addItemRange = async (items) => {
+  for (const item of items) {
+    addItem(item)
+  }
+}
+
+const parseItemType = async (itemType) => {
+  console.log('parseItemType running')
+  var typeTokens = itemType.split(' ')
+  var tipo = ''
+  var categoria = ''
+  var peso = ''
+  var tipoArma = ''
+
+  if (await isArmorWeight(typeTokens[0])) {
+    tipo = 'Armadura'
+    peso = typeTokens.shift() //Heavy, Medium, Light
+    categoria = typeTokens.join(' ') //Head, Shoulders, etc...
+  } else {
+    tipo = 'Arma'
+    if (typeTokens[0] === 'Off') {
+      categoria = typeTokens[0] + ' ' + typeTokens[1] //Off Hand
+      typeTokens.shift()
+      typeTokens.shift()
+    } else {
+      categoria = typeTokens.shift() //One-handed, Two-handed, ...
+    }
+    tipoArma = typeTokens.join(' ') // Shield, Sword, Lightning Staff ...
+  }
+
+  const typeData = {
+    tipo: tipo,
+    categoria: categoria,
+    peso: peso,
+    tipoArma: tipoArma,
+  }
+
+  return typeData
+}
+
+const isArmorWeight = async (string) => {
+  if (string === 'Heavy' || string === 'Medium' || string === 'Light') {
+    return true
+  } else {
+    return false
+  }
+}
+
+const testAddProperty = async () => {
+  const name = 'Breton Helm 3'
+  const res1 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const typeData = await parseItemType(res1.data.tipo)
+
+  try {
+    const body = {
+      _id: res1.data._id,
+      nombre: res1.data.nombre,
+      tipo: res1.data.tipo,
+      //categoria: typeData.categoria,
+      //infoTipo: typeData.infoTipo,
+      nivel: res1.data.nivel,
+      calidad: res1.data.calidad,
+      imagen: res1.data.imagen,
+    }
+    const res2 = await axios.post(
+      process.env.VUE_APP_SERVER_URL + '/item/update',
+      body
+    )
+  } catch (err) {
+    console.log(err.message)
+  }
+  const res3 = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
+    .catch(function (err) {
+      //console.log(err)
+    })
+  console.log(res3.data)
+}
+
+const sandbox = async () => {
+  item = {
+    name: 'itemDefaultTest',
+    type: '',
+    img: 'https://static.wikia.nocookie.net/espokemon/images/d/da/Caramelo_raro_%28Dream_World%29.png/revision/latest/scale-to-width-down/90?cb=20110130120819',
+  }
+  addItem(item)
+}
+
+const addFamilyWeights = async () => {
+  const res = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  var jsonReg = JSON.parse(JSON.stringify(res.data))
+
+  for (const familia of jsonReg) {
+    var pesosFamilia = []
+
+    for (const itemId of familia.itemsFamilia) {
+      const resItem = await axios
+        .get(process.env.VUE_APP_SERVER_URL + '/item/query?_id=' + itemId)
+        .catch(function (err) {
+          //console.log(err)
+        })
+      var jsonItem = JSON.parse(JSON.stringify(resItem.data))
+      pesosFamilia.push(jsonItem.peso)
+    }
+
+    var setPesos = new Set(pesosFamilia)
+    pesosFamilia = Array.from(setPesos)
+
+    for (const index in pesosFamilia) {
+      if (pesosFamilia[index] === '') {
+        pesosFamilia.splice(index, 1)
+        break
+      }
+    }
+
+    const weights = {
+      _id: familia._id,
+      pesos: pesosFamilia,
+    }
+
+    const resItem = await axios
+      .put(process.env.VUE_APP_SERVER_URL + '/familia/update', weights)
+      .catch(function (err) {
+        //console.log(err)
+      })
+  }
+}
+
+const apendItems = async (info) => {
+  const res = await axios
+    .get(
+      process.env.VUE_APP_SERVER_URL +
+        '/familia/queryNombre?nombre=' +
+        info.setName
+    )
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  //console.log(res.data)
+  var newItems = res.data.itemsFamilia
+  console.log(newItems.length)
+  for (const itemId of info.items) {
+    newItems.push(itemId)
+  }
+  console.log(newItems.length)
+
+  updateItems = {
+    _id: res.data._id,
+    itemsFamilia: newItems,
+  }
+  const resItem = await axios
+    .put(
+      process.env.VUE_APP_SERVER_URL + '/familia/addItemFamilia',
+      updateItems
+    )
+    .catch(function (err) {
+      //console.log(err)
+    })
+}
+
 module.exports = {
   addFamily,
   addItem,
+  filterNewItems,
+  addItemRange,
+  isArmorWeight,
+  parseItemType,
+  testAddProperty,
+  sandbox,
+  addFamilyWeights,
+  apendItems,
 }
