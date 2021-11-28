@@ -119,7 +119,7 @@
 .vig {
   border-width: 2px;
   border-style: solid;
-  border-color: goldenrod;
+  border-color: #a68f7b;
 }
 </style>
 <script>

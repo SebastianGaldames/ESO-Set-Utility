@@ -79,12 +79,15 @@
         class="input-group--focused secundario--text"
         @click:append="show = !show"
       ></v-text-field>
-      <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
+      <v-flex class="py-2">
+        <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
+      </v-flex>
       <v-text-field
         v-model="securityAnswerList[0]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
+        :counter="10"
         :rules="[
           questionRules.required,
           questionRules.longMax,
@@ -92,12 +95,15 @@
         ]"
         hidedetails="auto"
       ></v-text-field>
-      <v-text>¿Cuál es el apellido de tu madre? </v-text>
+      <v-flex class="py-2">
+        <v-text>¿Cuál es el apellido de tu madre? </v-text>
+      </v-flex>
       <v-text-field
         v-model="securityAnswerList[1]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
+        :counter="10"
         :rules="[
           questionRules.required,
           questionRules.longMax,
@@ -105,12 +111,15 @@
         ]"
         hide-details="auto"
       ></v-text-field>
-      <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
+      <v-flex class="py-2">
+        <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
+      </v-flex>
       <v-text-field
         v-model="securityAnswerList[2]"
         clearable
         color="acentuado1"
         label="Respuesta Secreta"
+        :counter="10"
         :rules="[
           questionRules.required,
           questionRules.longMax,
