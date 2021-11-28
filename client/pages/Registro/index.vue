@@ -144,7 +144,7 @@
         </v-col>
         <v-snackbar v-model="snackbar" timeout="3000" top>
           <span>¡{{ snackbarText }}!</span>
-          <v-btn @click="snackbar = false">Cerrar</v-btn>
+          <v-btn @click="comprobarUser()">Cerrar</v-btn>
         </v-snackbar>
       </v-row>
     </v-card>
@@ -215,6 +215,7 @@ export default {
       },
       snackbar: false,
       snackbarText: '',
+      userTrue: false,
     }
   },
   computed: {
@@ -244,6 +245,12 @@ export default {
   },
 
   methods: {
+    comprobarUser() {
+      this.snackbar = false
+      if (this.userTrue && this.snackbar === false) {
+        this.$router.push('/')
+      }
+    },
     aceptarTerminos() {
       this.checkbox = true
       this.dialog = false
@@ -294,10 +301,15 @@ export default {
             return respuesta.data
           })
           .then((data) => {
-            this.$router.push('/')
+            this.snackbarText = 'Usuario creado exitosamente'
+            this.snackbar = true
+            this.userTrue = true
+            if (this.snackbar === false) this.$router.push('/')
           })
-        this.snackbar = true
-        this.snackbarText = 'Usuario creado exitosamente'
+          .catch((e) => {
+            this.snackbar = true
+            this.snackbarText = 'Ha ingresado un usuario o un correo invalido'
+          })
       } else {
         this.snackbar = true
         this.snackbarText = 'Los datos no son iguales o son incorrectos'
