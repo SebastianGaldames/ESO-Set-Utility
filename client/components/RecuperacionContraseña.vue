@@ -44,7 +44,7 @@
                   clearable
                   color="acentuado1"
                   label="¿Cuál es el nombre de tu ciudad favorita?"
-                  :counter="10"
+                  :counter="20"
                   :rules="[rules.required, rules.longMax, rules.longMin]"
                   hide-details="auto"
                 ></v-text-field>
@@ -55,7 +55,7 @@
                 clearable
                 color="acentuado1"
                 label="¿Cuál es el apellido de tu madre?"
-                :counter="10"
+                :counter="20"
                 :rules="[rules.required, rules.longMax, rules.longMin]"
                 hide-details="auto"
               ></v-text-field>
@@ -65,7 +65,7 @@
                 clearable
                 color="acentuado1"
                 label="¿Cuál es el nombre de tu primera escuela?"
-                :counter="10"
+                :counter="20"
                 :rules="[rules.required, rules.longMax, rules.longMin]"
                 hide-details="auto"
               ></v-text-field>
@@ -85,26 +85,29 @@
               <v-flex text-center>
                 <v-text-field
                   v-model="character.newPassword"
-                  :type="show2 ? 'text' : 'password'"
-                  clearable
                   color="acentuado1"
                   label="Ingresa la nueva contraseña"
                   :rules="[rules.required, rules.minPass]"
                   hide-details="auto"
+                  clearable
+                  :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show ? 'text' : 'password'"
+                  @click:append="show = !show"
                 ></v-text-field>
                 <v-text-field
                   v-model="character.newRePassword"
-                  :rules="[rules.required, rules.minPass]"
-                  :type="show ? 'text' : 'password'"
-                  name="input-10-2"
+                  :rules="[rules.required, rules.minPass, rules.compPass]"
+                  color="acentuado1"
                   label="Confirma tu contraseña"
                   hint="Las contraseñas coinciden"
-                  value=""
                   class="input-group--focused secundario--text"
-                  @click:append="show = !show"
+                  clearable
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="show1 ? 'text' : 'password'"
+                  @click:append="show1 = !show1"
                 ></v-text-field>
                 <v-btn
-                  class="mt-1"
+                  class="mt-5"
                   outlined
                   blame
                   color="acentuado2"
@@ -146,45 +149,39 @@ class Usuario {
   }
 }
 export default {
-  data: () => ({
-    select: null,
-    valid: true,
-    rules: {
-      required: (value) => !!value || 'Campo obligatorio',
-      longMax: (value) =>
-        (value && value.length <= 20) || 'Debe tener máximo 20 caracteres',
-      longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
-      minPass: (value) =>
-        (value && value.length >= 8) || 'Debe tener al menos 8 caracteres',
-    },
-    character: {
-      characterName: '',
-      newPassword: '',
-      newRePassword: '',
-    },
-    user: new Usuario(),
-    lista: [],
-    confirmation: false,
-    confirmation1: false,
-    errorM: '',
-    snackbar: false,
-    snackbarText: '',
-    securityAnswer1: '',
-    securityAnswer2: '',
-    securityAnswer3: '',
-    seCambio: false,
-  }),
-  computed: {
-    passwordConfirmationRule() {
-      return () =>
-        this.newPassword === this.newRePassword ||
-        'Las contraseñas no coinciden'
-    },
-    passwordLargeConfirmationRule() {
-      return () =>
-        (this.newPassword.length === this.newRePassword.length) >= 8 ||
-        'Las contraseñas no cumplen el mínimo necesario'
-    },
+  data() {
+    return {
+      show: false,
+      show1: false,
+      select: null,
+      valid: true,
+      character: {
+        characterName: '',
+        newPassword: '',
+        newRePassword: '',
+      },
+      rules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        longMax: (value) =>
+          (value && value.length <= 20) || 'Debe tener máximo 20 caracteres',
+        longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
+        minPass: (value) =>
+          (value && value.length >= 8) || 'Debe tener al menos 8 caracteres',
+        compPass: (value) =>
+          value === this.character.newPassword ||
+          '¡Las contraseñas deben coincidir!',
+      },
+      user: new Usuario(),
+      lista: [],
+      confirmation: false,
+      confirmation1: false,
+      errorM: '',
+      snackbar: false,
+      snackbarText: '',
+      securityAnswer1: '',
+      securityAnswer2: '',
+      securityAnswer3: '',
+    }
   },
   methods: {
     async userValidation() {
@@ -255,6 +252,13 @@ export default {
         this.snackbarText =
           '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
         return false
+      } else if (
+        this.character.newPassword.length &&
+        this.character.newRePassword.length < 8
+      ) {
+        this.snackbar = true
+        this.snackbarText = 'Contraseña no cumple con el mínimo requerido'
+        return false
       } else {
         this.snackbar = true
         this.snackbarText = '¡¡Clave modificada exitosamente!!'
@@ -285,6 +289,7 @@ export default {
         )
         // eslint-disable-next-line no-console
         console.log(passwordUpdated)
+        this.$router.push('/login')
       }
     },
   },
