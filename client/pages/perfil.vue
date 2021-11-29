@@ -188,6 +188,82 @@
                 </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-text class="pl-4">Actualizar respuestas de seguridad</v-text>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content class="primario">
+                <v-toolbar color="primario">
+                  <v-toolbar-title
+                    >Marque casilla para efectuar cambios</v-toolbar-title
+                  >
+                </v-toolbar>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox5"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="securityAnswerList[0]"
+                    :disabled="!checkbox5"
+                    label="¿Cuál es el nombre de tu ciudad favorita?"
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox6"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="securityAnswerList[1]"
+                    :disabled="!checkbox6"
+                    label="¿Cuál es el apellido de tu madre?"
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row align="center" class="pl-2">
+                  <v-checkbox
+                    v-model="checkbox7"
+                    hide-details
+                    class="shrink mr-2 mt-0"
+                    color="secundario"
+                  ></v-checkbox>
+                  <v-text-field
+                    v-model="securityAnswerList[2]"
+                    :disabled="!checkbox7"
+                    label="¿Cuál es el nombre de tu primera escuela?"
+                    class="
+                      secundario--text
+                      text-input-goldenrod
+                      custom-label-color custom-placeholer-color
+                    "
+                  ></v-text-field>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <div class="text-xs-center">
+                      <v-btn color="error" @click="cambioRespuestas"
+                        >Guardar cambios</v-btn
+                      >
+                    </div>
+                  </v-col>
+                  <v-col> </v-col>
+                </v-row>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
           </v-expansion-panels>
         </div>
       </div>
@@ -224,7 +300,16 @@
 <script>
 // import axios from 'axios'
 class Usuario {
-  constructor(usuario, email, pais, password, sexo, personajes, inventario) {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    securityAnswerList
+  ) {
     this.usuario = usuario
     this.email = email
     this.pais = pais
@@ -232,6 +317,7 @@ class Usuario {
     this.sexo = sexo
     this.personajes = personajes
     this.inventario = inventario
+    this.securityAnswerList = securityAnswerList
   }
 }
 
@@ -256,12 +342,17 @@ export default {
       personajes: [],
       pais: '',
       inventario: [],
+      securityAnswerList: ['', '', ''],
+      securityAnswerList2: [],
       user: new Usuario(),
       checkbox: false,
       checkbox1: false,
       checkbox2: false,
       checkbox3: false,
       checkbox4: false,
+      checkbox5: false,
+      checkbox6: false,
+      checkbox7: false,
       rules: {
         min: () =>
           this.password.length >= 8 || 'Debe tener al menos 8 caracteres',
@@ -280,6 +371,39 @@ export default {
     this.tomaUser()
   },
   methods: {
+    async cambioRespuestas() {
+      this.securityAnswerList2 = this.user.securityAnswerList
+      if (this.securityAnswerList[0] !== '') {
+        this.securityAnswerList2[0] = this.securityAnswerList[0]
+      }
+      if (this.securityAnswerList[1] !== '') {
+        this.securityAnswerList2[1] = this.securityAnswerList[1]
+      }
+      if (this.securityAnswerList[2] !== '') {
+        this.securityAnswerList2[2] = this.securityAnswerList[2]
+      }
+      const newAnswers = {
+        _id: this.user._id,
+        securityAnswerList: this.securityAnswerList2,
+      }
+      const updated = await this.$axios.put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/update',
+        newAnswers
+      )
+      // eslint-disable-next-line no-console
+      console.log(updated.data)
+      this.tomaUser()
+      if (updated) {
+        // eslint-disable-next-line no-console
+        // this.reLog()
+        this.$store.dispatch('setUsuarioUp', this.user.usuario)
+        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
+        console.log(updated.data)
+        alert('Cambio exitoso')
+      } else {
+        alert('fallo')
+      }
+    },
     comprobarUsuario() {
       if (this.$store.state.usuario == null) {
         this.$router.push({ name: 'index' })
@@ -384,6 +508,7 @@ export default {
           userparam
       )
       this.user = userLogued.data
+      console.log(this.user)
     },
     sinDatos() {
       alert('No hay entrada de datos')
