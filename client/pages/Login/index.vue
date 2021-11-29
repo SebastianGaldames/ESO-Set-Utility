@@ -31,21 +31,23 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <v-flex v-if="errorM" class="red--text">
+        <!-- <v-flex v-if="errorM" class="red--text">
           {{ errorM }}
-        </v-flex>
+        </v-flex> -->
         <div class="ajustes1">
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
         <div class="ajustes2">
           <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
-          <v-btn text small
-            >¿No tienes cuenta?
-            <NuxtLink to="/Registro">Registrarse</NuxtLink></v-btn
-          >
+          <h5>
+            ¿No tienes cuenta? <NuxtLink to="/Registro">Registrarse</NuxtLink>
+          </h5>
         </div>
-        <div class="ajustes2"></div>
       </v-card>
+      <v-snackbar v-model="snackbar" timeout="6000" top>
+        <span>¡{{ snackbarText }}!</span>
+        <v-btn @click="snackbar = false">Cerrar</v-btn>
+      </v-snackbar>
     </v-container>
   </v-main>
 </template>
@@ -60,6 +62,8 @@ export default {
       nombreUsuario: '',
       password: '',
       errorM: '',
+      snackbar: false,
+      snackbarText: '',
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         min: (v) => v.length >= 8 || 'Debe tener al menos 8 caracteres',
@@ -78,12 +82,16 @@ export default {
         })
         .then((data) => {
           this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
+          this.snackbar = true
+          this.snackbarText = 'Sesión iniciada con éxito'
           this.$router.push({ name: 'index' }) // vamos hacia la ruta de home
         })
         .catch((error) => {
           this.errorM = null
           if (error.response.status === 404) {
             this.errorM = 'Datos ingresados incorrectamente'
+            this.snackbar = true
+            this.snackbarText = 'Ingrese nuevamente los datos'
           } else {
             this.errorM = 'Ocurrio un error con el servidor'
           }
