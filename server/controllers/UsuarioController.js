@@ -65,7 +65,7 @@ const update = async (req, res, next) => {
     //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
-      { usuario: req.body.usuario, email: req.body.email, pais: req.body.pais}
+      { usuario: req.body.usuario, email: req.body.email, pais: req.body.pais, securityAnswerList: req.body.securityAnswerList}
     )
     res.status(200).json(reg)
   } catch (e) {
