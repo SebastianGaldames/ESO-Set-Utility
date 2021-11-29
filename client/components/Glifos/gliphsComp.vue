@@ -35,13 +35,15 @@
                 <img :src="n.imagen" class="img" alt="" />
               </v-col>
               <v-col>
-                <h4 class="centro">{{ n.nombre }}</h4>
+                <h4 class="centro">{{ selectedCalidad }} {{ n.nombre }}</h4>
               </v-col>
             </v-row>
 
             <hr class="linea" />
             <v-spacer />
-            <h5 class="centro">{{ n.efectoDescripcion }}</h5>
+            <h5 class="centro">
+              {{ n.efectoDescripcion }}
+            </h5>
           </v-card>
         </v-col>
       </v-row>
@@ -103,7 +105,7 @@ export default {
         this.selectedGlyph !== undefined
       ) {
         this.$emit('selectionGlyphChanged', eventData)
-        // console.log(eventData)
+        console.log(eventData)
       }
     },
   },
