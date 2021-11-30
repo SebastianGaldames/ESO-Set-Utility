@@ -46,6 +46,8 @@
         :set="selectedSet"
         :all-items="items"
         :all-sets="familias"
+        @slotChanged="handleSlotChanged"
+        @saveBuild="handleSaveBuild"
       ></personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
@@ -96,7 +98,6 @@ export default {
     return {
       personajes: [],
       items: [],
-      itemsCache: [],
       itemsInventario: [],
       familias: [],
       glyphs: [],
@@ -106,6 +107,7 @@ export default {
       selectedItem: {},
       currentUser: {},
       snackbar: false,
+      personajeSlots: [],
     }
   },
   computed: {
@@ -119,24 +121,11 @@ export default {
       return filtered
     },
   },
-  watch: {
-    //
-  },
-  mounted() {
-    // this.makeDummyData()
-    // this.selectedPersonaje = this.personajes[0]
-  },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
-    // makeDummyData() {
-    //   const p1 = { nombre: 'juanin', email: 'asd@asd.com' }
-    //   const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
-    //   const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
-    //   this.personajes.push(p1, p2, p3)
-    // },
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
@@ -181,9 +170,13 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
+    handleItemEquiped(content) {
+      // adds the new item to the slots
+    },
+    async handleSaveBuild() {
+      // handles the endpoint call for saving the equipment of a character
+    },
     async handleCreateCharacter(event) {
-      console.log(event)
-
       const newPj = {
         _id: this.currentUser._id,
         nombre: event.nombre,
