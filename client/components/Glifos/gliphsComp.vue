@@ -115,7 +115,7 @@ export default {
         this.selectedGlyph !== undefined
       ) {
         this.$emit('selectionGlyphChanged', eventData)
-        console.log(eventData)
+        // console.log(eventData)
       }
     },
   },
