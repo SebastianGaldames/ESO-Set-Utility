@@ -298,7 +298,6 @@
 </style>
 
 <script>
-// import axios from 'axios'
 class Usuario {
   constructor(
     usuario,
@@ -322,16 +321,20 @@ class Usuario {
 }
 
 export default {
+  async asyncData({ $axios }) {
+    const post = await $axios.$get(
+      'https://countriesnode.herokuapp.com/v1/countries/'
+    )
+    const nombrePaises = []
+    for (let i = 0; i < post.length; i++) {
+      nombrePaises.push(post[i].name)
+    }
+    nombrePaises.sort()
+    return { paises: nombrePaises }
+  },
   data() {
     return {
-      paises: [
-        'Argentina',
-        'Bolivia',
-        'Chile',
-        'Colombia',
-        'Perú',
-        'Venezuela',
-      ],
+      paises: [],
       show: true,
       usuario: '',
       password: '',
@@ -372,14 +375,13 @@ export default {
   },
   methods: {
     async cambioRespuestas() {
-      this.securityAnswerList2 = this.user.securityAnswerList
-      if (this.securityAnswerList[0] !== '') {
+      if (this.checkbox5) {
         this.securityAnswerList2[0] = this.securityAnswerList[0]
       }
-      if (this.securityAnswerList[1] !== '') {
+      if (this.checkbox6) {
         this.securityAnswerList2[1] = this.securityAnswerList[1]
       }
-      if (this.securityAnswerList[2] !== '') {
+      if (this.checkbox7) {
         this.securityAnswerList2[2] = this.securityAnswerList[2]
       }
       const newAnswers = {
