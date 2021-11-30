@@ -80,7 +80,7 @@ export default {
         this.selectedTrait !== undefined
       ) {
         this.$emit('selectionTraitChanged', eventData)
-        console.log(eventData)
+        // console.log(eventData)
       }
     },
   },
