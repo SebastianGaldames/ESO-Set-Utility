@@ -6,6 +6,11 @@ const bcrypt = require('bcryptjs')
 const add = async (req, res, next) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10)
+    const answerList = req.body.securityAnswerList
+    answerList[0] = await bcrypt.hash(answerList[0], 10)
+    answerList[1] = await bcrypt.hash(answerList[1], 10)
+    answerList[2] = await bcrypt.hash(answerList[2], 10)
+    req.body.securityAnswerList = answerList
     const reg = await models.Usuario.create(req.body)
     res.status(200).json(reg)
   } catch (e) {
@@ -56,11 +61,42 @@ const queryNombre = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    console.log(req.body)
-    //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    if(req.body.securityAnswerList){
+      const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    
+    const answerList = req.body.securityAnswerList
+    if (!(await bcrypt.compare(answerList[0], reg0.securityAnswerList[0])) && answerList[0]!=='') {
+      console.log('entrexd1')
+      answerList[0] = await bcrypt.hash(answerList[0], 10)
+      req.body.securityAnswerList[0] = answerList[0]
+    } else {
+      req.body.securityAnswerList[0] = reg0.securityAnswerList[0]
+    }
+    if (!(await bcrypt.compare(answerList[1], reg0.securityAnswerList[1])) && answerList[1]!=='') {
+      console.log('entrexd2')
+      answerList[1] = await bcrypt.hash(answerList[1], 10)
+      req.body.securityAnswerList[1] = answerList[1]
+    } else {
+      req.body.securityAnswerList[1] = reg0.securityAnswerList[1]
+    }
+    if (!(await bcrypt.compare(answerList[2], reg0.securityAnswerList[2])) && answerList[2]!=='') {
+      console.log('entrexd3')
+      answerList[2] = await bcrypt.hash(answerList[2], 10)
+      req.body.securityAnswerList[2] = answerList[2]
+    } else {
+      req.body.securityAnswerList[2] = reg0.securityAnswerList[2]
+    }
+    }
+    
+
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
-      { usuario: req.body.usuario, email: req.body.email, pais: req.body.pais}
+      {
+        usuario: req.body.usuario,
+        email: req.body.email,
+        pais: req.body.pais,
+        securityAnswerList: req.body.securityAnswerList,
+      }
     )
     res.status(200).json(reg)
   } catch (e) {
@@ -77,7 +113,7 @@ const updatePassword = async (req, res, next) => {
     const encryptedPassword = await bcrypt.hash(req.body.password, 10)
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
-      {password: encryptedPassword}
+      { password: encryptedPassword }
     )
     res.status(200).json(reg)
   } catch (e) {
@@ -118,6 +154,38 @@ const login = async (req, res, next) => {
       res.status(404).send({
         message: 'No existe este usuario',
       })
+    }
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
+  }
+}
+
+const answers = async (req, res, next) => {
+  try {
+    let user = await models.Usuario.findOne({ usuario: req.body.nombreUsuario })
+    if (user) {
+      let match1 = await bcrypt.compare(
+        req.body.securityAnswer1,
+        user.securityAnswerList[0]
+      )
+      let match2 = await bcrypt.compare(
+        req.body.securityAnswer2,
+        user.securityAnswerList[1]
+      )
+      let match3 = await bcrypt.compare(
+        req.body.securityAnswer2,
+        user.securityAnswerList[2]
+      )
+      if (match1 && match2 && match3) {
+        res.status(200).json({ match1 })
+      } else {
+        res.status(404).send({
+          message: 'Respuestas incorrectas',
+        })
+      }
     }
   } catch (e) {
     res.status(500).send({
@@ -254,4 +322,5 @@ module.exports = {
   getPersonajes,
   actualizarPersonajes,
   updatePassword,
+  answers,
 }
