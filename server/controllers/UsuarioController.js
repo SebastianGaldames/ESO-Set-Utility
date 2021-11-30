@@ -61,7 +61,9 @@ const queryNombre = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    if(req.body.securityAnswerList){
+      const reg0 = await models.Usuario.findOne({ _id: req.body._id })
+    
     const answerList = req.body.securityAnswerList
     if (!(await bcrypt.compare(answerList[0], reg0.securityAnswerList[0])) && answerList[0]!=='') {
       console.log('entrexd1')
@@ -84,6 +86,8 @@ const update = async (req, res, next) => {
     } else {
       req.body.securityAnswerList[2] = reg0.securityAnswerList[2]
     }
+    }
+    
 
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
