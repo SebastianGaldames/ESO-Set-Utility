@@ -3,9 +3,10 @@
     <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
-        v-model="selectedPersonaje"
+        :selected="selectedPersonaje"
         :personajes="personajes"
         @createNewCharacterEvent="handleCreateCharacter"
+        @personajeSelectionChanged="handlerSeleccionDePersonaje"
       >
       </seleccion-personaje>
       <v-tabs color="acentuado1">
@@ -207,6 +208,9 @@ export default {
 
       // console.log(user.usuario)
       this.snackbar = true
+    },
+    handlerSeleccionDePersonaje(content) {
+      this.selectedPersonaje = content
     },
   },
 }
