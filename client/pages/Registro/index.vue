@@ -59,32 +59,32 @@
       <v-text-field
         v-model="password"
         :rules="[largoMinimoContrasenna(), passwordConfirmationRule()]"
-        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Ingresa contraseña"
-        hint="Contraseña ingresada con exito"
-        value=""
         class="input-group--focused secundario--text"
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show ? 'text' : 'password'"
         @click:append="show = !show"
       ></v-text-field>
 
       <v-text-field
         v-model="rePassword"
         :rules="[largoMinimoContrasenna2(), passwordConfirmationRule()]"
-        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Confirma tu contraseña"
-        hint="Las contraseñas coinciden"
-        value=""
+        hint="Las contraseñas deben coincidir"
         class="input-group--focused secundario--text"
-        @click:append="show = !show"
+        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show1 ? 'text' : 'password'"
+        @click:append="show1 = !show1"
       ></v-text-field>
-      <v-text>¿Cuál es el nombre de tu ciudad favorita?</v-text>
+
       <v-text-field
         v-model="securityAnswerList[0]"
         clearable
         color="acentuado1"
-        label="Respuesta Secreta"
+        label="¿Cuál es el nombre de tu ciudad favorita?"
+        :counter="20"
         :rules="[
           questionRules.required,
           questionRules.longMax,
@@ -92,12 +92,13 @@
         ]"
         hidedetails="auto"
       ></v-text-field>
-      <v-text>¿Cuál es el apellido de tu madre? </v-text>
+
       <v-text-field
         v-model="securityAnswerList[1]"
         clearable
         color="acentuado1"
-        label="Respuesta Secreta"
+        label="¿Cuál es el apellido de tu madre?"
+        :counter="20"
         :rules="[
           questionRules.required,
           questionRules.longMax,
@@ -105,12 +106,12 @@
         ]"
         hide-details="auto"
       ></v-text-field>
-      <v-text>¿Cuál es el nombre de tu primera escuela?</v-text>
       <v-text-field
         v-model="securityAnswerList[2]"
         clearable
         color="acentuado1"
-        label="Respuesta Secreta"
+        label="¿Cuál es el nombre de tu primera escuela?"
+        :counter="20"
         :rules="[
           questionRules.required,
           questionRules.longMax,
@@ -238,7 +239,7 @@ export default {
     return {
       countries: [],
       sexos: ['Masculino', 'Femenino', 'Otro'],
-      show: false,
+
       dialog: false,
       usuario: '',
       password: '',
@@ -252,6 +253,8 @@ export default {
       user: new Usuario(),
       securityAnswerList: [],
       checkbox: false,
+      show: false,
+      show1: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         usermin: () =>
@@ -265,7 +268,7 @@ export default {
       questionRules: {
         required: (value) => !!value || 'Campo obligatorio',
         longMax: (value) =>
-          (value && value.length <= 10) || 'Debe tener máximo 10 caracteres',
+          (value && value.length <= 20) || 'Debe tener máximo 20 caracteres',
         longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
       },
       snackbar: false,
@@ -321,11 +324,11 @@ export default {
         this.securityAnswerList[1] === '' ||
         this.securityAnswerList[2] === '' ||
         this.securityAnswerList[0].length < 2 ||
-        this.securityAnswerList[0].length > 10 ||
+        this.securityAnswerList[0].length > 20 ||
         this.securityAnswerList[1].length < 2 ||
-        this.securityAnswerList[1].length > 10 ||
+        this.securityAnswerList[1].length > 20 ||
         this.securityAnswerList[2].length < 2 ||
-        this.securityAnswerList[2].length > 10
+        this.securityAnswerList[2].length > 20
       ) {
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
