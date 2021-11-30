@@ -5,9 +5,9 @@
       <v-row>
         <v-col cols="5">
           <v-select
-            v-model="selectedPotencia"
-            :items="optionsPotencia"
-            label="Potencia"
+            v-model="selectedCalidad"
+            :items="optionsCalidad"
+            label="Calidad"
           ></v-select>
         </v-col>
       </v-row>
@@ -34,6 +34,13 @@
             <hr class="linea" />
             <v-spacer />
             <h5 v-for="e in n.efectos" :key="e" class="centro">{{ e }}</h5>
+            <h5
+              v-for="i in n.calidades[selectedCalidad]"
+              :key="i"
+              class="centro"
+            >
+              {{ i.type }}: {{ i.value }}
+            </h5>
           </v-card>
         </v-col>
       </v-row>
@@ -52,10 +59,10 @@ export default {
   data() {
     return {
       selectedTrait: undefined,
-      selectedPotencia: undefined,
+      selectedCalidad: 'normal',
       Rasgos: this.listaRasgos,
 
-      optionsPotencia: ['normal', 'fine', 'superior', 'epic', 'legendary'],
+      optionsCalidad: ['normal', 'fine', 'superior', 'epic', 'legendary'],
     }
   },
   methods: {
@@ -66,14 +73,14 @@ export default {
       // console.log(this.trait)
       const eventData = {
         trait: this.selectedTrait,
-        potencia: this.selectedPotencia,
+        calidad: this.selectedCalidad,
       }
       if (
         this.selectedCalidad !== undefined &&
         this.selectedTrait !== undefined
       ) {
         this.$emit('selectionTraitChanged', eventData)
-        // console.log(eventData)
+        console.log(eventData)
       }
     },
   },
