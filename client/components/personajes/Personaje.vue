@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 style="text-align: center">
-      {{ personaje === undefined ? 'Personaje' : personaje.nombre }}
+      {{ selectedPj === undefined ? 'Personaje' : selectedPj.nombre }}
     </h1>
     <div class="">
       <v-item-group v-model="selectedSlot" mandatory>
@@ -31,8 +31,8 @@
                     v-if="isItem(itemInv.categoria, index)"
                     :id="itemInv.categoria"
                     :enable-item="itemInv.enableItem"
-                    :enable-glyph="isAgregarGlyph('Armor')"
-                    :enable-trait="isAgregarTrait('Armor')"
+                    :enable-glyph="false"
+                    :enable-trait="false"
                     :slot-prop="itemInv.slotPJ"
                     style="padding: 5%"
                     @agregarSlotItem="handleAgregarSlotItem(index)"
@@ -52,6 +52,14 @@
           </v-row>
         </v-container>
       </v-item-group>
+      <v-btn
+        color="acentuado3"
+        class="mx-2 texto1--text"
+        x-small
+        @click="guardarInventario"
+      >
+        Save
+      </v-btn>
     </div>
   </div>
 </template>
@@ -92,10 +100,14 @@ export default {
       selectedSlot: {},
       selectedItem: {},
       selectedSet: {},
+      selectedPj: {},
       inventario: [],
     }
   },
   watch: {
+    personaje() {
+      this.selectedPj = this.personaje
+    },
     set() {
       this.selectedSet = this.set
     },
@@ -155,16 +167,16 @@ export default {
       if (this.isTwoHanded()) {
         this.inventario[index - 1].slotPJ.item = itemAux
         this.inventario[index - 1].slotPJ.set = setAux
-        this.inventario[index - 1].enableItem = false
       }
-      if (
-        this.inventario[index].categoria === 'One-Handed' &&
-        this.inventario[index + 1].slotPJ.item !== undefined
-      ) {
+      if (this.isOneHanded(index)) {
         this.inventario[index + 1].slotPJ.item = undefined
         this.inventario[index + 1].slotPJ.set = undefined
-        this.inventario[index + 1].enableItem = false
       }
+      this.selectedPj.slots.push(this.inventario[index].slotPJ)
+      this.$emit('slotChanged', this.selectedPj.slots)
+    },
+    guardarInventario() {
+      this.$emit('saveBuild', this.selectedPj.slots)
     },
     isItem(val, index) {
       if (index === 11 && this.isTwoHanded()) {
@@ -187,6 +199,13 @@ export default {
         return true
       }
       return false
+    },
+    isOneHanded(index) {
+      return (
+        index === 10 &&
+        this.inventario[index + 1].categoria !== 'One-Handed' &&
+        this.inventario[index + 1].slotPJ.item !== undefined
+      )
     },
     isAgregarGlyph(val) {
       return !(this.glyph === undefined) && this.glyph.tipo === val
