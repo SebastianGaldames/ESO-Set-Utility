@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
+    <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
         v-model="selectedPersonaje"
@@ -175,6 +175,15 @@ export default {
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
+      // TODO build a propper slot according to schema
+      const slots = {
+        _id: this.selectedPersonaje._id,
+        slots: this.personajeSlots,
+      }
+      await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Personaje/update',
+        slots
+      )
     },
     async handleCreateCharacter(event) {
       const newPj = {
