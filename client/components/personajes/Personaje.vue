@@ -55,6 +55,7 @@
         </v-container>
       </v-item-group>
       <v-btn color="acentuado3" @click="guardarInventario"> Save </v-btn>
+      {{ selectedPj.slots }}
     </div>
   </div>
 </template>
@@ -102,11 +103,7 @@ export default {
   watch: {
     personaje() {
       this.selectedPj = this.personaje
-    },
-    selectedPj() {
-      this.inventario = []
-      this.selectedItem = {}
-      this.buildPJ()
+      this.updatePj()
     },
     set() {
       this.selectedSet = this.set
@@ -173,6 +170,32 @@ export default {
       }
       // this.selectedPj.slots = slotsAux
       // console.log(this.selectedPj.slots)
+    },
+    updatePj() {
+      for (const invTemp of this.inventario) {
+        const target = this.selectedPj.slots.find(
+          (slotTemp) => slotTemp.tag === invTemp.slotPJ.tag
+        )
+        if (target !== undefined) {
+          // console.log(target)
+          const aux = {
+            item: target.item,
+            familia: target.familia,
+            nivel: target.nivel,
+            calidad: target.calidad,
+            posicion: target.posicion,
+            tag: target.tag,
+            glyph: target.glyph,
+            potenciaGlyph: target.potenciaGlyph,
+            calidadGlyph: target.calidadGlyph,
+            trait: target.trait,
+          }
+          invTemp.enableItem = false
+          console.log(aux.item)
+          invTemp.slotPJ = aux
+        }
+      }
+      // console.log(this.inventario)
     },
     handleAgregarSlotItem(index) {
       const itemAux = this.allItems.find(
