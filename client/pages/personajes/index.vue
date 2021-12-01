@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <v-btn @click="handleSaveBuild">save pj</v-btn>
+    <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
         v-model="selectedPersonaje"
@@ -126,6 +126,12 @@ export default {
       return filtered
     },
   },
+  watch: {
+    selectedPersonaje() {
+      this.personajeSlots =
+        this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
+    },
+  },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
@@ -141,6 +147,7 @@ export default {
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
+      this.personajes = []
       for (const id of idsArray) {
         const pj = await this.$axios.$get(
           process.env.VUE_APP_SERVER_URL + '/Personaje/query',

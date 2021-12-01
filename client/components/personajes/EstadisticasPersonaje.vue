@@ -22,7 +22,11 @@ export default {
       stat1: 0,
       stat2: 0,
       stat3: 0,
-      testingSlots: [{ set: '1234' }, { set: '1234' }, { set: '9876' }],
+      testingSlots: [
+        { familia: '1234' },
+        { familia: '1234' },
+        { familia: '9876' },
+      ],
     }
   },
   computed: {
@@ -33,12 +37,12 @@ export default {
       const itemsPerSet = []
       for (const slot of this.testingSlots) {
         const foundPair = itemsPerSet.find(
-          (objectPair) => objectPair.set === slot.set
+          (objectPair) => objectPair.familia === slot.familia
         )
         if (foundPair !== undefined) {
           foundPair.itemQuantity += 1
         } else {
-          itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
+          itemsPerSet.push({ familia: slot.familia, itemQuantity: 1 })
         }
       }
       return itemsPerSet
@@ -49,12 +53,12 @@ export default {
       const itemsPerSet = []
       for (const slot of slots) {
         const foundPair = itemsPerSet.find(
-          (objectPair) => objectPair.set === slot.set
+          (objectPair) => objectPair.familia === slot.familia
         )
         if (foundPair !== undefined) {
           foundPair.itemQuantity += 1
         } else {
-          itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
+          itemsPerSet.push({ familia: slot.familia, itemQuantity: 1 })
         }
       }
       return itemsPerSet
