@@ -36,9 +36,7 @@
                     :enable-trait="false"
                     :slot-prop="slotEq.slotPJ"
                     style="padding: 5%"
-                    @agregarSlotItem="
-                      handleAgregarSlotItem(slotEq.slotPJ.posicion, index)
-                    "
+                    @agregarSlotItem="handleAgregarSlotItem(index)"
                     @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
                   ></itemSlot>
                 </v-card>
@@ -237,7 +235,6 @@ export default {
       this.inventario[index].slotPJ.familia = setAux
       this.inventario[index].enableItem = false
       this.$emit('slotChanged', this.inventario[index].slotPJ)
-      // }
     },
     handleAgregarSlotGlyph(index) {
       this.inventario[index].slotPJ.glyph = this.selectedGlyph.glyph
@@ -252,6 +249,19 @@ export default {
     },
     guardarInventario() {
       this.$emit('saveBuild')
+    },
+    isItem(categoriaPj, index) {
+      if (index === 11 && this.isTwoHanded()) {
+        return (
+          !(
+            this.selectedItem === undefined || this.selectedSet === undefined
+          ) && this.selectedItem.categoria === 'Two-Handed'
+        )
+      }
+      return (
+        !(this.selectedItem === undefined || this.selectedSet === undefined) &&
+        this.selectedItem.categoria === categoriaPj
+      )
     },
     isGlyph(tipoPj) {
       return (
