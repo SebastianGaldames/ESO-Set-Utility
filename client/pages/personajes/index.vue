@@ -30,8 +30,11 @@
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
         <v-tab-item key="glifos">
-          <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
-        ></v-tab-item>
+          <gliphs-comp
+            :lista-glifos="glyphs"
+            @selectionGlyphChanged="handleGlyphChanged"
+          ></gliphs-comp>
+        </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
           <traits-comp :lista-rasgos="traits"></traits-comp
@@ -46,11 +49,12 @@
         :set="selectedSet"
         :all-items="items"
         :all-sets="familias"
+        :glyph-slot="selectedSetGlyphInfo"
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
       <estadisticas-personaje
-        :personaje-slots="personajeSlots"
+        :personaje-slots="selectedPersonaje.slots"
       ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
@@ -110,9 +114,10 @@ export default {
       selectedPersonaje: {},
       selectedSet: undefined,
       selectedItem: {},
+      selectedSetGlyphInfo: undefined,
       currentUser: {},
       snackbar: false,
-      personajeSlots: [],
+      // personajeSlots: [],
     }
   },
   computed: {
@@ -126,12 +131,12 @@ export default {
       return filtered
     },
   },
-  watch: {
-    selectedPersonaje() {
-      this.personajeSlots =
-        this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
-    },
-  },
+  // watch: {
+  //   selectedPersonaje() {
+  //     this.personajeSlots =
+  //       this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
+  //   },
+  // },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
@@ -248,6 +253,16 @@ export default {
 
       // console.log(user.usuario)
       this.snackbar = true
+    },
+    handleGlyphChanged(content) {
+      // console.log(content)
+      this.selectedSetGlyphInfo = {
+        imagen: content.glyph.imagen,
+        glyph: content.glyph._id,
+        calidadGlyph: content.calidad,
+        potenciaGlyph: content.potencia,
+      }
+      // console.log(this.selectedSetGlyphInfo)
     },
   },
 }
