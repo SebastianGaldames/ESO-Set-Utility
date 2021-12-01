@@ -310,7 +310,7 @@ export default {
             }
           })
         })
-        return selectedUbi
+        return selectedUbi.sort()
       }
       if (filtroTipo) {
         this.families.forEach((element) => {
@@ -361,7 +361,7 @@ export default {
             })
           }
         })
-        return selectedPeso
+        return selectedPeso.sort()
       }
       if (filtroUbi) {
         this.families.forEach((element) => {
@@ -385,7 +385,7 @@ export default {
               })
             }
           })
-          return selectedPeso2
+          return selectedPeso2.sort()
         }
       } else {
         this.families.forEach((element) => {
@@ -395,7 +395,7 @@ export default {
         })
       }
 
-      return selectedPeso
+      return selectedPeso.sort()
     },
   },
   created() {
