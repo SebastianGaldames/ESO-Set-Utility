@@ -55,7 +55,7 @@
         </v-container>
       </v-item-group>
       <v-btn color="acentuado3" @click="guardarInventario"> Save </v-btn>
-      {{ selectedPj.slots }}
+      <!-- {{ selectedPj.slots }} -->
     </div>
   </div>
 </template>
@@ -103,6 +103,10 @@ export default {
   watch: {
     personaje() {
       this.selectedPj = this.personaje
+      this.inventario = []
+      this.buildPJ()
+    },
+    selectedPj() {
       this.updatePj()
     },
     set() {

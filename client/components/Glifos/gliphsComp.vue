@@ -48,7 +48,7 @@
             <h5
               v-for="i in n.potencias[optionsPotencia.indexOf(selectedPotencia)]
                 .calidades[selectedCalidad]"
-              :key="i"
+              :key="i.nombre"
               class="centro"
             >
               {{ i.type }}: {{ i.value }}
