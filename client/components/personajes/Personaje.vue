@@ -183,6 +183,7 @@ export default {
             posicion: secciones[index],
             tag: temp,
             glyph: undefined,
+            glyphImage: undefined,
             potenciaGlyph: undefined,
             calidadGlyph: undefined,
             trait: undefined,
@@ -190,8 +191,6 @@ export default {
         }
         this.inventario.push(seccion)
       }
-      // this.selectedPj.slots = slotsAux
-      // console.log(this.selectedPj.slots)
     },
     updatePj() {
       for (const invTemp of this.inventario) {
@@ -199,7 +198,6 @@ export default {
           (slotTemp) => slotTemp.tag === invTemp.slotPJ.tag
         )
         if (target !== undefined) {
-          // console.log(target)
           const aux = {
             item: target.item,
             familia: target.familia,
@@ -213,14 +211,11 @@ export default {
             trait: target.trait,
           }
           invTemp.enableItem = false
-          // console.log(aux.item)
           invTemp.slotPJ = aux
         }
       }
-      // console.log(this.inventario)
     },
     handleAgregarSlotItem(index) {
-      // this.isItem(val, index) {
       const itemAux = this.allItems.find(
         (itemTemp) => itemTemp._id === this.selectedItem._id
       )
@@ -244,25 +239,18 @@ export default {
       // }
     },
     handleAgregarSlotGlyph(index) {
-      this.inventario[index].slotPJ.glyph = this.selectedGlyph
+      this.inventario[index].slotPJ.glyph = this.selectedGlyph.glyph
+      this.inventario[index].slotPJ.glyphImage = this.selectedGlyph.imagen
+      this.inventario[index].slotPJ.potenciaGlyph =
+        this.selectedGlyph.potenciaGlyph
+      this.inventario[index].slotPJ.calidadGlyph =
+        this.selectedGlyph.potenciaGlyph
       this.inventario[index].enableGlyph = false
+      console.log(this.inventario[index].slotPJ)
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     guardarInventario() {
       this.$emit('saveBuild')
-    },
-    isItem(categoriaPj, index) {
-      if (index === 11 && this.isTwoHanded()) {
-        return (
-          !(
-            this.selectedItem === undefined || this.selectedSet === undefined
-          ) && this.selectedItem.categoria === 'Two-Handed'
-        )
-      }
-      return (
-        !(this.selectedItem === undefined || this.selectedSet === undefined) &&
-        this.selectedItem.categoria === categoriaPj
-      )
     },
     isGlyph(tipoPj) {
       return (
