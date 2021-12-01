@@ -140,20 +140,31 @@ export default {
         'One-Handed',
         'Off Hand',
       ]
-      const slotsAux = []
       for (let index = 0; index < secciones.length; index++) {
-        const temp = {
-          item: undefined,
-          set: undefined,
-          glyph: undefined,
-          trait: undefined,
+        let temp = secciones[index]
+        if (index === 8) {
+          temp = 'Ring 1'
+        }
+        if (index === 9) {
+          temp = 'Ring 2'
+        }
+        if (index === 10) {
+          temp = 'Hand L'
+        }
+        if (index === 11) {
+          temp = 'Hand R'
         }
         const seccion = {
           posicion: secciones[index],
           enableItem: true,
-          slotPJ: temp,
+          slotPJ: {
+            tag: temp,
+            item: undefined,
+            set: undefined,
+            glyph: undefined,
+            trait: undefined,
+          },
         }
-        slotsAux.push(temp)
         this.inventario.push(seccion)
       }
       // this.selectedPj.slots = slotsAux
