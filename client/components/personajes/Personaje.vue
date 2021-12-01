@@ -25,13 +25,13 @@
                 Hand
               </h4>
               <h4 v-else style="text-align: center">
-                {{ slotEq.posicion }}
+                {{ slotEq.slotPJ.posicion }}
               </h4>
               <v-item>
                 <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isItem(slotEq.posicion, index)"
-                    :id="slotEq.posicion"
+                    v-if="isItem(slotEq.slotPJ.posicion, index)"
+                    :id="slotEq.slotPJ.posicion"
                     :enable-item="slotEq.enableItem"
                     :enable-glyph="false"
                     :enable-trait="false"
@@ -41,7 +41,7 @@
                   ></itemSlot>
                   <itemSlot
                     v-else
-                    :id="slotEq.posicion"
+                    :id="slotEq.slotPJ.posicion"
                     :enable-item="false"
                     :enable-glyph="false"
                     :enable-trait="false"
@@ -155,13 +155,17 @@ export default {
           temp = 'Hand R'
         }
         const seccion = {
-          posicion: secciones[index],
           enableItem: true,
           slotPJ: {
-            tag: temp,
             item: undefined,
-            set: undefined,
+            familia: undefined,
+            nivel: 50,
+            calidad: 'dorada',
+            posicion: secciones[index],
+            tag: temp,
             glyph: undefined,
+            potenciaGlyph: undefined,
+            calidadGlyph: undefined,
             trait: undefined,
           },
         }
@@ -178,17 +182,17 @@ export default {
         (setTemp) => setTemp._id === this.selectedSet._id
       )
       if (this.isTwoHanded()) {
-        this.inventario[11].posicion = 'Two-Handed'
+        this.inventario[11].slotPJ.posicion = 'Two-Handed'
         this.inventario[index - 1].slotPJ.item = itemAux
-        this.inventario[index - 1].slotPJ.set = setAux
+        this.inventario[index - 1].slotPJ.familia = setAux
       }
       if (this.isOneHanded()) {
         this.inventario[11].slotPJ.item = undefined
-        this.inventario[11].slotPJ.set = undefined
-        this.inventario[11].posicion = 'One-Handed'
+        this.inventario[11].slotPJ.familia = undefined
+        this.inventario[11].slotPJ.posicion = 'One-Handed'
       }
       this.inventario[index].slotPJ.item = itemAux
-      this.inventario[index].slotPJ.set = setAux
+      this.inventario[index].slotPJ.familia = setAux
       this.inventario[index].enableItem = false
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
@@ -219,7 +223,7 @@ export default {
         this.selectedItem !== undefined &&
         this.selectedItem.categoria === 'One-Handed' &&
         this.inventario[11].slotPJ.item !== undefined &&
-        this.inventario[11].posicion !== 'One-Handed'
+        this.inventario[11].slotPJ.posicion !== 'One-Handed'
       )
     },
     isAgregarGlyph(val) {
