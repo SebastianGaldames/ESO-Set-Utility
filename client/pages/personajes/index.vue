@@ -190,7 +190,9 @@ export default {
     handleSlotChanged(content) {
       // adds the new item to the slots
       console.log(content)
-      let slot = this.personajeSlots.find((slot) => slot.tag === content.tag)
+      let slot = this.selectedPersonaje.slots.find(
+        (slot) => slot.tag === content.tag
+      )
       if (slot !== undefined) {
         slot.item = content.item
         slot.familia = content.familia
@@ -214,7 +216,7 @@ export default {
           calidadGlyph: content.calidadGlyph,
           trait: content.trait,
         }
-        this.personajeSlots.push(slot)
+        this.selectedPersonaje.slots.push(slot)
       }
     },
     async handleSaveBuild() {
@@ -222,7 +224,7 @@ export default {
       // TODO build a propper slot according to schema
       const slots = {
         _id: this.selectedPersonaje._id,
-        slots: this.personajeSlots,
+        slots: this.selectedPersonaje.slots,
       }
       await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Personaje/update',

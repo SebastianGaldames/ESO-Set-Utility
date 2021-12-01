@@ -3,7 +3,7 @@
     <v-card-title> Estadisticas </v-card-title>
     <v-card-text>
       <p>
-        {{ itemsPerSetMethod(personajeSlots) }}
+        <!-- {{ itemsPerSetMethod(personajeSlots) }} -->
       </p>
     </v-card-text>
   </v-card>
