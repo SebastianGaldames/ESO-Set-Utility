@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
+    <v-btn @click="handleSaveBuild">save pj</v-btn>
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
         v-model="selectedPersonaje"
@@ -178,7 +178,32 @@ export default {
     handleSlotChanged(content) {
       // adds the new item to the slots
       console.log(content)
-      // const slot = this.personajeSlots.find(slot => )
+      let slot = this.personajeSlots.find((slot) => slot.tag === content.tag)
+      if (slot !== undefined) {
+        slot.item = content.item
+        slot.familia = content.familia
+        slot.nivel = content.nivel
+        slot.calidad = content.calidad
+        slot.posicion = content.posicion
+        slot.glyph = content.glyph
+        slot.potenciaGlyph = content.potenciaGlyph
+        slot.calidadGlyph = content.calidadGlyph
+        slot.trait = content.trait
+      } else {
+        slot = {
+          item: content.item,
+          familia: content.familia,
+          nivel: content.nivel,
+          calidad: content.calidad,
+          posicion: content.posicion,
+          tag: content.tag,
+          glyph: content.glyph,
+          potenciaGlyph: content.potenciaGlyph,
+          calidadGlyph: content.calidadGlyph,
+          trait: content.trait,
+        }
+        this.personajeSlots.push(slot)
+      }
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
