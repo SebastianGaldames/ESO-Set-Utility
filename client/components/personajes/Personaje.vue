@@ -4,12 +4,12 @@
       {{ selectedPj === undefined ? 'Personaje' : selectedPj.nombre }}
     </h1>
     <div class="">
-      <v-item-group v-model="selectedSlot" mandatory>
+      <v-item-group>
         <v-container fluid>
           <h2 style="text-align: center">Equipment</h2>
           <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="(itemInv, index) in inventario"
+              v-for="(slotEq, index) in selectedPj.slots"
               :key="index"
               align="center"
               justify="center"
@@ -24,26 +24,28 @@
               >
                 Hand
               </h4>
-              <h4 v-else style="text-align: center">{{ itemInv.categoria }}</h4>
+              <h4 v-else style="text-align: center">
+                {{ slotEq.posicion }}
+              </h4>
               <v-item>
                 <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isItem(itemInv.categoria, index)"
-                    :id="itemInv.categoria"
-                    :enable-item="itemInv.enableItem"
+                    v-if="isItem(slotEq.posicion, index)"
+                    :id="slotEq.posicion"
+                    :enable-item="inventario[index].enableItem"
                     :enable-glyph="false"
                     :enable-trait="false"
-                    :slot-prop="itemInv.slotPJ"
+                    :slot-prop="slotEq"
                     style="padding: 5%"
                     @agregarSlotItem="handleAgregarSlotItem(index)"
                   ></itemSlot>
                   <itemSlot
                     v-else
-                    :id="itemInv.categoria"
+                    :id="slotEq.posicion"
                     :enable-item="false"
                     :enable-glyph="false"
                     :enable-trait="false"
-                    :slot-prop="itemInv.slotPJ"
+                    :slot-prop="slotEq"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -52,14 +54,7 @@
           </v-row>
         </v-container>
       </v-item-group>
-      <v-btn
-        color="acentuado3"
-        class="mx-2 texto1--text"
-        x-small
-        @click="guardarInventario"
-      >
-        Save
-      </v-btn>
+      <v-btn color="acentuado3" @click="guardarInventario"> Save </v-btn>
     </div>
   </div>
 </template>
@@ -108,6 +103,11 @@ export default {
     personaje() {
       this.selectedPj = this.personaje
     },
+    selectedPj() {
+      this.inventario = []
+      this.selectedItem = {}
+      this.buildPJ()
+    },
     set() {
       this.selectedSet = this.set
     },
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     buildPJ() {
-      const partes = [
+      const secciones = [
         'Head',
         'Shoulders',
         'Chest',
@@ -140,19 +140,28 @@ export default {
         'One-Handed',
         'Off Hand',
       ]
-      for (let index = 0; index < partes.length; index++) {
-        const parte = {
-          enableItem: true,
-          categoria: partes[index],
-          slotPJ: {
-            item: undefined,
-            glyph: undefined,
-            trait: undefined,
-            set: undefined,
-          },
+      const slotsAux = []
+      for (let index = 0; index < secciones.length; index++) {
+        const temp = {
+          item: undefined,
+          familia: undefined,
+          nivel: 50,
+          calidad: 'dorada',
+          posicion: secciones[index],
+          glyph: undefined,
+          potenciaGlyph: undefined,
+          calidadGlyph: undefined,
+          trait: undefined,
         }
-        this.inventario.push(parte)
+        const seccion = {
+          enableItem: true,
+          slotPJ: temp,
+        }
+        slotsAux.push(temp)
+        this.inventario.push(seccion)
       }
+      this.selectedPj.slots = slotsAux
+      // console.log(this.selectedPj.slots)
     },
     handleAgregarSlotItem(index) {
       const itemAux = this.allItems.find(
@@ -161,19 +170,20 @@ export default {
       const setAux = this.allSets.find(
         (setTemp) => setTemp._id === this.selectedSet._id
       )
-      this.inventario[index].slotPJ.item = itemAux
-      this.inventario[index].slotPJ.set = setAux
-      this.inventario[index].enableItem = false
       if (this.isTwoHanded()) {
-        this.inventario[index - 1].slotPJ.item = itemAux
-        this.inventario[index - 1].slotPJ.set = setAux
+        this.selectedPj.slots.at(11).posicion = 'Two-Handed'
+        this.selectedPj.slots.at(index - 1).item = itemAux
+        this.selectedPj.slots.at(index - 1).familia = setAux
       }
-      if (this.isOneHanded(index)) {
-        this.inventario[index + 1].slotPJ.item = undefined
-        this.inventario[index + 1].slotPJ.set = undefined
+      if (this.isOneHanded()) {
+        this.selectedPj.slots.at(11).item = undefined
+        this.selectedPj.slots.at(11).familia = undefined
+        this.selectedPj.slots.at(11).posicion = 'One-Handed'
       }
-      this.selectedPj.slots.push(this.inventario[index].slotPJ)
-      this.$emit('slotChanged', this.selectedPj.slots)
+      this.selectedPj.slots.at(index).item = itemAux
+      this.selectedPj.slots.at(index).familia = setAux
+      this.inventario[index].enableItem = false
+      // this.$emit('slotChanged', this.selectedPj.slots)
     },
     guardarInventario() {
       this.$emit('saveBuild', this.selectedPj.slots)
@@ -192,19 +202,17 @@ export default {
       )
     },
     isTwoHanded() {
-      if (
+      return (
         this.selectedItem !== undefined &&
         this.selectedItem.categoria === 'Two-Handed'
-      ) {
-        return true
-      }
-      return false
+      )
     },
-    isOneHanded(index) {
+    isOneHanded() {
       return (
-        index === 10 &&
-        this.inventario[index + 1].categoria !== 'One-Handed' &&
-        this.inventario[index + 1].slotPJ.item !== undefined
+        this.selectedItem !== undefined &&
+        this.selectedItem.categoria === 'One-Handed' &&
+        this.selectedPj.slots.at(11).item !== undefined &&
+        this.selectedPj.slots.at(11).posicion !== 'One-Handed'
       )
     },
     isAgregarGlyph(val) {
