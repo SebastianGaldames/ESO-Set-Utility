@@ -175,9 +175,10 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
-    handleItemEquiped(content) {
+    handleSlotChanged(content) {
       // adds the new item to the slots
       console.log(content)
+      // const slot = this.personajeSlots.find(slot => )
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
