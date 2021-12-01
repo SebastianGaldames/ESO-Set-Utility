@@ -49,6 +49,9 @@
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
+      <estadisticas-personaje
+        :personaje-slots="personajeSlots"
+      ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -61,12 +64,14 @@
 import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue'
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 import Personaje from '~/components/personajes/Personaje.vue'
+import EstadisticasPersonaje from '~/components/personajes/EstadisticasPersonaje.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 import traitsComp from '~/components/Traits/traitsComp.vue'
 export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
+    EstadisticasPersonaje,
     Personaje,
     gliphsComp,
     traitsComp,
@@ -121,6 +126,12 @@ export default {
       return filtered
     },
   },
+  watch: {
+    selectedPersonaje() {
+      this.personajeSlots =
+        this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
+    },
+  },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
@@ -136,6 +147,7 @@ export default {
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
+      this.personajes = []
       for (const id of idsArray) {
         const pj = await this.$axios.$get(
           process.env.VUE_APP_SERVER_URL + '/Personaje/query',
@@ -170,8 +182,35 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
-    handleItemEquiped(content) {
+    handleSlotChanged(content) {
       // adds the new item to the slots
+      console.log(content)
+      let slot = this.personajeSlots.find((slot) => slot.tag === content.tag)
+      if (slot !== undefined) {
+        slot.item = content.item
+        slot.familia = content.familia
+        slot.nivel = content.nivel
+        slot.calidad = content.calidad
+        slot.posicion = content.posicion
+        slot.glyph = content.glyph
+        slot.potenciaGlyph = content.potenciaGlyph
+        slot.calidadGlyph = content.calidadGlyph
+        slot.trait = content.trait
+      } else {
+        slot = {
+          item: content.item,
+          familia: content.familia,
+          nivel: content.nivel,
+          calidad: content.calidad,
+          posicion: content.posicion,
+          tag: content.tag,
+          glyph: content.glyph,
+          potenciaGlyph: content.potenciaGlyph,
+          calidadGlyph: content.calidadGlyph,
+          trait: content.trait,
+        }
+        this.personajeSlots.push(slot)
+      }
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
