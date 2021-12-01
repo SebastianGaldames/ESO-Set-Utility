@@ -177,6 +177,7 @@ export default {
     },
     handleItemEquiped(content) {
       // adds the new item to the slots
+      console.log(content)
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
