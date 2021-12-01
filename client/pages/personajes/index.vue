@@ -297,6 +297,7 @@ export default {
         tipoGlyph: content.glyph.tipo,
       }
       console.log(this.selectedSetGlyphInfo)
+    },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
     },
