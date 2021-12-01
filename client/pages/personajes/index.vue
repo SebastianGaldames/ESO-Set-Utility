@@ -28,6 +28,7 @@
             @familyChanged="handleFamilyChanged"
             @itemChanged="handleItemChanged"
             @updateInventory="handleUpdateInventory"
+            @deletedItems="handleItemsDeleted"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -115,6 +116,7 @@ export default {
       currentUser: {},
       snackbar: false,
       personajeSlots: [],
+      itemsBorrados: [],
     }
   },
   computed: {
@@ -161,6 +163,36 @@ export default {
         }
       )
       console.log(response)
+    },
+    // Items eliminados del inventario por el usuario
+    handleItemsDeleted(content) {
+      this.itemsBorrados = content
+
+      // Si el usuario decide borrar todos los items
+      if (this.itemsBorrados.length === this.currentUser.inventario.length) {
+        this.currentUser.inventario = []
+      } else {
+        const nuevosItems = []
+        const nuevosItemsAux = []
+        const itemsABorrar = []
+        // console.log(itemsAux)
+        for (let i = 0; i < this.itemsBorrados.length; i++) {
+          itemsABorrar.push(this.currentUser.inventario[this.itemsBorrados[i]])
+        }
+        for (let j = 0; j < this.currentUser.inventario.length; j++) {
+          nuevosItems.push(this.currentUser.inventario[j])
+        }
+        for (let j = 0; j < this.itemsBorrados.length; j++) {
+          nuevosItems[this.itemsBorrados[j]] = 0
+        }
+        for (let j = 0; j < nuevosItems.length; j++) {
+          if (nuevosItems[j] !== 0) {
+            nuevosItemsAux.push(nuevosItems[j])
+          }
+        }
+        this.currentUser.inventario = nuevosItemsAux
+      }
+      this.updateInventario()
     },
     handleFamilyChanged(content) {
       // console.log(content.nombre)

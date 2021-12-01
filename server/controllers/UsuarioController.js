@@ -206,7 +206,7 @@ const removePersonaje = async (req, res, next) =>{
       const index = regUsr.personajes.indexOf(req.body.deletedPersonaje)
       regUsr.personajes.splice(index,1)
       //Guardar lista en los personajes del usuario
-      const reg = await models.Usuario.findByIdAndUpdate(
+      await models.Usuario.findByIdAndUpdate(
         { _id: req.body.usuario },
         { personajes: regUsr.personajes }
       )
