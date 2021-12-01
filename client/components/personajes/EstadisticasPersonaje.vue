@@ -3,7 +3,10 @@
     <v-card-title> Estadisticas </v-card-title>
     <v-card-text>
       <p>
-        {{ itemsPerSet }}
+        {{ itemsPerSetMethod(slots) }}
+      </p>
+      <p>
+        {{ itempsPerSetVariable }}
       </p>
     </v-card-text>
   </v-card>
@@ -23,6 +26,7 @@ export default {
       stat2: 0,
       stat3: 0,
       testingSlots: [{ set: '1234' }, { set: '1234' }, { set: '9876' }],
+      itemsPerSetVariable: [],
     }
   },
   computed: {
@@ -30,23 +34,39 @@ export default {
       return ''
     },
     itemsPerSet() {
-      const sets = []
       const itemsPerSet = []
-      for (const slot of this.personajeSlots) {
-        if (!sets.includes(slot.set)) {
-          sets.push(slot.set)
-          itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
-        } else {
-          const foundPair = itemsPerSet.find(
-            (objectPair) => objectPair.set === slot.set
-          )
+      for (const slot of this.testingSlots) {
+        const foundPair = itemsPerSet.find(
+          (objectPair) => objectPair.set === slot.set
+        )
+        if (foundPair !== undefined) {
           foundPair.itemQuantity += 1
+        } else {
+          itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
         }
       }
       return itemsPerSet
     },
   },
   methods: {
+    itemsPerSetMethod(slots) {
+      const itemsPerSet = []
+      for (const slot of slots) {
+        const foundPair = itemsPerSet.find(
+          (objectPair) => objectPair.set === slot.set
+        )
+        if (foundPair !== undefined) {
+          foundPair.itemQuantity += 1
+        } else {
+          itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
+        }
+      }
+      this.itemsPerSetVariable = itemsPerSet
+      return itemsPerSet
+    },
+    applySetStats() {
+      this.$emit('sample')
+    },
     sampleEvent() {
       this.$emit('sample')
     },
