@@ -193,10 +193,8 @@ export default {
             userparam
         )
         .then((respuesta) => {
-          console.log('entre al then')
           this.confirmation = true
           this.user = respuesta.data
-          console.log(this.user)
           this.snackbar = true
           this.snackbarText = 'Usuario validado correctamente'
           return respuesta.data
@@ -217,10 +215,6 @@ export default {
         })
     },
     async verificaInfo() {
-      console.log(this.user.usuario)
-      console.log(this.securityAnswer1)
-      console.log(this.securityAnswer2)
-      console.log(this.securityAnswer3)
       await this.$axios
         .post(process.env.VUE_APP_SERVER_URL + '/Usuario/answers', {
           nombreUsuario: this.user.usuario,
@@ -275,10 +269,7 @@ export default {
     },
 
     async cambioDatos() {
-      console.log(this.user._id)
-      console.log('cambio dentro')
       if (this.passwordVerificacion() && this.character.newPassword !== '') {
-        console.log('cambio dentro3')
         const newPassword = {
           _id: this.user._id,
           password: this.character.newPassword,
