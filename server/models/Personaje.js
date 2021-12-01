@@ -10,7 +10,7 @@ const slotSchema = new Schema({
   glyph: { type: Schema.ObjectId, ref: 'Glyph' },
   potenciaGlyph: { type: String },
   calidadGlyph: { type: String },
-  imagenGlyph: { type: String },
+  glyphImage: { type: String },
   trait: { type: Schema.ObjectId, ref: 'Trait' },
 })
 

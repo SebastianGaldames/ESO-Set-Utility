@@ -202,6 +202,7 @@ export default {
         slot.glyph = content.glyph
         slot.potenciaGlyph = content.potenciaGlyph
         slot.calidadGlyph = content.calidadGlyph
+        slot.glyphImage = content.glyphImage
         slot.trait = content.trait
       } else {
         slot = {
@@ -214,6 +215,7 @@ export default {
           glyph: content.glyph,
           potenciaGlyph: content.potenciaGlyph,
           calidadGlyph: content.calidadGlyph,
+          glyphImage: content.glyphImage,
           trait: content.trait,
         }
         this.selectedPersonaje.slots.push(slot)
