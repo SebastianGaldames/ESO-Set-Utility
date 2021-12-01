@@ -261,8 +261,9 @@ export default {
         glyph: content.glyph._id,
         calidadGlyph: content.calidad,
         potenciaGlyph: content.potencia,
+        tipoGlyph: content.glyph.tipo,
       }
-      // console.log(this.selectedSetGlyphInfo)
+      console.log(this.selectedSetGlyphInfo)
     },
   },
 }
