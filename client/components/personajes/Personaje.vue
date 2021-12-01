@@ -208,6 +208,7 @@ export default {
             glyph: target.glyph,
             potenciaGlyph: target.potenciaGlyph,
             calidadGlyph: target.calidadGlyph,
+            glyphImage: target.glyphImage,
             trait: target.trait,
           }
           invTemp.enableItem = false
