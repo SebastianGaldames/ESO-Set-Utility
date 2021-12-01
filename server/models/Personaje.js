@@ -6,6 +6,7 @@ const slotSchema = new Schema({
   nivel: { type: Number, default: 50 },
   calidad: { type: String, default: 'dorada' },
   posicion: { type: String, required: true, default: 'valor no asignado' },
+  tag: { type: String, required: true, unique: true },
   glyph: { type: Schema.ObjectId, ref: 'Glyph' },
   potenciaGlyph: { type: String },
   calidadGlyph: { type: String },
