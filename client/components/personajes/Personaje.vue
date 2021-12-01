@@ -9,7 +9,7 @@
           <h2 style="text-align: center">Equipment</h2>
           <v-row align="center" justify="center" no-gutters>
             <v-col
-              v-for="(slotEq, index) in selectedPj.slots"
+              v-for="(slotEq, index) in inventario"
               :key="index"
               align="center"
               justify="center"
@@ -32,10 +32,10 @@
                   <itemSlot
                     v-if="isItem(slotEq.posicion, index)"
                     :id="slotEq.posicion"
-                    :enable-item="inventario[index].enableItem"
+                    :enable-item="slotEq.enableItem"
                     :enable-glyph="false"
                     :enable-trait="false"
-                    :slot-prop="slotEq"
+                    :slot-prop="slotEq.slotPJ"
                     style="padding: 5%"
                     @agregarSlotItem="handleAgregarSlotItem(index)"
                   ></itemSlot>
@@ -45,7 +45,7 @@
                     :enable-item="false"
                     :enable-glyph="false"
                     :enable-trait="false"
-                    :slot-prop="slotEq"
+                    :slot-prop="slotEq.slotPJ"
                     style="padding: 5%"
                   ></itemSlot>
                 </v-card>
@@ -144,23 +144,19 @@ export default {
       for (let index = 0; index < secciones.length; index++) {
         const temp = {
           item: undefined,
-          familia: undefined,
-          nivel: 50,
-          calidad: 'dorada',
-          posicion: secciones[index],
+          set: undefined,
           glyph: undefined,
-          potenciaGlyph: undefined,
-          calidadGlyph: undefined,
           trait: undefined,
         }
         const seccion = {
+          posicion: secciones[index],
           enableItem: true,
           slotPJ: temp,
         }
         slotsAux.push(temp)
         this.inventario.push(seccion)
       }
-      this.selectedPj.slots = slotsAux
+      // this.selectedPj.slots = slotsAux
       // console.log(this.selectedPj.slots)
     },
     handleAgregarSlotItem(index) {
@@ -171,22 +167,22 @@ export default {
         (setTemp) => setTemp._id === this.selectedSet._id
       )
       if (this.isTwoHanded()) {
-        this.selectedPj.slots.at(11).posicion = 'Two-Handed'
-        this.selectedPj.slots.at(index - 1).item = itemAux
-        this.selectedPj.slots.at(index - 1).familia = setAux
+        this.inventario[11].posicion = 'Two-Handed'
+        this.inventario[index - 1].slotPJ.item = itemAux
+        this.inventario[index - 1].slotPJ.set = setAux
       }
       if (this.isOneHanded()) {
-        this.selectedPj.slots.at(11).item = undefined
-        this.selectedPj.slots.at(11).familia = undefined
-        this.selectedPj.slots.at(11).posicion = 'One-Handed'
+        this.inventario[11].slotPJ.item = undefined
+        this.inventario[11].slotPJ.set = undefined
+        this.inventario[11].posicion = 'One-Handed'
       }
-      this.selectedPj.slots.at(index).item = itemAux
-      this.selectedPj.slots.at(index).familia = setAux
+      this.inventario[index].slotPJ.item = itemAux
+      this.inventario[index].slotPJ.set = setAux
       this.inventario[index].enableItem = false
-      // this.$emit('slotChanged', this.selectedPj.slots)
+      this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     guardarInventario() {
-      this.$emit('saveBuild', this.selectedPj.slots)
+      this.$emit('saveBuild')
     },
     isItem(val, index) {
       if (index === 11 && this.isTwoHanded()) {
@@ -211,8 +207,8 @@ export default {
       return (
         this.selectedItem !== undefined &&
         this.selectedItem.categoria === 'One-Handed' &&
-        this.selectedPj.slots.at(11).item !== undefined &&
-        this.selectedPj.slots.at(11).posicion !== 'One-Handed'
+        this.inventario[11].slotPJ.item !== undefined &&
+        this.inventario[11].posicion !== 'One-Handed'
       )
     },
     isAgregarGlyph(val) {
