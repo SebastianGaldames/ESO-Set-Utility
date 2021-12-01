@@ -3,9 +3,11 @@
     <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
-        v-model="selectedPersonaje"
+        :selected="selectedPersonaje"
         :personajes="personajes"
         @createNewCharacterEvent="handleCreateCharacter"
+        @personajeSelectionChanged="handlerSeleccionDePersonaje"
+        @eliminarSelectedPersonaje="handlerEliminarSelectedPersonaje"
       >
       </seleccion-personaje>
       <v-tabs color="acentuado1">
@@ -26,6 +28,7 @@
             @familyChanged="handleFamilyChanged"
             @itemChanged="handleItemChanged"
             @updateInventory="handleUpdateInventory"
+            @deletedItems="handleItemsDeleted"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
@@ -117,7 +120,7 @@ export default {
       selectedSetGlyphInfo: undefined,
       currentUser: {},
       snackbar: false,
-      // personajeSlots: [],
+      itemsBorrados: [],
     }
   },
   computed: {
@@ -170,6 +173,36 @@ export default {
         }
       )
       console.log(response)
+    },
+    // Items eliminados del inventario por el usuario
+    handleItemsDeleted(content) {
+      this.itemsBorrados = content
+
+      // Si el usuario decide borrar todos los items
+      if (this.itemsBorrados.length === this.currentUser.inventario.length) {
+        this.currentUser.inventario = []
+      } else {
+        const nuevosItems = []
+        const nuevosItemsAux = []
+        const itemsABorrar = []
+        // console.log(itemsAux)
+        for (let i = 0; i < this.itemsBorrados.length; i++) {
+          itemsABorrar.push(this.currentUser.inventario[this.itemsBorrados[i]])
+        }
+        for (let j = 0; j < this.currentUser.inventario.length; j++) {
+          nuevosItems.push(this.currentUser.inventario[j])
+        }
+        for (let j = 0; j < this.itemsBorrados.length; j++) {
+          nuevosItems[this.itemsBorrados[j]] = 0
+        }
+        for (let j = 0; j < nuevosItems.length; j++) {
+          if (nuevosItems[j] !== 0) {
+            nuevosItemsAux.push(nuevosItems[j])
+          }
+        }
+        this.currentUser.inventario = nuevosItemsAux
+      }
+      this.updateInventario()
     },
     handleFamilyChanged(content) {
       // console.log(content.nombre)
@@ -264,6 +297,26 @@ export default {
         tipoGlyph: content.glyph.tipo,
       }
       console.log(this.selectedSetGlyphInfo)
+    handlerSeleccionDePersonaje(content) {
+      this.selectedPersonaje = content
+    },
+    async handlerEliminarSelectedPersonaje(event) {
+      await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/removePersonaje',
+        {
+          usuario: this.currentUser._id,
+          deletedPersonaje: this.selectedPersonaje._id,
+        }
+      )
+
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: this.currentUser.usuario } }
+      )
+      this.currentUser.personajes = user.personajes
+      // call fetch personajes
+      await this.fetchPersonajes(this.currentUser.personajes)
+      this.selectedPersonaje = this.personajes[0]
     },
   },
 }

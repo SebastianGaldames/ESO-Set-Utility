@@ -38,7 +38,11 @@
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
         <div class="ajustes2">
-          <v-btn text small>¿Olvidaste tu contraseña?</v-btn>
+          <h5>
+            <NuxtLink to="/recuperarContraseña"
+              >¿Olvidaste tu contraseña?</NuxtLink
+            >
+          </h5>
           <h5>
             ¿No tienes cuenta? <NuxtLink to="/Registro">Registrarse</NuxtLink>
           </h5>
