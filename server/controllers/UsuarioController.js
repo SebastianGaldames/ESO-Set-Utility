@@ -189,6 +189,32 @@ const answers = async (req, res, next) => {
     next(e)
   }
 }
+const removePersonaje = async (req, res, next) =>{
+   try{
+    const regUsr = await models.Usuario.findOne({ _id: req.body.usuario })
+     if (!regUsr) {
+       res.status(404).send({
+         message: 'El registro no existe',
+       })
+     } else {
+      //Crear lista de personajes sin el personaje a eliminar
+      const index = regUsr.personajes.indexOf(req.body.deletedPersonaje)
+      regUsr.personajes.splice(index,1)
+      //Guardar lista en los personajes del usuario
+      await models.Usuario.findByIdAndUpdate(
+        { _id: req.body.usuario },
+        { personajes: regUsr.personajes }
+      )
+      //TODO: Hay que borrar el personaje de la lista de los personajes
+      res.status(200).json(regUsr)
+     }
+   } catch (e){
+     res.status(500).send({
+       message: 'Ocurrio un error',
+     })
+     next(e)
+   }
+}
 
 //Metodo para crear un personaje y guardar su referencia en el usuario
 const addPersonaje = async (req, res, next) => {
@@ -317,4 +343,5 @@ module.exports = {
   actualizarPersonajes,
   updatePassword,
   answers,
+  removePersonaje,
 }
