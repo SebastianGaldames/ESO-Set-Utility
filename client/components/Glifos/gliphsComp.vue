@@ -48,7 +48,7 @@
             <h5
               v-for="i in n.potencias[optionsPotencia.indexOf(selectedPotencia)]
                 .calidades[selectedCalidad]"
-              :key="i"
+              :key="i.nombre"
               class="centro"
             >
               {{ i.type }}: {{ i.value }}
@@ -100,7 +100,7 @@ export default {
     // selecciona y envia el glifo, para despues usarlo
     selectGlyph(glifo) {
       this.selectedGlyph = glifo
-      console.log(this.selectedCalidad.nro)
+      // console.log(this.selectedCalidad.nro)
       // console.log(this.selectGlyph)
       // const potenciaTemp = this.selectGlyph.potencias[15]
       const eventData = {

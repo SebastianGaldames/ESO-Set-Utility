@@ -33,8 +33,11 @@
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
         <v-tab-item key="glifos">
-          <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
-        ></v-tab-item>
+          <gliphs-comp
+            :lista-glifos="glyphs"
+            @selectionGlyphChanged="handleGlyphChanged"
+          ></gliphs-comp>
+        </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
           <traits-comp :lista-rasgos="traits"></traits-comp
@@ -49,11 +52,12 @@
         :set="selectedSet"
         :all-items="items"
         :all-sets="familias"
+        :glyph-slot="selectedSetGlyphInfo"
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
       <estadisticas-personaje
-        :personaje-slots="personajeSlots"
+        :personaje-slots="selectedPersonaje.slots"
       ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
@@ -113,9 +117,9 @@ export default {
       selectedPersonaje: {},
       selectedSet: undefined,
       selectedItem: {},
+      selectedSetGlyphInfo: undefined,
       currentUser: {},
       snackbar: false,
-      personajeSlots: [],
       itemsBorrados: [],
     }
   },
@@ -130,6 +134,12 @@ export default {
       return filtered
     },
   },
+  // watch: {
+  //   selectedPersonaje() {
+  //     this.personajeSlots =
+  //       this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
+  //   },
+  // },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
@@ -213,14 +223,43 @@ export default {
     handleSlotChanged(content) {
       // adds the new item to the slots
       console.log(content)
-      // const slot = this.personajeSlots.find(slot => )
+      let slot = this.selectedPersonaje.slots.find(
+        (slot) => slot.tag === content.tag
+      )
+      if (slot !== undefined) {
+        slot.item = content.item
+        slot.familia = content.familia
+        slot.nivel = content.nivel
+        slot.calidad = content.calidad
+        slot.posicion = content.posicion
+        slot.glyph = content.glyph
+        slot.potenciaGlyph = content.potenciaGlyph
+        slot.calidadGlyph = content.calidadGlyph
+        slot.glyphImage = content.glyphImage
+        slot.trait = content.trait
+      } else {
+        slot = {
+          item: content.item,
+          familia: content.familia,
+          nivel: content.nivel,
+          calidad: content.calidad,
+          posicion: content.posicion,
+          tag: content.tag,
+          glyph: content.glyph,
+          potenciaGlyph: content.potenciaGlyph,
+          calidadGlyph: content.calidadGlyph,
+          glyphImage: content.glyphImage,
+          trait: content.trait,
+        }
+        this.selectedPersonaje.slots.push(slot)
+      }
     },
     async handleSaveBuild() {
       // handles the endpoint call for saving the equipment of a character
       // TODO build a propper slot according to schema
       const slots = {
         _id: this.selectedPersonaje._id,
-        slots: this.personajeSlots,
+        slots: this.selectedPersonaje.slots,
       }
       await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Personaje/update',
@@ -251,6 +290,17 @@ export default {
 
       // console.log(user.usuario)
       this.snackbar = true
+    },
+    handleGlyphChanged(content) {
+      // console.log(content)
+      this.selectedSetGlyphInfo = {
+        imagen: content.glyph.imagen,
+        glyph: content.glyph._id,
+        calidadGlyph: content.calidad,
+        potenciaGlyph: content.potencia,
+        tipoGlyph: content.glyph.tipo,
+      }
+      console.log(this.selectedSetGlyphInfo)
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
