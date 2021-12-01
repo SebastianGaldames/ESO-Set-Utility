@@ -3,10 +3,7 @@
     <v-card-title> Estadisticas </v-card-title>
     <v-card-text>
       <p>
-        {{ itemsPerSetMethod(slots) }}
-      </p>
-      <p>
-        {{ itempsPerSetVariable }}
+        {{ itemsPerSetMethod(personajeSlots) }}
       </p>
     </v-card-text>
   </v-card>
@@ -26,7 +23,6 @@ export default {
       stat2: 0,
       stat3: 0,
       testingSlots: [{ set: '1234' }, { set: '1234' }, { set: '9876' }],
-      itemsPerSetVariable: [],
     }
   },
   computed: {
@@ -61,7 +57,6 @@ export default {
           itemsPerSet.push({ set: slot.set, itemQuantity: 1 })
         }
       }
-      this.itemsPerSetVariable = itemsPerSet
       return itemsPerSet
     },
     applySetStats() {

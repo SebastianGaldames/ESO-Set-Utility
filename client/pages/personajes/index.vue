@@ -49,6 +49,9 @@
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
+      <estadisticas-personaje
+        :personaje-slots="personajeSlots"
+      ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -61,12 +64,14 @@
 import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue'
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 import Personaje from '~/components/personajes/Personaje.vue'
+import EstadisticasPersonaje from '~/components/personajes/EstadisticasPersonaje.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 import traitsComp from '~/components/Traits/traitsComp.vue'
 export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
+    EstadisticasPersonaje,
     Personaje,
     gliphsComp,
     traitsComp,
