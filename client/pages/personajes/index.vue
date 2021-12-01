@@ -7,6 +7,7 @@
         :personajes="personajes"
         @createNewCharacterEvent="handleCreateCharacter"
         @personajeSelectionChanged="handlerSeleccionDePersonaje"
+        @eliminarSelectedPersonaje="handlerEliminarSelectedPersonaje"
       >
       </seleccion-personaje>
       <v-tabs color="acentuado1">
@@ -148,6 +149,7 @@ export default {
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
+      this.personajes = []
       for (const id of idsArray) {
         const pj = await this.$axios.$get(
           process.env.VUE_APP_SERVER_URL + '/Personaje/query',
@@ -211,6 +213,24 @@ export default {
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
+    },
+    async handlerEliminarSelectedPersonaje(event) {
+      await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/removePersonaje',
+        {
+          usuario: this.currentUser._id,
+          deletedPersonaje: this.selectedPersonaje._id,
+        }
+      )
+
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: this.currentUser.usuario } }
+      )
+      this.currentUser.personajes = user.personajes
+      // call fetch personajes
+      await this.fetchPersonajes(this.currentUser.personajes)
+      this.selectedPersonaje = this.personajes[0]
     },
   },
 }

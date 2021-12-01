@@ -27,8 +27,8 @@
             <v-card-text>Personaje: {{ selected.nombre }}</v-card-text>
           </div>
           <v-card-actions class="justify-center">
-            <v-btn> Eliminar </v-btn>
-            <v-btn> Cancelar </v-btn>
+            <v-btn @click="eliminarSelectedPersonaje"> Eliminar </v-btn>
+            <v-btn @click="confirmacion = false"> Cancelar </v-btn>
           </v-card-actions>
         </v-card>
       </div>
@@ -74,6 +74,10 @@ export default {
     },
     eliminarPersonaje() {
       this.confirmacion = true
+    },
+    eliminarSelectedPersonaje() {
+      this.$emit('eliminarSelectedPersonaje')
+      this.confirmacion = false
     },
   },
 }
