@@ -36,7 +36,7 @@
             <h5 v-for="e in n.efectos" :key="e" class="centro">{{ e }}</h5>
             <h5
               v-for="i in n.calidades[selectedCalidad]"
-              :key="i"
+              :key="i.type"
               class="centro"
             >
               {{ i.type }}: {{ i.value }}
