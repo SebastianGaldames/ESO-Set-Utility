@@ -39,7 +39,7 @@
         </div>
         <div class="ajustes2">
           <h5>
-            <NuxtLink to="/recuperarContraseña"
+            <NuxtLink to="/recuperarContrasena"
               >¿Olvidaste tu contraseña?</NuxtLink
             >
           </h5>

@@ -53,21 +53,35 @@ export default {
   data() {
     return {
       personajes: [],
-      selectedPersonaje: {},
-      selectedPersonajeRef: {},
+      selectedPersonaje: [],
+      selectedPersonajeRef: [],
     }
   },
-  mounted() {
-    this.makeDummyData()
-    this.selectedPersonaje = this.personajes[0]
-    this.selectedPersonajeRef = this.personajes[1]
+  mounted() {},
+  beforeMount() {
+    const storeUser = this.$store.state.usuario
+    this.fetchUser(storeUser)
   },
   methods: {
-    makeDummyData() {
-      const p1 = { nombre: 'juanin' }
-      const p2 = { nombre: 'tulio' }
-      const p3 = { nombre: 'calcetin con rombosman' }
-      this.personajes.push(p1, p2, p3)
+    async fetchUser(userName) {
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: userName } }
+      )
+      await this.fetchPersonajes(user.personajes)
+      if (this.personajes.length !== 0) {
+        this.selectedPersonaje = this.personajes[0]
+        this.selectedPersonajeRef = this.personajes[1]
+      }
+    },
+    async fetchPersonajes(idsArray) {
+      for (const id of idsArray) {
+        const pj = await this.$axios.$get(
+          process.env.VUE_APP_SERVER_URL + '/Personaje/query',
+          { params: { _id: id } }
+        )
+        this.personajes.push(pj)
+      }
     },
   },
 }

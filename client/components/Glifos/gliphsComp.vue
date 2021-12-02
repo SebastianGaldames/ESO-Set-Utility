@@ -5,16 +5,16 @@
       <v-row>
         <v-col cols="5">
           <v-select
-            v-model="selectedCalidad"
-            :items="optionsCalidad"
-            label="Calidad"
+            v-model="selectedPotencia"
+            :items="optionsPotencia"
+            label="Potencia"
           ></v-select>
         </v-col>
         <v-col cols="5">
           <v-select
-            v-model="selectedPotencia"
-            :items="optionsPotencia"
-            label="Potencia"
+            v-model="selectedCalidad"
+            :items="optionsCalidad"
+            label="Calidad"
           ></v-select>
         </v-col>
       </v-row>
@@ -35,13 +35,24 @@
                 <img :src="n.imagen" class="img" alt="" />
               </v-col>
               <v-col>
-                <h4 class="centro">{{ n.nombre }}</h4>
+                <h4 class="centro">{{ selectedPotencia }} {{ n.nombre }}</h4>
               </v-col>
             </v-row>
 
             <hr class="linea" />
             <v-spacer />
-            <h5 class="centro">{{ n.efectoDescripcion }}</h5>
+            <h5 class="centro">
+              {{ n.efectoDescripcion }},
+              <!-- ; X = {{ n.potencias[5].calidades.selectedCalidad }}-->
+            </h5>
+            <h5
+              v-for="i in n.potencias[optionsPotencia.indexOf(selectedPotencia)]
+                .calidades[selectedCalidad]"
+              :key="i.nombre"
+              class="centro"
+            >
+              {{ i.type }}: {{ i.value }}
+            </h5>
           </v-card>
         </v-col>
       </v-row>
@@ -59,12 +70,7 @@ export default {
   },
   data() {
     return {
-      selectedGlyph: undefined,
-      selectedPotencia: undefined,
-      selectedCalidad: undefined,
-      glifos: this.listaGlifos,
-
-      optionsCalidad: [
+      optionsPotencia: [
         'Trifling',
         'Inferior',
         'Petty',
@@ -82,13 +88,19 @@ export default {
         'Superb',
         'Truly Superb',
       ],
-      optionsPotencia: ['normal', 'fine', 'superior', 'epic', 'legendary'],
+      optionsCalidad: ['normal', 'fine', 'superior', 'epic', 'legendary'],
+
+      selectedGlyph: undefined,
+      selectedPotencia: 'Trifling',
+      selectedCalidad: 'normal',
+      glifos: this.listaGlifos,
     }
   },
   methods: {
     // selecciona y envia el glifo, para despues usarlo
     selectGlyph(glifo) {
       this.selectedGlyph = glifo
+      // console.log(this.selectedCalidad.nro)
       // console.log(this.selectGlyph)
       // const potenciaTemp = this.selectGlyph.potencias[15]
       const eventData = {

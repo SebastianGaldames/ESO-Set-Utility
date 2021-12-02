@@ -120,7 +120,7 @@
         </v-col>
         <v-snackbar v-model="snackbar" timeout="6000" top>
           <span>{{ snackbarText }}</span>
-          <v-btn @click="snackbar = false">Cerrar</v-btn>
+          <v-btn @click="mandarAInicio()">Cerrar</v-btn>
         </v-snackbar>
       </v-layout>
     </v-container>
@@ -193,10 +193,8 @@ export default {
             userparam
         )
         .then((respuesta) => {
-          console.log('entre al then')
           this.confirmation = true
           this.user = respuesta.data
-          console.log(this.user)
           this.snackbar = true
           this.snackbarText = 'Usuario validado correctamente'
           return respuesta.data
@@ -216,29 +214,31 @@ export default {
           }
         })
     },
-    verificaInfo() {
-      console.log(this.user)
-      this.lista = this.user.securityAnswerList
-      console.log(this.lista)
-      console.log(this.securityAnswer1)
-      console.log(this.securityAnswer2)
-      console.log(this.securityAnswer3)
-      if (
-        this.lista[0] === this.securityAnswer1 &&
-        this.lista[1] === this.securityAnswer2 &&
-        this.lista[2] === this.securityAnswer3
-      ) {
-        console.log('Respuestas correctas')
-        this.confirmation1 = true
-        this.snackbar = true
-        this.snackbarText = '¡¡Respuestas validadas correctamente!!'
-      } else {
-        console.log('fallo')
-        this.confirmation1 = false
-        this.snackbar = true
-        this.snackbarText =
-          '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
-      }
+    async verificaInfo() {
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/Usuario/answers', {
+          nombreUsuario: this.user.usuario,
+          securityAnswer1: this.securityAnswer1,
+          securityAnswer2: this.securityAnswer2,
+          securityAnswer3: this.securityAnswer3,
+        })
+        .then((respuesta) => {
+          this.confirmation1 = true
+          this.snackbar = true
+          this.snackbarText = '¡¡Respuestas validadas correctamente!!'
+          return respuesta.data
+        })
+        .catch((error) => {
+          this.errorM = null
+          if (error.response.status === 404) {
+            this.confirmation1 = false
+            this.snackbar = true
+            this.snackbarText =
+              '¡¡No existen coincidencias!! Ingrese nuevamente los datos'
+          } else {
+            this.errorM = 'Ocurrio un error con el servidor'
+          }
+        })
     },
     passwordVerificacion() {
       if (this.character.newPassword !== this.character.newRePassword) {
@@ -256,15 +256,20 @@ export default {
       } else {
         this.snackbar = true
         this.snackbarText = '¡¡Clave modificada exitosamente!!'
+        this.seCambio = true
         return true
       }
     },
 
+    mandarAInicio() {
+      this.snackbar = false
+      if (this.seCambio) {
+        this.$router.push('/')
+      }
+    },
+
     async cambioDatos() {
-      console.log(this.user._id)
-      console.log('cambio dentro')
       if (this.passwordVerificacion() && this.character.newPassword !== '') {
-        console.log('cambio dentro3')
         const newPassword = {
           _id: this.user._id,
           password: this.character.newPassword,

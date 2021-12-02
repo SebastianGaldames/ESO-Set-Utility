@@ -1,11 +1,13 @@
 <template>
   <div class="d-flex">
-    <!-- <v-btn @click="updateInventario">add inventario</v-btn> -->
+    <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
-        v-model="selectedPersonaje"
+        :selected="selectedPersonaje"
         :personajes="personajes"
         @createNewCharacterEvent="handleCreateCharacter"
+        @personajeSelectionChanged="handlerSeleccionDePersonaje"
+        @eliminarSelectedPersonaje="handlerEliminarSelectedPersonaje"
       >
       </seleccion-personaje>
       <v-tabs color="acentuado1">
@@ -26,12 +28,16 @@
             @familyChanged="handleFamilyChanged"
             @itemChanged="handleItemChanged"
             @updateInventory="handleUpdateInventory"
+            @deletedItems="handleItemsDeleted"
           ></personaje-inventario
         ></v-tab-item>
         <v-tab key="glifos"> glifos </v-tab>
         <v-tab-item key="glifos">
-          <gliphs-comp :lista-glifos="glyphs"></gliphs-comp
-        ></v-tab-item>
+          <gliphs-comp
+            :lista-glifos="glyphs"
+            @selectionGlyphChanged="handleGlyphChanged"
+          ></gliphs-comp>
+        </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
           <traits-comp :lista-rasgos="traits"></traits-comp
@@ -46,7 +52,13 @@
         :set="selectedSet"
         :all-items="items"
         :all-sets="familias"
+        :glyph-slot="selectedSetGlyphInfo"
+        @slotChanged="handleSlotChanged"
+        @saveBuild="handleSaveBuild"
       ></personaje>
+      <estadisticas-personaje
+        :personaje-slots="selectedPersonaje.slots"
+      ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -59,12 +71,14 @@
 import PersonajeInventario from '~/components/personajes/PersonajeInventario.vue'
 import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 import Personaje from '~/components/personajes/Personaje.vue'
+import EstadisticasPersonaje from '~/components/personajes/EstadisticasPersonaje.vue'
 import gliphsComp from '~/components/Glifos/gliphsComp.vue'
 import traitsComp from '~/components/Traits/traitsComp.vue'
 export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
+    EstadisticasPersonaje,
     Personaje,
     gliphsComp,
     traitsComp,
@@ -96,7 +110,6 @@ export default {
     return {
       personajes: [],
       items: [],
-      itemsCache: [],
       itemsInventario: [],
       familias: [],
       glyphs: [],
@@ -104,8 +117,10 @@ export default {
       selectedPersonaje: {},
       selectedSet: undefined,
       selectedItem: {},
+      selectedSetGlyphInfo: undefined,
       currentUser: {},
       snackbar: false,
+      itemsBorrados: [],
     }
   },
   computed: {
@@ -119,24 +134,17 @@ export default {
       return filtered
     },
   },
-  watch: {
-    //
-  },
-  mounted() {
-    // this.makeDummyData()
-    // this.selectedPersonaje = this.personajes[0]
-  },
+  // watch: {
+  //   selectedPersonaje() {
+  //     this.personajeSlots =
+  //       this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
+  //   },
+  // },
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.currentUser = this.fetchUser(storeUser)
   },
   methods: {
-    // makeDummyData() {
-    //   const p1 = { nombre: 'juanin', email: 'asd@asd.com' }
-    //   const p2 = { nombre: 'tulio', email: 'qwe@asd.com' }
-    //   const p3 = { nombre: 'calcetin con rombosman', email: 'zxc@asd.com' }
-    //   this.personajes.push(p1, p2, p3)
-    // },
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
@@ -147,6 +155,7 @@ export default {
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
+      this.personajes = []
       for (const id of idsArray) {
         const pj = await this.$axios.$get(
           process.env.VUE_APP_SERVER_URL + '/Personaje/query',
@@ -165,6 +174,36 @@ export default {
       )
       console.log(response)
     },
+    // Items eliminados del inventario por el usuario
+    handleItemsDeleted(content) {
+      this.itemsBorrados = content
+
+      // Si el usuario decide borrar todos los items
+      if (this.itemsBorrados.length === this.currentUser.inventario.length) {
+        this.currentUser.inventario = []
+      } else {
+        const nuevosItems = []
+        const nuevosItemsAux = []
+        const itemsABorrar = []
+        // console.log(itemsAux)
+        for (let i = 0; i < this.itemsBorrados.length; i++) {
+          itemsABorrar.push(this.currentUser.inventario[this.itemsBorrados[i]])
+        }
+        for (let j = 0; j < this.currentUser.inventario.length; j++) {
+          nuevosItems.push(this.currentUser.inventario[j])
+        }
+        for (let j = 0; j < this.itemsBorrados.length; j++) {
+          nuevosItems[this.itemsBorrados[j]] = 0
+        }
+        for (let j = 0; j < nuevosItems.length; j++) {
+          if (nuevosItems[j] !== 0) {
+            nuevosItemsAux.push(nuevosItems[j])
+          }
+        }
+        this.currentUser.inventario = nuevosItemsAux
+      }
+      this.updateInventario()
+    },
     handleFamilyChanged(content) {
       // console.log(content.nombre)
       this.selectedSet = content
@@ -181,9 +220,53 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
+    handleSlotChanged(content) {
+      // adds the new item to the slots
+      console.log(content)
+      let slot = this.selectedPersonaje.slots.find(
+        (slot) => slot.tag === content.tag
+      )
+      if (slot !== undefined) {
+        slot.item = content.item
+        slot.familia = content.familia
+        slot.nivel = content.nivel
+        slot.calidad = content.calidad
+        slot.posicion = content.posicion
+        slot.glyph = content.glyph
+        slot.potenciaGlyph = content.potenciaGlyph
+        slot.calidadGlyph = content.calidadGlyph
+        slot.glyphImage = content.glyphImage
+        slot.trait = content.trait
+      } else {
+        slot = {
+          item: content.item,
+          familia: content.familia,
+          nivel: content.nivel,
+          calidad: content.calidad,
+          posicion: content.posicion,
+          tag: content.tag,
+          glyph: content.glyph,
+          potenciaGlyph: content.potenciaGlyph,
+          calidadGlyph: content.calidadGlyph,
+          glyphImage: content.glyphImage,
+          trait: content.trait,
+        }
+        this.selectedPersonaje.slots.push(slot)
+      }
+    },
+    async handleSaveBuild() {
+      // handles the endpoint call for saving the equipment of a character
+      // TODO build a propper slot according to schema
+      const slots = {
+        _id: this.selectedPersonaje._id,
+        slots: this.selectedPersonaje.slots,
+      }
+      await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Personaje/update',
+        slots
+      )
+    },
     async handleCreateCharacter(event) {
-      console.log(event)
-
       const newPj = {
         _id: this.currentUser._id,
         nombre: event.nombre,
@@ -207,6 +290,38 @@ export default {
 
       // console.log(user.usuario)
       this.snackbar = true
+    },
+    handleGlyphChanged(content) {
+      // console.log(content)
+      this.selectedSetGlyphInfo = {
+        imagen: content.glyph.imagen,
+        glyph: content.glyph._id,
+        calidadGlyph: content.calidad,
+        potenciaGlyph: content.potencia,
+        tipoGlyph: content.glyph.tipo,
+      }
+      console.log(this.selectedSetGlyphInfo)
+    },
+    handlerSeleccionDePersonaje(content) {
+      this.selectedPersonaje = content
+    },
+    async handlerEliminarSelectedPersonaje(event) {
+      await this.$axios.$put(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/removePersonaje',
+        {
+          usuario: this.currentUser._id,
+          deletedPersonaje: this.selectedPersonaje._id,
+        }
+      )
+
+      const user = await this.$axios.$get(
+        process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
+        { params: { usuario: this.currentUser.usuario } }
+      )
+      this.currentUser.personajes = user.personajes
+      // call fetch personajes
+      await this.fetchPersonajes(this.currentUser.personajes)
+      this.selectedPersonaje = this.personajes[0]
     },
   },
 }
