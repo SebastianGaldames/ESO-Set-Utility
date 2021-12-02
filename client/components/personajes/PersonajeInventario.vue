@@ -64,7 +64,41 @@
                   </v-sheet>
                 </v-item>
               </v-col>
+              <v-dialog v-model="eliminar" width="600">
+                <div>
+                  <v-card class="justify-center" max-width="600">
+                    <v-card-title class="justify-center"
+                      >Eliminar Items</v-card-title
+                    >
+                    <div v-if="inventarioViewModel !== undefined">
+                      <v-card-text>
+                        <v-checkbox
+                          v-model="selectedAllItems"
+                          label="Seleccionar todo"
+                        ></v-checkbox>
+                        <div
+                          v-for="(itemInventario, index) in inventarioViewModel"
+                          :key="itemInventario.nombre"
+                        >
+                          <v-checkbox
+                            v-model="checkboxes[index]"
+                            :label="
+                              itemInventario.item.nombre +
+                              ' from set ' +
+                              itemInventario.set.nombre
+                            "
+                          ></v-checkbox></div
+                      ></v-card-text>
+                    </div>
+                    <v-card-actions class="justify-center">
+                      <v-btn @click="deleteItems"> Eliminar </v-btn>
+                      <v-btn @click="eliminar = false"> Cancelar </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </div>
+              </v-dialog>
             </v-row>
+            <v-btn @click="eliminarItems"> Eliminar Items </v-btn>
           </v-container>
         </v-item-group>
         <v-divider></v-divider>
@@ -165,9 +199,27 @@ export default {
       categoriaFilterValue: '',
       setFilter: '',
       snackbar: false,
+      eliminar: false,
+      checkboxes: [],
+      largoCheckBoxes: 0,
+      deletedItems: [],
     }
   },
   computed: {
+    // Seleccionar todos los checkbox de eliminar item
+    selectedAllItems: {
+      set(val) {
+        this.checkboxes = []
+        if (val) {
+          for (let i = 0; i < this.inventario.length; i++) {
+            this.checkboxes.push(true)
+          }
+        }
+      },
+      get() {
+        return this.largoCheckBoxes === this.inventario.length
+      },
+    },
     filteredItems() {
       return this.filterByText(this.filterByTipo())
     },
@@ -196,7 +248,6 @@ export default {
           // tempVM.push({ itemId: inventoryItem.item, setId: inventoryItem.set })
         }
       } catch {}
-
       return tempVM
     },
   },
@@ -207,8 +258,30 @@ export default {
     selectedItem(val) {
       this.selectedItemChanged()
     },
+    deletedItems(val) {
+      this.deletedItemsChanged()
+    },
   },
   methods: {
+    // Se agregan los items del inventario eliminados a la lista de items eliminados
+    deleteItems() {
+      // console.log(this.checkboxes)
+      this.deletedItems = []
+      for (let i = 0; i < this.checkboxes.length; i++) {
+        if (this.checkboxes[i] === true) {
+          this.deletedItems.push(i)
+        }
+      }
+      this.eliminar = false
+    },
+    // Se inicia el v-dialog
+    eliminarItems() {
+      this.eliminar = true
+      this.checkboxes = []
+      for (let i = 0; i < this.checkboxes.length; i++) {
+        this.checkboxes[i] = false
+      }
+    },
     filterByTipo() {
       return this.items.filter((item) => {
         if (
@@ -268,6 +341,9 @@ export default {
         this.selectedItem = event.item
         this.selectedFamilia = event.set
       }
+    },
+    deletedItemsChanged() {
+      this.$emit('deletedItems', this.deletedItems)
     },
   },
 }

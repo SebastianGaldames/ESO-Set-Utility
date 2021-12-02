@@ -25,6 +25,7 @@ const usuarioSchema = new Schema({
   sexo: { type: String, required: true },
   personajes: { type: [Schema.ObjectId], ref: 'Personaje' },
   inventario: { type: [inventarioSchema] },
+  securityAnswerList: {type: [String], required: true},
 })
 
 module.exports = model('Usuario', usuarioSchema)
