@@ -7,6 +7,7 @@ const familiaController = require('../controllers/FamiliaController')
 const addFamily = async (family, items) => {
   // Se obtiene la id de los items desde la base de datos
   const itemsId = []
+  var pesosFamilia = []
   for (const item of items) {
     const res = await axios
       .get(
@@ -16,7 +17,19 @@ const addFamily = async (family, items) => {
         //console.log(err)
       })
     if (res !== undefined) {
+      var jsonItem = JSON.parse(JSON.stringify(res.data))
+      pesosFamilia.push(jsonItem.peso)
       itemsId.push(res.data._id)
+    }
+  }
+
+  var setPesos = new Set(pesosFamilia)
+  pesosFamilia = Array.from(setPesos)
+
+  for (const index in pesosFamilia) {
+    if (pesosFamilia[index] === '') {
+      pesosFamilia.splice(index, 1)
+      break
     }
   }
 
@@ -46,6 +59,7 @@ const addFamily = async (family, items) => {
         bonos: [],
         imagen: family.imageUrl,
         itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
       }
       family.setBonus.forEach((bonusTier) => {
         const bono = {
@@ -72,6 +86,7 @@ const addFamily = async (family, items) => {
         bonos: [],
         imagen: family.imageUrl,
         itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
       }
       family.setBonus.forEach((bonusTier) => {
         const bono = {
