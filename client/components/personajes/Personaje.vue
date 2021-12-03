@@ -33,11 +33,12 @@
                     :id="slotEq.slotPJ.posicion"
                     :enable-item="slotEq.enableItem"
                     :enable-glyph="slotEq.enableGlyph"
-                    :enable-trait="false"
+                    :enable-trait="slotEq.enableTrait"
                     :slot-prop="slotEq.slotPJ"
                     style="padding: 5%"
                     @agregarSlotItem="handleAgregarSlotItem(index)"
                     @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
+                    @agregarSlotTrait="handleAgregarSlotTrait(index)"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -85,10 +86,15 @@ export default {
       type: Object,
       default: undefined,
     },
+    traitSlot: {
+      type: Object,
+      default: undefined,
+    },
   },
   data() {
     return {
       selectedGlyph: {},
+      selectedTrait: {},
       selectedItem: {},
       selectedSet: {},
       selectedPj: {},
@@ -113,6 +119,9 @@ export default {
     glyphSlot() {
       this.selectedGlyph = this.glyphSlot
     },
+    traitSlot() {
+      this.selectedTrait = this.traitSlot
+    },
     selectedItem() {
       for (let index = 0; index < this.inventario.length; index++) {
         this.inventario[index].enableItem = false
@@ -126,6 +135,14 @@ export default {
         this.inventario[index].enableGlyph = false
         if (this.isGlyph(this.inventario[index].tipo)) {
           this.inventario[index].enableGlyph = true
+        }
+      }
+    },
+    selectedTrait() {
+      for (let index = 0; index < this.inventario.length; index++) {
+        this.inventario[index].enableTrait = false
+        if (this.isTrait(this.inventario[index].tipo)) {
+          this.inventario[index].enableTrait = true
         }
       }
     },
@@ -173,6 +190,7 @@ export default {
           tipo: tipoTemp,
           enableItem: false,
           enableGlyph: false,
+          enableTrait: false,
           slotPJ: {
             item: undefined,
             familia: undefined,
@@ -225,6 +243,7 @@ export default {
         this.inventario[11].slotPJ.posicion = 'Two-Handed'
         this.inventario[index - 1].slotPJ.item = itemAux
         this.inventario[index - 1].slotPJ.familia = setAux
+        this.$emit('slotChanged', this.inventario[index - 1].slotPJ)
       }
       if (this.isOneHanded()) {
         this.inventario[11].slotPJ.item = undefined
@@ -242,9 +261,20 @@ export default {
       this.inventario[index].slotPJ.potenciaGlyph =
         this.selectedGlyph.potenciaGlyph
       this.inventario[index].slotPJ.calidadGlyph =
-        this.selectedGlyph.potenciaGlyph
+        this.selectedGlyph.calidadGlyph
       this.inventario[index].enableGlyph = false
-      console.log(this.inventario[index].slotPJ)
+      // console.log(this.inventario[index].slotPJ)
+      this.selectedGlyph = {}
+      this.$emit('slotChanged', this.inventario[index].slotPJ)
+    },
+    handleAgregarSlotTrait(index) {
+      this.inventario[index].slotPJ.trait = this.selectedTrait.trait
+      this.inventario[index].slotPJ.traitImage = this.selectedTrait.imagen
+      this.inventario[index].slotPJ.calidadTrait =
+        this.selectedTrait.calidadTrait
+      this.inventario[index].enableTrait = false
+      // console.log(this.inventario[index].slotPJ)
+      this.selectedTrait = {}
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     guardarInventario() {
@@ -267,6 +297,12 @@ export default {
       return (
         this.selectedGlyph !== undefined &&
         this.selectedGlyph.tipoGlyph === tipoPj
+      )
+    },
+    isTrait(tipoPj) {
+      return (
+        this.selectedTrait !== undefined &&
+        this.selectedTrait.tipoTrait === tipoPj
       )
     },
     isTwoHanded() {

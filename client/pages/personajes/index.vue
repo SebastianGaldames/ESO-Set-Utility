@@ -40,7 +40,10 @@
         </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
-          <traits-comp :lista-rasgos="traits"></traits-comp
+          <traits-comp
+            :lista-rasgos="traits"
+            @selectionTraitChanged="handleTraitChanged"
+          ></traits-comp
         ></v-tab-item>
       </v-tabs>
     </div>
@@ -53,6 +56,7 @@
         :all-items="items"
         :all-sets="familias"
         :glyph-slot="selectedSetGlyphInfo"
+        :trait-slot="selectedSetTraitInfo"
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
@@ -118,6 +122,7 @@ export default {
       selectedSet: undefined,
       selectedItem: {},
       selectedSetGlyphInfo: undefined,
+      selectedSetTraitInfo: undefined,
       currentUser: {},
       snackbar: false,
       itemsBorrados: [],
@@ -237,6 +242,7 @@ export default {
         slot.calidadGlyph = content.calidadGlyph
         slot.glyphImage = content.glyphImage
         slot.trait = content.trait
+        slot.traitImage = content.traitImage
       } else {
         slot = {
           item: content.item,
@@ -250,6 +256,7 @@ export default {
           calidadGlyph: content.calidadGlyph,
           glyphImage: content.glyphImage,
           trait: content.trait,
+          traitImage: content.traitImage,
         }
         this.selectedPersonaje.slots.push(slot)
       }
@@ -295,12 +302,22 @@ export default {
       // console.log(content)
       this.selectedSetGlyphInfo = {
         imagen: content.glyph.imagen,
-        glyph: content.glyph._id,
+        glyph: content.glyph,
         calidadGlyph: content.calidad,
         potenciaGlyph: content.potencia,
         tipoGlyph: content.glyph.tipo,
       }
       console.log(this.selectedSetGlyphInfo)
+    },
+    handleTraitChanged(content) {
+      // console.log(content)
+      this.selectedSetTraitInfo = {
+        imagen: content.trait.imagen,
+        trait: content.trait,
+        calidadTrait: content.calidad,
+        tipoTrait: content.trait.tipo,
+      }
+      console.log(this.selectedSetTraitInfo)
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content

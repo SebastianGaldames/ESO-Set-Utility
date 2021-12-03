@@ -109,7 +109,7 @@ export default {
     },
     traitImage() {
       if (!(this.slotProp.trait === undefined)) {
-        return this.slotProp.item.imagen
+        return this.slotProp.trait.imagen
       }
       return ''
     },
