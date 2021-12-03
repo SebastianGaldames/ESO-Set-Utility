@@ -7,6 +7,7 @@ const familiaController = require('../controllers/FamiliaController')
 const addFamily = async (family, items) => {
   // Se obtiene la id de los items desde la base de datos
   const itemsId = []
+  var pesosFamilia = []
   for (const item of items) {
     const res = await axios
       .get(
@@ -16,7 +17,19 @@ const addFamily = async (family, items) => {
         //console.log(err)
       })
     if (res !== undefined) {
+      var jsonItem = JSON.parse(JSON.stringify(res.data))
+      pesosFamilia.push(jsonItem.peso)
       itemsId.push(res.data._id)
+    }
+  }
+
+  var setPesos = new Set(pesosFamilia)
+  pesosFamilia = Array.from(setPesos)
+
+  for (const index in pesosFamilia) {
+    if (pesosFamilia[index] === '') {
+      pesosFamilia.splice(index, 1)
+      break
     }
   }
 
@@ -24,31 +37,70 @@ const addFamily = async (family, items) => {
   const itemsIdSet = new Set(itemsId)
   const itemsRef = Array.from(itemsIdSet)
 
-  // Se añade la familia a la base de datos
-  try {
-    const body = {
-      nombre: family.name,
-      tipo: family.type,
-      estilo: family.style,
-      dlc: family.dlcRequirement,
-      ubicacion: family.location,
-      bonos: [],
-      imagen: family.imageUrl,
-      itemsFamilia: itemsRef,
-    }
-    family.setBonus.forEach((bonusTier) => {
-      const bono = {
-        texto: bonusTier.bonus,
-        cantidad: Number(bonusTier.number),
-      }
-      body.bonos.push(bono)
-    })
-
-    const res = await axios.post(
-      process.env.VUE_APP_SERVER_URL + '/familia/add',
-      body
+  // Se verifica si la familia ya existe en la base de datos
+  const resFamily = await axios
+    .get(
+      process.env.VUE_APP_SERVER_URL +
+        '/family/queryNombre?nombre=' +
+        family.name
     )
-  } catch {}
+    .catch(function (err) {
+      //console.log(err)
+    })
+  if (resFamily === undefined) {
+    // Si no existe, se añade la familia a la base de datos
+    try {
+      const body = {
+        nombre: family.name,
+        tipo: family.type,
+        estilo: family.style,
+        dlc: family.dlcRequirement,
+        ubicacion: family.location,
+        bonos: [],
+        imagen: family.imageUrl,
+        itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
+      }
+      family.setBonus.forEach((bonusTier) => {
+        const bono = {
+          texto: bonusTier.bonus,
+          cantidad: Number(bonusTier.number),
+        }
+        body.bonos.push(bono)
+      })
+
+      const res = await axios.post(
+        process.env.VUE_APP_SERVER_URL + '/familia/add',
+        body
+      )
+    } catch {}
+  } else {
+    // Si existe, se actualizan los datos de la familia
+    try {
+      const updateBody = {
+        _id: resFamily.data._id,
+        tipo: family.type,
+        estilo: family.style,
+        dlc: family.dlcRequirement,
+        ubicacion: family.location,
+        bonos: [],
+        imagen: family.imageUrl,
+        itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
+      }
+      family.setBonus.forEach((bonusTier) => {
+        const bono = {
+          texto: bonusTier.bonus,
+          cantidad: Number(bonusTier.number),
+        }
+        updateBody.bonos.push(bono)
+      })
+      const res = await axios.put(
+        process.env.VUE_APP_SERVER_URL + '/familia/update',
+        updateBody
+      )
+    } catch {}
+  }
 }
 
 // Añade un item a la base de datos. Asume que no existe un duplicado
