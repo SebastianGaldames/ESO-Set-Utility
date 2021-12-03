@@ -40,7 +40,10 @@
         </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
-          <traits-comp :lista-rasgos="traits"></traits-comp
+          <traits-comp
+            :lista-rasgos="traits"
+            @selectionTraitChanged="handleTraitChanged"
+          ></traits-comp
         ></v-tab-item>
       </v-tabs>
     </div>
@@ -53,12 +56,13 @@
         :all-items="items"
         :all-sets="familias"
         :glyph-slot="selectedSetGlyphInfo"
+        :trait-slot="selectedSetTraitInfo"
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
-      <estadisticas-personaje
+      <!-- <estadisticas-personaje
         :personaje-slots="selectedPersonaje.slots"
-      ></estadisticas-personaje>
+      ></estadisticas-personaje> -->
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -78,6 +82,7 @@ export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
+    // eslint-disable-next-line vue/no-unused-components
     EstadisticasPersonaje,
     Personaje,
     gliphsComp,
@@ -118,6 +123,7 @@ export default {
       selectedSet: undefined,
       selectedItem: {},
       selectedSetGlyphInfo: undefined,
+      selectedSetTraitInfo: undefined,
       currentUser: {},
       snackbar: false,
       itemsBorrados: [],
@@ -301,6 +307,16 @@ export default {
         tipoGlyph: content.glyph.tipo,
       }
       console.log(this.selectedSetGlyphInfo)
+    },
+    handleTraitChanged(content) {
+      console.log(content)
+      this.selectedSetTraitInfo = {
+        imagen: content.trait.imagen,
+        trait: content.trait,
+        calidadTrait: content.calidad,
+        tipoTrait: content.trait.tipo,
+      }
+      // console.log(this.selectedSetTraitInfo)
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
