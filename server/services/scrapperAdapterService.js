@@ -41,7 +41,7 @@ const addFamily = async (family, items) => {
   const resFamily = await axios
     .get(
       process.env.VUE_APP_SERVER_URL +
-        '/family/queryNombre?nombre=' +
+        '/familia/queryNombre?nombre=' +
         family.name
     )
     .catch(function (err) {
