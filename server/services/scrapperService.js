@@ -118,6 +118,19 @@ const scrapSet = async (setUrl) => {
     console.log(item.name)
   })
   const itemsToAdd = await getTypeItem(itemsToScrapType)
+
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      noTypeItems.push({ name: 'Ring' })
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      noTypeItems.push({ name: 'Necklace' })
+    }
+  }
+
   scrapperAdapter.addItemRange(itemsToAdd)
   scrapperAdapter.addFamily(setData, noTypeItems)
 
