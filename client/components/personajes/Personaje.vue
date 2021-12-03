@@ -30,23 +30,14 @@
               <v-item>
                 <v-card outlined width="90" height="90">
                   <itemSlot
-                    v-if="isItem(slotEq.slotPJ.posicion, index)"
                     :id="slotEq.slotPJ.posicion"
                     :enable-item="slotEq.enableItem"
-                    :enable-glyph="false"
+                    :enable-glyph="slotEq.enableGlyph"
                     :enable-trait="false"
                     :slot-prop="slotEq.slotPJ"
                     style="padding: 5%"
                     @agregarSlotItem="handleAgregarSlotItem(index)"
-                  ></itemSlot>
-                  <itemSlot
-                    v-else
-                    :id="slotEq.slotPJ.posicion"
-                    :enable-item="false"
-                    :enable-glyph="false"
-                    :enable-trait="false"
-                    :slot-prop="slotEq.slotPJ"
-                    style="padding: 5%"
+                    @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
                   ></itemSlot>
                 </v-card>
               </v-item>
@@ -90,10 +81,14 @@ export default {
       type: Object,
       default: undefined,
     },
+    glyphSlot: {
+      type: Object,
+      default: undefined,
+    },
   },
   data() {
     return {
-      selectedSlot: {},
+      selectedGlyph: {},
       selectedItem: {},
       selectedSet: {},
       selectedPj: {},
@@ -115,9 +110,23 @@ export default {
     item() {
       this.selectedItem = this.item
     },
+    glyphSlot() {
+      this.selectedGlyph = this.glyphSlot
+    },
     selectedItem() {
       for (let index = 0; index < this.inventario.length; index++) {
-        this.inventario[index].enableItem = true
+        this.inventario[index].enableItem = false
+        if (this.isItem(this.inventario[index].slotPJ.posicion, index)) {
+          this.inventario[index].enableItem = true
+        }
+      }
+    },
+    selectedGlyph() {
+      for (let index = 0; index < this.inventario.length; index++) {
+        this.inventario[index].enableGlyph = false
+        if (this.isGlyph(this.inventario[index].tipo)) {
+          this.inventario[index].enableGlyph = true
+        }
       }
     },
   },
@@ -141,8 +150,12 @@ export default {
         'One-Handed',
         'Off Hand',
       ]
+      let tipoTemp = 'Armor'
       for (let index = 0; index < secciones.length; index++) {
         let temp = secciones[index]
+        if (index === 7) {
+          tipoTemp = 'Jewelry'
+        }
         if (index === 8) {
           temp = 'Ring 1'
         }
@@ -150,13 +163,16 @@ export default {
           temp = 'Ring 2'
         }
         if (index === 10) {
+          tipoTemp = 'Weapon'
           temp = 'Hand L'
         }
         if (index === 11) {
           temp = 'Hand R'
         }
         const seccion = {
-          enableItem: true,
+          tipo: tipoTemp,
+          enableItem: false,
+          enableGlyph: false,
           slotPJ: {
             item: undefined,
             familia: undefined,
@@ -165,6 +181,7 @@ export default {
             posicion: secciones[index],
             tag: temp,
             glyph: undefined,
+            glyphImage: undefined,
             potenciaGlyph: undefined,
             calidadGlyph: undefined,
             trait: undefined,
@@ -172,8 +189,6 @@ export default {
         }
         this.inventario.push(seccion)
       }
-      // this.selectedPj.slots = slotsAux
-      // console.log(this.selectedPj.slots)
     },
     updatePj() {
       for (const invTemp of this.inventario) {
@@ -181,7 +196,6 @@ export default {
           (slotTemp) => slotTemp.tag === invTemp.slotPJ.tag
         )
         if (target !== undefined) {
-          // console.log(target)
           const aux = {
             item: target.item,
             familia: target.familia,
@@ -192,14 +206,13 @@ export default {
             glyph: target.glyph,
             potenciaGlyph: target.potenciaGlyph,
             calidadGlyph: target.calidadGlyph,
+            glyphImage: target.glyphImage,
             trait: target.trait,
           }
           invTemp.enableItem = false
-          console.log(aux.item)
           invTemp.slotPJ = aux
         }
       }
-      // console.log(this.inventario)
     },
     handleAgregarSlotItem(index) {
       const itemAux = this.allItems.find(
@@ -223,10 +236,21 @@ export default {
       this.inventario[index].enableItem = false
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
+    handleAgregarSlotGlyph(index) {
+      this.inventario[index].slotPJ.glyph = this.selectedGlyph.glyph
+      this.inventario[index].slotPJ.glyphImage = this.selectedGlyph.imagen
+      this.inventario[index].slotPJ.potenciaGlyph =
+        this.selectedGlyph.potenciaGlyph
+      this.inventario[index].slotPJ.calidadGlyph =
+        this.selectedGlyph.potenciaGlyph
+      this.inventario[index].enableGlyph = false
+      console.log(this.inventario[index].slotPJ)
+      this.$emit('slotChanged', this.inventario[index].slotPJ)
+    },
     guardarInventario() {
       this.$emit('saveBuild')
     },
-    isItem(val, index) {
+    isItem(categoriaPj, index) {
       if (index === 11 && this.isTwoHanded()) {
         return (
           !(
@@ -236,7 +260,13 @@ export default {
       }
       return (
         !(this.selectedItem === undefined || this.selectedSet === undefined) &&
-        this.selectedItem.categoria === val
+        this.selectedItem.categoria === categoriaPj
+      )
+    },
+    isGlyph(tipoPj) {
+      return (
+        this.selectedGlyph !== undefined &&
+        this.selectedGlyph.tipoGlyph === tipoPj
       )
     },
     isTwoHanded() {
