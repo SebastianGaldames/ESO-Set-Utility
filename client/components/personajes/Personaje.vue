@@ -269,7 +269,6 @@ export default {
     },
     handleAgregarSlotTrait(index) {
       this.inventario[index].slotPJ.trait = this.selectedTrait.trait
-      this.inventario[index].slotPJ.traitImage = this.selectedTrait.imagen
       this.inventario[index].slotPJ.calidadTrait =
         this.selectedTrait.calidadTrait
       this.inventario[index].enableTrait = false

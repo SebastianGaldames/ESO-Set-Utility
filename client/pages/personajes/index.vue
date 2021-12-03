@@ -60,9 +60,9 @@
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
-      <estadisticas-personaje
+      <!-- <estadisticas-personaje
         :personaje-slots="selectedPersonaje.slots"
-      ></estadisticas-personaje>
+      ></estadisticas-personaje> -->
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -82,6 +82,7 @@ export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
+    // eslint-disable-next-line vue/no-unused-components
     EstadisticasPersonaje,
     Personaje,
     gliphsComp,
@@ -242,7 +243,6 @@ export default {
         slot.calidadGlyph = content.calidadGlyph
         slot.glyphImage = content.glyphImage
         slot.trait = content.trait
-        slot.traitImage = content.traitImage
       } else {
         slot = {
           item: content.item,
@@ -256,7 +256,6 @@ export default {
           calidadGlyph: content.calidadGlyph,
           glyphImage: content.glyphImage,
           trait: content.trait,
-          traitImage: content.traitImage,
         }
         this.selectedPersonaje.slots.push(slot)
       }
@@ -302,7 +301,7 @@ export default {
       // console.log(content)
       this.selectedSetGlyphInfo = {
         imagen: content.glyph.imagen,
-        glyph: content.glyph,
+        glyph: content.glyph._id,
         calidadGlyph: content.calidad,
         potenciaGlyph: content.potencia,
         tipoGlyph: content.glyph.tipo,
@@ -310,14 +309,14 @@ export default {
       console.log(this.selectedSetGlyphInfo)
     },
     handleTraitChanged(content) {
-      // console.log(content)
+      console.log(content)
       this.selectedSetTraitInfo = {
         imagen: content.trait.imagen,
         trait: content.trait,
         calidadTrait: content.calidad,
         tipoTrait: content.trait.tipo,
       }
-      console.log(this.selectedSetTraitInfo)
+      // console.log(this.selectedSetTraitInfo)
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
