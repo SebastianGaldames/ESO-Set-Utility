@@ -3,6 +3,11 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
+const scrapStatus = {
+  sets: 0,
+  running: false,
+}
+
 // move to ENV variables, change secret then
 // const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
@@ -22,19 +27,17 @@ function auth(authSecret) {
 }
 
 const scrapAllSets = async (setUrls) => {
+  scrapStatus.running = true
   const allSets = []
   var i = 0
   for (const url of setUrls) {
     const contents = await scrapSet(url)
     allSets.push(contents)
     console.log('scrapping: ' + i)
-    //test
-    //if (i % 10 === 0) {
-    //  console.log(allSets[i])
-    //}
+    scrapStatus.sets = i
     i += 1
   }
-
+  scrapStatus.running = false
   return { message: 'Agregados ' + i + ' familias' }
 }
 
@@ -112,6 +115,19 @@ const scrapSet = async (setUrl) => {
     console.log(item.name)
   })
   const itemsToAdd = await getTypeItem(itemsToScrapType)
+
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      noTypeItems.push({ name: 'Ring' })
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      noTypeItems.push({ name: 'Necklace' })
+    }
+  }
+
   scrapperAdapter.addItemRange(itemsToAdd)
   scrapperAdapter.addFamily(setData, noTypeItems)
 
@@ -277,4 +293,5 @@ module.exports = {
   scrapItemType,
   scrapJewels,
   scrapAllJewels,
+  scrapStatus,
 }
