@@ -99,6 +99,7 @@ export default {
       selectedSet: {},
       selectedPj: {},
       inventario: [],
+      flagWeapon: 0,
     }
   },
   watch: {
@@ -133,16 +134,22 @@ export default {
     selectedGlyph() {
       for (let index = 0; index < this.inventario.length; index++) {
         this.inventario[index].enableGlyph = false
-        if (this.isGlyph(this.inventario[index].tipo)) {
+        if (this.isGlyph(index)) {
           this.inventario[index].enableGlyph = true
+        }
+        if (this.flagWeapon === 1) {
+          this.inventario[10].enableGlyph = false
         }
       }
     },
     selectedTrait() {
       for (let index = 0; index < this.inventario.length; index++) {
         this.inventario[index].enableTrait = false
-        if (this.isTrait(this.inventario[index].tipo)) {
+        if (this.isTrait(index)) {
           this.inventario[index].enableTrait = true
+        }
+        if (this.flagWeapon === 1) {
+          this.inventario[10].enableTrait = false
         }
       }
     },
@@ -243,16 +250,36 @@ export default {
         this.inventario[11].slotPJ.posicion = 'Two-Handed'
         this.inventario[index - 1].slotPJ.item = itemAux
         this.inventario[index - 1].slotPJ.familia = setAux
+        this.flagWeapon = 1
+        this.inventario[index - 1].slotPJ.glyph = undefined
+        this.inventario[index - 1].slotPJ.glyphImage = undefined
+        this.inventario[index - 1].slotPJ.potenciaGlyph = undefined
+        this.inventario[index - 1].slotPJ.calidadGlyph = undefined
+        this.inventario[index - 1].slotPJ.trait = undefined
+        this.inventario[index - 1].slotPJ.calidadTrait = undefined
         this.$emit('slotChanged', this.inventario[index - 1].slotPJ)
       }
       if (this.isOneHanded()) {
+        this.flagWeapon = 0
         this.inventario[11].slotPJ.item = undefined
         this.inventario[11].slotPJ.familia = undefined
         this.inventario[11].slotPJ.posicion = 'One-Handed'
+        this.inventario[11].slotPJ.glyph = undefined
+        this.inventario[11].slotPJ.glyphImage = undefined
+        this.inventario[11].slotPJ.potenciaGlyph = undefined
+        this.inventario[11].slotPJ.calidadGlyph = undefined
+        this.inventario[11].slotPJ.trait = undefined
+        this.inventario[11].slotPJ.calidadTrait = undefined
       }
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.familia = setAux
       this.inventario[index].enableItem = false
+      this.inventario[index].slotPJ.glyph = undefined
+      this.inventario[index].slotPJ.glyphImage = undefined
+      this.inventario[index].slotPJ.potenciaGlyph = undefined
+      this.inventario[index].slotPJ.calidadGlyph = undefined
+      this.inventario[index].slotPJ.trait = undefined
+      this.inventario[index].slotPJ.calidadTrait = undefined
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     handleAgregarSlotGlyph(index) {
@@ -292,16 +319,18 @@ export default {
         this.selectedItem.categoria === categoriaPj
       )
     },
-    isGlyph(tipoPj) {
+    isGlyph(index) {
       return (
         this.selectedGlyph !== undefined &&
-        this.selectedGlyph.tipoGlyph === tipoPj
+        this.selectedGlyph.tipoGlyph === this.inventario[index].tipo &&
+        this.inventario[index].slotPJ.item !== undefined
       )
     },
-    isTrait(tipoPj) {
+    isTrait(index) {
       return (
         this.selectedTrait !== undefined &&
-        this.selectedTrait.tipoTrait === tipoPj
+        this.selectedTrait.tipoTrait === this.inventario[index].tipo &&
+        this.inventario[index].slotPJ.item !== undefined
       )
     },
     isTwoHanded() {
