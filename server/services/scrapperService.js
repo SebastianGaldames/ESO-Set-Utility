@@ -3,6 +3,12 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
+const scrapStatus = {
+  sets: 0,
+  items: 0,
+  running: false,
+}
+
 // move to ENV variables, change secret then
 // const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
@@ -277,4 +283,5 @@ module.exports = {
   scrapItemType,
   scrapJewels,
   scrapAllJewels,
+  scrapStatus,
 }

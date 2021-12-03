@@ -3,7 +3,7 @@
     <v-card
       dark
       class="mx-auto pa-10 ma-10 margenCarta"
-      max-width="380"
+      max-width="450"
       max-height="2000"
       style="border: 2px solid #a68f7b"
     >
@@ -59,27 +59,66 @@
       <v-text-field
         v-model="password"
         :rules="[largoMinimoContrasenna(), passwordConfirmationRule()]"
-        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Ingresa contraseña"
-        hint="Contraseña ingresada con exito"
-        value=""
         class="input-group--focused secundario--text"
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show ? 'text' : 'password'"
         @click:append="show = !show"
       ></v-text-field>
 
       <v-text-field
         v-model="rePassword"
         :rules="[largoMinimoContrasenna2(), passwordConfirmationRule()]"
-        :type="show ? 'text' : 'password'"
         name="input-10-2"
         label="Confirma tu contraseña"
-        hint="Las contraseñas coinciden"
-        value=""
+        hint="Las contraseñas deben coincidir"
         class="input-group--focused secundario--text"
-        @click:append="show = !show"
+        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show1 ? 'text' : 'password'"
+        @click:append="show1 = !show1"
       ></v-text-field>
 
+      <v-text-field
+        v-model="securityAnswerList[0]"
+        clearable
+        color="acentuado1"
+        label="¿Cuál es el nombre de tu ciudad favorita?"
+        :counter="20"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hidedetails="auto"
+      ></v-text-field>
+
+      <v-text-field
+        v-model="securityAnswerList[1]"
+        clearable
+        color="acentuado1"
+        label="¿Cuál es el apellido de tu madre?"
+        :counter="20"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
+      <v-text-field
+        v-model="securityAnswerList[2]"
+        clearable
+        color="acentuado1"
+        label="¿Cuál es el nombre de tu primera escuela?"
+        :counter="20"
+        :rules="[
+          questionRules.required,
+          questionRules.longMax,
+          questionRules.longMin,
+        ]"
+        hide-details="auto"
+      ></v-text-field>
       <v-row align="center">
         <v-checkbox v-model="checkbox"> </v-checkbox>
         acepto los&nbsp;
@@ -144,7 +183,7 @@
         </v-col>
         <v-snackbar v-model="snackbar" timeout="3000" top>
           <span>¡{{ snackbarText }}!</span>
-          <v-btn @click="snackbar = false">Cerrar</v-btn>
+          <v-btn @click="comprobarUser()">Cerrar</v-btn>
         </v-snackbar>
       </v-row>
     </v-card>
@@ -163,7 +202,16 @@
 import axios from 'axios'
 
 class Usuario {
-  constructor(usuario, email, pais, password, sexo, personajes, inventario) {
+  constructor(
+    usuario,
+    email,
+    pais,
+    password,
+    sexo,
+    personajes,
+    inventario,
+    securityAnswerList
+  ) {
     this.usuario = usuario
     this.email = email
     this.pais = pais
@@ -171,6 +219,7 @@ class Usuario {
     this.sexo = sexo
     this.personajes = personajes
     this.inventario = inventario
+    this.securityAnswerList = securityAnswerList
   }
 }
 
@@ -190,7 +239,7 @@ export default {
     return {
       countries: [],
       sexos: ['Masculino', 'Femenino', 'Otro'],
-      show: false,
+
       dialog: false,
       usuario: '',
       password: '',
@@ -202,7 +251,10 @@ export default {
       pais: '',
       inventario: [],
       user: new Usuario(),
+      securityAnswerList: [],
       checkbox: false,
+      show: false,
+      show1: false,
       rules: {
         required: (value) => !!value || 'Campo obligatorio',
         usermin: () =>
@@ -213,8 +265,15 @@ export default {
         equals: (v) => v === this.email || 'Los e-mails no coinciden',
         syntax: (v) => /.+@.+\..+/.test(v) || 'E-mail no es valido',
       },
+      questionRules: {
+        required: (value) => !!value || 'Campo obligatorio',
+        longMax: (value) =>
+          (value && value.length <= 20) || 'Debe tener máximo 20 caracteres',
+        longMin: (value) => (value && value.length >= 2) || 'Min 2 caracteres',
+      },
       snackbar: false,
       snackbarText: '',
+      userTrue: false,
     }
   },
   computed: {
@@ -235,15 +294,21 @@ export default {
     },
     largoMinimoContrasenna() {
       return () =>
-        this.password.length === 8 || 'Debe tener al menos 8 caracteres'
+        this.password.length >= 8 || 'Debe tener al menos 8 caracteres'
     },
     largoMinimoContrasenna2() {
       return () =>
-        this.rePassword.length === 8 || 'Debe tener al menos 8 caracteres'
+        this.rePassword.length >= 8 || 'Debe tener al menos 8 caracteres'
     },
   },
 
   methods: {
+    comprobarUser() {
+      this.snackbar = false
+      if (this.userTrue && this.snackbar === false) {
+        this.$router.push('/')
+      }
+    },
     aceptarTerminos() {
       this.checkbox = true
       this.dialog = false
@@ -261,7 +326,16 @@ export default {
         this.email === '' ||
         this.pais === '' ||
         this.password === '' ||
-        this.sexo === ''
+        this.sexo === '' ||
+        this.securityAnswerList[0] === '' ||
+        this.securityAnswerList[1] === '' ||
+        this.securityAnswerList[2] === '' ||
+        this.securityAnswerList[0].length < 2 ||
+        this.securityAnswerList[0].length > 20 ||
+        this.securityAnswerList[1].length < 2 ||
+        this.securityAnswerList[1].length > 20 ||
+        this.securityAnswerList[2].length < 2 ||
+        this.securityAnswerList[2].length > 20
       ) {
         this.snackbar = true
         this.snackbarText = 'Existen campos incompletos'
@@ -278,7 +352,8 @@ export default {
           this.password,
           this.sexo,
           this.personajes,
-          this.inventario
+          this.inventario,
+          this.securityAnswerList
         )
         axios
           .post(process.env.VUE_APP_SERVER_URL + '/Usuario/add', {
@@ -289,15 +364,21 @@ export default {
             sexo: this.user.sexo,
             personajes: this.personajes,
             inventario: this.inventario,
+            securityAnswerList: this.securityAnswerList,
           })
           .then((respuesta) => {
             return respuesta.data
           })
           .then((data) => {
-            this.$router.push('/')
+            this.snackbarText = 'Usuario creado exitosamente'
+            this.snackbar = true
+            this.userTrue = true
+            if (this.snackbar === false) this.$router.push('/')
           })
-        this.snackbar = true
-        this.snackbarText = 'Usuario creado exitosamente'
+          .catch((e) => {
+            this.snackbar = true
+            this.snackbarText = 'Ha ingresado un usuario o un correo invalido'
+          })
       } else {
         this.snackbar = true
         this.snackbarText = 'Los datos no son iguales o son incorrectos'
