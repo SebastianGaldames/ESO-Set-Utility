@@ -14,7 +14,21 @@ const add = async (req, res, next) => {
 //Metodo para obtener un personaje mediante _id
 const query = async (req, res, next) => {
   try {
-    const reg = await models.Personaje.findOne({ _id: req.query._id })
+    const reg = await models.Personaje.findOne({
+      _id: req.query._id,
+    }).populate({
+      path: 'slots',
+      populate: [
+        {
+          path: 'item',
+          model: 'Item',
+        },
+        {
+          path: 'familia',
+          model: 'Familia',
+        },
+      ],
+    })
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
