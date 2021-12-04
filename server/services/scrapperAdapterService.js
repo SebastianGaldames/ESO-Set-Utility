@@ -1,7 +1,6 @@
 const axios = require('axios')
 
-const itemController = require('../controllers/ItemController')
-const familiaController = require('../controllers/FamiliaController')
+const parsingService = require('../services/parsingService')
 
 // Agrega una familia a la base de datos. Asume que sus items ya existen.
 const addFamily = async (family, items) => {
@@ -322,6 +321,46 @@ const apendItems = async (info) => {
     })
 }
 
+const addFamilyBonusStats = async () => {
+  const res = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const familias = res.data
+
+  for (const familia of familias) {
+    console.log(familia.nombre)
+    const newBonos = []
+    for (const bono of familia.bonos) {
+      console.log(bono.texto)
+      const stats = await parsingService.parseSetBonusLine(bono.texto)
+      console.log(stats.stats)
+      const newBono = {
+        _id: bono._id,
+        texto: bono.texto,
+        cantidad: bono.cantidad,
+        estadisticas: stats.stats,
+      }
+      newBonos.push(newBono)
+      //var jsonItem = JSON.parse(JSON.stringify(resItem.data))
+      //console.log(JSON.parse(JSON.stringify(stats)))
+    }
+
+    const bonosUpdate = {
+      _id: familia._id,
+      bonos: newBonos,
+    }
+
+    const resUpdate = await axios
+      .put(process.env.VUE_APP_SERVER_URL + '/familia/update', bonosUpdate)
+      .catch(function (err) {
+        //console.log(err)
+      })
+  }
+}
+
 module.exports = {
   addFamily,
   addItem,
@@ -333,4 +372,5 @@ module.exports = {
   sandbox,
   addFamilyWeights,
   apendItems,
+  addFamilyBonusStats,
 }
