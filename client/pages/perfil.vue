@@ -346,7 +346,7 @@ export default {
       pais: '',
       inventario: [],
       securityAnswerList: ['', '', ''],
-      securityAnswerList2: [],
+      securityAnswerList2: ['', '', ''],
       user: new Usuario(),
       checkbox: false,
       checkbox1: false,
@@ -375,35 +375,58 @@ export default {
   },
   methods: {
     async cambioRespuestas() {
-      if (this.checkbox5) {
-        this.securityAnswerList2[0] = this.securityAnswerList[0]
-      }
-      if (this.checkbox6) {
-        this.securityAnswerList2[1] = this.securityAnswerList[1]
-      }
-      if (this.checkbox7) {
-        this.securityAnswerList2[2] = this.securityAnswerList[2]
-      }
-      const newAnswers = {
-        _id: this.user._id,
-        securityAnswerList: this.securityAnswerList2,
-      }
-      const updated = await this.$axios.put(
-        process.env.VUE_APP_SERVER_URL + '/Usuario/update',
-        newAnswers
-      )
-      // eslint-disable-next-line no-console
-      console.log(updated.data)
-      this.tomaUser()
-      if (updated) {
-        // eslint-disable-next-line no-console
-        // this.reLog()
-        this.$store.dispatch('setUsuarioUp', this.user.usuario)
-        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
-        console.log(updated.data)
-        alert('Cambio exitoso')
+      let verif = true
+      if (this.checkbox5 || this.checkbox6 || this.checkbox7) {
+        if (this.checkbox5) {
+          if (this.securityAnswerList[0] !== '') {
+            this.securityAnswerList2[0] = this.securityAnswerList[0]
+          } else {
+            verif = false
+          }
+        }
+        if (this.checkbox6) {
+          if (this.securityAnswerList[1] !== '') {
+            this.securityAnswerList2[1] = this.securityAnswerList[1]
+          } else {
+            verif = false
+          }
+        }
+        if (this.checkbox7) {
+          if (this.securityAnswerList[2] !== '') {
+            this.securityAnswerList2[2] = this.securityAnswerList[2]
+          } else {
+            verif = false
+          }
+        }
+        if (verif) {
+          const newAnswers = {
+            _id: this.user._id,
+            securityAnswerList: this.securityAnswerList2,
+          }
+          const updated = await this.$axios.put(
+            process.env.VUE_APP_SERVER_URL + '/Usuario/update',
+            newAnswers
+          )
+          // eslint-disable-next-line no-console
+          console.log(updated.data)
+          this.tomaUser()
+          if (updated) {
+            // eslint-disable-next-line no-console
+            // this.reLog()
+            this.$store.dispatch('setUsuarioUp', this.user.usuario)
+            // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
+            console.log(updated.data)
+            alert('Cambio exitoso')
+          } else {
+            alert('fallo')
+          }
+        } else {
+          alert(
+            'Hay una casilla seleccionada que no tiene una respuesta ingresada'
+          )
+        }
       } else {
-        alert('fallo')
+        alert('No hay ninguna casilla seleccionada')
       }
     },
     comprobarUsuario() {
