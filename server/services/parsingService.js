@@ -15,6 +15,7 @@ const parseSetBonusLine = async (line) => {
     'Maximum Stamina',
     'Offensive Penetration',
     'Critical Chance',
+    'Critical Resistance',
     'Spell Damage',
     'Stamina Recovery',
   ]
@@ -47,7 +48,7 @@ const parseSetBonusLine = async (line) => {
   }
 
   regexStats = new RegExp(
-    `(${operationsListStr})\\s([0-9]+)\\s(${statsListStr})`,
+    `(${operationsListStr})\\s([0-9]+%?)\\s(${statsListStr})`,
     'g'
   )
   // regexStats = new RegExp(`${operationsListStr}\\s[0-9]+\\s${statsListStr}`, 'g')
@@ -58,7 +59,7 @@ const parseSetBonusLine = async (line) => {
   // iterador de matches
   let matches = line.matchAll(regexStats)
 
-  console.log('all matches: ' + matches[0])
+  // console.log('all matches: ' + matches[0])
 
   let match = matches.next()
   // var matchcounter = 0
@@ -75,10 +76,18 @@ const parseSetBonusLine = async (line) => {
     // regexSingleMatch = new RegExp(`(Adds)\\s([0-9]+)\\s(${statsListStr})`)
     regexSingleMatch = regexStats
     stat.type = match.value[0].toString().replace(regexSingleMatch, '$3')
-    stat.value = parseInt(
-      match.value[0].toString().replace(regexSingleMatch, '$2')
-    )
-    stat.operation = match.value[0].toString().replace(regexSingleMatch, '$1')
+
+    // logica para seleccionar Multiply
+    const secondGroup = match.value[0]
+      .toString()
+      .replace(regexSingleMatch, '$2')
+    stat.value = parseInt(secondGroup)
+    if (secondGroup.charAt(secondGroup.length - 1) === '%') {
+      stat.operation = 'Multiply'
+      stat.value = stat.value / 100
+    } else {
+      stat.operation = match.value[0].toString().replace(regexSingleMatch, '$1')
+    }
     result.stats.push(stat)
     match = matches.next()
   }
