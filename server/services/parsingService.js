@@ -15,6 +15,7 @@ const parseSetBonusLine = async (line) => {
     'Maximum Stamina',
     'Offensive Penetration',
     'Critical Chance',
+    'Critical Resistance',
     'Spell Damage',
     'Stamina Recovery',
   ]
