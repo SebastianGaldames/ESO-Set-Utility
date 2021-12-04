@@ -163,7 +163,7 @@ export default {
       selectedSet: {},
       selectedPj: {},
       inventario: [],
-      flagWeapon: 0,
+      flagWeapon: 1,
     }
   },
   watch: {
