@@ -3,74 +3,87 @@
     <h4 style="text-align: center">
       {{ slotProp.posicion }}
     </h4>
-    <v-card
-      height="34"
-      min-width="100"
-      max-width="100"
-      outlined
-      class="d-flex mx-1"
-    >
-      <div class="d-flex">
-        <v-btn
-          v-if="enableItem"
-          x-small
-          color="acentuado3"
-          :height="defaultItemHeight"
-          @click="agregarSlotItem"
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-card
+          v-bind="attrs"
+          height="34"
+          min-width="100"
+          max-width="100"
+          outlined
+          class="d-flex mx-1"
+          v-on="on"
         >
-          +
-        </v-btn>
+          <div class="d-flex">
+            <v-btn
+              v-if="enableItem"
+              x-small
+              color="acentuado3"
+              :height="defaultItemHeight"
+              @click="agregarSlotItem"
+            >
+              +
+            </v-btn>
 
-        <v-img
-          v-else
-          contain
-          :height="defaultItemHeight"
-          max-width="32"
-          :src="itemImage"
-        ></v-img>
-        <!-- <p>{{ itemName }}</p> -->
+            <v-img
+              v-else
+              contain
+              :height="defaultItemHeight"
+              max-width="32"
+              :src="itemImage"
+            ></v-img>
+            <!-- <p>{{ itemName }}</p> -->
+          </div>
+          <div class="d-flex">
+            <v-btn
+              v-if="enableTrait"
+              color="acentuado3"
+              x-small
+              :height="defaultGlyphTraitHeight"
+              :width="defaultGlyphTraitWidth"
+              @click="agregarSlotTrait"
+            >
+              +
+            </v-btn>
+            <v-img
+              v-else
+              contain
+              :src="traitImage"
+              :max-height="defaultGlyphTraitHeight"
+              :max-width="defaultGlyphTraitWidth"
+            ></v-img>
+            <!-- <p>{{ slotProp.glyph }}</p> -->
+          </div>
+          <div class="d-flex">
+            <v-btn
+              v-if="enableGlyph"
+              color="acentuado3"
+              x-small
+              :height="defaultGlyphTraitHeight"
+              :width="defaultGlyphTraitWidth"
+              @click="agregarSlotGlyph"
+            >
+              +
+            </v-btn>
+            <v-img
+              v-else
+              contain
+              :src="glyphImage"
+              :max-height="defaultGlyphTraitHeight"
+              :max-width="defaultGlyphTraitWidth"
+            ></v-img>
+            <!-- <p>{{ traitName }}</p> -->
+          </div>
+        </v-card>
+      </template>
+      <div>
+        <span>{{ itemName }}</span
+        ><br />
+        <span>{{ glyphName }}</span
+        ><br />
+        <span>{{ traitName }}</span>
       </div>
-      <div class="d-flex">
-        <v-btn
-          v-if="enableTrait"
-          color="acentuado3"
-          x-small
-          :height="defaultGlyphTraitHeight"
-          :width="defaultGlyphTraitWidth"
-          @click="agregarSlotTrait"
-        >
-          +
-        </v-btn>
-        <v-img
-          v-else
-          contain
-          :src="traitImage"
-          :max-height="defaultGlyphTraitHeight"
-          :max-width="defaultGlyphTraitWidth"
-        ></v-img>
-        <!-- <p>{{ slotProp.glyph }}</p> -->
-      </div>
-      <div class="d-flex">
-        <v-btn
-          v-if="enableGlyph"
-          color="acentuado3"
-          x-small
-          :height="defaultGlyphTraitHeight"
-          :width="defaultGlyphTraitWidth"
-          @click="agregarSlotGlyph"
-        >
-          +
-        </v-btn>
-        <v-img
-          v-else
-          contain
-          :src="glyphImage"
-          :max-height="defaultGlyphTraitHeight"
-          :max-width="defaultGlyphTraitWidth"
-        ></v-img>
-        <!-- <p>{{ traitName }}</p> -->
-      </div>
-    </v-card>
+    </v-tooltip>
   </div>
 </template>
 
