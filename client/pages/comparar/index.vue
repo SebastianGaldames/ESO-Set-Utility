@@ -1,35 +1,44 @@
 <template>
   <div style="height: 100%" class="primario">
-    <div style="margin: 20px">
+    <div style="margin: 2%">
       <v-item-group>
         <v-row>
-          <v-item dark style="overflow: hidden">
-            <v-card dark width="30%">
-              <seleccion-personaje
-                v-model="selectedPersonaje"
-                :personajes="personajes"
-              >
-              </seleccion-personaje>
-              <personaje
-                :nombre="selectedPersonaje.nombre"
-                class="bordes"
-              ></personaje>
+          <v-item>
+            <v-card width="30%">
+              <!-- Aqui se debe seleccionar personaje -->
+              <div v-if="personajes.length > 0" style="margin: 2%">
+                <v-combobox
+                  v-model="selectedPersonaje"
+                  item-text="nombre"
+                  :items="personajes"
+                  label="Seleccionar un personaje"
+                ></v-combobox>
+                <personaje
+                  :personaje="selectedPersonaje"
+                  class="bordes"
+                ></personaje>
+              </div>
             </v-card>
           </v-item>
-          <v-item dark>
+          <!-- Aqui deberia ir el componente central -->
+          <v-item>
             <v-card class="secundario--text" width="40%">stats</v-card>
           </v-item>
-          <v-item dark>
-            <v-card dark width="30%">
-              <seleccion-personaje
-                v-model="selectedPersonajeRef"
-                :personajes="personajes"
-              >
-              </seleccion-personaje>
-              <personaje
-                :nombre="selectedPersonajeRef.nombre"
-                class="bordes"
-              ></personaje>
+          <v-item>
+            <v-card width="30%">
+              <!-- Segunda seleccion -->
+              <div v-if="personajes.length > 0" style="margin: 2%">
+                <v-combobox
+                  v-model="selectedPersonaje2"
+                  item-text="nombre"
+                  :items="personajes"
+                  label="Seleccionar un personaje"
+                ></v-combobox>
+                <personaje
+                  :personaje="selectedPersonaje2"
+                  class="bordes"
+                ></personaje>
+              </div>
             </v-card>
           </v-item>
         </v-row>
@@ -47,14 +56,13 @@
 </style>
 <script>
 import Personaje from '~/components/personajes/Personaje.vue'
-import SeleccionPersonaje from '~/components/personajes/SeleccionPersonaje.vue'
 export default {
-  components: { SeleccionPersonaje, Personaje },
+  components: { Personaje },
   data() {
     return {
       personajes: [],
       selectedPersonaje: [],
-      selectedPersonajeRef: [],
+      selectedPersonaje2: [],
     }
   },
   mounted() {},
@@ -69,10 +77,6 @@ export default {
         { params: { usuario: userName } }
       )
       await this.fetchPersonajes(user.personajes)
-      if (this.personajes.length !== 0) {
-        this.selectedPersonaje = this.personajes[0]
-        this.selectedPersonajeRef = this.personajes[1]
-      }
     },
     async fetchPersonajes(idsArray) {
       for (const id of idsArray) {
