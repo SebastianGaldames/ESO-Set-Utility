@@ -43,7 +43,6 @@ const query = async (req, res, next) => {
 const queryNombre = async (req, res, next) => {
   try {
     const reg = await models.Usuario.findOne({ usuario: req.query.usuario })
-    // console.log('req: ' + req.query)
     if (!reg) {
       res.status(404).send({
         message: 'El registro no existe',
@@ -66,21 +65,18 @@ const update = async (req, res, next) => {
     
     const answerList = req.body.securityAnswerList
     if (!(await bcrypt.compare(answerList[0], reg0.securityAnswerList[0])) && answerList[0]!=='') {
-      console.log('entrexd1')
       answerList[0] = await bcrypt.hash(answerList[0], 10)
       req.body.securityAnswerList[0] = answerList[0]
     } else {
       req.body.securityAnswerList[0] = reg0.securityAnswerList[0]
     }
     if (!(await bcrypt.compare(answerList[1], reg0.securityAnswerList[1])) && answerList[1]!=='') {
-      console.log('entrexd2')
       answerList[1] = await bcrypt.hash(answerList[1], 10)
       req.body.securityAnswerList[1] = answerList[1]
     } else {
       req.body.securityAnswerList[1] = reg0.securityAnswerList[1]
     }
     if (!(await bcrypt.compare(answerList[2], reg0.securityAnswerList[2])) && answerList[2]!=='') {
-      console.log('entrexd3')
       answerList[2] = await bcrypt.hash(answerList[2], 10)
       req.body.securityAnswerList[2] = answerList[2]
     } else {
@@ -108,7 +104,6 @@ const update = async (req, res, next) => {
 }
 const updatePassword = async (req, res, next) => {
   try {
-    console.log(req.body)
     //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
     const encryptedPassword = await bcrypt.hash(req.body.password, 10)
     const reg = await models.Usuario.findByIdAndUpdate(
@@ -176,7 +171,7 @@ const answers = async (req, res, next) => {
         user.securityAnswerList[1]
       )
       let match3 = await bcrypt.compare(
-        req.body.securityAnswer2,
+        req.body.securityAnswer3,
         user.securityAnswerList[2]
       )
       if (match1 && match2 && match3) {
@@ -230,7 +225,6 @@ const addPersonaje = async (req, res, next) => {
     //     message: 'No se pudo crear el personaje',
     //   })
     // }
-    console.log(regUsr)
 
     pj = {
       nombre: req.body.nombre,
