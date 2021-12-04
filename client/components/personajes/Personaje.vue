@@ -334,6 +334,7 @@ export default {
         this.inventario[11].slotPJ.calidadGlyph = undefined
         this.inventario[11].slotPJ.trait = undefined
         this.inventario[11].slotPJ.calidadTrait = undefined
+        this.$emit('slotChanged', this.inventario[11].slotPJ)
       }
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.familia = setAux
