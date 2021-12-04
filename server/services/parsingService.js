@@ -47,7 +47,7 @@ const parseSetBonusLine = async (line) => {
   }
 
   regexStats = new RegExp(
-    `(${operationsListStr})\\s([0-9]+)\\s(${statsListStr})`,
+    `(${operationsListStr})\\s([0-9]+%?)\\s(${statsListStr})`,
     'g'
   )
   // regexStats = new RegExp(`${operationsListStr}\\s[0-9]+\\s${statsListStr}`, 'g')
