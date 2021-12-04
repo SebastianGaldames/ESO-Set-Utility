@@ -1,29 +1,39 @@
 <template>
   <div>
-    <div>
-      <v-btn
-        v-if="enableItem"
-        color="acentuado3"
-        class="texto1--text"
-        :height="defaultItemHeight"
-        :width="defaultItemWidth"
-        @click="agregarSlotItem"
-      >
-        +
-      </v-btn>
-      <v-img
-        v-else
-        class="mx-1"
-        contain
-        :height="defaultItemHeight"
-        :src="itemImage"
-        :width="defaultItemWidth"
-      ></v-img>
-      <div class="d-flex py-2">
+    <h4 style="text-align: center">
+      {{ slotProp.posicion }}
+    </h4>
+    <v-card
+      height="34"
+      min-width="100"
+      max-width="100"
+      outlined
+      class="d-flex mx-1"
+    >
+      <div class="d-flex">
+        <v-btn
+          v-if="enableItem"
+          x-small
+          color="acentuado3"
+          :height="defaultItemHeight"
+          @click="agregarSlotItem"
+        >
+          +
+        </v-btn>
+
+        <v-img
+          v-else
+          contain
+          :height="defaultItemHeight"
+          max-width="32"
+          :src="itemImage"
+        ></v-img>
+        <!-- <p>{{ itemName }}</p> -->
+      </div>
+      <div class="d-flex">
         <v-btn
           v-if="enableTrait"
           color="acentuado3"
-          class="texto1--text"
           x-small
           :height="defaultGlyphTraitHeight"
           :width="defaultGlyphTraitWidth"
@@ -38,10 +48,12 @@
           :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
         ></v-img>
+        <!-- <p>{{ slotProp.glyph }}</p> -->
+      </div>
+      <div class="d-flex">
         <v-btn
           v-if="enableGlyph"
           color="acentuado3"
-          class="mx-2 texto1--text"
           x-small
           :height="defaultGlyphTraitHeight"
           :width="defaultGlyphTraitWidth"
@@ -52,13 +64,13 @@
         <v-img
           v-else
           contain
-          class="mx-2"
           :src="glyphImage"
           :max-height="defaultGlyphTraitHeight"
           :max-width="defaultGlyphTraitWidth"
         ></v-img>
+        <!-- <p>{{ traitName }}</p> -->
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 
@@ -88,10 +100,10 @@ export default {
   },
   data() {
     return {
-      defaultItemHeight: '50',
-      defaultItemWidth: '50',
-      defaultGlyphTraitHeight: '25',
-      defaultGlyphTraitWidth: '25',
+      defaultItemHeight: '32',
+      defaultItemWidth: '32',
+      defaultGlyphTraitHeight: '32',
+      defaultGlyphTraitWidth: '32',
     }
   },
   computed: {
@@ -113,6 +125,24 @@ export default {
       }
       return ''
     },
+    itemName() {
+      if (!(this.slotProp.item === undefined)) {
+        return this.slotProp.item.nombre
+      }
+      return ''
+    },
+    glyphName() {
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.glyph.nombre
+      }
+      return ''
+    },
+    traitName() {
+      if (!(this.slotProp.trait === undefined)) {
+        return this.slotProp.trait.nombre
+      }
+      return ''
+    },
   },
   methods: {
     // test(event) {
@@ -130,3 +160,8 @@ export default {
   },
 }
 </script>
+<style>
+/* p {
+  font-size: 8px;
+} */
+</style>
