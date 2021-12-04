@@ -14,34 +14,98 @@
               align="center"
               justify="center"
               no-gutters
+              md="3"
+            >
+              <div v-if="slotEq.tipo === 'Armor'">
+                <h4 style="text-align: center">
+                  {{ slotEq.slotPJ.posicion }}
+                </h4>
+                <v-item>
+                  <v-card outlined width="90" height="90">
+                    <itemSlot
+                      :id="slotEq.slotPJ.posicion"
+                      :enable-item="slotEq.enableItem"
+                      :enable-glyph="slotEq.enableGlyph"
+                      :enable-trait="slotEq.enableTrait"
+                      :slot-prop="slotEq.slotPJ"
+                      style="padding: 5%"
+                      @agregarSlotItem="handleAgregarSlotItem(index)"
+                      @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
+                      @agregarSlotTrait="handleAgregarSlotTrait(index)"
+                    ></itemSlot>
+                  </v-card>
+                </v-item>
+              </div>
+            </v-col>
+          </v-row>
+          <h2 style="text-align: center">Accessories</h2>
+          <v-row align="center" justify="center" no-gutters>
+            <v-col
+              v-for="(slotEq, index) in inventario.slice(7)"
+              :key="index"
+              align="center"
+              justify="center"
+              no-gutters
               md="4"
             >
-              <h2 v-if="index === 7" style="text-align: center">Accessories</h2>
-              <h2 v-if="index === 10" style="text-align: center">Weapons</h2>
-              <h4
-                v-if="index === 10 || index === 11"
-                style="text-align: center"
-              >
-                Hand
-              </h4>
-              <h4 v-else style="text-align: center">
-                {{ slotEq.slotPJ.posicion }}
-              </h4>
-              <v-item>
-                <v-card outlined width="90" height="90">
-                  <itemSlot
-                    :id="slotEq.slotPJ.posicion"
-                    :enable-item="slotEq.enableItem"
-                    :enable-glyph="slotEq.enableGlyph"
-                    :enable-trait="slotEq.enableTrait"
-                    :slot-prop="slotEq.slotPJ"
-                    style="padding: 5%"
-                    @agregarSlotItem="handleAgregarSlotItem(index)"
-                    @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
-                    @agregarSlotTrait="handleAgregarSlotTrait(index)"
-                  ></itemSlot>
-                </v-card>
-              </v-item>
+              <div v-if="slotEq.tipo === 'Jewelry'">
+                <h4 style="text-align: center">
+                  {{ slotEq.slotPJ.posicion }}
+                </h4>
+                <v-item>
+                  <v-card outlined width="90" height="90">
+                    <itemSlot
+                      :id="slotEq.slotPJ.posicion"
+                      :enable-item="slotEq.enableItem"
+                      :enable-glyph="slotEq.enableGlyph"
+                      :enable-trait="slotEq.enableTrait"
+                      :slot-prop="slotEq.slotPJ"
+                      style="padding: 5%"
+                      @agregarSlotItem="handleAgregarSlotItem(index + 7)"
+                      @agregarSlotGlyph="handleAgregarSlotGlyph(index + 7)"
+                      @agregarSlotTrait="handleAgregarSlotTrait(index + 7)"
+                    ></itemSlot>
+                  </v-card>
+                </v-item>
+              </div>
+            </v-col>
+          </v-row>
+          <h2 style="text-align: center">Weapons</h2>
+          <v-row align="center" justify="center" no-gutters>
+            <v-col
+              v-for="(slotEq, index) in inventario.slice(10)"
+              :key="index"
+              align="center"
+              justify="center"
+              no-gutters
+              md="3"
+            >
+              <div v-if="slotEq.tipo === 'Weapon'">
+                <h4
+                  v-if="index === 0 || index === 1"
+                  style="text-align: center"
+                >
+                  Hand
+                </h4>
+                <h4 v-else style="text-align: center">
+                  {{ slotEq.slotPJ.posicion }}
+                </h4>
+                <v-item>
+                  <v-card outlined width="90" height="90">
+                    <itemSlot
+                      :id="slotEq.slotPJ.posicion"
+                      :enable-item="slotEq.enableItem"
+                      :enable-glyph="slotEq.enableGlyph"
+                      :enable-trait="slotEq.enableTrait"
+                      :slot-prop="slotEq.slotPJ"
+                      style="padding: 5%"
+                      @agregarSlotItem="handleAgregarSlotItem(index + 10)"
+                      @agregarSlotGlyph="handleAgregarSlotGlyph(index + 10)"
+                      @agregarSlotTrait="handleAgregarSlotTrait(index + 10)"
+                    ></itemSlot>
+                  </v-card>
+                </v-item>
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -99,6 +163,7 @@ export default {
       selectedSet: {},
       selectedPj: {},
       inventario: [],
+      flagWeapon: 0,
     }
   },
   watch: {
@@ -133,16 +198,22 @@ export default {
     selectedGlyph() {
       for (let index = 0; index < this.inventario.length; index++) {
         this.inventario[index].enableGlyph = false
-        if (this.isGlyph(this.inventario[index].tipo)) {
+        if (this.isGlyph(index)) {
           this.inventario[index].enableGlyph = true
+        }
+        if (this.flagWeapon === 1) {
+          this.inventario[10].enableGlyph = false
         }
       }
     },
     selectedTrait() {
       for (let index = 0; index < this.inventario.length; index++) {
         this.inventario[index].enableTrait = false
-        if (this.isTrait(this.inventario[index].tipo)) {
+        if (this.isTrait(index)) {
           this.inventario[index].enableTrait = true
+        }
+        if (this.flagWeapon === 1) {
+          this.inventario[10].enableTrait = false
         }
       }
     },
@@ -243,16 +314,37 @@ export default {
         this.inventario[11].slotPJ.posicion = 'Two-Handed'
         this.inventario[index - 1].slotPJ.item = itemAux
         this.inventario[index - 1].slotPJ.familia = setAux
+        this.flagWeapon = 1
+        this.inventario[index - 1].slotPJ.glyph = undefined
+        this.inventario[index - 1].slotPJ.glyphImage = undefined
+        this.inventario[index - 1].slotPJ.potenciaGlyph = undefined
+        this.inventario[index - 1].slotPJ.calidadGlyph = undefined
+        this.inventario[index - 1].slotPJ.trait = undefined
+        this.inventario[index - 1].slotPJ.calidadTrait = undefined
         this.$emit('slotChanged', this.inventario[index - 1].slotPJ)
       }
       if (this.isOneHanded()) {
+        this.flagWeapon = 0
         this.inventario[11].slotPJ.item = undefined
         this.inventario[11].slotPJ.familia = undefined
         this.inventario[11].slotPJ.posicion = 'One-Handed'
+        this.inventario[11].slotPJ.glyph = undefined
+        this.inventario[11].slotPJ.glyphImage = undefined
+        this.inventario[11].slotPJ.potenciaGlyph = undefined
+        this.inventario[11].slotPJ.calidadGlyph = undefined
+        this.inventario[11].slotPJ.trait = undefined
+        this.inventario[11].slotPJ.calidadTrait = undefined
+        this.$emit('slotChanged', this.inventario[11].slotPJ)
       }
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.familia = setAux
       this.inventario[index].enableItem = false
+      this.inventario[index].slotPJ.glyph = undefined
+      this.inventario[index].slotPJ.glyphImage = undefined
+      this.inventario[index].slotPJ.potenciaGlyph = undefined
+      this.inventario[index].slotPJ.calidadGlyph = undefined
+      this.inventario[index].slotPJ.trait = undefined
+      this.inventario[index].slotPJ.calidadTrait = undefined
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     handleAgregarSlotGlyph(index) {
@@ -292,16 +384,18 @@ export default {
         this.selectedItem.categoria === categoriaPj
       )
     },
-    isGlyph(tipoPj) {
+    isGlyph(index) {
       return (
         this.selectedGlyph !== undefined &&
-        this.selectedGlyph.tipoGlyph === tipoPj
+        this.selectedGlyph.tipoGlyph === this.inventario[index].tipo &&
+        this.inventario[index].slotPJ.item !== undefined
       )
     },
-    isTrait(tipoPj) {
+    isTrait(index) {
       return (
         this.selectedTrait !== undefined &&
-        this.selectedTrait.tipoTrait === tipoPj
+        this.selectedTrait.tipoTrait === this.inventario[index].tipo &&
+        this.inventario[index].slotPJ.item !== undefined
       )
     },
     isTwoHanded() {
