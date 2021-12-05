@@ -3,7 +3,7 @@
     <h4 style="text-align: center">
       {{ slotProp.posicion }}
     </h4>
-    <v-tooltip bottom>
+    <v-tooltip bottom color="red">
       <template v-slot:activator="{ on, attrs }">
         <v-card
           v-bind="attrs"
@@ -79,6 +79,8 @@
       <div>
         <span>{{ itemName }}</span
         ><br />
+        <span>{{ familyName }}</span
+        ><br />
         <span>{{ glyphName }}</span
         ><br />
         <span>{{ traitName }}</span>
@@ -141,6 +143,12 @@ export default {
     itemName() {
       if (!(this.slotProp.item === undefined)) {
         return this.slotProp.item.nombre
+      }
+      return ''
+    },
+    familyName() {
+      if (!(this.slotProp.familia === undefined)) {
+        return this.slotProp.familia.nombre
       }
       return ''
     },
