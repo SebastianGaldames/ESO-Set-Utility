@@ -3,6 +3,12 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
+const scrapStatus = {
+  sets: 0,
+  items: 0,
+  running: false,
+}
+
 // move to ENV variables, change secret then
 // const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
@@ -112,6 +118,19 @@ const scrapSet = async (setUrl) => {
     console.log(item.name)
   })
   const itemsToAdd = await getTypeItem(itemsToScrapType)
+
+  const jewelScrap = [
+    ...dataItemsPanel.querySelectorAll('picture img'), //srcset="/storage/icons
+  ]
+  for (const item of jewelScrap) {
+    if (item.getAttribute('title') === 'Ring') {
+      noTypeItems.push({ name: 'Ring' })
+    }
+    if (item.getAttribute('title') === 'Necklace') {
+      noTypeItems.push({ name: 'Necklace' })
+    }
+  }
+
   scrapperAdapter.addItemRange(itemsToAdd)
   scrapperAdapter.addFamily(setData, noTypeItems)
 
@@ -277,4 +296,5 @@ module.exports = {
   scrapItemType,
   scrapJewels,
   scrapAllJewels,
+  scrapStatus,
 }

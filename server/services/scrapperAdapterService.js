@@ -1,12 +1,12 @@
 const axios = require('axios')
 
-const itemController = require('../controllers/ItemController')
-const familiaController = require('../controllers/FamiliaController')
+const parsingService = require('../services/parsingService')
 
 // Agrega una familia a la base de datos. Asume que sus items ya existen.
 const addFamily = async (family, items) => {
   // Se obtiene la id de los items desde la base de datos
   const itemsId = []
+  var pesosFamilia = []
   for (const item of items) {
     const res = await axios
       .get(
@@ -16,7 +16,19 @@ const addFamily = async (family, items) => {
         //console.log(err)
       })
     if (res !== undefined) {
+      var jsonItem = JSON.parse(JSON.stringify(res.data))
+      pesosFamilia.push(jsonItem.peso)
       itemsId.push(res.data._id)
+    }
+  }
+
+  var setPesos = new Set(pesosFamilia)
+  pesosFamilia = Array.from(setPesos)
+
+  for (const index in pesosFamilia) {
+    if (pesosFamilia[index] === '') {
+      pesosFamilia.splice(index, 1)
+      break
     }
   }
 
@@ -24,31 +36,70 @@ const addFamily = async (family, items) => {
   const itemsIdSet = new Set(itemsId)
   const itemsRef = Array.from(itemsIdSet)
 
-  // Se añade la familia a la base de datos
-  try {
-    const body = {
-      nombre: family.name,
-      tipo: family.type,
-      estilo: family.style,
-      dlc: family.dlcRequirement,
-      ubicacion: family.location,
-      bonos: [],
-      imagen: family.imageUrl,
-      itemsFamilia: itemsRef,
-    }
-    family.setBonus.forEach((bonusTier) => {
-      const bono = {
-        texto: bonusTier.bonus,
-        cantidad: Number(bonusTier.number),
-      }
-      body.bonos.push(bono)
-    })
-
-    const res = await axios.post(
-      process.env.VUE_APP_SERVER_URL + '/familia/add',
-      body
+  // Se verifica si la familia ya existe en la base de datos
+  const resFamily = await axios
+    .get(
+      process.env.VUE_APP_SERVER_URL +
+        '/familia/queryNombre?nombre=' +
+        family.name
     )
-  } catch {}
+    .catch(function (err) {
+      //console.log(err)
+    })
+  if (resFamily === undefined) {
+    // Si no existe, se añade la familia a la base de datos
+    try {
+      const body = {
+        nombre: family.name,
+        tipo: family.type,
+        estilo: family.style,
+        dlc: family.dlcRequirement,
+        ubicacion: family.location,
+        bonos: [],
+        imagen: family.imageUrl,
+        itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
+      }
+      family.setBonus.forEach((bonusTier) => {
+        const bono = {
+          texto: bonusTier.bonus,
+          cantidad: Number(bonusTier.number),
+        }
+        body.bonos.push(bono)
+      })
+
+      const res = await axios.post(
+        process.env.VUE_APP_SERVER_URL + '/familia/add',
+        body
+      )
+    } catch {}
+  } else {
+    // Si existe, se actualizan los datos de la familia
+    try {
+      const updateBody = {
+        _id: resFamily.data._id,
+        tipo: family.type,
+        estilo: family.style,
+        dlc: family.dlcRequirement,
+        ubicacion: family.location,
+        bonos: [],
+        imagen: family.imageUrl,
+        itemsFamilia: itemsRef,
+        pesos: pesosFamilia,
+      }
+      family.setBonus.forEach((bonusTier) => {
+        const bono = {
+          texto: bonusTier.bonus,
+          cantidad: Number(bonusTier.number),
+        }
+        updateBody.bonos.push(bono)
+      })
+      const res = await axios.put(
+        process.env.VUE_APP_SERVER_URL + '/familia/update',
+        updateBody
+      )
+    } catch {}
+  }
 }
 
 // Añade un item a la base de datos. Asume que no existe un duplicado
@@ -270,6 +321,46 @@ const apendItems = async (info) => {
     })
 }
 
+const addFamilyBonusStats = async () => {
+  const res = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const familias = res.data
+
+  for (const familia of familias) {
+    console.log(familia.nombre)
+    const newBonos = []
+    for (const bono of familia.bonos) {
+      console.log(bono.texto)
+      const stats = await parsingService.parseSetBonusLine(bono.texto)
+      console.log(stats.stats)
+      const newBono = {
+        _id: bono._id,
+        texto: bono.texto,
+        cantidad: bono.cantidad,
+        estadisticas: stats.stats,
+      }
+      newBonos.push(newBono)
+      //var jsonItem = JSON.parse(JSON.stringify(resItem.data))
+      //console.log(JSON.parse(JSON.stringify(stats)))
+    }
+
+    const bonosUpdate = {
+      _id: familia._id,
+      bonos: newBonos,
+    }
+
+    const resUpdate = await axios
+      .put(process.env.VUE_APP_SERVER_URL + '/familia/update', bonosUpdate)
+      .catch(function (err) {
+        //console.log(err)
+      })
+  }
+}
+
 module.exports = {
   addFamily,
   addItem,
@@ -281,4 +372,5 @@ module.exports = {
   sandbox,
   addFamilyWeights,
   apendItems,
+  addFamilyBonusStats,
 }
