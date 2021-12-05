@@ -24,13 +24,6 @@
         >
           <v-btn text> Familias </v-btn>
         </NuxtLink>
-        <NuxtLink
-          to="/personajes"
-          style="text-decoration: none; color: inherit"
-          class="pt-5"
-        >
-          <v-btn text> Personajes </v-btn>
-        </NuxtLink>
         <v-sheet class="pt-5" color="transparent">
           <v-menu open-on-hover bottom offset-y>
             <template v-slot:activator="{ on, attrs }">
@@ -51,6 +44,7 @@
             </template>
             <v-list v-if="usuarioLogeado">
               <v-list-item @click="irPerfil()"> Perfil </v-list-item>
+              <v-list-item @click="irPersonajes()"> Personajes </v-list-item>
               <v-list-item @click="salir()"> Salir </v-list-item>
             </v-list>
           </v-menu>
@@ -82,6 +76,11 @@ export default {
     irPerfil() {
       if (this.usuarioLogeado) {
         this.$router.push('/perfil')
+      }
+    },
+    irPersonajes() {
+      if (this.usuarioLogeado) {
+        this.$router.push('/personajes')
       }
     },
     comprobarUsuario() {
