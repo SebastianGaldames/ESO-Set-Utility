@@ -246,7 +246,6 @@ export default {
             posicion: secciones[index],
             tag: temp,
             glyph: undefined,
-            glyphImage: undefined,
             potenciaGlyph: undefined,
             calidadGlyph: undefined,
             trait: undefined,
@@ -271,7 +270,6 @@ export default {
             glyph: target.glyph,
             potenciaGlyph: target.potenciaGlyph,
             calidadGlyph: target.calidadGlyph,
-            glyphImage: target.glyphImage,
             trait: target.trait,
           }
           invTemp.enableItem = false
@@ -292,7 +290,6 @@ export default {
         this.inventario[index - 1].slotPJ.familia = setAux
         this.flagWeapon = 1
         this.inventario[index - 1].slotPJ.glyph = undefined
-        this.inventario[index - 1].slotPJ.glyphImage = undefined
         this.inventario[index - 1].slotPJ.potenciaGlyph = undefined
         this.inventario[index - 1].slotPJ.calidadGlyph = undefined
         this.inventario[index - 1].slotPJ.trait = undefined
@@ -305,7 +302,6 @@ export default {
         this.inventario[11].slotPJ.familia = undefined
         this.inventario[11].slotPJ.posicion = 'One-Handed'
         this.inventario[11].slotPJ.glyph = undefined
-        this.inventario[11].slotPJ.glyphImage = undefined
         this.inventario[11].slotPJ.potenciaGlyph = undefined
         this.inventario[11].slotPJ.calidadGlyph = undefined
         this.inventario[11].slotPJ.trait = undefined
@@ -316,7 +312,6 @@ export default {
       this.inventario[index].slotPJ.familia = setAux
       this.inventario[index].enableItem = false
       this.inventario[index].slotPJ.glyph = undefined
-      this.inventario[index].slotPJ.glyphImage = undefined
       this.inventario[index].slotPJ.potenciaGlyph = undefined
       this.inventario[index].slotPJ.calidadGlyph = undefined
       this.inventario[index].slotPJ.trait = undefined
@@ -325,7 +320,6 @@ export default {
     },
     handleAgregarSlotGlyph(index) {
       this.inventario[index].slotPJ.glyph = this.selectedGlyph.glyph
-      this.inventario[index].slotPJ.glyphImage = this.selectedGlyph.imagen
       this.inventario[index].slotPJ.potenciaGlyph =
         this.selectedGlyph.potenciaGlyph
       this.inventario[index].slotPJ.calidadGlyph =
