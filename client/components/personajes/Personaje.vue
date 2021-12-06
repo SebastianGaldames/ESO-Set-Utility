@@ -6,7 +6,7 @@
     <div class="">
       <v-item-group>
         <v-container fluid>
-          <h2 style="text-align: center">Equipment</h2>
+          <!-- <h2 style="text-align: center">Equipment</h2> -->
           <v-row align="center" justify="center" no-gutters>
             <v-col
               v-for="(slotEq, index) in inventario"
@@ -17,23 +17,17 @@
               md="3"
             >
               <div v-if="slotEq.tipo === 'Armor'">
-                <h4 style="text-align: center">
-                  {{ slotEq.slotPJ.posicion }}
-                </h4>
                 <v-item>
-                  <v-card outlined width="90" height="90">
-                    <itemSlot
-                      :id="slotEq.slotPJ.posicion"
-                      :enable-item="slotEq.enableItem"
-                      :enable-glyph="slotEq.enableGlyph"
-                      :enable-trait="slotEq.enableTrait"
-                      :slot-prop="slotEq.slotPJ"
-                      style="padding: 5%"
-                      @agregarSlotItem="handleAgregarSlotItem(index)"
-                      @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
-                      @agregarSlotTrait="handleAgregarSlotTrait(index)"
-                    ></itemSlot>
-                  </v-card>
+                  <itemSlot
+                    :id="slotEq.slotPJ.posicion"
+                    :enable-item="slotEq.enableItem"
+                    :enable-glyph="slotEq.enableGlyph"
+                    :enable-trait="slotEq.enableTrait"
+                    :slot-prop="slotEq.slotPJ"
+                    @agregarSlotItem="handleAgregarSlotItem(index)"
+                    @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
+                    @agregarSlotTrait="handleAgregarSlotTrait(index)"
+                  ></itemSlot>
                 </v-item>
               </div>
             </v-col>
@@ -49,23 +43,17 @@
               md="4"
             >
               <div v-if="slotEq.tipo === 'Jewelry'">
-                <h4 style="text-align: center">
-                  {{ slotEq.slotPJ.posicion }}
-                </h4>
                 <v-item>
-                  <v-card outlined width="90" height="90">
-                    <itemSlot
-                      :id="slotEq.slotPJ.posicion"
-                      :enable-item="slotEq.enableItem"
-                      :enable-glyph="slotEq.enableGlyph"
-                      :enable-trait="slotEq.enableTrait"
-                      :slot-prop="slotEq.slotPJ"
-                      style="padding: 5%"
-                      @agregarSlotItem="handleAgregarSlotItem(index + 7)"
-                      @agregarSlotGlyph="handleAgregarSlotGlyph(index + 7)"
-                      @agregarSlotTrait="handleAgregarSlotTrait(index + 7)"
-                    ></itemSlot>
-                  </v-card>
+                  <itemSlot
+                    :id="slotEq.slotPJ.posicion"
+                    :enable-item="slotEq.enableItem"
+                    :enable-glyph="slotEq.enableGlyph"
+                    :enable-trait="slotEq.enableTrait"
+                    :slot-prop="slotEq.slotPJ"
+                    @agregarSlotItem="handleAgregarSlotItem(index + 7)"
+                    @agregarSlotGlyph="handleAgregarSlotGlyph(index + 7)"
+                    @agregarSlotTrait="handleAgregarSlotTrait(index + 7)"
+                  ></itemSlot>
                 </v-item>
               </div>
             </v-col>
@@ -78,32 +66,20 @@
               align="center"
               justify="center"
               no-gutters
-              md="3"
+              md="4"
             >
               <div v-if="slotEq.tipo === 'Weapon'">
-                <h4
-                  v-if="index === 0 || index === 1"
-                  style="text-align: center"
-                >
-                  Hand
-                </h4>
-                <h4 v-else style="text-align: center">
-                  {{ slotEq.slotPJ.posicion }}
-                </h4>
                 <v-item>
-                  <v-card outlined width="90" height="90">
-                    <itemSlot
-                      :id="slotEq.slotPJ.posicion"
-                      :enable-item="slotEq.enableItem"
-                      :enable-glyph="slotEq.enableGlyph"
-                      :enable-trait="slotEq.enableTrait"
-                      :slot-prop="slotEq.slotPJ"
-                      style="padding: 5%"
-                      @agregarSlotItem="handleAgregarSlotItem(index + 10)"
-                      @agregarSlotGlyph="handleAgregarSlotGlyph(index + 10)"
-                      @agregarSlotTrait="handleAgregarSlotTrait(index + 10)"
-                    ></itemSlot>
-                  </v-card>
+                  <itemSlot
+                    :id="slotEq.slotPJ.posicion"
+                    :enable-item="slotEq.enableItem"
+                    :enable-glyph="slotEq.enableGlyph"
+                    :enable-trait="slotEq.enableTrait"
+                    :slot-prop="slotEq.slotPJ"
+                    @agregarSlotItem="handleAgregarSlotItem(index + 10)"
+                    @agregarSlotGlyph="handleAgregarSlotGlyph(index + 10)"
+                    @agregarSlotTrait="handleAgregarSlotTrait(index + 10)"
+                  ></itemSlot>
                 </v-item>
               </div>
             </v-col>
