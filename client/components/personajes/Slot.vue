@@ -129,8 +129,8 @@ export default {
       return ''
     },
     glyphImage() {
-      if (!(this.slotProp.glyphImage === undefined)) {
-        return this.slotProp.glyphImage
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.glyph.imagen
       }
       return ''
     },

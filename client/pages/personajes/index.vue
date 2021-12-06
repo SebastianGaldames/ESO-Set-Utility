@@ -301,7 +301,7 @@ export default {
       // console.log(content)
       this.selectedSetGlyphInfo = {
         imagen: content.glyph.imagen,
-        glyph: content.glyph._id,
+        glyph: content.glyph,
         calidadGlyph: content.calidad,
         potenciaGlyph: content.potencia,
         tipoGlyph: content.glyph.tipo,
