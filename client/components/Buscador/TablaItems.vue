@@ -170,13 +170,11 @@ export default {
           // Empieza con filtro ubicacion
           if (filtroUbi) {
             filtered = item.nombre === aux
-            // console.log(filtroUbi)
             // Cuando hay ubicacion y tipo
             if (filtroTipo) {
               item.ubicacion.forEach((element) => {
                 if (element === filtroUbi) {
                   if (item.tipo === filtroTipo) {
-                    // console.log(item.nombre)
                     // Cuando hay ubicacion, tipo y peso
                     if (filtroPeso) {
                       item.pesos.forEach((element2) => {
@@ -197,7 +195,6 @@ export default {
                 if (element === filtroUbi) {
                   item.pesos.forEach((element2) => {
                     if (element2 === filtroPeso) {
-                      // console.log(item.nombre)
                       // Cuando hay ubicaicon, peso y tipo
                       if (filtroTipo) {
                         if (item.tipo === filtroTipo) {
@@ -219,7 +216,6 @@ export default {
             }
           } else if (filtroTipo) {
             // Cuando es tipo
-            // console.log(filtroTipo)
             filtered = item.nombre === aux
             if (item.tipo === filtroTipo) {
               // Cuando es tipo y peso
@@ -236,14 +232,12 @@ export default {
             }
           } else if (filtroPeso) {
             // Cuando es peso
-            // console.log(filtroPeso)
             filtered = item.nombre === aux
             item.pesos.forEach((element2) => {
               filtered += element2 === filtroPeso
             })
           } else {
             // cuando no hay filtros
-            // console.log('entree xdd')
             filtered = item
           }
         }
@@ -334,7 +328,6 @@ export default {
               }
             })
           })
-          // console.log(selectedUbi2)
           return selectedUbi2.sort()
         }
       } else {

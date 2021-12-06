@@ -533,7 +533,6 @@ export default {
           userparam
       )
       this.user = userLogued.data
-      console.log(this.user)
     },
     sinDatos() {
       alert('No hay entrada de datos')
@@ -572,38 +571,23 @@ export default {
           process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
           newPassword
         )
+        if (passwordUpdated) {
+        } else {
+          alert('fallo de cambio de contraseña')
+        }
         // eslint-disable-next-line no-console
         console.log(passwordUpdated)
       }
 
       if (updated) {
         // eslint-disable-next-line no-console
-        // this.reLog()
         this.$store.dispatch('setUsuarioUp', this.user.usuario)
-        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
         console.log(updated.data)
         alert('Cambio exitoso')
       } else {
         alert('fallo')
       }
     },
-    // async reLog() {
-    //   console.log(this.user.usuario)
-    //   console.log(this.user.password)
-    //   this.$store.dispatch('salir')
-    //   const datos2 = {
-    //     usuario: this.user.usuario,
-    //     password: this.user.password,
-    //   }
-    //   await this.$axios
-    //     .post(process.env.VUE_APP_SERVER_URL + '/Usuario/login', datos2)
-    //     .then((respuesta) => {
-    //       return respuesta.data
-    //     })
-    //     .then((data) => {
-    //       this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
-    //     })
-    // },
   },
 }
 </script>

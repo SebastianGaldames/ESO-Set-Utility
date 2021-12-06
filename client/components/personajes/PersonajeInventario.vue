@@ -265,7 +265,6 @@ export default {
   methods: {
     // Se agregan los items del inventario eliminados a la lista de items eliminados
     deleteItems() {
-      // console.log(this.checkboxes)
       this.deletedItems = []
       for (let i = 0; i < this.checkboxes.length; i++) {
         if (this.checkboxes[i] === true) {
