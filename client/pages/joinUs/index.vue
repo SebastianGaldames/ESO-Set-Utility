@@ -20,6 +20,16 @@
             v-model="PerfilSteam"
             label="Perfil de Steam"
           ></v-text-field>
+          <v-select
+            v-model="Servidor"
+            :items="opServers"
+            label="Servidor que juegas"
+          ></v-select>
+          <v-select
+            v-model="Idioma"
+            :items="opIdiomas"
+            label="Idioma"
+          ></v-select>
           <v-text-field
             v-model="CorreoContacto"
             label="Correo de Contacto"
@@ -54,19 +64,34 @@
 </template>
 
 <script>
+import $axios from 'axios'
 export default {
   data: () => ({
     sheet: false,
     Nombre: undefined,
     PerfilSteam: undefined,
+    Servidor: undefined,
+    Idioma: undefined,
     CorreoContacto: undefined,
+
+    opServers: ['EU', 'NA'],
+    opIdiomas: ['Ingles', 'Español'],
   }),
   methods: {
-    enviarInfo() {
+    async enviarInfo() {
       this.sheet = !this.sheet
-      // console.log(this.Nombre)
-      // console.log(this.PerfilSteam)
-      // console.log(this.CorreoContacto)
+      const data = {
+        Nombre: this.Nombre,
+        PerfilSteam: this.PerfilSteam,
+        Servidor: this.Servidor,
+        Idioma: this.Idioma,
+        CorreoContacto: this.CorreoContacto,
+      }
+      const response = await $axios.post(
+        process.env.VUE_APP_SERVER_URL + '/Mail/post-mail',
+        data
+      )
+      console.log(response)
     },
   },
 }

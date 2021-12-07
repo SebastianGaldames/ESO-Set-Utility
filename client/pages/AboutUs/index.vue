@@ -20,7 +20,7 @@
           <h3>Leopoldo Muñoz</h3>
           <h3>Francisco Quevedo</h3>
           <h3>Joaquin Saavedra</h3>
-          <h3>NicolasRojas</h3>
+          <h3>Nicolas Rojas</h3>
           <h3>Escarlet Tapia</h3>
           <v-spacer />
           <hr class="linea" />
