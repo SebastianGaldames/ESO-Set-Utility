@@ -139,7 +139,6 @@ export default {
       selectedSet: {},
       selectedPj: {},
       inventario: [],
-      flagWeapon: 1,
     }
   },
   watch: {
@@ -177,9 +176,6 @@ export default {
         if (this.isGlyph(index)) {
           this.inventario[index].enableGlyph = true
         }
-        if (this.flagWeapon === 1) {
-          this.inventario[10].enableGlyph = false
-        }
       }
     },
     selectedTrait() {
@@ -187,9 +183,6 @@ export default {
         this.inventario[index].enableTrait = false
         if (this.isTrait(index)) {
           this.inventario[index].enableTrait = true
-        }
-        if (this.flagWeapon === 1) {
-          this.inventario[10].enableTrait = false
         }
       }
     },
@@ -211,8 +204,8 @@ export default {
         'Ring',
         'Ring',
         'One-Handed',
-        'One-Handed',
         'Off Hand',
+        'Two-Handed',
       ]
       let tipoTemp = 'Armor'
       for (let index = 0; index < secciones.length; index++) {
@@ -285,28 +278,33 @@ export default {
         (setTemp) => setTemp._id === this.selectedSet._id
       )
       if (this.isTwoHanded()) {
-        this.inventario[11].slotPJ.posicion = 'Two-Handed'
-        this.inventario[index - 1].slotPJ.item = itemAux
-        this.inventario[index - 1].slotPJ.familia = setAux
+        this.inventario[10].slotPJ.item = undefined
+        this.inventario[10].slotPJ.familia = undefined
         this.flagWeapon = 1
-        this.inventario[index - 1].slotPJ.glyph = undefined
-        this.inventario[index - 1].slotPJ.potenciaGlyph = undefined
-        this.inventario[index - 1].slotPJ.calidadGlyph = undefined
-        this.inventario[index - 1].slotPJ.trait = undefined
-        this.inventario[index - 1].slotPJ.calidadTrait = undefined
-        this.$emit('slotChanged', this.inventario[index - 1].slotPJ)
-      }
-      if (this.isOneHanded()) {
-        this.flagWeapon = 0
+        this.inventario[10].slotPJ.glyph = undefined
+        this.inventario[10].slotPJ.potenciaGlyph = undefined
+        this.inventario[10].slotPJ.calidadGlyph = undefined
+        this.inventario[10].slotPJ.trait = undefined
+        this.inventario[10].slotPJ.calidadTrait = undefined
+        this.$emit('slotChanged', this.inventario[10].slotPJ)
         this.inventario[11].slotPJ.item = undefined
         this.inventario[11].slotPJ.familia = undefined
-        this.inventario[11].slotPJ.posicion = 'One-Handed'
         this.inventario[11].slotPJ.glyph = undefined
         this.inventario[11].slotPJ.potenciaGlyph = undefined
         this.inventario[11].slotPJ.calidadGlyph = undefined
         this.inventario[11].slotPJ.trait = undefined
         this.inventario[11].slotPJ.calidadTrait = undefined
         this.$emit('slotChanged', this.inventario[11].slotPJ)
+      }
+      if (this.isOneHanded()) {
+        this.inventario[12].slotPJ.item = undefined
+        this.inventario[12].slotPJ.familia = undefined
+        this.inventario[12].slotPJ.glyph = undefined
+        this.inventario[12].slotPJ.potenciaGlyph = undefined
+        this.inventario[12].slotPJ.calidadGlyph = undefined
+        this.inventario[12].slotPJ.trait = undefined
+        this.inventario[12].slotPJ.calidadTrait = undefined
+        this.$emit('slotChanged', this.inventario[12].slotPJ)
       }
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.familia = setAux
@@ -342,11 +340,9 @@ export default {
       this.$emit('saveBuild')
     },
     isItem(categoriaPj, index) {
-      if (index === 11 && this.isTwoHanded()) {
-        return (
-          !(
-            this.selectedItem === undefined || this.selectedSet === undefined
-          ) && this.selectedItem.categoria === 'Two-Handed'
+      if (index === 11 && this.isOneHanded()) {
+        return !(
+          this.selectedItem === undefined || this.selectedSet === undefined
         )
       }
       return (
@@ -377,9 +373,8 @@ export default {
     isOneHanded() {
       return (
         this.selectedItem !== undefined &&
-        this.selectedItem.categoria === 'One-Handed' &&
-        this.inventario[11].slotPJ.item !== undefined &&
-        this.inventario[11].slotPJ.posicion !== 'One-Handed'
+        (this.selectedItem.categoria === 'One-Handed' ||
+          this.selectedItem.categoria === 'Off Hand')
       )
     },
     isAgregarGlyph(val) {
