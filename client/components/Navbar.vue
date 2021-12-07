@@ -24,6 +24,13 @@
         >
           <v-btn text> Familias </v-btn>
         </NuxtLink>
+        <NuxtLink
+          to="/joinUs"
+          style="text-decoration: none; color: inherit"
+          class="pt-5"
+        >
+          <v-btn text> Unetenos </v-btn>
+        </NuxtLink>
         <v-sheet class="pt-5" color="transparent">
           <v-menu open-on-hover bottom offset-y>
             <template v-slot:activator="{ on, attrs }">

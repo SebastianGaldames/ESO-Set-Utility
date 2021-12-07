@@ -2,7 +2,13 @@
   <v-footer dark padless>
     <v-card class="flex" flat tile>
       <v-card-title class="grey darken-3">
-        <strong class="subheading">Contactanos!</strong>
+        <NuxtLink
+          to="/AboutUs"
+          style="text-decoration: none; color: inherit"
+          class="pt-5"
+        >
+          <v-btn text> Nosotros </v-btn>
+        </NuxtLink>
         <v-spacer></v-spacer>
         <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon>
           <v-icon size="24px">

@@ -31,6 +31,14 @@
         <v-col md="2"></v-col>
         <v-col md="8">
           <h3>Agradecemos que usen esta página</h3>
+          <h3>
+            Somos un grupo del curso Construccion de Software dentro de la
+            universidad de Talca.
+          </h3>
+          <h3>
+            Esperamos les guste la pagina y nos den muchos comentarios a traves
+            de nuestro discord
+          </h3>
         </v-col>
         <v-col md="2"></v-col>
       </v-row>
