@@ -3,10 +3,12 @@
     <h1 style="text-align: center">
       {{ selectedPj === undefined ? 'Personaje' : selectedPj.nombre }}
     </h1>
-    <div class="">
+    <v-switch v-model="enableDelete"> </v-switch>
+    <!-- {{ enableDelete }} -->
+    <div>
       <v-item-group>
         <v-container fluid>
-          <!-- <h2 style="text-align: center">Equipment</h2> -->
+          <h2 style="text-align: center">Armor</h2>
           <v-row align="center" justify="center" no-gutters>
             <v-col
               v-for="(slotEq, index) in inventario"
@@ -20,6 +22,7 @@
                 <v-item>
                   <itemSlot
                     :id="slotEq.slotPJ.posicion"
+                    :enable-delete="enableDelete"
                     :enable-item="slotEq.enableItem"
                     :enable-glyph="slotEq.enableGlyph"
                     :enable-trait="slotEq.enableTrait"
@@ -27,6 +30,7 @@
                     @agregarSlotItem="handleAgregarSlotItem(index)"
                     @agregarSlotGlyph="handleAgregarSlotGlyph(index)"
                     @agregarSlotTrait="handleAgregarSlotTrait(index)"
+                    @deleteSlot="handleEliminarSlot(index)"
                   ></itemSlot>
                 </v-item>
               </div>
@@ -46,6 +50,7 @@
                 <v-item>
                   <itemSlot
                     :id="slotEq.slotPJ.posicion"
+                    :enable-delete="enableDelete"
                     :enable-item="slotEq.enableItem"
                     :enable-glyph="slotEq.enableGlyph"
                     :enable-trait="slotEq.enableTrait"
@@ -53,6 +58,7 @@
                     @agregarSlotItem="handleAgregarSlotItem(index + 7)"
                     @agregarSlotGlyph="handleAgregarSlotGlyph(index + 7)"
                     @agregarSlotTrait="handleAgregarSlotTrait(index + 7)"
+                    @deleteSlot="handleEliminarSlot(index + 7)"
                   ></itemSlot>
                 </v-item>
               </div>
@@ -72,6 +78,7 @@
                 <v-item>
                   <itemSlot
                     :id="slotEq.slotPJ.posicion"
+                    :enable-delete="enableDelete"
                     :enable-item="slotEq.enableItem"
                     :enable-glyph="slotEq.enableGlyph"
                     :enable-trait="slotEq.enableTrait"
@@ -79,6 +86,7 @@
                     @agregarSlotItem="handleAgregarSlotItem(index + 10)"
                     @agregarSlotGlyph="handleAgregarSlotGlyph(index + 10)"
                     @agregarSlotTrait="handleAgregarSlotTrait(index + 10)"
+                    @deleteSlot="handleEliminarSlot(index + 10)"
                   ></itemSlot>
                 </v-item>
               </div>
@@ -86,7 +94,7 @@
           </v-row>
         </v-container>
       </v-item-group>
-      <v-btn color="acentuado3" @click="guardarInventario"> Save </v-btn>
+      <v-btn color="positive" @click="guardarInventario"> Save </v-btn>
       <!-- {{ selectedPj.slots }} -->
     </div>
   </div>
@@ -139,6 +147,7 @@ export default {
       selectedSet: {},
       selectedPj: {},
       inventario: [],
+      enableDelete: false,
     }
   },
   watch: {
@@ -325,6 +334,17 @@ export default {
       this.inventario[index].enableGlyph = false
       // console.log(this.inventario[index].slotPJ)
       this.selectedGlyph = {}
+      this.$emit('slotChanged', this.inventario[index].slotPJ)
+    },
+    handleEliminarSlot(index) {
+      this.inventario[index].slotPJ.item = undefined
+      this.inventario[index].slotPJ.familia = undefined
+      this.inventario[index].enableItem = false
+      this.inventario[index].slotPJ.glyph = undefined
+      this.inventario[index].slotPJ.potenciaGlyph = undefined
+      this.inventario[index].slotPJ.calidadGlyph = undefined
+      this.inventario[index].slotPJ.trait = undefined
+      this.inventario[index].slotPJ.calidadTrait = undefined
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     handleAgregarSlotTrait(index) {

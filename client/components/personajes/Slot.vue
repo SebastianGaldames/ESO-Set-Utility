@@ -24,6 +24,15 @@
             >
               +
             </v-btn>
+            <v-btn
+              v-else-if="enableDelete"
+              x-small
+              color="red"
+              :height="defaultItemHeight"
+              @click="deleteSlot"
+            >
+              x
+            </v-btn>
 
             <v-img
               v-else
@@ -112,6 +121,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    enableDelete: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -177,6 +190,9 @@ export default {
     },
     agregarSlotGlyph() {
       this.$emit('agregarSlotGlyph', this.id)
+    },
+    deleteSlot() {
+      this.$emit('deleteSlot', this.id)
     },
   },
 }
