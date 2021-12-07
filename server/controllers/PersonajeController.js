@@ -31,6 +31,10 @@ const query = async (req, res, next) => {
           path: 'trait',
           model: 'Trait',
         },
+        {
+          path: 'glyph',
+          model: 'Glyph',
+        },
       ],
     })
     if (!reg) {
