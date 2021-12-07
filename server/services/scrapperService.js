@@ -6,6 +6,7 @@ const scrapperAdapter = require('../services/scrapperAdapterService')
 const scrapStatus = {
   sets: 0,
   running: false,
+  totalSets: 0,
 }
 
 // move to ENV variables, change secret then
@@ -27,6 +28,7 @@ function auth(authSecret) {
 }
 
 const scrapAllSets = async (setUrls) => {
+  this.scrapStatus.totalSets = setUrls.length
   scrapStatus.running = true
   const allSets = []
   var i = 0
