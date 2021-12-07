@@ -96,14 +96,6 @@ export default {
       personajes: [],
       selectedPersonaje: {},
       selectedPersonaje2: {},
-      statsSelectedPersonaje1: {
-        MaximumMagicka: ['Maximum Magicka', '1'],
-        MaximumMagicka2: ['Maximum Magickax', '5'],
-      },
-      statsSelectedPersonaje2: {
-        MaximumMagicka: ['Maximum Magicka', '3'],
-        MaximumMagicka2: ['Maximum Magickax', '2'],
-      },
       stats: [
         [1, 'Maximum Magicka', 0],
         [2, 'Magicka Recovery', 0],
@@ -123,15 +115,6 @@ export default {
       ],
     }
   },
-  computed: {
-    stats1() {
-      return this.statsSelectedPersonaje1
-    },
-    stats2() {
-      return this.statsSelectedPersonaje2
-    },
-  },
-  mounted() {},
   beforeMount() {
     const storeUser = this.$store.state.usuario
     this.fetchUser(storeUser)
