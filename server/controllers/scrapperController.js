@@ -4,13 +4,23 @@ const { JSDOM } = jsdom
 const scrapperService = require('../services/scrapperService')
 const scrapperAdapter = require('../services/scrapperAdapterService')
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 const test = async (req, res) => {
-  console.log('scrapping main page')
-  const url = scrapperService.url
-  const response = await axios.get(url)
-  console.log('scrapping urls')
-  const setListUrls = scrapperService.scrapSetsTable(response.data)
-  await scrapperService.scrapAllJewels(setListUrls)
+  // console.log('scrapping main page')
+  // const url = scrapperService.url
+  // const response = await axios.get(url)
+  // console.log('scrapping urls')
+  // const setListUrls = scrapperService.scrapSetsTable(response.data)
+  // await scrapperService.scrapAllJewels(setListUrls)
+
+  // for (let i = 0; i < 20; i++) {
+  //   await sleep(1000)
+  //   scrapperService.scrapStatus.sets++
+  // }
+
   res.send('ok')
 }
 
@@ -49,4 +59,8 @@ const scrapSingle = async (req, res) => {
   }
 }
 
-module.exports = { scrap, scrapSingle, test }
+const reportScrapStatus = async (req, res) => {
+  res.status(200).send(scrapperService.scrapStatus)
+}
+
+module.exports = { scrap, scrapSingle, reportScrapStatus, test }

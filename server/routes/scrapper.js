@@ -12,4 +12,6 @@ router.post('/scrap', scrapperController.scrap)
 
 router.post('/scrap-single', scrapperController.scrapSingle)
 
+router.get('/status', scrapperController.reportScrapStatus)
+
 module.exports = router

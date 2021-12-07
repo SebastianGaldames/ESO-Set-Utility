@@ -39,7 +39,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [{ src: '~/plugins/testPlugin.js' }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -77,6 +77,7 @@ export default {
           acentuado1: '#ffe34d',
           acentuado2: '#8B8B8B',
           acentuado3: '#de360b',
+          positive: '#06ab03',
           // info: colors.teal.lighten1,
           // warning: colors.amber.base,
           // error: colors.deepOrange.accent4,
