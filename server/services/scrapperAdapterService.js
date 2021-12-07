@@ -361,6 +361,87 @@ const addFamilyBonusStats = async () => {
   }
 }
 
+const addItemsArmor = async () => {
+  const armorValues = {
+    heavy: {
+      chest: 2772,
+      headShoulderLegsFeet: 2425,
+      hands: 1386,
+      waist: 1039,
+    },
+    medium: {
+      chest: 2084,
+      headShoulderLegsFeet: 1823,
+      hands: 1042,
+      waist: 781,
+    },
+    light: {
+      chest: 1396,
+      headShoulderLegsFeet: 1221,
+      hands: 698,
+      waist: 523,
+    },
+  }
+
+  const res = await axios
+    .get(process.env.VUE_APP_SERVER_URL + '/item/list')
+    .catch(function (err) {
+      //console.log(err)
+    })
+
+  const items = res.data
+
+  console.log(items.length)
+
+  for (const item of items) {
+    if (item.tipo === 'Armadura') {
+      var pesoValues
+      switch (item.peso) {
+        case 'Heavy':
+          pesoValues = armorValues.heavy
+          break
+        case 'Medium':
+          pesoValues = armorValues.medium
+          break
+        case 'Light':
+          pesoValues = armorValues.light
+          break
+        default:
+          break
+      }
+
+      var itemArmor
+      switch (item.categoria) {
+        case 'Chest':
+          itemArmor = pesoValues.chest
+          break
+        case 'Hands':
+          itemArmor = pesoValues.hands
+          break
+        case 'Waist':
+          itemArmor = pesoValues.waist
+          break
+        default:
+          itemArmor = pesoValues.headShoulderLegsFeet
+          break
+      }
+
+      armorUpdate = {
+        _id: item._id,
+        estadisticas: {
+          armadura: itemArmor,
+        },
+      }
+
+      const resUpdate = await axios
+        .put(process.env.VUE_APP_SERVER_URL + '/item/update', armorUpdate)
+        .catch(function (err) {
+          //console.log(err)
+        })
+    }
+  }
+}
+
 module.exports = {
   addFamily,
   addItem,
@@ -373,4 +454,5 @@ module.exports = {
   addFamilyWeights,
   apendItems,
   addFamilyBonusStats,
+  addItemsArmor,
 }
