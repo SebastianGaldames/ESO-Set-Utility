@@ -241,7 +241,7 @@ export default {
         slot.glyph = content.glyph
         slot.potenciaGlyph = content.potenciaGlyph
         slot.calidadGlyph = content.calidadGlyph
-        slot.glyphImage = content.glyphImage
+        // slot.glyphImage = content.glyphImage
         slot.trait = content.trait
       } else {
         slot = {
@@ -254,18 +254,35 @@ export default {
           glyph: content.glyph,
           potenciaGlyph: content.potenciaGlyph,
           calidadGlyph: content.calidadGlyph,
-          glyphImage: content.glyphImage,
+          // glyphImage: content.glyphImage,
           trait: content.trait,
         }
         this.selectedPersonaje.slots.push(slot)
       }
     },
     async handleSaveBuild() {
+      console.log(this.selectedPersonaje.slots)
+      const auxSlots = []
+      for (const item of this.selectedPersonaje.slots) {
+        const aux = {
+          item: item.item,
+          familia: item.familia,
+          nivel: item.nivel,
+          calidad: item.calidad,
+          posicion: item.posicion,
+          tag: item.tag,
+          glyph: item.glyph !== undefined ? item.glyph._id : undefined,
+          potenciaGlyph: item.potenciaGlyph,
+          calidadGlyph: item.calidadGlyph,
+          trait: item.trait,
+        }
+        auxSlots.push(aux)
+      }
       // handles the endpoint call for saving the equipment of a character
       // TODO build a propper slot according to schema
       const slots = {
         _id: this.selectedPersonaje._id,
-        slots: this.selectedPersonaje.slots,
+        slots: auxSlots,
       }
       await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Personaje/update',
