@@ -3,7 +3,7 @@
     <h4 style="text-align: center">
       {{ slotProp.posicion }}
     </h4>
-    <v-tooltip bottom color="red">
+    <v-tooltip bottom color="acentuado2">
       <template v-slot:activator="{ on, attrs }">
         <v-card
           v-bind="attrs"
@@ -18,7 +18,7 @@
             <v-btn
               v-if="enableItem"
               x-small
-              color="acentuado3"
+              color="positive"
               :height="defaultItemHeight"
               @click="agregarSlotItem"
             >
@@ -37,7 +37,7 @@
           <div class="d-flex">
             <v-btn
               v-if="enableTrait"
-              color="acentuado3"
+              color="positive"
               x-small
               :height="defaultGlyphTraitHeight"
               :width="defaultGlyphTraitWidth"
@@ -57,7 +57,7 @@
           <div class="d-flex">
             <v-btn
               v-if="enableGlyph"
-              color="acentuado3"
+              color="positive"
               x-small
               :height="defaultGlyphTraitHeight"
               :width="defaultGlyphTraitWidth"
