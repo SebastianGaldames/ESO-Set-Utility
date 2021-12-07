@@ -1,72 +1,58 @@
 <template>
-  <div style="height: 100%" class="primario">
-    <div style="margin: 2%">
-      <v-item-group>
-        <v-row>
-          <v-item>
-            <v-card width="30%">
-              <!-- Aqui se debe seleccionar personaje -->
-              <div v-if="personajes.length > 0" style="margin: 2%">
-                <v-combobox
-                  v-model="selectedPersonaje"
-                  item-text="nombre"
-                  :items="personajes"
-                  label="Seleccionar un personaje"
-                ></v-combobox>
-                <personaje
-                  :personaje="selectedPersonaje"
-                  class="bordes"
-                ></personaje>
-              </div>
-            </v-card>
-          </v-item>
-          <!-- Aqui deberia ir la comparacion de las estadisticas -->
-          <v-item>
-            <v-card class="" width="40%">
-              <div class="dif font">Diferencia de estadisticas</div>
-              <div
-                v-for="stat in stats"
-                :key="stat[1]"
-                class="stastCenter font"
-              >
-                <div v-if="stat[0] > stat[2]" class="stats">
-                  <p style="color: green">{{ stat[0] }}</p>
-                  <p>{{ stat[1] }}</p>
-                  <p style="color: red">{{ stat[2] }}</p>
-                </div>
-                <div v-else-if="stat[0] < stat[2]" class="stats">
-                  <p style="color: red">{{ stat[0] }}</p>
-                  <p>{{ stat[1] }}</p>
-                  <p style="color: green">{{ stat[2] }}</p>
-                </div>
-                <div v-else class="stats">
-                  <p>{{ stat[0] }}</p>
-                  <p>{{ stat[1] }}</p>
-                  <p>{{ stat[2] }}</p>
-                </div>
-              </div>
-            </v-card>
-          </v-item>
-          <v-item>
-            <v-card width="30%">
-              <!-- Segunda seleccion -->
-              <div v-if="personajes.length > 0" style="margin: 2%">
-                <v-combobox
-                  v-model="selectedPersonaje2"
-                  item-text="nombre"
-                  :items="personajes"
-                  label="Seleccionar un personaje"
-                ></v-combobox>
-                <personaje
-                  :personaje="selectedPersonaje2"
-                  class="bordes"
-                ></personaje>
-              </div>
-            </v-card>
-          </v-item>
-        </v-row>
-      </v-item-group>
-    </div>
+  <div v-if="personajes.length > 0" class="d-flex mt-4">
+    <v-card class="ml-2" width="30%">
+      <!-- Aqui se debe seleccionar personaje -->
+      <div style="margin: 2%">
+        <v-combobox
+          v-model="selectedPersonaje"
+          item-text="nombre"
+          :items="personajes"
+          label="Seleccionar un personaje"
+        ></v-combobox>
+        <!-- <personaje :personaje="selectedPersonaje" class="bordes"></personaje> -->
+        <personaje-lite
+          :personaje="selectedPersonaje"
+          class="bordes"
+        ></personaje-lite>
+      </div>
+    </v-card>
+    <!-- Aqui deberia ir la comparacion de las estadisticas -->
+    <v-card class="mx-2" width="40%">
+      <h2 class="dif">Diferencia de estadísticas</h2>
+      <div v-for="stat in stats" :key="stat[1]" class="stastCenter font">
+        <div v-if="stat[0] > stat[2]" class="stats">
+          <span style="color: green">{{ stat[0] }}</span>
+          <span>{{ stat[1] }}</span>
+          <span style="color: red">{{ stat[2] }}</span>
+        </div>
+        <div v-else-if="stat[0] < stat[2]" class="stats">
+          <span style="color: red">{{ stat[0] }}</span>
+          <span>{{ stat[1] }}</span>
+          <span style="color: green">{{ stat[2] }}</span>
+        </div>
+        <div v-else class="stats">
+          <span>{{ stat[0] }}</span>
+          <span>{{ stat[1] }}</span>
+          <span>{{ stat[2] }}</span>
+        </div>
+      </div>
+    </v-card>
+    <v-card class="mr-3" width="30%">
+      <!-- Segunda seleccion -->
+      <div style="margin: 2%">
+        <v-combobox
+          v-model="selectedPersonaje2"
+          item-text="nombre"
+          :items="personajes"
+          label="Seleccionar un personaje"
+        ></v-combobox>
+        <!-- <personaje :personaje="selectedPersonaje2" class="bordes"></personaje> -->
+        <personaje-lite
+          :personaje="selectedPersonaje2"
+          class="bordes"
+        ></personaje-lite>
+      </div>
+    </v-card>
   </div>
 </template>
 
@@ -81,7 +67,7 @@
 }
 .dif {
   margin-top: 20px;
-  margin-bottom: 10%;
+  margin-bottom: 2%;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -102,14 +88,14 @@
 }
 </style>
 <script>
-import Personaje from '~/components/personajes/Personaje.vue'
+import PersonajeLite from '~/components/personajes/PersonajeLite.vue'
 export default {
-  components: { Personaje },
+  components: { PersonajeLite },
   data() {
     return {
       personajes: [],
-      selectedPersonaje: [],
-      selectedPersonaje2: [],
+      selectedPersonaje: {},
+      selectedPersonaje2: {},
       statsSelectedPersonaje1: {
         MaximumMagicka: ['Maximum Magicka', '1'],
         MaximumMagicka2: ['Maximum Magickax', '5'],
