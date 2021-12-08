@@ -2,9 +2,11 @@
   <v-card>
     <v-card-title> Estadisticas </v-card-title>
     <v-card-text>
-      <p>
-        <!-- {{ itemsPerSetMethod(personajeSlots) }} -->
-      </p>
+      <!-- <p>
+        {{ personajeSlots }}
+      </p> -->
+      <span>Armor:</span>
+      {{ stats.armor }}
     </v-card-text>
   </v-card>
 </template>
@@ -15,6 +17,10 @@ export default {
     personajeSlots: {
       type: Array,
       default: () => [],
+    },
+    stats: {
+      type: Object,
+      required: true,
     },
   },
   data() {
@@ -72,3 +78,8 @@ export default {
   },
 }
 </script>
+<style>
+span {
+  font-weight: bold;
+}
+</style>
