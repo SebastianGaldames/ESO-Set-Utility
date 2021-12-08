@@ -3,7 +3,12 @@
     <h1 style="text-align: center">
       {{ selectedPj === undefined ? 'Personaje' : selectedPj.nombre }}
     </h1>
-    <v-switch v-model="enableDelete"> </v-switch>
+    <v-switch
+      v-model="enableDelete"
+      :label="'Eliminar Slots'"
+      color="red darken-3"
+    >
+    </v-switch>
     <!-- {{ enableDelete }} -->
     <div>
       <v-item-group>
