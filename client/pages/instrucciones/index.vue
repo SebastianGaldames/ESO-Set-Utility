@@ -84,12 +84,6 @@
                         <h4 class="mt-16" style="text-align: justify">
                           <!-- https://i.ibb.co/yXbdRtR/passrecovery2.png
 src="https://i.ibb.co/18d3jTw/passrecovery3.png"
- barra superior
- barra inferior
- pantalla familia
- 
- ejemplo busqueda
- contenido de familia
 
                           -->
                           Para Recuperar contraseña deberás seguir una serie de
@@ -138,7 +132,131 @@ src="https://i.ibb.co/18d3jTw/passrecovery3.png"
                   </div>
                 </v-expansion-panel-content>
               </v-expansion-panel>
-
+              <h2>Mi Cuenta</h2>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Cambio de datos</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2 mb-5">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Para cambiar alguno de los datos que ingresaste cuando
+                          te registraste, debes dirigirte a tu perfil, esto lo
+                          harás haciendo click sobre tu nombre de usuario en la
+                          esquina superior derecha de la pantalla una vez que
+                          iniciaste Sesión, se desplegarán dos opciones:
+                          "perfil" y "salir", deberás dar click en perfil, lo
+                          que te llevará a la vista que se muestra a la derecha:
+                        </h4>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="2.5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Cuando te encuentres en esa vista debes decidir si
+                          quieres cambiar los datos de usuario como tal, en cuyo
+                          caso deberás seleccionar la opción de "Cambio de
+                          datos". A continuación se revelarán los datos que
+                          puedes cambiar, lo cual realizarás haciendo click en
+                          el cuadrado correspondiente del dato que desees
+                          cambiar, es decir, si lo que quieres es cambiar tu
+                          mail debes hacer click en el cuadrado junto a él y
+                          realizar las modificaciones correspondientes, para
+                          guardar los cambios debes hacer click sobre el botón
+                          de "Guardar Cambios". Se te notificará que los cambios
+                          han sido guardados y podrás visualizarlo en el
+                          recuadro de datos de usuario que se mostró
+                          anteriormente.
+                        </h4>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="1.5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/nf1pnpf/micuentacambiogatos.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>
+                    Actualización de Respuestas de Seguridad
+                  </h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2 mb-5">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Para cambiar alguno de los datos que ingresaste cuando
+                          te registraste, debes dirigirte a tu perfil, esto lo
+                          harás haciendo click sobre tu nombre de usuario en la
+                          esquina superior derecha de la pantalla una vez que
+                          iniciaste Sesión, se desplegarán dos opciones:
+                          "perfil" y "salir", deberás dar click en perfil, lo
+                          que te llevará a la vista que se muestra a la derecha:
+                        </h4>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="2.5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Cuando te encuentres en esa vista debes decidir si
+                          quieres cambiar los datos de usuario como tal o
+                          cambiar las respuestas de seguridad, en cuyo caso
+                          deberás seleccionar la opción de "Actualizar
+                          respuestas de seguridad", inmediatamente se revelarán
+                          campos de texto con un cuadrado de selección junto a
+                          las preguntas de seguridad que contestaste cuando te
+                          registraste, para poder modificarlas deberás dar click
+                          en el cuadrado junto a la respuesta que quieras
+                          modificar, reescribir tu respuesta y click sobre el
+                          botón "Guardar Cambios" para que la modificación sea
+                          realizada.
+                        </h4>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="2.5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/jwKBD4C/micuentarespuestasseguridad.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
               <h2>Familias</h2>
               <v-expansion-panel>
                 <v-expansion-panel-header>
