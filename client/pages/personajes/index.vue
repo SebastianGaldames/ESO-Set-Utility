@@ -269,7 +269,7 @@ export default {
         }
         this.selectedPersonaje.slots.push(slot)
       }
-      console.log(this.selectedPersonaje.slots)
+      // console.log(this.selectedPersonaje.slots)
       // recalc stats
       this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },

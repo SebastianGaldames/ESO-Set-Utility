@@ -7,6 +7,8 @@
       </p> -->
       <span>Armor:</span>
       {{ stats.armor }}
+      <br />
+      {{ stats }}
     </v-card-text>
   </v-card>
 </template>
