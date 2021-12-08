@@ -92,6 +92,11 @@ export default {
         data
       )
       console.log(response)
+      const response2 = await $axios.post(
+        process.env.VUE_APP_SERVER_URL + '/Mail/info-mail',
+        data
+      )
+      console.log(response2)
     },
   },
 }

@@ -4,7 +4,7 @@
       <v-card-title class="grey darken-3">
         <a href="/AboutUs"> Nosotros </a>
         <v-spacer></v-spacer>
-        <v-btn v-for="data in links" :key="data" class="mx-4" dark icon>
+        <v-btn v-for="data in links" :key="data.nro" class="mx-4" dark icon>
           <a :href="data.route" target="_blank" rel="noopener noreferrer">
             <v-icon size="24px">
               {{ data.icon }}
@@ -22,10 +22,10 @@
 export default {
   data: () => ({
     links: [
-      { icon: 'mdi-facebook', route: '' },
-      { icon: 'mdi-twitter', route: '' },
-      { icon: 'mdi-discord', route: 'https://discord.gg/WuBbkgC3cy' },
-      { icon: 'mdi-instagram', route: '' },
+      { nro: '1', icon: 'mdi-facebook', route: '' },
+      { nro: '2', icon: 'mdi-twitter', route: '' },
+      { nro: '3', icon: 'mdi-discord', route: 'https://discord.gg/WuBbkgC3cy' },
+      { nro: '4', icon: 'mdi-instagram', route: '' },
     ],
   }),
 }

@@ -45,4 +45,51 @@ const postMail = async (req, res, next) => {
     }
   }
 
-module.exports = { postMail }
+  const infoMail = async (req, res, next) => {
+    try {
+        let data = req.body
+
+        let seoMailData = {
+            user: 'EsoSetUtility@gmail.com',
+            pass: 'SepasaConstru'
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: seoMailData
+        });
+
+        let text = `
+            Info
+            Nombre: ${data.Nombre} 
+            Usuario de Steam: ${data.PerfilSteam}
+            Servidor: ${data.Servidor}
+            Idioma: ${data.Idioma}
+            Correo de Contacto: ${data.CorreoContacto}
+        `
+        
+        var mailOptions = {
+            from: seoMailData.user,
+            to: seoMailData.user,
+            subject: 'Informacion de suscriptor',
+            text: text,
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                res.status(500).send({
+                    message: 'Ocurrio un error',
+                })
+            } else {
+                res.status(200).send("Enviado!")
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    } catch (e) {
+        res.status(500).send({
+            message: 'Ocurrio un error',
+        })
+        next(e)
+    }
+  }
+module.exports = { postMail, infoMail }
