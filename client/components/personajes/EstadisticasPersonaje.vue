@@ -5,7 +5,8 @@
       <!-- <p>
         {{ personajeSlots }}
       </p> -->
-      <span>Armor: {{ stats }}</span>
+      <span>Armor:</span>
+      {{ stats.armor }}
     </v-card-text>
   </v-card>
 </template>
@@ -77,3 +78,8 @@ export default {
   },
 }
 </script>
+<style>
+span {
+  font-weight: bold;
+}
+</style>

@@ -160,7 +160,7 @@ export default {
       )
       await this.fetchPersonajes(user.personajes)
       this.selectedPersonaje = this.personajes[0]
-      this.stats = this.$calculateArmor(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
@@ -271,7 +271,7 @@ export default {
       }
       console.log(this.selectedPersonaje.slots)
       // recalc stats
-      this.stats = this.$calculateArmor(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handleSaveBuild() {
       console.log(this.selectedPersonaje.slots)
@@ -350,7 +350,7 @@ export default {
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
-      this.stats = this.$calculateArmor(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handlerEliminarSelectedPersonaje(event) {
       await this.$axios.$put(
