@@ -1,6 +1,6 @@
 <template>
   <div>
-    <recuperacionContrasena></recuperacionContrasena>
+    <recuperacion-contrasena></recuperacion-contrasena>
   </div>
 </template>
 <script>
