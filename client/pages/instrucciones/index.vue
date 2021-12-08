@@ -22,25 +22,107 @@ import Personaje from '~/components/personajes/Personaje.vue';
                         <h4 class="mt-16" style="text-align: justify">
                           Para crear un usuario debes dirigirte al botón de
                           inicio de sesión ubicado en la esquina superior
-                          derecha de la pantalla. Posteriormente se abrirá un
-                          recuadro para el inicio de sesión y más abajo estará
-                          el enlace de registro, deberás dar click y se
-                          desplegará una vista con datos que deberás ingresar
-                          para crear tu cuenta, debes aceptar los términos y
-                          condiciones de uso y finalmente dar click en
-                          registrarte.
+                          derecha de la pantalla. Posteriormente se abrirá el
+                          siguiente recuadro para el inicio de sesión:
                         </h4>
                       </v-col>
-                      <v-col cols="5">
+                      <v-col cols="4">
                         <v-img
-                          class="mt-4"
-                          aspect-ratio="1"
+                          class="mt-13"
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/rH5yqLd/Login.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="9">
+                        <h4 class="mt-6" style="text-align: justify">
+                          En la parte inferior del recuadro estará el enlace de
+                          registro, deberás dar click y se desplegará una vista
+                          con datos que deberás ingresar para crear tu cuenta.
+                        </h4>
+                      </v-col>
+                      <v-col cols="9">
+                        <v-img
+                          class="mt-2"
+                          aspect-ratio="1.8"
                           height="100%"
                           width="auto"
                           contain
                           src="https://i.ibb.co/bsBJ3cD/registro.png"
                         ></v-img>
                       </v-col>
+                    </v-row>
+
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Todos los campos son obligatorios, pero existen
+                          algunos con requisitos especiales, como el e-mail que
+                          debe ingresarse y confirmarse o la contraseña que al
+                          menos debe contar con 8 caracteres como mínimo para
+                          ser válida y luego debe ser confirmada:
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="4"
+                          contain
+                          src="https://i.ibb.co/jH2Fg54/contrase-a.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/yFCWFMc/preguntas-de-seguridad.png"
+                        ></v-img>
+                      </v-col>
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-10" style="text-align: justify">
+                          Luego de haber ingresado y verificado la contraseña,
+                          te encontrarás con la sección de preguntas de
+                          seguridad. Es importante que contestes a conciencia
+                          estas preguntas, debido a que esta información se
+                          utilizará para que puedas recuperar tu contraseña en
+                          caso de que la hayas olvidado, estas preguntas exigen
+                          un máximo de 20 caracteres y si te pasas de ellos no
+                          podrás registrarte.
+                        </h4>
+                      </v-col>
+                    </v-row>
+
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-10" style="text-align: justify">
+                          Luego de haber llenado tus datos de registro debes
+                          aceptar los términos y condiciones de uso, para
+                          leerlos puedes hacer click en el enlace mostrado con
+                          letras azules de "términos y condiciones" y aceptarlos
+                          desde la misma pantalla desplegable o dar click en el
+                          cuadrado dispuesto para ello.
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="5"
+                          contain
+                          src="https://i.ibb.co/nf8fdXp/terminos.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <h4 class="mt-10" style="text-align: justify">
+                        Finalmente debes dar click en registrarte y se te
+                        notificará que el proceso se ha realizado.
+                      </h4>
                     </v-row>
                   </div>
                 </v-expansion-panel-content>
@@ -179,15 +261,32 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           te registraste, debes dirigirte a tu perfil, esto lo
                           harás haciendo click sobre tu nombre de usuario en la
                           esquina superior derecha de la pantalla una vez que
-                          iniciaste Sesión, se desplegarán dos opciones:
-                          "perfil" y "salir", deberás dar click en perfil, lo
-                          que te llevará a la vista que se muestra a la derecha:
+                          iniciaste Sesión, se desplegarán tres opciones:
+                          "Perfil", "Personajes" y "Salir":
+                        </h4>
+                      </v-col>
+                      <v-col class="mt-10" cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Deberás dar click en perfil, lo que te llevará a la
+                          vista que se muestra a la derecha:
                         </h4>
                       </v-col>
                       <v-col cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="2.5"
+                          aspect-ratio="3"
                           height="100%"
                           width="auto"
                           contain
@@ -217,7 +316,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                       <v-col cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="1.5"
+                          aspect-ratio="1.7"
                           height="100%"
                           width="auto"
                           contain
@@ -243,15 +342,32 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           te registraste, debes dirigirte a tu perfil, esto lo
                           harás haciendo click sobre tu nombre de usuario en la
                           esquina superior derecha de la pantalla una vez que
-                          iniciaste Sesión, se desplegarán dos opciones:
-                          "perfil" y "salir", deberás dar click en perfil, lo
-                          que te llevará a la vista que se muestra a la derecha:
+                          iniciaste Sesión, se desplegarán tres opciones:
+                          "Perfil", "Personajes" y "Salir":
+                        </h4>
+                      </v-col>
+                      <v-col class="mt-10" cols="5">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="5"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Deberás dar click en perfil, lo que te llevará a la
+                          vista que se muestra a la derecha:
                         </h4>
                       </v-col>
                       <v-col cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="2.5"
+                          aspect-ratio="3"
                           height="100%"
                           width="auto"
                           contain
@@ -279,7 +395,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                       <v-col cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="2.5"
+                          aspect-ratio="3"
                           height="100%"
                           width="auto"
                           contain
@@ -311,10 +427,12 @@ import Personaje from '~/components/personajes/Personaje.vue';
                             class="mt-4"
                             aspect-ratio="15"
                             contain
-                            src="https://i.ibb.co/NYTncYG/navbar.png"
+                            src="https://i.ibb.co/BsPMw58/navbar.png"
                           ></v-img>
-                          Al hacer click se te redirigirá a una vista como la
-                          que se muestra a continuación:
+                          <h4 class="mt-6" style="text-align: justify">
+                            Al hacer click se te redirigirá a una vista como la
+                            que se muestra a continuación:
+                          </h4>
                           <v-img
                             aspect-ratio="1"
                             contain
@@ -327,8 +445,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           la esquina inferior derecha te encontrarás con una
                           barra que muestra cuantos items son mostrados por
                           página, cuantas páginas hay con las coincidencias y
-                          las flechas para moverte por cada una, hacia la
-                          izquierda o hacia la derecha:
+                          las flechas de navegación para moverte por cada una,
+                          hacia la izquierda o derecha:
 
                           <v-img
                             class="mt-6"
@@ -336,60 +454,78 @@ import Personaje from '~/components/personajes/Personaje.vue';
                             contain
                             src="https://i.ibb.co/PjkRmFZ/familias-inferior.png"
                           ></v-img>
-                          En ella te encontrarás con una barra de búsqueda desde
-                          la cual puedes escribir palabras que coincidan con el
-                          nombre, ubicacion, tipo o peso del item que desees
-                          revisar:
-
-                          <v-img
-                            aspect-ratio="6"
-                            contain
-                            src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
-                          ></v-img>
+                        </h4>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Búsqueda de Familia</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Para realizar la búsqueda de una familia deberás
+                          dirigirte a la barra de búsqueda "Buscar familia" e
+                          ingresar palabras que coincidan con el nombre,
+                          ubicacion, tipo o peso del item que deseas revisar y
+                          de acuerdo a las coincidencias, estos aparecerán:
+                        </h4>
+                        <v-img
+                          aspect-ratio="6"
+                          contain
+                          src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
                           Un ejemplo de esto se muestra a continuación:
-                          <v-img
-                            class="mt-6"
-                            aspect-ratio="2"
-                            contain
-                            src="https://i.ibb.co/tcxjQYx/Familias5.png"
-                          ></v-img>
+                        </h4>
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/tcxjQYx/Familias5.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
                           También existe otra manera de ubicar el item que
                           desees revisar, esto se hace utilizando los filtros
                           con opciones que se encuentran bajo la barra de
                           búsqueda, de izquierda a derecha puedes ver los
                           filtros de: Búsqueda:
-                          <v-img
-                            aspect-ratio="2"
-                            contain
-                            src="https://i.ibb.co/hWD81cZ/familias2.png"
-                          ></v-img>
-                          Tipo:
-                          <v-img
-                            aspect-ratio="2"
-                            contain
-                            src="https://i.ibb.co/DDNmrnb/familias3.png"
-                          ></v-img>
-
-                          Peso:
-
-                          <v-img
-                            aspect-ratio="3"
-                            contain
-                            src="https://i.ibb.co/gJzTy82/Familias4.png"
-                          ></v-img>
-
+                        </h4>
+                        <v-img
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/hWD81cZ/familias2.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">Tipo:</h4>
+                        <v-img
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/DDNmrnb/familias3.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">Peso:</h4>
+                        <v-img
+                          aspect-ratio="3"
+                          contain
+                          src="https://i.ibb.co/gJzTy82/Familias4.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">
                           Una vez se han puesto todos los filtros o ya has
                           identificado en pantalla el item del que deseas
                           conocer los detalles, solo debes hacer click sobre el
                           ícono del item y te enviara a la vista con los
                           detalles:
-                          <v-img
-                            class="mt-6"
-                            aspect-ratio="1.7"
-                            contain
-                            src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
-                          ></v-img>
                         </h4>
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="1.7"
+                          contain
+                          src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
+                        ></v-img>
                       </v-col>
                     </v-row>
                   </div>
@@ -454,7 +590,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
               </v-expansion-panel>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <h2>Seleccinar Personaje</h2></v-expansion-panel-header
+                  <h2>Seleccionar Personaje</h2></v-expansion-panel-header
                 >
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
@@ -674,7 +810,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
                     <v-row justify="center">
-                      <v-col class="pl-10" cols="8">
+                      <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
                           A continuación se muestra la sección del equipamiento
                           del personaje, esta sección se activa una vez que el
@@ -688,25 +824,49 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           guardar los cambios realizados, ya que de lo contrario
                           no se guardarán las modificaciones.
                         </h4>
+                      </v-col>
+                      <v-col cols="4">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="3"
+                          aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/0fRNWsZ/agregar-personaje9.png"
                         ></v-img>
                       </v-col>
-                      <v-col class="pl-10" cols="8">
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
                           De esta manera, una vez que se vayan agregando items,
                           glifos y traits a cada sección la vista del
                           equipamiento de personaje irá modificandose de la
                           siguiente manera:
                         </h4>
+                      </v-col>
+                      <v-col cols="4">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="3"
+                          aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/fq3Vdx8/agregar-personaje22.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Existe además una opción para visualizar los detalles
+                          de lo que actualmente se encuentra en cada slot, para
+                          ello debes poner tu mouse sobre él y se desplegará una
+                          pegueña vista con los detalles, tal como se muestra:
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="1.7"
+                          contain
+                          src="https://i.ibb.co/Qp3DfDz/detalles-item-en-personaje-equipado.png"
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -783,8 +943,19 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para eliminar items del equipamiento del personaje, el
                           usuario deberá hacer click en el switch ubicado en la
                           esquina superior izquierda de la vista del
-                          equipamiento del personaje, así se modificará la vista
-                          para eliminar los items que el usuario desee, como se
+                          equipamiento del personaje, el cual especifica la
+                          opción "Eliminar Slots", deshabilitada por defecto:
+                        </h4>
+
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="20"
+                          contain
+                          src="https://i.ibb.co/gJNsSHM/eliminar-slot.png"
+                        ></v-img>
+                        <h4 class="mt-4" style="text-align: justify">
+                          Al activar la opción, se modificará la vista para
+                          eliminar los items que el usuario desee, como se
                           muestra a continuación:
                         </h4>
                         <v-img
@@ -797,7 +968,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
 
                       <h4 style="text-align: justify">
                         Así dependiendo de la sección en la que se encuentre, el
-                        usuario podrá eliminar items, trais o glifos.
+                        usuario podrá eliminar items, traits o glifos de los
+                        slots.
                       </h4>
                     </v-row>
                   </div>
@@ -951,7 +1123,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
               </v-expansion-panel>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <h2>Agregar trait a Personaje</h2></v-expansion-panel-header
+                  <h2>Agregar Trait a Personaje</h2></v-expansion-panel-header
                 >
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
