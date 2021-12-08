@@ -10,7 +10,19 @@ export default {
   components: { AdminScrap },
 
   data() {
-    return {}
+    return {
+      usuarioLogeado: false,
+      usuario: null,
+    }
+  },
+  beforeCreate() {
+    const usuario = this.$store.state.usuario
+    if (usuario === 'administrador') {
+      this.usuario = usuario
+      this.usuarioLogeado = true
+    } else {
+      this.$router.push({ name: 'index' })
+    }
   },
 }
 </script>

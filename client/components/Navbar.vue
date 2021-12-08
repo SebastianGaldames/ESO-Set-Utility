@@ -49,7 +49,16 @@
                 </v-btn>
               </div>
             </template>
-            <v-list v-if="usuarioLogeado">
+            <v-list
+              v-if="usuarioLogeado && usuario === 'administrador'"
+              class="tile"
+            >
+              <v-list class="tile">
+                <v-list-item @click="scrap()">Scrap</v-list-item>
+                <v-list-item @click="salir()">Salir</v-list-item>
+              </v-list>
+            </v-list>
+            <v-list v-else-if="usuarioLogeado">
               <v-list-item @click="irPerfil()"> Perfil </v-list-item>
               <v-list-item @click="salir()"> Salir </v-list-item>
             </v-list>
@@ -97,6 +106,11 @@ export default {
       this.snackbar = true
       this.$store.dispatch('salir')
       this.$router.push({ name: 'index' })
+    },
+    scrap() {
+      if (this.usuarioLogeado) {
+        this.$router.push('/adminScrap')
+      }
     },
   },
 }
