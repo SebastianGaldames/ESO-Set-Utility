@@ -62,15 +62,55 @@ export default (context, inject) => {
   }
   // eslint-disable-next-line no-unused-vars
   function getItemStats(slot) {
-    const itemStats = []
+    const itemStats = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
     // calculate the stats generated for item+modifiers
     // TODO add undefined check for item that is not an armor
     const spellResistance = slot.item.estadisticas.armadura
     const physicalResistance = slot.item.estadisticas.armadura
-    itemStats.push({ type: 'Spell Resistance', value: spellResistance })
-    itemStats.push({ type: 'Physical Resistance', value: physicalResistance })
     // Trait
-    let traitStats = []
+    const traitStats = getTraitStats(slot)
+    // Glyph
+    const glyphStats = getGlyphStats(slot)
+
+    if (
+      slot.tag === 'Waist' ||
+      slot.tag === 'Feet' ||
+      slot.tag === 'Hands' ||
+      slot.tag === 'Shoulder'
+    ) {
+      glyphStats.adds.forEach((stat) => {
+        stat.value = stat.value * 0.4
+      })
+      glyphStats.multiply.forEach((stat) => {
+        stat.value = stat.value * 0.4
+      })
+    }
+
+    return itemStats
+  }
+  function getTraitStats(slot) {
+    const stats = {
+      adds: [],
+      multiply: [],
+    }
+    let traitStats
     if (slot.trait !== undefined) {
       if (slot.tag !== 'Two-Handed') {
         // Calidad
@@ -94,23 +134,63 @@ export default (context, inject) => {
         }
       }
       for (const stat of traitStats) {
-        if (stat.operation === 'Adds') {
-          const target = itemStats.find((elm) => elm.type === stat.type)
-
-          if (target !== undefined) {
-            target.value += stat.value
+        if (stat.operation !== undefined) {
+          if (stat.operation === 'Adds') {
+            // Caso que la operacion sea Adds
+            stats.adds.push({ type: stat.type, value: stat.value })
           } else {
-            itemStats.push({ type: stat.type, value: stat.value })
+            // Caso que la operacion sea Multiply
+            stats.multiply.push({ type: stat.type, value: stat.value })
           }
-        } else {
-          // Caso que la operacion sea Multiply
         }
       }
     }
+    return stats
+  }
+  function getGlyphStats(slot) {
+    const stats = {
+      adds: [],
+      multiply: [],
+    }
+    if (slot.glyph !== undefined) {
+      const potencia = slot.glyph.potencias.find(
+        (pot) => pot.potencia === slot.potenciaGlyph
+      )
 
-    // Glyph
+      let calidadStats
+      switch (slot.calidadGlyph) {
+        case 'normal':
+          calidadStats = potencia.calidades.normal
+          break
+        case 'fine':
+          calidadStats = potencia.calidades.fine
+          break
+        case 'superior':
+          calidadStats = potencia.calidades.superior
+          break
+        case 'epic':
+          calidadStats = potencia.calidades.epic
+          break
+        case 'legendary':
+          calidadStats = potencia.calidades.legendary
+          break
 
-    return itemStats
+        default:
+          break
+      }
+      for (const stat of calidadStats) {
+        if (stat.operation !== undefined) {
+          if (stat.operation === 'Adds') {
+            // Caso que la operacion sea Adds
+            stats.adds.push({ type: stat.type, value: stat.value })
+          } else {
+            // Caso que la operacion sea Multiply
+            stats.multiply.push({ type: stat.type, value: stat.value })
+          }
+        }
+      }
+    }
+    return stats
   }
   function calculateStats(slots) {
     const stats = {
