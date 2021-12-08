@@ -287,15 +287,15 @@ export default {
         (setTemp) => setTemp._id === this.selectedSet._id
       )
       if (this.isTwoHanded()) {
+        this.$emit('deleteSlot', this.inventario[10].slotPJ)
         this.inventario[10].slotPJ.item = undefined
         this.inventario[10].slotPJ.familia = undefined
-        this.flagWeapon = 1
         this.inventario[10].slotPJ.glyph = undefined
         this.inventario[10].slotPJ.potenciaGlyph = undefined
         this.inventario[10].slotPJ.calidadGlyph = undefined
         this.inventario[10].slotPJ.trait = undefined
         this.inventario[10].slotPJ.calidadTrait = undefined
-        this.$emit('slotChanged', this.inventario[10].slotPJ)
+        this.$emit('deleteSlot', this.inventario[11].slotPJ)
         this.inventario[11].slotPJ.item = undefined
         this.inventario[11].slotPJ.familia = undefined
         this.inventario[11].slotPJ.glyph = undefined
@@ -303,9 +303,9 @@ export default {
         this.inventario[11].slotPJ.calidadGlyph = undefined
         this.inventario[11].slotPJ.trait = undefined
         this.inventario[11].slotPJ.calidadTrait = undefined
-        this.$emit('slotChanged', this.inventario[11].slotPJ)
       }
       if (this.isOneHanded()) {
+        this.$emit('deleteSlot', this.inventario[12].slotPJ)
         this.inventario[12].slotPJ.item = undefined
         this.inventario[12].slotPJ.familia = undefined
         this.inventario[12].slotPJ.glyph = undefined
@@ -313,7 +313,6 @@ export default {
         this.inventario[12].slotPJ.calidadGlyph = undefined
         this.inventario[12].slotPJ.trait = undefined
         this.inventario[12].slotPJ.calidadTrait = undefined
-        this.$emit('slotChanged', this.inventario[12].slotPJ)
       }
       this.inventario[index].slotPJ.item = itemAux
       this.inventario[index].slotPJ.familia = setAux
@@ -337,6 +336,7 @@ export default {
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     handleEliminarSlot(index) {
+      this.$emit('deleteSlot', this.inventario[index].slotPJ)
       this.inventario[index].slotPJ.item = undefined
       this.inventario[index].slotPJ.familia = undefined
       this.inventario[index].enableItem = false
@@ -345,7 +345,6 @@ export default {
       this.inventario[index].slotPJ.calidadGlyph = undefined
       this.inventario[index].slotPJ.trait = undefined
       this.inventario[index].slotPJ.calidadTrait = undefined
-      this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
     handleAgregarSlotTrait(index) {
       this.inventario[index].slotPJ.trait = this.selectedTrait.trait
