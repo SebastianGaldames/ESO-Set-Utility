@@ -9,6 +9,8 @@ import AdminScrap from '~/components/Admin/AdminScrap.vue'
 export default {
   components: { AdminScrap },
 
-  data() {},
+  data() {
+    return {}
+  },
 }
 </script>

@@ -29,11 +29,17 @@ export default {
     }
   },
   methods: {
-    scrapPage() {
-      let i = 0
-      for (this.power; i < 100; i++) {
-        this.power += i
-      }
+    async scrapPage() {
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/scrapper/scrap', {
+          secret: process.env.SCRAPPER_SECRET,
+        })
+        .then((respuesta) => {
+          return respuesta
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
   },
 }
