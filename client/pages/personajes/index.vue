@@ -58,6 +58,7 @@
         :glyph-slot="selectedSetGlyphInfo"
         :trait-slot="selectedSetTraitInfo"
         @slotChanged="handleSlotChanged"
+        @deleteSlot="handleDeleteSlot"
         @saveBuild="handleSaveBuild"
       ></personaje>
       <estadisticas-personaje
@@ -228,9 +229,16 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
+    handleDeleteSlot(content) {
+      const auxSlots = this.selectedPersonaje.slots.filter(
+        (value) => value.tag !== content.tag
+      )
+      this.selectedPersonaje.slots = auxSlots
+      // console.log(this.selectedPersonaje.slots)
+    },
     handleSlotChanged(content) {
       // adds the new item to the slots
-      console.log(content)
+      // console.log(content)
       let slot = this.selectedPersonaje.slots.find(
         (slot) => slot.tag === content.tag
       )
@@ -261,6 +269,7 @@ export default {
         }
         this.selectedPersonaje.slots.push(slot)
       }
+      console.log(this.selectedPersonaje.slots)
       // recalc stats
       this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
