@@ -60,9 +60,10 @@
         @slotChanged="handleSlotChanged"
         @saveBuild="handleSaveBuild"
       ></personaje>
-      <!-- <estadisticas-personaje
+      <estadisticas-personaje
         :personaje-slots="selectedPersonaje.slots"
-      ></estadisticas-personaje> -->
+        :stats="stats"
+      ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -82,7 +83,6 @@ export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
-    // eslint-disable-next-line vue/no-unused-components
     EstadisticasPersonaje,
     Personaje,
     gliphsComp,
@@ -127,6 +127,7 @@ export default {
       currentUser: {},
       snackbar: false,
       itemsBorrados: [],
+      stats: {},
     }
   },
   computed: {
@@ -259,6 +260,8 @@ export default {
         }
         this.selectedPersonaje.slots.push(slot)
       }
+      // recalc stats
+      this.stats = this.$calculateArmor(this.selectedPersonaje.slots)
     },
     async handleSaveBuild() {
       console.log(this.selectedPersonaje.slots)
