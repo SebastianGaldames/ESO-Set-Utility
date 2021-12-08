@@ -3,14 +3,14 @@ export default (context, inject) => {
     return sumArmor(slots)
   })
   function sumArmor(slots) {
-    let armor = 0
+    let armorTemp = 0
     for (const slot of slots) {
-      const tempArmor =
-        slot.slotPJ.item === undefined
-          ? 0
-          : slot.slotPJ.item.estadisticas.armadura
-      armor = armor + tempArmor
+      if (slot.item !== undefined) {
+        if (slot.item.tipo === 'Armadura') {
+          armorTemp = armorTemp + slot.item.estadisticas.armadura
+        }
+      }
     }
-    return armor
+    return { armor: armorTemp }
   }
 }
