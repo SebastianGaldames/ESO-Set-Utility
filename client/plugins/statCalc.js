@@ -378,6 +378,28 @@ export default (context, inject) => {
     }
     return statDelta
   }
+
+  function addStatObjects(statA, statB) {
+    const cloneA = Object.assign({}, statA)
+    cloneA.armor += statB.armor
+    cloneA.maximumMagicka += statB.maximumMagicka
+    cloneA.magickaRecovery += statB.magickaRecovery
+    cloneA.maximumHealth += statB.maximumHealth
+    cloneA.healthRecovery += statB.healthRecovery
+    cloneA.maximumStamina += statB.maximumStamina
+    cloneA.staminaRecovery += statB.staminaRecovery
+    cloneA.spellDamage += statB.spellDamage
+    cloneA.spellCritical += statB.spellCritical
+    cloneA.spellPenetration += statB.spellPenetration
+    cloneA.weaponDamage += statB.weaponDamage
+    cloneA.weaponCritical += statB.weaponCritical
+    cloneA.physicalPenetration += statB.physicalPenetration
+    cloneA.spellResistance += statB.spellResistance
+    cloneA.physicalResistance += statB.physicalResistance
+    cloneA.criticalResistance += statB.criticalResistance
+    return cloneA
+  }
+
   function calculateStats(slots) {
     const stats = {
       armor: 0,
