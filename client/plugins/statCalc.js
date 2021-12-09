@@ -61,7 +61,7 @@ export default (context, inject) => {
     return setsStats
   }
   function getItemStats(slot) {
-    const itemStats = {
+    let itemStats = {
       armor: 0,
       maximumMagicka: 0,
       magickaRecovery: 0,
@@ -100,6 +100,16 @@ export default (context, inject) => {
       glyphStats.multiply.forEach((stat) => {
         stat.value = stat.value * 0.4
       })
+    }
+
+    itemStats = applyAdds(traitStats.adds, itemStats)
+    itemStats = applyAdds(glyphStats.adds, itemStats)
+    if (slot.item.tipo === 'Armadura') {
+      itemStats.armor = itemStats.armor + slot.item.estadisticas.armadura
+      itemStats.spellResistance =
+        itemStats.spellResistance + slot.item.estadisticas.armadura
+      itemStats.physicalResistance =
+        itemStats.physicalResistance + slot.item.estadisticas.armadura
     }
 
     return itemStats
