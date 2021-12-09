@@ -70,9 +70,30 @@
       </div>
     </v-card>
   </div>
+  <div v-else class="noPersonajes">
+    <v-card>
+      <v-card-title class="text-h5">
+        Usted no posee ningún personaje
+      </v-card-title>
+      <v-card-text>Desea ir al apartado de crear un personaje?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="crearPersonaje">
+          ir a personajes
+        </v-btn>
+        <v-btn color="red darken-1" text @click="cancelar"> Cancelar </v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <style>
+.noPersonajes {
+  margin-top: 10%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
 .bordes {
   border-width: 2px;
   border-style: solid;
@@ -189,6 +210,12 @@ export default {
     this.fetchUser(storeUser)
   },
   methods: {
+    crearPersonaje() {
+      this.$router.push('/personajes')
+    },
+    cancelar() {
+      this.$router.push('/')
+    },
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
