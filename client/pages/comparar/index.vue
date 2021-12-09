@@ -17,7 +17,7 @@
       </div>
     </v-card>
     <!-- Aqui deberia ir la comparacion de las estadisticas -->
-    <v-card class="mx-2" width="40%">
+    <v-card class="mx-2" width="40%" img="https://imgur.com/faXqoLO.png">
       <h2 class="dif">Diferencia de estadísticas</h2>
       <div
         v-for="stat in statsPersonajes"
@@ -104,7 +104,7 @@
 .ancho2 {
   width: 100px;
   align-items: flex-end;
-  justify-content: end;
+  justify-content: flex-end;
   display: flex;
 }
 .nombre {
