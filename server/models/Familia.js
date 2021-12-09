@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const bonoSchema = new Schema({
   texto: { type: String },
   cantidad: { type: Number },
-  estadisticas: { type: [String] },
+  estadisticas: { type: [Object] },
 })
 
 const familiaSchema = new Schema({

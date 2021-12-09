@@ -31,22 +31,22 @@ const query = async (req, res, next) => {
 }
 //Metodo para obtener un Item por nombre (unico)
 const queryNombre = async (req, res, next) => {
-    try {
-      const reg = await models.Item.findOne({ nombre: req.query.nombre })
-      if (!reg) {
-        res.status(404).send({
-          message: 'El registro no existe',
-        })
-      } else {
-        res.status(200).json(reg)
-      }
-    } catch (e) {
-      res.status(500).send({
-        message: 'Ocurrio un error',
+  try {
+    const reg = await models.Item.findOne({ nombre: req.query.nombre })
+    if (!reg) {
+      res.status(404).send({
+        message: 'El registro no existe',
       })
-      next(e)
+    } else {
+      res.status(200).json(reg)
     }
+  } catch (e) {
+    res.status(500).send({
+      message: 'Ocurrio un error',
+    })
+    next(e)
   }
+}
 //Metodo para listar todos los Item actuales en la BD
 const list = async (req, res, next) => {
   try {
@@ -62,7 +62,10 @@ const list = async (req, res, next) => {
 //Metodo para actualizar un Item en concreto mediante el _id
 const update = async (req, res, next) => {
   try {
-    const reg = await models.Item.findByIdAndUpdate({ _id: req.body._id }, {})
+    const reg = await models.Item.findByIdAndUpdate(
+      { _id: req.body._id },
+      req.body
+    )
     res.status(200).json(reg)
   } catch (e) {
     res.status(500).send({

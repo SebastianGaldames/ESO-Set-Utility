@@ -1,13 +1,16 @@
 <template>
-  <v-sheet
-    color="transparent"
-    min-height="80"
-    width="100%"
-    class="d-flex flex-direction:column align-center py-4 px-2"
-  >
-    <v-img contain :src="item.imagen" height="32px" />
-    <h4>{{ item.nombre }}</h4>
-  </v-sheet>
+  <div>
+    <v-sheet
+      color="transparent"
+      min-height="80"
+      width="100%"
+      class="d-flex flex-direction:column align-center py-4 px-2"
+    >
+      <v-img contain :src="item.imagen" height="32px" />
+      <h4>{{ item.nombre }}</h4>
+    </v-sheet>
+    <span>{{ item.peso }}</span>
+  </div>
 </template>
 <script>
 export default {
