@@ -45,7 +45,7 @@ export default (context, inject) => {
   function getSetsStats(slots) {
     const itPerSet = itemsPerSet(slots)
 
-    const statObject = {
+    let statObject = {
       armor: 0,
       maximumMagicka: 0,
       magickaRecovery: 0,
@@ -77,7 +77,10 @@ export default (context, inject) => {
       }
     }
 
-    applyAdds(setsStats.filter((stat) => stat.operation === 'Adds'))
+    statObject = applyAdds(
+      setsStats.filter((stat) => stat.operation === 'Adds'),
+      statObject
+    )
 
     return statObject
   }
