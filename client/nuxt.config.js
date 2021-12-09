@@ -39,7 +39,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: '~/plugins/testPlugin.js' }],
+  plugins: [
+    { src: '~/plugins/testPlugin.js' },
+    { src: '~/plugins/statCalc.js' },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

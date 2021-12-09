@@ -58,11 +58,13 @@
         :glyph-slot="selectedSetGlyphInfo"
         :trait-slot="selectedSetTraitInfo"
         @slotChanged="handleSlotChanged"
+        @deleteSlot="handleDeleteSlot"
         @saveBuild="handleSaveBuild"
       ></personaje>
-      <!-- <estadisticas-personaje
+      <estadisticas-personaje
         :personaje-slots="selectedPersonaje.slots"
-      ></estadisticas-personaje> -->
+        :stats="stats"
+      ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
       <span>¡Personaje agregado exitosamente!</span>
@@ -82,7 +84,6 @@ export default {
   components: {
     SeleccionPersonaje,
     PersonajeInventario,
-    // eslint-disable-next-line vue/no-unused-components
     EstadisticasPersonaje,
     Personaje,
     gliphsComp,
@@ -127,6 +128,7 @@ export default {
       currentUser: {},
       snackbar: false,
       itemsBorrados: [],
+      stats: {},
     }
   },
   computed: {
@@ -158,6 +160,7 @@ export default {
       )
       await this.fetchPersonajes(user.personajes)
       this.selectedPersonaje = this.personajes[0]
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
@@ -226,9 +229,17 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
+    handleDeleteSlot(content) {
+      const auxSlots = this.selectedPersonaje.slots.filter(
+        (value) => value.tag !== content.tag
+      )
+      this.selectedPersonaje.slots = auxSlots
+      // console.log(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
+    },
     handleSlotChanged(content) {
       // adds the new item to the slots
-      console.log(content)
+      // console.log(content)
       let slot = this.selectedPersonaje.slots.find(
         (slot) => slot.tag === content.tag
       )
@@ -259,6 +270,9 @@ export default {
         }
         this.selectedPersonaje.slots.push(slot)
       }
+      // console.log(this.selectedPersonaje.slots)
+      // recalc stats
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handleSaveBuild() {
       console.log(this.selectedPersonaje.slots)
@@ -337,6 +351,7 @@ export default {
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handlerEliminarSelectedPersonaje(event) {
       await this.$axios.$put(

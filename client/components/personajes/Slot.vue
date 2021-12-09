@@ -1,8 +1,15 @@
 <template>
   <div>
-    <h4 style="text-align: center">
-      {{ slotProp.posicion }}
-    </h4>
+    <div class="d-flex" style="justify-content: center">
+      <v-btn v-if="enableDelete" plain @click="deleteSlot">
+        <h4 style="text-align: center; color: red">{{ slotProp.posicion }}</h4>
+      </v-btn>
+      <v-btn v-else plain disabled>
+        <h4 style="text-align: center; color: white">
+          {{ slotProp.posicion }}
+        </h4>
+      </v-btn>
+    </div>
     <v-tooltip bottom color="acentuado2">
       <template v-slot:activator="{ on, attrs }">
         <v-card
@@ -23,15 +30,6 @@
               @click="agregarSlotItem"
             >
               +
-            </v-btn>
-            <v-btn
-              v-else-if="enableDelete"
-              x-small
-              color="red"
-              :height="defaultItemHeight"
-              @click="deleteSlot"
-            >
-              x
             </v-btn>
 
             <v-img
@@ -85,7 +83,7 @@
           </div>
         </v-card>
       </template>
-      <div>
+      <div v-if="itemName !== ''">
         <span>{{ itemName }}</span
         ><br />
         <span>{{ familyName }}</span
@@ -132,6 +130,9 @@ export default {
       defaultItemWidth: '32',
       defaultGlyphTraitHeight: '32',
       defaultGlyphTraitWidth: '32',
+      defaultButtonWidth: '20',
+      defaultButtonHeight: '20',
+      colorPos: 'white',
     }
   },
   computed: {
