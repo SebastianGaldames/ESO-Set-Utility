@@ -82,6 +82,11 @@ export default (context, inject) => {
       statObject
     )
 
+    const multSets = applyAdds(
+      setsStats.filter((stat) => stat.operation === 'Multiply'),
+      statObject
+    )
+
     return statObject
   }
   function getItemStats(slot) {
@@ -133,6 +138,9 @@ export default (context, inject) => {
       itemStats.physicalResistance =
         itemStats.physicalResistance + slot.item.estadisticas.armadura
     }
+
+    const multTrait = addMults(traitStats.multiply, itemStats)
+    const multGlyph = addMults(glyphStats.multiply, itemStats)
 
     return itemStats
   }
