@@ -111,6 +111,65 @@ export default (context, inject) => {
 
     return itemStats
   }
+
+  function applyAdds(addStatsArray, statObject) {
+    for (const stat of addStatsArray) {
+      switch (stat.type) {
+        case 'Armor':
+          statObject.armor += stat.value
+          break
+        case 'Maximum Health':
+          statObject.maximumHealth += stat.value
+          break
+        case 'Maximum Magicka':
+          statObject.maximumMagicka += stat.value
+          break
+        case 'Maximum Stamina':
+          statObject.maximumStamina += stat.value
+          break
+        case 'Health Recovery':
+          statObject.healthRecovery += stat.value
+          break
+        case 'Magicka Recovery':
+          statObject.magickaRecovery += stat.value
+          break
+        case 'Stamina Recovery':
+          statObject.staminaRecovery += stat.value
+          break
+        case 'Spell Damage':
+          statObject.spellDamage += stat.value
+          break
+        case 'Spell Critical':
+          statObject.spellCritical += stat.value
+          break
+        case 'Spell Penetration':
+          statObject.spellPenetration += stat.value
+          break
+        case 'Weapon Damage':
+          statObject.weaponDamage += stat.value
+          break
+        case 'Weapon Critical':
+          statObject.weaponCritical += stat.value
+          break
+        case 'Physical Penetration':
+          statObject.physicalPenetration += stat.value
+          break
+        case 'Spell Resistance':
+          statObject.spellResistance += stat.value
+          break
+        case 'Physical Resistance':
+          statObject.physicalResistance += stat.value
+          break
+        case 'Critical Resistance':
+          statObject.criticalResistance += stat.value
+          break
+        default:
+        //
+      }
+    }
+    return statObject
+  }
+
   function calculateStats(slots) {
     const stats = {
       armor: 0,
