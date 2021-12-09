@@ -81,7 +81,6 @@
         <v-btn color="green darken-1" text @click="crearPersonaje">
           ir a personajes
         </v-btn>
-        <v-btn color="red darken-1" text @click="cancelar"> Cancelar </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -166,6 +165,7 @@ export default {
     statsPersonajes() {
       if (this.selectedPersonaje.nombre !== undefined) {
         const newStats = this.$calculateStats(this.selectedPersonaje.slots)
+        // console.log(this.$getSetsBonus(this.selectedPersonaje.slots))
         // console.log('stats p 1: ', newStats)
         const stats2 = []
         for (let i = 0; i < this.stats.length; i++) {
@@ -213,9 +213,7 @@ export default {
     crearPersonaje() {
       this.$router.push('/personajes')
     },
-    cancelar() {
-      this.$router.push('/')
-    },
+
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',

@@ -62,6 +62,7 @@
         @saveBuild="handleSaveBuild"
       ></personaje>
       <estadisticas-personaje
+        v-if="selectedPersonaje !== undefined"
         :personaje-slots="selectedPersonaje.slots"
         :stats="stats"
       ></estadisticas-personaje>
@@ -160,7 +161,10 @@ export default {
       )
       await this.fetchPersonajes(user.personajes)
       this.selectedPersonaje = this.personajes[0]
-      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
+      if (this.selectedPersonaje !== undefined) {
+        this.stats = this.$calculateStats(this.selectedPersonaje.slots)
+      }
+
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {

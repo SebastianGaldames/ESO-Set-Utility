@@ -6,6 +6,9 @@ export default (context, inject) => {
   inject('calculateStats', (slots) => {
     return calculateStats(slots)
   })
+  inject('getSetsBonus', (slots) => {
+    return itemsPerSet(slots)
+  })
   function sumArmor(slots) {
     let armorTemp = 0
     for (const slot of slots) {
