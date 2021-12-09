@@ -45,6 +45,25 @@ export default (context, inject) => {
   function getSetsStats(slots) {
     const itPerSet = itemsPerSet(slots)
 
+    const statObject = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
+
     const setsStats = []
 
     // Por cada familia del equipamiento
@@ -58,7 +77,9 @@ export default (context, inject) => {
       }
     }
 
-    return setsStats
+    applyAdds(setsStats.filter((stat) => stat.operation === 'Adds'))
+
+    return statObject
   }
   function getItemStats(slot) {
     let itemStats = {
@@ -80,9 +101,7 @@ export default (context, inject) => {
       criticalResistance: 0,
     }
     // calculate the stats generated for item+modifiers
-    // TODO add undefined check for item that is not an armor
-    const spellResistance = slot.item.estadisticas.armadura
-    const physicalResistance = slot.item.estadisticas.armadura
+
     // Trait
     const traitStats = getTraitStats(slot)
     // Glyph
