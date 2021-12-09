@@ -163,6 +163,10 @@ export default (context, inject) => {
         case 'Critical Resistance':
           statObject.criticalResistance += stat.value
           break
+        case 'Offensive Penetration':
+          statObject.physicalPenetration += stat.value
+          statObject.spellPenetration += stat.value
+          break
         default:
         //
       }
