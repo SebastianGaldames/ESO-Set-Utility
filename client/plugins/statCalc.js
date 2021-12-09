@@ -554,6 +554,7 @@ export default (context, inject) => {
   //     maximumStamina
   function calcStamina(itemStamina, setStamina) {
     const stamina = 220 * 50 + 1000 + itemStamina + setStamina
+    return stamina
   }
   //     staminaRecovery
   function calcStaminaRecovery(itemStaminaRegen, setStaminaRegen) {
