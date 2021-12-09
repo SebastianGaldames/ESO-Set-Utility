@@ -45,7 +45,7 @@ export default (context, inject) => {
   function getSetsStats(slots) {
     const itPerSet = itemsPerSet(slots)
 
-    const statObject = {
+    let statObject = {
       armor: 0,
       maximumMagicka: 0,
       magickaRecovery: 0,
@@ -77,9 +77,44 @@ export default (context, inject) => {
       }
     }
 
-    applyAdds(setsStats.filter((stat) => stat.operation === 'Adds'))
+    statObject = applyAdds(
+      setsStats.filter((stat) => stat.operation === 'Adds'),
+      statObject
+    )
+
+    const multSets = addMults(
+      setsStats.filter((stat) => stat.operation === 'Multiply'),
+      statObject
+    )
+
+    statObject = addStatObjects(statObject, multSets)
 
     return statObject
+  }
+  function getItemCollectionStats(slots) {
+    let itemColStats = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
+    for (const slot of slots) {
+      const itemStats = getItemStats(slot)
+      itemColStats = addStatObjects(itemColStats, itemStats)
+    }
+    return itemColStats
   }
   function getItemStats(slot) {
     let itemStats = {
@@ -107,6 +142,11 @@ export default (context, inject) => {
     // Glyph
     const glyphStats = getGlyphStats(slot)
 
+    // console.log('traitStats')
+    // console.log(traitStats)
+    // console.log('glyphStats')
+    // console.log(glyphStats)
+
     if (
       slot.tag === 'Waist' ||
       slot.tag === 'Feet' ||
@@ -130,6 +170,12 @@ export default (context, inject) => {
       itemStats.physicalResistance =
         itemStats.physicalResistance + slot.item.estadisticas.armadura
     }
+
+    const multTrait = addMults(traitStats.multiply, itemStats)
+    const multGlyph = addMults(glyphStats.multiply, itemStats)
+
+    itemStats = addStatObjects(itemStats, multTrait)
+    itemStats = addStatObjects(itemStats, multGlyph)
 
     return itemStats
   }
@@ -408,10 +454,80 @@ export default (context, inject) => {
       physicalResistance: 0,
       criticalResistance: 0,
     }
-    stats.armor = sumArmor(slots)
+    // stats.armor = sumArmor(slots)
     // itemsPerSet(slots)
     // console.log(slots)
-    console.log(getSetsStats(slots))
+    // console.log(getSetsStats(slots))
+
+    const itemsStats = getItemCollectionStats(slots)
+    const setsStats = getSetsStats(slots)
+
+    console.log('itemsStats')
+    console.log(itemsStats)
+    console.log('setsStats')
+    console.log(setsStats)
+
+    stats.armor = itemsStats.armor + setsStats.armor
+    stats.maximumMagicka = calcMagicka(
+      itemsStats.maximumMagicka,
+      setsStats.maximumMagicka
+    )
+    stats.magickaRecovery = calcMagickaRecovery(
+      itemsStats.magickaRecovery,
+      setsStats.magickaRecovery
+    )
+    stats.maximumHealth = calcHealth(
+      itemsStats.maximumHealth,
+      setsStats.maximumHealth
+    )
+    stats.healthRecovery = calcHealthRecovery(
+      itemsStats.healthRecovery,
+      setsStats.healthRecovery
+    )
+    stats.maximumStamina = calcStamina(
+      itemsStats.maximumStamina,
+      setsStats.maximumStamina
+    )
+    stats.staminaRecovery = calcStaminaRecovery(
+      itemsStats.staminaRecovery,
+      setsStats.staminaRecovery
+    )
+    stats.spellDamage = calcSpellDamage(
+      itemsStats.spellDamage,
+      setsStats.spellDamage
+    )
+    stats.spellCritical = calcSpellCritical(
+      itemsStats.spellCritical,
+      setsStats.spellCritical
+    )
+    stats.spellPenetration = calcSpellPenetration(
+      itemsStats.spellPenetration,
+      setsStats.spellPenetration
+    )
+    stats.weaponDamage = calcWeaponDamage(
+      itemsStats.weaponDamage,
+      setsStats.weaponDamage
+    )
+    stats.weaponCritical = calcWeaponCritical(
+      itemsStats.weaponCritical,
+      setsStats.weaponCritical
+    )
+    stats.physicalPenetration = calcPhysicalPenetration(
+      itemsStats.physicalPenetration,
+      setsStats.physicalPenetration
+    )
+    stats.spellResistance = calcSpellResistance(
+      itemsStats.spellResistance,
+      setsStats.spellResistance
+    )
+    stats.physicalResistance = calcphysicalResistance(
+      itemsStats.physicalResistance,
+      setsStats.physicalResistance
+    )
+    stats.criticalResistance = calcCriticalResistance(
+      itemsStats.criticalResistance,
+      setsStats.criticalResistance
+    )
 
     return stats
   }
@@ -451,7 +567,7 @@ export default (context, inject) => {
     return spellDamage
   }
   //     spellCritical
-  function calcSpellCritical(setSpellCrit, itemSpellCrit) {
+  function calcSpellCritical(itemSpellCrit, setSpellCrit) {
     const spellCrit =
       setSpellCrit * (1 / (2 * 66 * (100 + 66))) + 0.1 + itemSpellCrit
     return spellCrit
@@ -467,7 +583,7 @@ export default (context, inject) => {
     return weaponDamage
   }
   //     weaponCritical
-  function calcWeaponCritical(setWeaponCrit, itemWeaponCrit) {
+  function calcWeaponCritical(itemWeaponCrit, setWeaponCrit) {
     const weaponCrit =
       setWeaponCrit * (1 / (2 * 66 * (100 + 66))) + 0.1 + itemWeaponCrit
     return weaponCrit
