@@ -174,6 +174,90 @@ export default (context, inject) => {
     return statObject
   }
 
+  function addMults(multsArray, statObject) {
+    const statDelta = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
+    // for each value in statsArray add the percentage to delta
+    for (const mult of multsArray) {
+      switch (mult.type) {
+        case 'Armor':
+          statDelta.armor += statObject.armor * mult.value
+          break
+        case 'Maximum Health':
+          statDelta.maximumHealth += statObject.maximumHealth * mult.value
+          break
+        case 'Maximum Magicka':
+          statDelta.maximumMagicka += statObject.maximumMagicka * mult.value
+          break
+        case 'Maximum Stamina':
+          statDelta.maximumStamina += statObject.maximumStamina * mult.value
+          break
+        case 'Health Recovery':
+          statDelta.healthRecovery += statObject.healthRecovery * mult.value
+          break
+        case 'Magicka Recovery':
+          statDelta.magickaRecovery += statObject.magickaRecovery * mult.value
+          break
+        case 'Stamina Recovery':
+          statDelta.staminaRecovery += statObject.staminaRecovery * mult.value
+          break
+        case 'Spell Damage':
+          statDelta.spellDamage += statObject.spellDamage * mult.value
+          break
+        case 'Spell Critical':
+          statDelta.spellCritical += statObject.spellCritical * mult.value
+          break
+        case 'Spell Penetration':
+          statDelta.spellPenetration += statObject.spellPenetration * mult.value
+          break
+        case 'Weapon Damage':
+          statDelta.weaponDamage += statObject.weaponDamage * mult.value
+          break
+        case 'Weapon Critical':
+          statDelta.weaponCritical += statObject.weaponCritical * mult.value
+          break
+        case 'Physical Penetration':
+          statDelta.physicalPenetration +=
+            statObject.physicalPenetration * mult.value
+          break
+        case 'Spell Resistance':
+          statDelta.spellResistance += statObject.spellResistance * mult.value
+          break
+        case 'Physical Resistance':
+          statDelta.physicalResistance +=
+            statObject.physicalResistance * mult.value
+          break
+        case 'Critical Resistance':
+          statDelta.criticalResistance +=
+            statObject.criticalResistance * mult.value
+          break
+        case 'Offensive Penetration':
+          statDelta.physicalPenetration +=
+            statObject.physicalPenetration * mult.value
+          statDelta.spellPenetration += statObject.spellPenetration * mult.value
+          break
+        default:
+        //
+      }
+    }
+    return statDelta
+  }
   function calculateStats(slots) {
     const stats = {
       armor: 0,
