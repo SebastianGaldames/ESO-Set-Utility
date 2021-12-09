@@ -1,15 +1,191 @@
-import Personaje from '~/components/personajes/Personaje.vue';
 <template>
   <div class="pa-2 imagenFondo">
     <v-layout height="100%">
       <v-flex xs12 sm11 class="mx-auto pa-4 ma-10">
         <v-card color="rgb(0, 0, 0, 0.8)" style="border: 1px solid #a68f7b">
           <v-card-title primary-title class="justify-center"
-            >Preguntas Frecuentes sobre el funcionamiento de la
-            página</v-card-title
+            ><h2>
+              Aquí puedes resolver tus dudas sobre el funcionamiento de la
+              página
+            </h2></v-card-title
           >
           <v-card-actions>
             <v-expansion-panels focusable>
+              <h2>Familias</h2>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Sección Familias</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2 mb-5">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-16" style="text-align: justify">
+                          La sección de Familias se ha creado con el fin de
+                          entregar toda la información necesaria sobre los items
+                          pertenecientes a cada una de ellas.. Si quieres saber
+                          los detalles de algún item en específico este es tu
+                          lugar. Para acceder a esta sección debes dirigirte a
+                          la barra de navegación ubicada en la parte superior
+                          derecha de la pantalla y localizar "Familias":
+                          <v-img
+                            class="mt-4"
+                            aspect-ratio="15"
+                            contain
+                            src="https://i.ibb.co/BsPMw58/navbar.png"
+                          ></v-img>
+                          <h4 class="mt-6" style="text-align: justify">
+                            Al hacer click se te redirigirá a una vista como la
+                            que se muestra a continuación:
+                          </h4>
+                          <v-img
+                            aspect-ratio="1"
+                            contain
+                            src="https://i.ibb.co/KsD5Vgy/familias1.png"
+                          ></v-img>
+
+                          En ella se encuentra el listado total de los items
+                          utilizables en el juego, clasificados por nombre,
+                          ubicación, tipo y peso, para navegar por esta tabla en
+                          la esquina inferior derecha te encontrarás con una
+                          barra que muestra cuantos items son mostrados por
+                          página, cuantas páginas hay con las coincidencias y
+                          las flechas de navegación para moverte por cada una,
+                          hacia la izquierda o derecha:
+
+                          <v-img
+                            class="mt-6"
+                            aspect-ratio="13"
+                            contain
+                            src="https://i.ibb.co/PjkRmFZ/familias-inferior.png"
+                          ></v-img>
+                        </h4>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Búsqueda de Familia</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Para realizar la búsqueda de una familia deberás
+                          dirigirte a la barra de búsqueda "Buscar familia" e
+                          ingresar palabras que coincidan con el nombre,
+                          ubicación, tipo o peso del item que deseas revisar y
+                          de acuerdo a las coincidencias, estos aparecerán:
+                        </h4>
+                        <v-img
+                          aspect-ratio="6"
+                          contain
+                          src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
+                          Un ejemplo de esto se muestra a continuación:
+                        </h4>
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/tcxjQYx/Familias5.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
+                          También existe otra manera de ubicar el item que
+                          desees revisar, esto se hace utilizando los filtros
+                          con opciones que se encuentran bajo la barra de
+                          búsqueda, de izquierda a derecha puedes ver los
+                          filtros de:
+                        </h4>
+                        <h4 class="mt-6" style="text-align: justify">
+                          Búsqueda:
+                        </h4>
+                        <v-img
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/hWD81cZ/familias2.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">Tipo:</h4>
+                        <v-img
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/DDNmrnb/familias3.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">Peso:</h4>
+                        <v-img
+                          aspect-ratio="3"
+                          contain
+                          src="https://i.ibb.co/gJzTy82/Familias4.png"
+                        ></v-img>
+                        <h4 style="text-align: justify">
+                          Una vez se han puesto todos los filtros o ya has
+                          identificado en pantalla el item del que deseas
+                          conocer los detalles, solo debes hacer click sobre el
+                          ícono del item y te enviará a la vista con los
+                          detalles:
+                        </h4>
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="1.7"
+                          contain
+                          src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <h2>Únetenos</h2>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Llenar Formulario</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2 mb-5">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-6" style="text-align: justify">
+                          Si quieres mantenerte informado acerca de las
+                          novedades de la página, tenemos una sección de
+                          únetenos para que puedas acceder a nuestro clan, para
+                          ello deberás dirigirte en la barra de navegación en la
+                          esquina superior derecha de la pantalla y dar click en
+                          la opción "Unetenos".
+                        </h4>
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="15"
+                          contain
+                          src="https://i.ibb.co/BsPMw58/navbar.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
+                          Al hacer click se te redirigirá a una vista como la
+                          que se muestra a continuación:
+                        </h4>
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/Wzd3P4W/unetenos.png"
+                        ></v-img>
+                        <h4 class="mt-6" style="text-align: justify">
+                          En ella deberás llenar los datos solicidatos: Nombre,
+                          Usuario de Steam y Mail de contacto (Al que te llegará
+                          un correo de saludo para verificar que fue todo
+                          correctamente ingresado) y seleccionar en que servidor
+                          juegas y tu idioma. Finalmente deberás presionar en
+                          "Enviar" y esperar a que te llegue nuestro correo de
+                          verificación.
+                        </h4>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
               <h2>Acceso de Usuario</h2>
               <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -63,7 +239,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           algunos con requisitos especiales, como el e-mail que
                           debe ingresarse y confirmarse o la contraseña que al
                           menos debe contar con 8 caracteres como mínimo para
-                          ser válida y luego debe ser confirmada:
+                          ser válida y más tarde confirmada:
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -92,8 +268,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           estas preguntas, debido a que esta información se
                           utilizará para que puedas recuperar tu contraseña en
                           caso de que la hayas olvidado, estas preguntas exigen
-                          un máximo de 20 caracteres y si te pasas de ellos no
-                          podrás registrarte.
+                          un máximo de 20 caracteres y si los excedes no podrás
+                          registrarte.
                         </h4>
                       </v-col>
                     </v-row>
@@ -141,7 +317,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           pantalla. Posteriormente se abrirá un recuadro para el
                           inicio de sesión, en él debes ingresar tus datos de
                           usuario y contraseña y dar click en el botón de
-                          "Iniciar Sesión"
+                          "Iniciar Sesión":
                         </h4>
                       </v-col>
                       <v-col cols="5">
@@ -167,15 +343,14 @@ import Personaje from '~/components/personajes/Personaje.vue';
                         <h4 class="mt-16" style="text-align: justify">
                           Para Recuperar contraseña deberás seguir una serie de
                           pasos que se han dispuesto con el fin de dar una mayor
-                          seguridad a tus credenciales. Para Acceder a la
-                          sección de recuperación de contraseña deberás
-                          dirigirte al botón de "Iniciar Sesión" ubicado en la
-                          esquina superior derecha de la pantalla.
-                          Posteriormente se abrirá un recuadro para el inicio de
-                          sesión y más abajo estará el enlace de "¿Olvidaste tu
-                          contraseña?", deberás dar click y se desplegará una
-                          vista de Recuperación de contraseña, tal como se
-                          muestra a continuación:
+                          seguridad a tus datos. Para Acceder a la sección de
+                          recuperación de contraseña deberás dirigirte al botón
+                          de "Iniciar Sesión" ubicado en la esquina superior
+                          derecha de la pantalla. Posteriormente se abrirá un
+                          recuadro para el inicio de sesión y más abajo estará
+                          el enlace de "¿Olvidaste tu contraseña?", deberás dar
+                          click y se desplegará una vista de Recuperación de
+                          contraseña, tal como se muestra a continuación:
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -213,7 +388,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                     <v-row justify="center">
                       <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
-                          en ellas deberás escribir correctamente tus respuestas
+                          En ellas deberás escribir correctamente tus respuestas
                           secretas (recuerda que puedes cambiarlas cuando lo
                           desees en la sección Cambio de respuestas de seguridad
                           de tu perfil) y presionar el botón que se encuentra
@@ -234,8 +409,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                     <v-row justify="center">
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
-                          esta te permitirá ingresar tu contraseña con una
-                          extensión mínimo de 8 caracteres de la misma forma que
+                          Esta te permitirá ingresar tu contraseña con una
+                          extensión mínima de 8 caracteres de la misma forma que
                           lo hiciste cuando creaste tu usuario, una vez has
                           ingresado la contraseña y confirmado la misma, debes
                           hacer click en el botón de "Cambiar Contraseña" y si
@@ -260,9 +435,12 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para cambiar alguno de los datos que ingresaste cuando
                           te registraste, debes dirigirte a tu perfil, esto lo
                           harás haciendo click sobre tu nombre de usuario en la
-                          esquina superior derecha de la pantalla una vez que
-                          iniciaste Sesión, se desplegarán tres opciones:
-                          "Perfil", "Personajes" y "Salir":
+                          esquina superior derecha de la pantalla luego de haber
+                          iniciado sesión.
+                        </h4>
+                        <h4 class="mt-16" style="text-align: justify">
+                          Se desplegarán tres opciones: "Perfil", "Personajes" y
+                          "Salir":
                         </h4>
                       </v-col>
                       <v-col class="mt-10" cols="5">
@@ -301,16 +479,15 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           quieres cambiar los datos de usuario como tal, en cuyo
                           caso deberás seleccionar la opción de "Cambio de
                           datos". A continuación se revelarán los datos que
-                          puedes cambiar, lo cual realizarás haciendo click en
-                          el cuadrado correspondiente del dato que desees
-                          cambiar, es decir, si lo que quieres es cambiar tu
-                          mail debes hacer click en el cuadrado junto a él y
-                          realizar las modificaciones correspondientes, para
-                          guardar los cambios debes hacer click sobre el botón
-                          de "Guardar Cambios". Se te notificará que los cambios
-                          han sido guardados y podrás visualizarlo en el
-                          recuadro de datos de usuario que se mostró
-                          anteriormente.
+                          puedes cambiar. Debes dar click en el cuadrado
+                          correspondiente del dato que desees cambiar, es decir,
+                          si lo que quieres es cambiar tu mail debes hacer click
+                          en el cuadrado junto a él y realizar las
+                          modificaciones correspondientes, para guardar los
+                          cambios debes hacer click sobre el botón de "Guardar
+                          Cambios". Se te notificará que los cambios han sido
+                          guardados y podrás visualizarlo en el recuadro de
+                          datos de usuario que se mostró anteriormente.
                         </h4>
                       </v-col>
                       <v-col cols="5">
@@ -341,9 +518,12 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para cambiar alguno de los datos que ingresaste cuando
                           te registraste, debes dirigirte a tu perfil, esto lo
                           harás haciendo click sobre tu nombre de usuario en la
-                          esquina superior derecha de la pantalla una vez que
-                          iniciaste Sesión, se desplegarán tres opciones:
-                          "Perfil", "Personajes" y "Salir":
+                          esquina superior derecha de la pantalla luego de haber
+                          iniciado sesión.
+                        </h4>
+                        <h4 class="mt-16" style="text-align: justify">
+                          Se desplegarán tres opciones: "Perfil", "Personajes" y
+                          "Salir":
                         </h4>
                       </v-col>
                       <v-col class="mt-10" cols="5">
@@ -387,9 +567,9 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           las preguntas de seguridad que contestaste cuando te
                           registraste, para poder modificarlas deberás dar click
                           en el cuadrado junto a la respuesta que quieras
-                          modificar, reescribir tu respuesta y click sobre el
-                          botón "Guardar Cambios" para que la modificación sea
-                          realizada.
+                          modificar, reescribir tu respuesta y dar click sobre
+                          el botón "Guardar Cambios" para que la modificación
+                          sea realizada.
                         </h4>
                       </v-col>
                       <v-col cols="5">
@@ -406,131 +586,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                   </div>
                 </v-expansion-panel-content>
               </v-expansion-panel>
-              <h2>Familias</h2>
-              <v-expansion-panel>
-                <v-expansion-panel-header>
-                  <h2>Sección Familias</h2></v-expansion-panel-header
-                >
-                <v-expansion-panel-content>
-                  <div class="mt-2 mb-5">
-                    <v-row justify="center">
-                      <v-col class="pl-10" cols="8">
-                        <h4 class="mt-16" style="text-align: justify">
-                          La sección de Familias se ha creado con el fin de
-                          entregar toda la información necesaria sobre los items
-                          pertenecientes a cada una de ellas.. si quieres saber
-                          los detalles de algún item en específico este es tu
-                          lugar. Para acceder a esta sección debes dirigirte a
-                          la barra de navegación ubicada en la parte superior
-                          derecha de la pantalla y localizar "Familias"
-                          <v-img
-                            class="mt-4"
-                            aspect-ratio="15"
-                            contain
-                            src="https://i.ibb.co/BsPMw58/navbar.png"
-                          ></v-img>
-                          <h4 class="mt-6" style="text-align: justify">
-                            Al hacer click se te redirigirá a una vista como la
-                            que se muestra a continuación:
-                          </h4>
-                          <v-img
-                            aspect-ratio="1"
-                            contain
-                            src="https://i.ibb.co/KsD5Vgy/familias1.png"
-                          ></v-img>
 
-                          En ella se encuentra el listado total de los items
-                          utilizables en el juego, clasificados por nombre,
-                          ubicacion, tipo y peso, para navegar por esta tabla en
-                          la esquina inferior derecha te encontrarás con una
-                          barra que muestra cuantos items son mostrados por
-                          página, cuantas páginas hay con las coincidencias y
-                          las flechas de navegación para moverte por cada una,
-                          hacia la izquierda o derecha:
-
-                          <v-img
-                            class="mt-6"
-                            aspect-ratio="13"
-                            contain
-                            src="https://i.ibb.co/PjkRmFZ/familias-inferior.png"
-                          ></v-img>
-                        </h4>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-              <v-expansion-panel>
-                <v-expansion-panel-header>
-                  <h2>Búsqueda de Familia</h2></v-expansion-panel-header
-                >
-                <v-expansion-panel-content>
-                  <div class="mt-2">
-                    <v-row justify="center">
-                      <v-col class="pl-10" cols="8">
-                        <h4 class="mt-16" style="text-align: justify">
-                          Para realizar la búsqueda de una familia deberás
-                          dirigirte a la barra de búsqueda "Buscar familia" e
-                          ingresar palabras que coincidan con el nombre,
-                          ubicacion, tipo o peso del item que deseas revisar y
-                          de acuerdo a las coincidencias, estos aparecerán:
-                        </h4>
-                        <v-img
-                          aspect-ratio="6"
-                          contain
-                          src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
-                        ></v-img>
-                        <h4 class="mt-6" style="text-align: justify">
-                          Un ejemplo de esto se muestra a continuación:
-                        </h4>
-                        <v-img
-                          class="mt-6"
-                          aspect-ratio="2"
-                          contain
-                          src="https://i.ibb.co/tcxjQYx/Familias5.png"
-                        ></v-img>
-                        <h4 class="mt-6" style="text-align: justify">
-                          También existe otra manera de ubicar el item que
-                          desees revisar, esto se hace utilizando los filtros
-                          con opciones que se encuentran bajo la barra de
-                          búsqueda, de izquierda a derecha puedes ver los
-                          filtros de: Búsqueda:
-                        </h4>
-                        <v-img
-                          aspect-ratio="2"
-                          contain
-                          src="https://i.ibb.co/hWD81cZ/familias2.png"
-                        ></v-img>
-                        <h4 style="text-align: justify">Tipo:</h4>
-                        <v-img
-                          aspect-ratio="2"
-                          contain
-                          src="https://i.ibb.co/DDNmrnb/familias3.png"
-                        ></v-img>
-                        <h4 style="text-align: justify">Peso:</h4>
-                        <v-img
-                          aspect-ratio="3"
-                          contain
-                          src="https://i.ibb.co/gJzTy82/Familias4.png"
-                        ></v-img>
-                        <h4 style="text-align: justify">
-                          Una vez se han puesto todos los filtros o ya has
-                          identificado en pantalla el item del que deseas
-                          conocer los detalles, solo debes hacer click sobre el
-                          ícono del item y te enviara a la vista con los
-                          detalles:
-                        </h4>
-                        <v-img
-                          class="mt-6"
-                          aspect-ratio="1.7"
-                          contain
-                          src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
-                        ></v-img>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
               <h2>Personajes</h2>
               <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -600,7 +656,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para seleccionar un personaje de los que ya has
                           creado, debes dirigirte a la sección de personajes
                           desde el ícono de tu usuario y seleccionar la vista de
-                          "personajes", cuando estes ahí te encontrarás con esta
+                          "personajes", cuando estés ahí te encontrarás con esta
                           sección:
                         </h4>
                         <v-img
@@ -687,7 +743,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
               </v-expansion-panel>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <h2>Sección Items</h2></v-expansion-panel-header
+                  <h2>Búsqueda de Items</h2></v-expansion-panel-header
                 >
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
@@ -711,7 +767,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                       <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
                           Para realizar la búsqueda de items tienes la lista de
-                          Set ubicada a la izquierda de tu pantalla, debes
+                          Sets ubicada a la izquierda de tu pantalla, debes
                           ingresar el nombre en el sector buscar set y se irán
                           mostrando las coincidencias de lo escrito o
                           simplemente buscarlo deslizándote con la flecha hasta
@@ -786,7 +842,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para agregar un item a tu inventario en primer lugar
                           debes realizar la búsqueda del item deseado, puedes
                           encontrar el procedimiento en el punto anterior de
-                          "Búsqueda de Item", una vez lo has encontrado y
+                          "Búsqueda de Items", una vez lo has encontrado y
                           seleccionado, deberás dar click en la opción "Agregar
                           a Inventario" ubicado justo debajo de la búsqueda de
                           Item y este se agregará a la sección de inventario tal
@@ -815,14 +871,14 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           A continuación se muestra la sección del equipamiento
                           del personaje, esta sección se activa una vez que el
                           usuario ha creado y seleccionado a un personaje. En
-                          esta seción se podrán agregar y eliminar, tanto items,
-                          como glifos y traits, se encuentra en cada espacio
-                          designado para items, armas o joyas, un recuadro para
-                          cada uno de las tres secciones a agregar. Es
-                          importante mencionar que una vez se hayan realizado
-                          los cambios, debe dar click en el botón de "Save" para
-                          guardar los cambios realizados, ya que de lo contrario
-                          no se guardarán las modificaciones.
+                          esta sección se podrán agregar y eliminar, tanto
+                          items, como glifos y traits, los cuales poseen cada
+                          uno un recuadro en los espacios de cada parte de la
+                          vista del personaje. Es importante mencionar que una
+                          vez se hayan realizado los cambios, debe dar click en
+                          el botón de "Save" para guardar todo lo realizado, ya
+                          que de lo contrario no se guardarán las
+                          modificaciones.
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -838,8 +894,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                       <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
                           De esta manera, una vez que se vayan agregando items,
-                          glifos y traits a cada sección la vista del
-                          equipamiento de personaje irá modificandose de la
+                          glifos y traits a cada sección, la vista del
+                          equipamiento de personaje irá modificándose de la
                           siguiente manera:
                         </h4>
                       </v-col>
@@ -858,7 +914,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Existe además una opción para visualizar los detalles
                           de lo que actualmente se encuentra en cada slot, para
                           ello debes poner tu mouse sobre él y se desplegará una
-                          pegueña vista con los detalles, tal como se muestra:
+                          pequeña vista con los detalles, tal como se muestra:
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -885,8 +941,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Para equipar un item en primer lugar debes realizar la
                           búsqueda del item deseado, puedes encontrar el
                           procedimiento en el punto anterior de "Búsqueda de
-                          Item", una vez lo has encontrado y seleccionado, se
-                          desbloqueara un botón con un signo "+" en la sección
+                          Items", una vez lo has encontrado y seleccionado, se
+                          desbloqueará un botón con un signo "+" en la sección
                           de personaje ubicado a la derecha de la pantalla,
                           según donde pertenezca el item seleccionado.
                         </h4>
@@ -968,8 +1024,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
 
                       <h4 style="text-align: justify">
                         Así dependiendo de la sección en la que se encuentre, el
-                        usuario podrá eliminar items, traits o glifos de los
-                        slots.
+                        usuario podrá eliminar items, traits o glifos agregados
+                        en los slots.
                       </h4>
                     </v-row>
                   </div>
@@ -1004,7 +1060,7 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           Supongamos que en primer lugar comienza con la sección
                           de Potencia: Para ello debe seleccionar la opción
                           Potencia ubicada en la esquina superior izquierda del
-                          recuadro, como se muestra a continuación
+                          recuadro, como se muestra a continuación:
                         </h4>
                         <v-img
                           class="mt-6"
@@ -1087,7 +1143,8 @@ import Personaje from '~/components/personajes/Personaje.vue';
                           La sección de traits actúa de manera similar a la
                           sección de equipar item a personaje, en esta sección
                           se muestran los traits con su especificación de armor
-                          (para set), Jewelry (para joyas) y weapon (para arma).
+                          (para set), Jewelry (para joyas) y weapon (para
+                          armas).
                         </h4>
                         <v-img
                           class="mt-6"
