@@ -45,6 +45,25 @@ export default (context, inject) => {
   function getSetsStats(slots) {
     const itPerSet = itemsPerSet(slots)
 
+    const statObject = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
+
     const setsStats = []
 
     // Por cada familia del equipamiento
@@ -58,18 +77,68 @@ export default (context, inject) => {
       }
     }
 
-    return setsStats
+    applyAdds(setsStats.filter((stat) => stat.operation === 'Adds'))
+
+    return statObject
   }
   function getItemStats(slot) {
-    const itemStats = []
+    let itemStats = {
+      armor: 0,
+      maximumMagicka: 0,
+      magickaRecovery: 0,
+      maximumHealth: 0,
+      healthRecovery: 0,
+      maximumStamina: 0,
+      staminaRecovery: 0,
+      spellDamage: 0,
+      spellCritical: 0,
+      spellPenetration: 0,
+      weaponDamage: 0,
+      weaponCritical: 0,
+      physicalPenetration: 0,
+      spellResistance: 0,
+      physicalResistance: 0,
+      criticalResistance: 0,
+    }
     // calculate the stats generated for item+modifiers
-    // TODO add undefined check for item that is not an armor
-    const spellResistance = slot.item.estadisticas.armadura
-    const physicalResistance = slot.item.estadisticas.armadura
-    itemStats.push({ type: 'Spell Resistance', value: spellResistance })
-    itemStats.push({ type: 'Physical Resistance', value: physicalResistance })
+
     // Trait
-    let traitStats = []
+    const traitStats = getTraitStats(slot)
+    // Glyph
+    const glyphStats = getGlyphStats(slot)
+
+    if (
+      slot.tag === 'Waist' ||
+      slot.tag === 'Feet' ||
+      slot.tag === 'Hands' ||
+      slot.tag === 'Shoulder'
+    ) {
+      glyphStats.adds.forEach((stat) => {
+        stat.value = stat.value * 0.4
+      })
+      glyphStats.multiply.forEach((stat) => {
+        stat.value = stat.value * 0.4
+      })
+    }
+
+    itemStats = applyAdds(traitStats.adds, itemStats)
+    itemStats = applyAdds(glyphStats.adds, itemStats)
+    if (slot.item.tipo === 'Armadura') {
+      itemStats.armor = itemStats.armor + slot.item.estadisticas.armadura
+      itemStats.spellResistance =
+        itemStats.spellResistance + slot.item.estadisticas.armadura
+      itemStats.physicalResistance =
+        itemStats.physicalResistance + slot.item.estadisticas.armadura
+    }
+
+    return itemStats
+  }
+  function getTraitStats(slot) {
+    const stats = {
+      adds: [],
+      multiply: [],
+    }
+    let traitStats
     if (slot.trait !== undefined) {
       if (slot.tag !== 'Two-Handed') {
         // Calidad
@@ -93,23 +162,63 @@ export default (context, inject) => {
         }
       }
       for (const stat of traitStats) {
-        if (stat.operation === 'Adds') {
-          const target = itemStats.find((elm) => elm.type === stat.type)
-
-          if (target !== undefined) {
-            target.value += stat.value
+        if (stat.operation !== undefined) {
+          if (stat.operation === 'Adds') {
+            // Caso que la operacion sea Adds
+            stats.adds.push({ type: stat.type, value: stat.value })
           } else {
-            itemStats.push({ type: stat.type, value: stat.value })
+            // Caso que la operacion sea Multiply
+            stats.multiply.push({ type: stat.type, value: stat.value })
           }
-        } else {
-          // Caso que la operacion sea Multiply
         }
       }
     }
+    return stats
+  }
+  function getGlyphStats(slot) {
+    const stats = {
+      adds: [],
+      multiply: [],
+    }
+    if (slot.glyph !== undefined) {
+      const potencia = slot.glyph.potencias.find(
+        (pot) => pot.potencia === slot.potenciaGlyph
+      )
 
-    // Glyph
+      let calidadStats
+      switch (slot.calidadGlyph) {
+        case 'normal':
+          calidadStats = potencia.calidades.normal
+          break
+        case 'fine':
+          calidadStats = potencia.calidades.fine
+          break
+        case 'superior':
+          calidadStats = potencia.calidades.superior
+          break
+        case 'epic':
+          calidadStats = potencia.calidades.epic
+          break
+        case 'legendary':
+          calidadStats = potencia.calidades.legendary
+          break
 
-    return itemStats
+        default:
+          break
+      }
+      for (const stat of calidadStats) {
+        if (stat.operation !== undefined) {
+          if (stat.operation === 'Adds') {
+            // Caso que la operacion sea Adds
+            stats.adds.push({ type: stat.type, value: stat.value })
+          } else {
+            // Caso que la operacion sea Multiply
+            stats.multiply.push({ type: stat.type, value: stat.value })
+          }
+        }
+      }
+    }
+    return stats
   }
 
   function applyAdds(addStatsArray, statObject) {
