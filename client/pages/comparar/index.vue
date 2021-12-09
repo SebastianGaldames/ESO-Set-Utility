@@ -19,21 +19,37 @@
     <!-- Aqui deberia ir la comparacion de las estadisticas -->
     <v-card class="mx-2" width="40%">
       <h2 class="dif">Diferencia de estadísticas</h2>
-      <div v-for="stat in stats" :key="stat[1]" class="stastCenter font">
+      <div
+        v-for="stat in statsPersonajes"
+        :key="stat[1]"
+        class="stastCenter font"
+      >
         <div v-if="stat[0] > stat[2]" class="stats">
-          <span style="color: green">{{ stat[0] }}</span>
+          <div class="ancho">
+            <span style="color: green">{{ stat[0] }}</span>
+          </div>
           <span>{{ stat[1] }}</span>
-          <span style="color: red">{{ stat[2] }}</span>
+          <div class="ancho2">
+            <span style="color: red">{{ stat[2] }}</span>
+          </div>
         </div>
         <div v-else-if="stat[0] < stat[2]" class="stats">
-          <span style="color: red">{{ stat[0] }}</span>
+          <div class="ancho">
+            <span style="color: red">{{ stat[0] }}</span>
+          </div>
           <span>{{ stat[1] }}</span>
-          <span style="color: green">{{ stat[2] }}</span>
+          <div class="ancho2">
+            <span style="color: green">{{ stat[2] }}</span>
+          </div>
         </div>
         <div v-else class="stats">
-          <span>{{ stat[0] }}</span>
+          <div class="ancho">
+            <span>{{ stat[0] }}</span>
+          </div>
           <span>{{ stat[1] }}</span>
-          <span>{{ stat[2] }}</span>
+          <div class="ancho2">
+            <span>{{ stat[2] }}</span>
+          </div>
         </div>
       </div>
     </v-card>
@@ -80,7 +96,16 @@
 .stats {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 90%;
+}
+.ancho {
+  width: 100px;
+}
+.ancho2 {
+  width: 100px;
+  align-items: flex-end;
+  justify-content: end;
+  display: flex;
 }
 .nombre {
   margin-left: 5px;
@@ -97,9 +122,10 @@ export default {
       selectedPersonaje: {},
       selectedPersonaje2: {},
       stats: [
-        [1, 'Maximum Magicka', 0],
-        [2, 'Magicka Recovery', 0],
-        [0, 'Maximum Health', 3],
+        [0, 'Armor', 0],
+        [0, 'Maximum Magicka', 0],
+        [0, 'Magicka Recovery', 0],
+        [0, 'Maximum Health', 0],
         [0, 'Health Recovery', 0],
         [0, 'Maximum Stamina', 0],
         [0, 'Stamina Recovery', 0],
@@ -114,6 +140,49 @@ export default {
         [0, 'Critical Resistance', 0],
       ],
     }
+  },
+  computed: {
+    statsPersonajes() {
+      if (this.selectedPersonaje.nombre !== undefined) {
+        const newStats = this.$calculateStats(this.selectedPersonaje.slots)
+        // console.log('stats p 1: ', newStats)
+        const stats2 = []
+        for (let i = 0; i < this.stats.length; i++) {
+          stats2.push(this.stats[i])
+        }
+        for (let i = 0; i < this.stats.length; i++) {
+          for (const key in newStats) {
+            if (
+              key ===
+              this.stats[i][1].replace(/\s+/g, '').charAt(0).toLowerCase() +
+                this.stats[i][1].replace(/\s+/g, '').slice(1)
+            ) {
+              stats2[i][0] = newStats[key]
+            }
+          }
+        }
+      }
+      if (this.selectedPersonaje2.nombre !== undefined) {
+        const newStats = this.$calculateStats(this.selectedPersonaje2.slots)
+        // console.log('stats p 2: ', newStats)
+        const stats2 = []
+        for (let i = 0; i < this.stats.length; i++) {
+          stats2.push(this.stats[i])
+        }
+        for (let i = 0; i < this.stats.length; i++) {
+          for (const key in newStats) {
+            if (
+              key ===
+              this.stats[i][1].replace(/\s+/g, '').charAt(0).toLowerCase() +
+                this.stats[i][1].replace(/\s+/g, '').slice(1)
+            ) {
+              stats2[i][2] = newStats[key]
+            }
+          }
+        }
+      }
+      return this.stats
+    },
   },
   beforeMount() {
     const storeUser = this.$store.state.usuario
