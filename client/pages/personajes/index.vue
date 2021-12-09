@@ -235,6 +235,7 @@ export default {
       )
       this.selectedPersonaje.slots = auxSlots
       // console.log(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     handleSlotChanged(content) {
       // adds the new item to the slots
@@ -269,7 +270,7 @@ export default {
         }
         this.selectedPersonaje.slots.push(slot)
       }
-      console.log(this.selectedPersonaje.slots)
+      // console.log(this.selectedPersonaje.slots)
       // recalc stats
       this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
