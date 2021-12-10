@@ -4,11 +4,14 @@
       {{ comprobarUsuario() }}
       <v-row class="d-flex justify-center">
         <v-flex class="d-flex">
-          <v-img
-            max-height="100"
-            max-width="250"
-            src="https://i.imgur.com/Hc1mF2k.png"
-          ></v-img>
+          <NuxtLink to="/">
+            <v-img
+              max-height="100"
+              max-width="250"
+              src="https://i.imgur.com/Hc1mF2k.png"
+            >
+            </v-img>
+          </NuxtLink>
         </v-flex>
         <NuxtLink
           to="/"
@@ -56,9 +59,21 @@
                 </v-btn>
               </div>
             </template>
-            <v-list v-if="usuarioLogeado">
+            <v-list
+              v-if="usuarioLogeado && usuario === 'administrador'"
+              class="tile"
+            >
+              <v-list class="tile">
+                <v-list-item @click="scrap()">Scrap</v-list-item>
+                <v-list-item @click="salir()">Salir</v-list-item>
+              </v-list>
+            </v-list>
+            <v-list v-else-if="usuarioLogeado">
               <v-list-item @click="irPerfil()"> Perfil </v-list-item>
               <v-list-item @click="irPersonajes()"> Personajes </v-list-item>
+              <v-list-item @click="irComparar()">
+                Comparar Personajes
+              </v-list-item>
               <v-list-item @click="salir()"> Salir </v-list-item>
             </v-list>
           </v-menu>
@@ -97,6 +112,11 @@ export default {
         this.$router.push('/personajes')
       }
     },
+    irComparar() {
+      if (this.usuarioLogeado) {
+        this.$router.push('/comparar')
+      }
+    },
     comprobarUsuario() {
       const usuario = this.$store.state.usuario
       if (usuario != null) {
@@ -110,6 +130,11 @@ export default {
       this.snackbar = true
       this.$store.dispatch('salir')
       this.$router.push({ name: 'index' })
+    },
+    scrap() {
+      if (this.usuarioLogeado) {
+        this.$router.push('/adminScrap')
+      }
     },
   },
 }

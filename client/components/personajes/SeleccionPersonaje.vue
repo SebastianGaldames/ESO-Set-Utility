@@ -9,6 +9,9 @@
       dense
       color="acentuado1"
       class="pr-2"
+      @keydown="$event.target.blur()"
+      @keypress="$event.target.blur()"
+      @keyup="$event.target.blur()"
       @input="triggerUpdate"
     ></v-combobox>
     <v-dialog v-model="dialog" width="480">
@@ -34,7 +37,9 @@
       </div>
     </v-dialog>
     <v-btn @click="dialog = true"> Agregar Personaje </v-btn>
-    <v-btn @click="eliminarPersonaje"> Eliminar Personaje </v-btn>
+    <v-btn v-if="selected !== undefined" @click="eliminarPersonaje">
+      Eliminar Personaje
+    </v-btn>
   </div>
 </template>
 <script>
