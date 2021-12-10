@@ -375,7 +375,7 @@ export default {
           .catch((e) => {
             if (this.checkbox === false) {
               this.snackbar = true
-              this.snackbarText = 'Debe aceptar los terminos y condicones'
+              this.snackbarText = 'Debe aceptar los términos y condiciones'
             } else {
               this.snackbar = true
               this.snackbarText = 'Ha ingresado un usuario o un correo invalido'
