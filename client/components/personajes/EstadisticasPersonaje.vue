@@ -5,10 +5,13 @@
       <!-- <p>
         {{ personajeSlots }}
       </p> -->
-      <span>Armor:</span>
-      {{ stats.armor }}
-      <br />
-      {{ stats }}
+      <div v-for="(value, propertyName) in stats" :key="propertyName">
+        <div>
+          <span>{{ propertyName }}:</span>
+          {{ value }}
+        </div>
+      </div>
+      <!-- {{ stats }} -->
     </v-card-text>
   </v-card>
 </template>
