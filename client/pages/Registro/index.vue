@@ -90,7 +90,7 @@
           questionRules.longMax,
           questionRules.longMin,
         ]"
-        hidedetails="auto"
+        hide-details="auto"
       ></v-text-field>
 
       <v-text-field
@@ -251,7 +251,7 @@ export default {
       pais: '',
       inventario: [],
       user: new Usuario(),
-      securityAnswerList: [],
+      securityAnswerList: ['', '', ''],
       checkbox: false,
       show: false,
       show1: false,
