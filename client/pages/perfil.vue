@@ -346,7 +346,7 @@ export default {
       pais: '',
       inventario: [],
       securityAnswerList: ['', '', ''],
-      securityAnswerList2: [],
+      securityAnswerList2: ['', '', ''],
       user: new Usuario(),
       checkbox: false,
       checkbox1: false,
@@ -375,35 +375,52 @@ export default {
   },
   methods: {
     async cambioRespuestas() {
-      if (this.checkbox5) {
-        this.securityAnswerList2[0] = this.securityAnswerList[0]
-      }
-      if (this.checkbox6) {
-        this.securityAnswerList2[1] = this.securityAnswerList[1]
-      }
-      if (this.checkbox7) {
-        this.securityAnswerList2[2] = this.securityAnswerList[2]
-      }
-      const newAnswers = {
-        _id: this.user._id,
-        securityAnswerList: this.securityAnswerList2,
-      }
-      const updated = await this.$axios.put(
-        process.env.VUE_APP_SERVER_URL + '/Usuario/update',
-        newAnswers
-      )
-      // eslint-disable-next-line no-console
-      console.log(updated.data)
-      this.tomaUser()
-      if (updated) {
-        // eslint-disable-next-line no-console
-        // this.reLog()
-        this.$store.dispatch('setUsuarioUp', this.user.usuario)
-        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
-        console.log(updated.data)
-        alert('Cambio exitoso')
+      let verif = true
+      if (this.checkbox5 || this.checkbox6 || this.checkbox7) {
+        if (this.checkbox5) {
+          if (this.securityAnswerList[0] !== '') {
+            this.securityAnswerList2[0] = this.securityAnswerList[0]
+          } else {
+            verif = false
+          }
+        }
+        if (this.checkbox6) {
+          if (this.securityAnswerList[1] !== '') {
+            this.securityAnswerList2[1] = this.securityAnswerList[1]
+          } else {
+            verif = false
+          }
+        }
+        if (this.checkbox7) {
+          if (this.securityAnswerList[2] !== '') {
+            this.securityAnswerList2[2] = this.securityAnswerList[2]
+          } else {
+            verif = false
+          }
+        }
+        if (verif) {
+          const newAnswers = {
+            _id: this.user._id,
+            securityAnswerList: this.securityAnswerList2,
+          }
+          const updated = await this.$axios.put(
+            process.env.VUE_APP_SERVER_URL + '/Usuario/update',
+            newAnswers
+          )
+          this.tomaUser()
+          if (updated) {
+            this.$store.dispatch('setUsuarioUp', this.user.usuario)
+            alert('Cambio exitoso')
+          } else {
+            alert('fallo')
+          }
+        } else {
+          alert(
+            'Hay una casilla seleccionada que no tiene una respuesta ingresada'
+          )
+        }
       } else {
-        alert('fallo')
+        alert('No hay ninguna casilla seleccionada')
       }
     },
     comprobarUsuario() {
@@ -428,7 +445,6 @@ export default {
         if (this.password === null) {
           this.password = ''
         }
-        console.log('password exitosa')
         if (
           this.usuario.length >= 8 ||
           this.usuario === '' ||
@@ -437,19 +453,15 @@ export default {
           if (this.usuario === null) {
             this.usuario = ''
           }
-          console.log('usuario exitosa')
           if (this.email === this.reEmail) {
-            console.log('email clear' + this.email)
             if (this.email === '' || this.email === null) {
               if (this.email === null) {
                 this.email = ''
               }
-              console.log('email exitoso vacio')
               this.cambioDatos()
             }
             const bol = /.+@.+\..+/.test(this.email)
             if (bol === true) {
-              console.log('email exitosa')
               this.cambioDatos()
             }
           }
@@ -510,7 +522,6 @@ export default {
           userparam
       )
       this.user = userLogued.data
-      console.log(this.user)
     },
     sinDatos() {
       alert('No hay entrada de datos')
@@ -549,38 +560,19 @@ export default {
           process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
           newPassword
         )
-        // eslint-disable-next-line no-console
-        console.log(passwordUpdated)
+        if (passwordUpdated) {
+        } else {
+          alert('fallo de cambio de contraseña')
+        }
       }
 
       if (updated) {
-        // eslint-disable-next-line no-console
-        // this.reLog()
         this.$store.dispatch('setUsuarioUp', this.user.usuario)
-        // this.$store.state.setUsuario(this.$store.state, this.user.usuario)
-        console.log(updated.data)
         alert('Cambio exitoso')
       } else {
         alert('fallo')
       }
     },
-    // async reLog() {
-    //   console.log(this.user.usuario)
-    //   console.log(this.user.password)
-    //   this.$store.dispatch('salir')
-    //   const datos2 = {
-    //     usuario: this.user.usuario,
-    //     password: this.user.password,
-    //   }
-    //   await this.$axios
-    //     .post(process.env.VUE_APP_SERVER_URL + '/Usuario/login', datos2)
-    //     .then((respuesta) => {
-    //       return respuesta.data
-    //     })
-    //     .then((data) => {
-    //       this.$store.dispatch('guardarToken', data.tokenReturn) // llamamos a la accion guardar token
-    //     })
-    // },
   },
 }
 </script>

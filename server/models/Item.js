@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 //No se usa, borrado pendiente por confirmacion del profe
-const estadisticaSchema = new Schema({
+const estadisticasSchema = new Schema({
   regenSalud: { type: Number },
   critArma: { type: Number },
   armadura: { type: Number },
@@ -18,7 +18,7 @@ const estadisticaSchema = new Schema({
 
 const itemSchema = new Schema({
   nombre: { type: String, required: true, unique: true },
-  //estadistica: { type: estadisticaSchema, required: false },
+  estadisticas: { type: estadisticasSchema, required: false },
   //efecto: { type: [String], required: false },
   //categoria: { type: String, required: false },
   tipo: { type: String, default: 'valor no asignado' },
