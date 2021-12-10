@@ -18,7 +18,7 @@
       ></CreacionPersonaje>
     </v-dialog>
     <v-dialog v-model="confirmacion" width="600">
-      <div>
+      <div v-if="selected !== undefined">
         <v-card class="justify-center" max-width="600">
           <v-card-title class="justify-center"
             >Está seguro que desea eliminar el personaje?</v-card-title

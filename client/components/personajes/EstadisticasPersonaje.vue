@@ -2,9 +2,16 @@
   <v-card>
     <v-card-title> Estadisticas </v-card-title>
     <v-card-text>
-      <p>
-        <!-- {{ itemsPerSetMethod(personajeSlots) }} -->
-      </p>
+      <!-- <p>
+        {{ personajeSlots }}
+      </p> -->
+      <div v-for="(value, propertyName) in stats" :key="propertyName">
+        <div>
+          <span>{{ propertyName }}:</span>
+          {{ value }}
+        </div>
+      </div>
+      <!-- {{ stats }} -->
     </v-card-text>
   </v-card>
 </template>
@@ -15,6 +22,10 @@ export default {
     personajeSlots: {
       type: Array,
       default: () => [],
+    },
+    stats: {
+      type: Object,
+      required: true,
     },
   },
   data() {
@@ -72,3 +83,8 @@ export default {
   },
 }
 </script>
+<style>
+span {
+  font-weight: bold;
+}
+</style>

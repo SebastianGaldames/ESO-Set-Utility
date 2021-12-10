@@ -1,64 +1,98 @@
 <template>
   <div>
-    <div>
-      <v-btn
-        v-if="enableItem"
-        color="acentuado3"
-        class="texto1--text"
-        :height="defaultItemHeight"
-        :width="defaultItemWidth"
-        @click="agregarSlotItem"
-      >
-        +
+    <div class="d-flex" style="justify-content: center">
+      <v-btn v-if="enableDelete" plain @click="deleteSlot">
+        <h4 style="text-align: center; color: red">{{ slotProp.posicion }}</h4>
       </v-btn>
-      <v-img
-        v-else
-        class="mx-1"
-        contain
-        :height="defaultItemHeight"
-        :src="itemImage"
-        :width="defaultItemWidth"
-      ></v-img>
-      <div class="d-flex py-2">
-        <v-btn
-          v-if="enableTrait"
-          color="acentuado3"
-          class="texto1--text"
-          x-small
-          :height="defaultGlyphTraitHeight"
-          :width="defaultGlyphTraitWidth"
-          @click="agregarSlotTrait"
-        >
-          +
-        </v-btn>
-        <v-img
-          v-else
-          contain
-          :src="traitImage"
-          :max-height="defaultGlyphTraitHeight"
-          :max-width="defaultGlyphTraitWidth"
-        ></v-img>
-        <v-btn
-          v-if="enableGlyph"
-          color="acentuado3"
-          class="mx-2 texto1--text"
-          x-small
-          :height="defaultGlyphTraitHeight"
-          :width="defaultGlyphTraitWidth"
-          @click="agregarSlotGlyph"
-        >
-          +
-        </v-btn>
-        <v-img
-          v-else
-          contain
-          class="mx-2"
-          :src="glyphImage"
-          :max-height="defaultGlyphTraitHeight"
-          :max-width="defaultGlyphTraitWidth"
-        ></v-img>
-      </div>
+      <v-btn v-else plain disabled>
+        <h4 style="text-align: center; color: white">
+          {{ slotProp.posicion }}
+        </h4>
+      </v-btn>
     </div>
+    <v-tooltip bottom color="acentuado2">
+      <template v-slot:activator="{ on, attrs }">
+        <v-card
+          v-bind="attrs"
+          height="34"
+          min-width="100"
+          max-width="100"
+          outlined
+          class="d-flex mx-1"
+          v-on="on"
+        >
+          <div class="d-flex">
+            <v-btn
+              v-if="enableItem"
+              x-small
+              color="positive"
+              :height="defaultItemHeight"
+              @click="agregarSlotItem"
+            >
+              +
+            </v-btn>
+
+            <v-img
+              v-else
+              contain
+              :height="defaultItemHeight"
+              max-width="32"
+              :src="itemImage"
+            ></v-img>
+            <!-- <p>{{ itemName }}</p> -->
+          </div>
+          <div class="d-flex">
+            <v-btn
+              v-if="enableTrait"
+              color="positive"
+              x-small
+              :height="defaultGlyphTraitHeight"
+              :width="defaultGlyphTraitWidth"
+              @click="agregarSlotTrait"
+            >
+              +
+            </v-btn>
+            <v-img
+              v-else
+              contain
+              :src="traitImage"
+              :max-height="defaultGlyphTraitHeight"
+              :max-width="defaultGlyphTraitWidth"
+            ></v-img>
+            <!-- <p>{{ slotProp.glyph }}</p> -->
+          </div>
+          <div class="d-flex">
+            <v-btn
+              v-if="enableGlyph"
+              color="positive"
+              x-small
+              :height="defaultGlyphTraitHeight"
+              :width="defaultGlyphTraitWidth"
+              @click="agregarSlotGlyph"
+            >
+              +
+            </v-btn>
+            <v-img
+              v-else
+              contain
+              :src="glyphImage"
+              :max-height="defaultGlyphTraitHeight"
+              :max-width="defaultGlyphTraitWidth"
+            ></v-img>
+            <!-- <p>{{ traitName }}</p> -->
+          </div>
+        </v-card>
+      </template>
+      <div v-if="itemName !== ''">
+        <span>{{ itemName }}</span
+        ><br />
+        <span>{{ familyName }}</span
+        ><br />
+        <span>{{ glyphName }}</span
+        ><br />
+        <span>{{ traitName }}</span>
+      </div>
+    </v-tooltip>
   </div>
 </template>
 
@@ -85,13 +119,20 @@ export default {
       type: Boolean,
       default: false,
     },
+    enableDelete: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      defaultItemHeight: '50',
-      defaultItemWidth: '50',
-      defaultGlyphTraitHeight: '25',
-      defaultGlyphTraitWidth: '25',
+      defaultItemHeight: '32',
+      defaultItemWidth: '32',
+      defaultGlyphTraitHeight: '32',
+      defaultGlyphTraitWidth: '32',
+      defaultButtonWidth: '20',
+      defaultButtonHeight: '20',
+      colorPos: 'white',
     }
   },
   computed: {
@@ -102,14 +143,38 @@ export default {
       return ''
     },
     glyphImage() {
-      if (!(this.slotProp.glyphImage === undefined)) {
-        return this.slotProp.glyphImage
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.glyph.imagen
       }
       return ''
     },
     traitImage() {
       if (!(this.slotProp.trait === undefined)) {
-        return this.slotProp.item.imagen
+        return this.slotProp.trait.imagen
+      }
+      return ''
+    },
+    itemName() {
+      if (!(this.slotProp.item === undefined)) {
+        return this.slotProp.item.nombre
+      }
+      return ''
+    },
+    familyName() {
+      if (!(this.slotProp.familia === undefined)) {
+        return this.slotProp.familia.nombre
+      }
+      return ''
+    },
+    glyphName() {
+      if (!(this.slotProp.glyph === undefined)) {
+        return this.slotProp.glyph.nombre
+      }
+      return ''
+    },
+    traitName() {
+      if (!(this.slotProp.trait === undefined)) {
+        return this.slotProp.trait.nombre
       }
       return ''
     },
@@ -127,6 +192,14 @@ export default {
     agregarSlotGlyph() {
       this.$emit('agregarSlotGlyph', this.id)
     },
+    deleteSlot() {
+      this.$emit('deleteSlot', this.id)
+    },
   },
 }
 </script>
+<style>
+/* p {
+  font-size: 8px;
+} */
+</style>

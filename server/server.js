@@ -40,6 +40,7 @@ app.use('/Familia', require('./routes/Familia'))
 app.use('/Glyph', require('./routes/Glyph'))
 app.use('/Trait', require('./routes/Trait'))
 app.use('/Parsing', require('./routes/Parsing'))
+app.use('/Mail', require('./routes/Mail'))
 
 // Listening to port
 app.listen(port)
