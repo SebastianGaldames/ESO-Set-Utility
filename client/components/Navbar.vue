@@ -62,6 +62,9 @@
             <v-list v-if="usuarioLogeado">
               <v-list-item @click="irPerfil()"> Perfil </v-list-item>
               <v-list-item @click="irPersonajes()"> Personajes </v-list-item>
+              <v-list-item @click="irComparar()">
+                Comparar Personajes
+              </v-list-item>
               <v-list-item @click="salir()"> Salir </v-list-item>
             </v-list>
           </v-menu>
@@ -98,6 +101,11 @@ export default {
     irPersonajes() {
       if (this.usuarioLogeado) {
         this.$router.push('/personajes')
+      }
+    },
+    irComparar() {
+      if (this.usuarioLogeado) {
+        this.$router.push('/comparar')
       }
     },
     comprobarUsuario() {

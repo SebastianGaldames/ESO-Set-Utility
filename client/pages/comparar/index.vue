@@ -7,6 +7,11 @@
           v-model="selectedPersonaje"
           item-text="nombre"
           :items="personajes"
+          outlined
+          solo
+          dense
+          color="acentuado1"
+          class="pr-2"
           label="Seleccionar un personaje"
         ></v-combobox>
         <!-- <personaje :personaje="selectedPersonaje" class="bordes"></personaje> -->
@@ -60,6 +65,11 @@
           v-model="selectedPersonaje2"
           item-text="nombre"
           :items="personajes"
+          outlined
+          solo
+          dense
+          color="acentuado1"
+          class="pr-2"
           label="Seleccionar un personaje"
         ></v-combobox>
         <!-- <personaje :personaje="selectedPersonaje2" class="bordes"></personaje> -->
@@ -68,20 +78,6 @@
           class="bordes"
         ></personaje-lite>
       </div>
-    </v-card>
-  </div>
-  <div v-else class="noPersonajes">
-    <v-card>
-      <v-card-title class="text-h5">
-        Usted no posee ningún personaje
-      </v-card-title>
-      <v-card-text>Desea ir al apartado de crear un personaje?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="crearPersonaje">
-          ir a personajes
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </div>
 </template>
