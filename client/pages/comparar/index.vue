@@ -2,6 +2,7 @@
   <div v-if="personajes.length > 0" class="d-flex mt-4">
     <v-card class="ml-2" width="30%">
       <!-- Aqui se debe seleccionar personaje -->
+
       <div style="margin: 2%">
         <v-combobox
           v-model="selectedPersonaje"
@@ -210,13 +211,13 @@ export default {
   },
   beforeMount() {
     const storeUser = this.$store.state.usuario
-    this.fetchUser(storeUser)
+    if (storeUser === null) {
+      this.$router.push({ name: 'index' })
+    } else {
+      this.fetchUser(storeUser)
+    }
   },
   methods: {
-    crearPersonaje() {
-      this.$router.push('/personajes')
-    },
-
     async fetchUser(userName) {
       const user = await this.$axios.$get(
         process.env.VUE_APP_SERVER_URL + '/Usuario/querynombre',
