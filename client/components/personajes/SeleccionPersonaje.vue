@@ -9,6 +9,9 @@
       dense
       color="acentuado1"
       class="pr-2"
+      @keydown="$event.target.blur()"
+      @keypress="$event.target.blur()"
+      @keyup="$event.target.blur()"
       @input="triggerUpdate"
     ></v-combobox>
     <v-dialog v-model="dialog" width="480">
