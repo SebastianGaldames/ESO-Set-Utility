@@ -13,6 +13,9 @@
           color="acentuado1"
           class="pr-2"
           label="Seleccionar un personaje"
+          @keydown="$event.target.blur()"
+          @keypress="$event.target.blur()"
+          @keyup="$event.target.blur()"
         ></v-combobox>
         <!-- <personaje :personaje="selectedPersonaje" class="bordes"></personaje> -->
         <personaje-lite
@@ -71,6 +74,9 @@
           color="acentuado1"
           class="pr-2"
           label="Seleccionar un personaje"
+          @keydown="$event.target.blur()"
+          @keypress="$event.target.blur()"
+          @keyup="$event.target.blur()"
         ></v-combobox>
         <!-- <personaje :personaje="selectedPersonaje2" class="bordes"></personaje> -->
         <personaje-lite
@@ -160,6 +166,7 @@ export default {
   computed: {
     statsPersonajes() {
       if (this.selectedPersonaje.nombre !== undefined) {
+        // console.log(this.selectedPersonaje)
         const newStats = this.$calculateStats(this.selectedPersonaje.slots)
         // console.log(this.$getSetsBonus(this.selectedPersonaje.slots))
         // console.log('stats p 1: ', newStats)

@@ -34,7 +34,9 @@
       </div>
     </v-dialog>
     <v-btn @click="dialog = true"> Agregar Personaje </v-btn>
-    <v-btn @click="eliminarPersonaje"> Eliminar Personaje </v-btn>
+    <v-btn v-if="selected !== undefined" @click="eliminarPersonaje">
+      Eliminar Personaje
+    </v-btn>
   </div>
 </template>
 <script>
