@@ -81,7 +81,6 @@
 
       <v-text-field
         v-model="securityAnswerList[0]"
-        clearable
         color="acentuado1"
         label="¿Cuál es el nombre de tu ciudad favorita?"
         :counter="20"
@@ -95,7 +94,6 @@
 
       <v-text-field
         v-model="securityAnswerList[1]"
-        clearable
         color="acentuado1"
         label="¿Cuál es el apellido de tu madre?"
         :counter="20"
@@ -108,7 +106,6 @@
       ></v-text-field>
       <v-text-field
         v-model="securityAnswerList[2]"
-        clearable
         color="acentuado1"
         label="¿Cuál es el nombre de tu primera escuela?"
         :counter="20"
@@ -376,8 +373,13 @@ export default {
             if (this.snackbar === false) this.$router.push('/')
           })
           .catch((e) => {
-            this.snackbar = true
-            this.snackbarText = 'Ha ingresado un usuario o un correo invalido'
+            if (this.checkbox === false) {
+              this.snackbar = true
+              this.snackbarText = 'Debe aceptar los terminos y condicones'
+            } else {
+              this.snackbar = true
+              this.snackbarText = 'Ha ingresado un usuario o un correo invalido'
+            }
           })
       } else {
         this.snackbar = true
