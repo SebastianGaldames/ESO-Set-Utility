@@ -33,6 +33,7 @@
                             aspect-ratio="15"
                             contain
                             src="https://i.ibb.co/BsPMw58/navbar.png"
+                            async
                           ></v-img>
                           <h4 class="mt-6" style="text-align: justify">
                             Al hacer click se te redirigirá a una vista como la
@@ -42,6 +43,7 @@
                             aspect-ratio="1"
                             contain
                             src="https://i.ibb.co/KsD5Vgy/familias1.png"
+                            async
                           ></v-img>
 
                           En ella se encuentra el listado total de los items
@@ -58,6 +60,7 @@
                             aspect-ratio="13"
                             contain
                             src="https://i.ibb.co/PjkRmFZ/familias-inferior.png"
+                            async
                           ></v-img>
                         </h4>
                       </v-col>
@@ -84,6 +87,7 @@
                           aspect-ratio="6"
                           contain
                           src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           Un ejemplo de esto se muestra a continuación:
@@ -93,6 +97,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/tcxjQYx/Familias5.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           También existe otra manera de ubicar el item que
@@ -108,18 +113,21 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/hWD81cZ/familias2.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">Tipo:</h4>
                         <v-img
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/DDNmrnb/familias3.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">Peso:</h4>
                         <v-img
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/gJzTy82/Familias4.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">
                           Una vez se han puesto todos los filtros o ya has
@@ -133,6 +141,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -161,6 +170,7 @@
                           aspect-ratio="15"
                           contain
                           src="https://i.ibb.co/BsPMw58/navbar.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           Al hacer click se te redirigirá a una vista como la
@@ -171,6 +181,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/Wzd3P4W/unetenos.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           En ella deberás llenar los datos solicidatos: Nombre,
@@ -208,6 +219,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/rH5yqLd/Login.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -228,6 +240,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/bsBJ3cD/registro.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -248,6 +261,7 @@
                           aspect-ratio="4"
                           contain
                           src="https://i.ibb.co/jH2Fg54/contrase-a.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -258,6 +272,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/yFCWFMc/preguntas-de-seguridad.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="5">
@@ -291,6 +306,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/nf8fdXp/terminos.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -326,6 +342,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/rH5yqLd/Login.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -359,6 +376,7 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/WtC61vp/Recuperacion-contrase-a.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -382,6 +400,7 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/yXbdRtR/passrecovery2.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -403,6 +422,7 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/18d3jTw/passrecovery3.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -451,6 +471,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -469,6 +490,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -498,6 +520,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/nf1pnpf/micuentacambiogatos.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -534,6 +557,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -552,6 +576,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -580,6 +605,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/jwKBD4C/micuentarespuestasseguridad.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -607,6 +633,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción de "agregar
@@ -618,6 +645,7 @@
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/QkZNWp8/agregar-personaje1.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Deberás rellenar al menos el campo del nombre del
@@ -630,6 +658,7 @@
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/B45cRtL/agregar-personaje2.png"
+                          async
                         ></v-img>
 
                         <h4 class="mt-16" style="text-align: justify">
@@ -664,6 +693,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción ubicada a la
@@ -676,6 +706,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/4MLdbRr/agregar-personaje3.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Una vez haz seleccionado el nombre del personaje se
@@ -706,6 +737,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción ubicada a la
@@ -718,6 +750,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/4MLdbRr/agregar-personaje3.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Luego de ello debes seleccionar cual es el personaje
@@ -731,6 +764,7 @@
                           aspect-ratio="7"
                           contain
                           src="https://i.ibb.co/ZM0PCqS/agregar-personaje24.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Si estás seguro de eliminar el personaje debes dar
@@ -760,6 +794,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/mD9YW53/agregar-personaje4.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -781,6 +816,7 @@
                           aspect-ratio="1"
                           contain
                           src="https://i.ibb.co/Sxrq6kg/agregar-personaje5.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -799,6 +835,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/Sn0JywR/agregar-personaje6.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -816,6 +853,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/9GYwkpz/agregar-personaje7.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -853,6 +891,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/Wpz4Vtb/agregar-personaje8.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -887,6 +926,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/0fRNWsZ/agregar-personaje9.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -905,6 +945,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/fq3Vdx8/agregar-personaje22.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -923,6 +964,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/Qp3DfDz/detalles-item-en-personaje-equipado.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -951,6 +993,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/ZLh3bN7/agregar-personaje10.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -964,6 +1007,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/0JvB4P6/agregar-personaje11.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -976,6 +1020,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/51RhXN9/agregar-personaje12.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1008,6 +1053,7 @@
                           aspect-ratio="20"
                           contain
                           src="https://i.ibb.co/gJNsSHM/eliminar-slot.png"
+                          async
                         ></v-img>
                         <h4 class="mt-4" style="text-align: justify">
                           Al activar la opción, se modificará la vista para
@@ -1019,6 +1065,7 @@
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/DWKSw18/agregar-personaje23.png"
+                          async
                         ></v-img>
                       </v-col>
 
@@ -1053,6 +1100,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/3TjYZrC/agregar-personaje13.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1067,6 +1115,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/pbmvQyD/agregar-personaje14.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1080,6 +1129,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/Dtpcbc5/agregar-personaje15.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -1107,6 +1157,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/CVTdz36/agregar-personaje16.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1117,6 +1168,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/jGSghVv/agregar-personaje17.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1125,6 +1177,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/PQ5t63S/agregar-personaje18.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -1151,6 +1204,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/5R84d6L/agregar-personaje19.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1166,6 +1220,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/DQSp8kt/agregar-personaje20.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1200,6 +1255,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/bPNkJ1m/agregar-personaje21.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
