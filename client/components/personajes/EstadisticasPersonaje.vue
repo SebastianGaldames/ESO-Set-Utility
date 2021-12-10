@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title> Estadisticas </v-card-title>
+    <v-card-title> Estadísticas </v-card-title>
     <v-card-text>
       <!-- <p>
         {{ personajeSlots }}
