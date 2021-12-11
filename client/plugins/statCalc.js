@@ -462,10 +462,10 @@ export default (context, inject) => {
     const itemsStats = getItemCollectionStats(slots)
     const setsStats = getSetsStats(slots)
 
-    console.log('itemsStats')
-    console.log(itemsStats)
-    console.log('setsStats')
-    console.log(setsStats)
+    // console.log('itemsStats')
+    // console.log(itemsStats)
+    // console.log('setsStats')
+    // console.log(setsStats)
 
     stats.armor = itemsStats.armor + setsStats.armor
     stats.maximumMagicka = calcMagicka(
