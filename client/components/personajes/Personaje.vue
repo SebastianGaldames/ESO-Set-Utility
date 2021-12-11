@@ -3,14 +3,7 @@
     <h1 style="text-align: center">
       {{ selectedPj === undefined ? 'Personaje' : selectedPj.nombre }}
     </h1>
-    <v-switch
-      v-model="enableDelete"
-      :label="'Eliminar Slots'"
-      :width="30"
-      color="red darken-3"
-    >
-    </v-switch>
-    <span v-if="enableDelete">Clickee el titulo del slot para limpiarlo</span>
+
     <div>
       <v-item-group>
         <v-container fluid>
@@ -100,9 +93,23 @@
           </v-row>
         </v-container>
       </v-item-group>
+      <div class="d-flex align-center">
+        <v-switch
+          v-model="enableDelete"
+          label="Limpiar Slots"
+          :width="30"
+          color="red darken-3"
+          class="mr-6"
+        >
+        </v-switch>
+        <span v-if="enableDelete"
+          >Clickee el titulo del slot para limpiarlo</span
+        >
+      </div>
+
       <v-btn color="positive" @click="guardarInventario"> Save </v-btn>
-      <span v-if="save"> Guarde los cambios del personaje </span>
-      <span v-else> Personaje guardado </span>
+      <span v-if="save"> Hay cambios sin guardar en este personaje </span>
+      <!-- <span v-else> Personaje guardado </span> -->
       <!-- {{ selectedPj.slots }} -->
     </div>
   </div>
