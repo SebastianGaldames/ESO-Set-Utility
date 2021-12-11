@@ -98,7 +98,9 @@
                 </div>
               </v-dialog>
             </v-row>
-            <v-btn @click="eliminarItems"> Eliminar Items </v-btn>
+            <v-btn v-if="inventario.length > 0" @click="eliminarItems">
+              Eliminar Items
+            </v-btn>
           </v-container>
         </v-item-group>
         <v-divider></v-divider>

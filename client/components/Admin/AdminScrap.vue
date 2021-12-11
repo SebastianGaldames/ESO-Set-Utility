@@ -8,15 +8,39 @@
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <v-progress-linear
-      v-model="power"
-      color="amber"
-      height="25"
-    ></v-progress-linear>
+    <div v-if="power">
+      <v-progress-linear color="amber" height="25"></v-progress-linear>
+    </div>
+    <div v-else>
+      <v-progress-linear
+        indeterminate
+        color="amber"
+        height="25"
+      ></v-progress-linear>
+    </div>
     <v-card-actions>
-      <v-btn outlined rounded text class="center" @click="scrapPage">
+      <v-btn outlined rounded text class="center" @click="estasSeguro">
         Pulsa
       </v-btn>
+      <v-dialog v-model="safe" persistent max-width="470">
+        <v-card>
+          <v-card-title class="text-h5">
+            Estas seguro que deseas realizar este proceso?
+          </v-card-title>
+          <v-card-text
+            >Este proceso puede durar bastaste tiempo en finalizar</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="scrapPage">
+              Si, estoy seguro
+            </v-btn>
+            <v-btn color="red darken-1" text @click="cancelar">
+              Cancelar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card-actions>
   </v-card>
 </template>
@@ -25,15 +49,30 @@
 export default {
   data() {
     return {
-      power: 0,
+      power: true,
+      safe: false,
     }
   },
   methods: {
-    scrapPage() {
-      let i = 0
-      for (this.power; i < 100; i++) {
-        this.power += i
-      }
+    async scrapPage() {
+      this.power = false
+      await this.$axios
+        .post(process.env.VUE_APP_SERVER_URL + '/scrapper/scrap', {
+          secret: 'HWFC8MEvqD',
+        })
+        .then((respuesta) => {
+          this.power = true
+          return respuesta
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    estasSeguro() {
+      this.safe = true
+    },
+    cancelar() {
+      this.safe = false
     },
   },
 }
