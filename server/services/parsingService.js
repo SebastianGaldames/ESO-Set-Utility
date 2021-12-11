@@ -82,7 +82,9 @@ const parseSetBonusLine = async (line) => {
 
     // llenado del objeto stat por iteracion
     // regexSingleMatch = new RegExp(`(Adds)\\s([0-9]+)\\s(${statsListStr})`)
-    if (!new RegExp(match.value[0].toString() + ' ([Ww]hile|if)').test(line)) {
+    if (
+      !new RegExp(match.value[0].toString() + ' (while|if)', 'i').test(line)
+    ) {
       regexSingleMatch = regexStats
       stat.type = match.value[0].toString().replace(regexSingleMatch, '$3')
 
@@ -102,6 +104,49 @@ const parseSetBonusLine = async (line) => {
       stat.operation =
         stat.operation.charAt(0).toUpperCase() + stat.operation.substring(1)
       result.stats.push(stat)
+    }
+    match = matches.next()
+  }
+
+  // parser de stats con and entre nombres
+  let regexStats1 = new RegExp(
+    '(Adds) ([0-9]+) (Weapon|Spell) and (Weapon|Spell) Damage',
+    'gi'
+  )
+  matches = lineCopy.matchAll(regexStats1)
+
+  match = matches.next()
+  // var matchcounter = 0
+  while (!match.done) {
+    for (let k = 0; k < 2; k++) {
+      const stat = {
+        type: '',
+        value: 0,
+        operation: '',
+      }
+      // matchcounter++
+
+      // llenado del objeto stat por iteracion
+      if (
+        !new RegExp(match.value[0].toString() + ' (while|if)', 'i').test(line)
+      ) {
+        regexSingleMatch = regexStats1
+        stat.type = match.value[0]
+          .toString()
+          .replace(regexSingleMatch, '$' + (3 + k).toString() + ' Damage')
+
+        // logica para seleccionar Multiply
+        const secondGroup = match.value[0]
+          .toString()
+          .replace(regexSingleMatch, '$2')
+        stat.value = parseInt(secondGroup)
+        stat.operation = match.value[0]
+          .toString()
+          .replace(regexSingleMatch, '$1')
+        stat.operation =
+          stat.operation.charAt(0).toUpperCase() + stat.operation.substring(1)
+        result.stats.push(stat)
+      }
     }
     match = matches.next()
   }
