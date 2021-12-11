@@ -100,8 +100,6 @@ export default {
     // selecciona y envia el glifo, para despues usarlo
     selectGlyph(glifo) {
       this.selectedGlyph = glifo
-      // console.log(this.selectedCalidad.nro)
-      // console.log(this.selectGlyph)
       // const potenciaTemp = this.selectGlyph.potencias[15]
       const eventData = {
         glyph: this.selectedGlyph,
@@ -115,7 +113,6 @@ export default {
         this.selectedGlyph !== undefined
       ) {
         this.$emit('selectionGlyphChanged', eventData)
-        // console.log(eventData)
       }
     },
   },

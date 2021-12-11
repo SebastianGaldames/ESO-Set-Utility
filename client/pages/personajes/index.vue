@@ -40,7 +40,10 @@
         </v-tab-item>
         <v-tab key="traits"> traits </v-tab>
         <v-tab-item key="traits">
-          <traits-comp :lista-rasgos="traits"></traits-comp
+          <traits-comp
+            :lista-rasgos="traits"
+            @selectionTraitChanged="handleTraitChanged"
+          ></traits-comp
         ></v-tab-item>
       </v-tabs>
     </div>
@@ -53,11 +56,15 @@
         :all-items="items"
         :all-sets="familias"
         :glyph-slot="selectedSetGlyphInfo"
+        :trait-slot="selectedSetTraitInfo"
         @slotChanged="handleSlotChanged"
+        @deleteSlot="handleDeleteSlot"
         @saveBuild="handleSaveBuild"
       ></personaje>
       <estadisticas-personaje
+        v-if="selectedPersonaje !== undefined"
         :personaje-slots="selectedPersonaje.slots"
+        :stats="stats"
       ></estadisticas-personaje>
     </div>
     <v-snackbar v-model="snackbar" timeout="3000" top>
@@ -118,9 +125,11 @@ export default {
       selectedSet: undefined,
       selectedItem: {},
       selectedSetGlyphInfo: undefined,
+      selectedSetTraitInfo: undefined,
       currentUser: {},
       snackbar: false,
       itemsBorrados: [],
+      stats: {},
     }
   },
   computed: {
@@ -152,6 +161,10 @@ export default {
       )
       await this.fetchPersonajes(user.personajes)
       this.selectedPersonaje = this.personajes[0]
+      if (this.selectedPersonaje !== undefined) {
+        this.stats = this.$calculateStats(this.selectedPersonaje.slots)
+      }
+
       this.currentUser = user
     },
     async fetchPersonajes(idsArray) {
@@ -220,9 +233,17 @@ export default {
       this.currentUser.inventario.push(newItem)
       this.updateInventario()
     },
+    handleDeleteSlot(content) {
+      const auxSlots = this.selectedPersonaje.slots.filter(
+        (value) => value.tag !== content.tag
+      )
+      this.selectedPersonaje.slots = auxSlots
+      // console.log(this.selectedPersonaje.slots)
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
+    },
     handleSlotChanged(content) {
       // adds the new item to the slots
-      console.log(content)
+      // console.log(content)
       let slot = this.selectedPersonaje.slots.find(
         (slot) => slot.tag === content.tag
       )
@@ -235,7 +256,7 @@ export default {
         slot.glyph = content.glyph
         slot.potenciaGlyph = content.potenciaGlyph
         slot.calidadGlyph = content.calidadGlyph
-        slot.glyphImage = content.glyphImage
+        // slot.glyphImage = content.glyphImage
         slot.trait = content.trait
       } else {
         slot = {
@@ -248,18 +269,38 @@ export default {
           glyph: content.glyph,
           potenciaGlyph: content.potenciaGlyph,
           calidadGlyph: content.calidadGlyph,
-          glyphImage: content.glyphImage,
+          // glyphImage: content.glyphImage,
           trait: content.trait,
         }
         this.selectedPersonaje.slots.push(slot)
       }
+      // console.log(this.selectedPersonaje.slots)
+      // recalc stats
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handleSaveBuild() {
+      console.log(this.selectedPersonaje.slots)
+      const auxSlots = []
+      for (const item of this.selectedPersonaje.slots) {
+        const aux = {
+          item: item.item,
+          familia: item.familia,
+          nivel: item.nivel,
+          calidad: item.calidad,
+          posicion: item.posicion,
+          tag: item.tag,
+          glyph: item.glyph !== undefined ? item.glyph._id : undefined,
+          potenciaGlyph: item.potenciaGlyph,
+          calidadGlyph: item.calidadGlyph,
+          trait: item.trait,
+        }
+        auxSlots.push(aux)
+      }
       // handles the endpoint call for saving the equipment of a character
       // TODO build a propper slot according to schema
       const slots = {
         _id: this.selectedPersonaje._id,
-        slots: this.selectedPersonaje.slots,
+        slots: auxSlots,
       }
       await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Personaje/update',
@@ -295,15 +336,26 @@ export default {
       // console.log(content)
       this.selectedSetGlyphInfo = {
         imagen: content.glyph.imagen,
-        glyph: content.glyph._id,
+        glyph: content.glyph,
         calidadGlyph: content.calidad,
         potenciaGlyph: content.potencia,
         tipoGlyph: content.glyph.tipo,
       }
       console.log(this.selectedSetGlyphInfo)
     },
+    handleTraitChanged(content) {
+      console.log(content)
+      this.selectedSetTraitInfo = {
+        imagen: content.trait.imagen,
+        trait: content.trait,
+        calidadTrait: content.calidad,
+        tipoTrait: content.trait.tipo,
+      }
+      // console.log(this.selectedSetTraitInfo)
+    },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content
+      this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handlerEliminarSelectedPersonaje(event) {
       await this.$axios.$put(

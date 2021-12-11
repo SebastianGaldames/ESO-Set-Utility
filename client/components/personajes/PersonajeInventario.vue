@@ -98,7 +98,9 @@
                 </div>
               </v-dialog>
             </v-row>
-            <v-btn @click="eliminarItems"> Eliminar Items </v-btn>
+            <v-btn v-if="inventario.length > 0" @click="eliminarItems">
+              Eliminar Items
+            </v-btn>
           </v-container>
         </v-item-group>
         <v-divider></v-divider>
@@ -265,7 +267,6 @@ export default {
   methods: {
     // Se agregan los items del inventario eliminados a la lista de items eliminados
     deleteItems() {
-      // console.log(this.checkboxes)
       this.deletedItems = []
       for (let i = 0; i < this.checkboxes.length; i++) {
         if (this.checkboxes[i] === true) {
