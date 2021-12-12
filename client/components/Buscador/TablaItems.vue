@@ -141,7 +141,7 @@ export default {
           sortable: true,
           value: 'ubicacion',
           width: '30%',
-          text: 'Ubicacion',
+          text: 'Ubicación',
         },
         {
           sortable: true,
