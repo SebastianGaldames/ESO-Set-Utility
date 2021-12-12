@@ -13,7 +13,7 @@
       <v-row>
         <v-col md="2"></v-col>
         <v-col class="" md="8">
-          <h1>¿Quienes Somos?</h1>
+          <h1>¿Quiénes Somos?</h1>
           <hr class="linea" />
         </v-col>
         <v-col md="2"></v-col>
@@ -41,12 +41,12 @@
         <v-col md="8">
           <h3>Agradecemos que usen esta página</h3>
           <h3>
-            Somos un grupo del curso Construccion de Software dentro de la
-            universidad de Talca.
+            Somos un grupo del curso Construcción de Software dentro de la
+            Universidad de Talca.
           </h3>
           <h3>
-            Esperamos les guste la pagina y nos den muchos comentarios a traves
-            del Discord de la Comunidad
+            Esperamos les guste la página y nos den muchos comentarios a través
+            del Discord de la Comunidad.
           </h3>
         </v-col>
         <v-col md="2"></v-col>
