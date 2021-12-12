@@ -32,7 +32,7 @@
           style="text-decoration: none; color: inherit"
           class="pt-5"
         >
-          <v-btn text> Unetenos </v-btn>
+          <v-btn text> Unete </v-btn>
         </NuxtLink>
         <NuxtLink
           to="/instrucciones"
