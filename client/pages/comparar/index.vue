@@ -213,6 +213,8 @@ export default {
     const storeUser = this.$store.state.usuario
     if (storeUser === null) {
       this.$router.push({ name: 'index' })
+    } else if (this.personajes.length === 0) {
+      this.$router.push('/')
     } else {
       this.fetchUser(storeUser)
     }
