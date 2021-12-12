@@ -104,16 +104,14 @@ export default {
         Idioma: this.Idioma,
         CorreoContacto: this.CorreoContacto,
       }
-      const response = await $axios.post(
+      await $axios.post(
         process.env.VUE_APP_SERVER_URL + '/Mail/post-mail',
         data
       )
-      console.log(response)
-      const response2 = await $axios.post(
+      await $axios.post(
         process.env.VUE_APP_SERVER_URL + '/Mail/info-mail',
         data
       )
-      console.log(response2)
     },
   },
 }
@@ -132,7 +130,6 @@ export default {
   text-align: right;
   padding: 5px 10px;
 }
-,
 .linea {
   width: 100%;
   align-content: center;

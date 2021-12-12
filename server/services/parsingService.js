@@ -59,29 +59,19 @@ const parseSetBonusLine = async (line) => {
     `(${operationsListStr})\\s([0-9]+%?)\\s(${statsListStr})`,
     'gi'
   )
-  // regexStats = new RegExp(`${operationsListStr}\\s[0-9]+\\s${statsListStr}`, 'g')
-  // console.log('exec: ' + regexStats.exec(line)[0])
-  // console.log('exec 2: ' + regexStats.exec(line)[0])
-  // console.log('regexStats: ' + regexStats)
 
   // iterador de matches
   let matches = lineCopy.matchAll(regexStats)
 
-  // console.log('all matches: ' + matches[0])
-
   let match = matches.next()
-  // var matchcounter = 0
   while (!match.done) {
     const stat = {
       type: '',
       value: 0,
       operation: '',
     }
-    // console.log('match ' + matchcounter.toString() + ': ' + match.value[0])
-    // matchcounter++
 
     // llenado del objeto stat por iteracion
-    // regexSingleMatch = new RegExp(`(Adds)\\s([0-9]+)\\s(${statsListStr})`)
     if (
       !new RegExp(match.value[0].toString() + ' (while|if)', 'i').test(line)
     ) {
@@ -116,7 +106,6 @@ const parseSetBonusLine = async (line) => {
   matches = lineCopy.matchAll(regexStats1)
 
   match = matches.next()
-  // var matchcounter = 0
   while (!match.done) {
     for (let k = 0; k < 2; k++) {
       const stat = {
@@ -124,7 +113,6 @@ const parseSetBonusLine = async (line) => {
         value: 0,
         operation: '',
       }
-      // matchcounter++
 
       // llenado del objeto stat por iteracion
       if (

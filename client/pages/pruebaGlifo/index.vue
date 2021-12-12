@@ -16,7 +16,6 @@ export default {
     const post = await $axios.$get(
       process.env.VUE_APP_SERVER_URL + '/Glyph/list'
     )
-    console.log(post)
     return { listaGlifos: post }
   },
   data() {

@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex">
-    <!-- <v-btn @click="handleSaveBuild">save pj</v-btn> -->
     <div style="width: 70%" class="pa-3">
       <seleccion-personaje
         :selected="selectedPersonaje"
@@ -13,12 +12,6 @@
       <v-tabs color="acentuado1">
         <v-tab key="items"> items </v-tab>
         <v-tab-item key="items">
-          <div>
-            <!-- {{ selectedSet === undefined ? 'none' : selectedSet.nombre }} <br />
-            {{ selectedItem === undefined ? 'none' : selectedItem.nombre }}
-            <br /> -->
-            <!-- {{ currentUser.inventario }} -->
-          </div>
           <v-divider></v-divider>
           <personaje-inventario
             :familias="familias"
@@ -177,14 +170,13 @@ export default {
       }
     },
     async updateInventario() {
-      const response = await this.$axios.$put(
+      await this.$axios.$put(
         process.env.VUE_APP_SERVER_URL + '/Usuario/actualizarInventario',
         {
           _id: this.currentUser._id,
           inventario: this.currentUser.inventario,
         }
       )
-      console.log(response)
     },
     // Items eliminados del inventario por el usuario
     handleItemsDeleted(content) {
@@ -197,7 +189,6 @@ export default {
         const nuevosItems = []
         const nuevosItemsAux = []
         const itemsABorrar = []
-        // console.log(itemsAux)
         for (let i = 0; i < this.itemsBorrados.length; i++) {
           itemsABorrar.push(this.currentUser.inventario[this.itemsBorrados[i]])
         }
@@ -217,11 +208,9 @@ export default {
       this.updateInventario()
     },
     handleFamilyChanged(content) {
-      // console.log(content.nombre)
       this.selectedSet = content
     },
     handleItemChanged(content) {
-      // console.log(content.nombre)
       this.selectedItem = content
     },
     handleUpdateInventory(event) {
@@ -237,12 +226,9 @@ export default {
         (value) => value.tag !== content.tag
       )
       this.selectedPersonaje.slots = auxSlots
-      // console.log(this.selectedPersonaje.slots)
       this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     handleSlotChanged(content) {
-      // adds the new item to the slots
-      // console.log(content)
       let slot = this.selectedPersonaje.slots.find(
         (slot) => slot.tag === content.tag
       )
@@ -255,7 +241,6 @@ export default {
         slot.glyph = content.glyph
         slot.potenciaGlyph = content.potenciaGlyph
         slot.calidadGlyph = content.calidadGlyph
-        // slot.glyphImage = content.glyphImage
         slot.trait = content.trait
       } else {
         slot = {
@@ -268,17 +253,14 @@ export default {
           glyph: content.glyph,
           potenciaGlyph: content.potenciaGlyph,
           calidadGlyph: content.calidadGlyph,
-          // glyphImage: content.glyphImage,
           trait: content.trait,
         }
         this.selectedPersonaje.slots.push(slot)
       }
-      // console.log(this.selectedPersonaje.slots)
       // recalc stats
       this.stats = this.$calculateStats(this.selectedPersonaje.slots)
     },
     async handleSaveBuild() {
-      console.log(this.selectedPersonaje.slots)
       const auxSlots = []
       for (const item of this.selectedPersonaje.slots) {
         const aux = {
@@ -328,11 +310,9 @@ export default {
       // call fetch personajes
       this.fetchPersonajes(this.currentUser.personajes)
 
-      // console.log(user.usuario)
       this.snackbar = true
     },
     handleGlyphChanged(content) {
-      // console.log(content)
       this.selectedSetGlyphInfo = {
         imagen: content.glyph.imagen,
         glyph: content.glyph,
@@ -340,17 +320,14 @@ export default {
         potenciaGlyph: content.potencia,
         tipoGlyph: content.glyph.tipo,
       }
-      console.log(this.selectedSetGlyphInfo)
     },
     handleTraitChanged(content) {
-      console.log(content)
       this.selectedSetTraitInfo = {
         imagen: content.trait.imagen,
         trait: content.trait,
         calidadTrait: content.calidad,
         tipoTrait: content.trait.tipo,
       }
-      // console.log(this.selectedSetTraitInfo)
     },
     handlerSeleccionDePersonaje(content) {
       this.selectedPersonaje = content

@@ -41,10 +41,7 @@
 
             <hr class="linea" />
             <v-spacer />
-            <h5 class="centro">
-              {{ n.efectoDescripcion }},
-              <!-- ; X = {{ n.potencias[5].calidades.selectedCalidad }}-->
-            </h5>
+            <h5 class="centro">{{ n.efectoDescripcion }},</h5>
             <h5
               v-for="i in n.potencias[optionsPotencia.indexOf(selectedPotencia)]
                 .calidades[selectedCalidad]"

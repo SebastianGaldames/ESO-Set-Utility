@@ -29,8 +29,6 @@
         </v-list>
       </v-card>
       <v-card width="70%">
-        <!-- {{ inventarioViewModel }} <br /> -->
-        <!-- <item-box :item="items[0]"></item-box> -->
         <h3>Inventario</h3>
         <v-item-group @change="handleSelectionInventory">
           <v-container fluid>
@@ -51,7 +49,6 @@
                       outlined
                     >
                       <v-sheet rounded class="pa-2">
-                        <!-- <item-box :item="item.item"></item-box> -->
                         {{ inventarioItem.item.nombre }}<br />
                         <h5>{{ inventarioItem.set.nombre }}</h5>
                       </v-sheet>
@@ -59,7 +56,6 @@
                     <v-card v-else width="100%" outlined class="pa-2">
                       {{ inventarioItem.item.nombre }}<br />
                       <h5>{{ inventarioItem.set.nombre }}</h5>
-                      <!-- <item-box :item="item.item"></item-box> -->
                     </v-card>
                   </v-sheet>
                 </v-item>
@@ -247,7 +243,6 @@ export default {
             (item) => item._id === inventoryItem.item
           )
           tempVM.push({ set: targetSet, item: targetItem })
-          // tempVM.push({ itemId: inventoryItem.item, setId: inventoryItem.set })
         }
       } catch {}
       return tempVM
@@ -319,10 +314,7 @@ export default {
         return this.setFilter
           .toLowerCase()
           .split(' ')
-          .every(
-            (v) => set.nombre.toLowerCase().includes(v)
-            // || item.tipo.toLowerCase().includes(v)
-          )
+          .every((v) => set.nombre.toLowerCase().includes(v))
       })
     },
     // emits an event to update the parent component

@@ -2,7 +2,6 @@
   <div>
     <v-app class="page-container">
       <div class="content-wrap">
-        <!-- <NavbarIS> </NavbarIS> -->
         <Navbar> </Navbar>
         <PiePag class="footer" solo></PiePag>
       </div>

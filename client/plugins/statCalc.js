@@ -145,11 +145,6 @@ export default (context, inject) => {
     // Glyph
     const glyphStats = getGlyphStats(slot)
 
-    // console.log('traitStats')
-    // console.log(traitStats)
-    // console.log('glyphStats')
-    // console.log(glyphStats)
-
     if (
       slot.tag === 'Waist' ||
       slot.tag === 'Feet' ||
@@ -326,7 +321,6 @@ export default (context, inject) => {
           statObject.spellPenetration += stat.value
           break
         default:
-        //
       }
     }
     return statObject
@@ -411,7 +405,6 @@ export default (context, inject) => {
           statDelta.spellPenetration += statObject.spellPenetration * mult.value
           break
         default:
-        //
       }
     }
     return statDelta
@@ -457,18 +450,9 @@ export default (context, inject) => {
       physicalResistance: 0,
       criticalResistance: 0,
     }
-    // stats.armor = sumArmor(slots)
-    // itemsPerSet(slots)
-    // console.log(slots)
-    // console.log(getSetsStats(slots))
 
     const itemsStats = getItemCollectionStats(slots)
     const setsStats = getSetsStats(slots)
-
-    // console.log('itemsStats')
-    // console.log(itemsStats)
-    // console.log('setsStats')
-    // console.log(setsStats)
 
     stats.armor = itemsStats.armor + setsStats.armor
     stats.maximumMagicka = calcMagicka(
@@ -536,7 +520,6 @@ export default (context, inject) => {
   }
   // equations, all math done with lvl 50 as max, and lvl 66 as effective level
   function calcHealth(itemHealth, setHealth) {
-    //
     const hp = 300 * 50 + 1000 + itemHealth + setHealth
     return hp
   }
