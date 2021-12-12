@@ -1,4 +1,3 @@
-// const decode = require('jwt-decode')
 import decode from 'jwt-decode'
 // Nuestro almacenamiento
 export const state = () => ({
@@ -24,7 +23,6 @@ export const actions = {
         commit('setUsuario', user.usuario)
       }
     } else {
-      // console.log('we are running on the server')
     }
   },
   salir({ commit }) {
@@ -51,6 +49,5 @@ export const mutations = {
   },
   setUsuario(state, usuario) {
     state.usuario = usuario
-    // console.log(usuario.nombreUsuario)
   },
 }

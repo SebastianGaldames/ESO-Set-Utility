@@ -2,16 +2,12 @@
   <v-card>
     <v-card-title> Estadísticas </v-card-title>
     <v-card-text>
-      <!-- <p>
-        {{ personajeSlots }}
-      </p> -->
       <div v-for="(value, propertyName) in stats" :key="propertyName">
         <div>
           <span>{{ propertyName }}:</span>
           {{ value }}
         </div>
       </div>
-      <!-- {{ stats }} -->
     </v-card-text>
   </v-card>
 </template>

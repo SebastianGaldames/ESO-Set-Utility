@@ -12,9 +12,7 @@ const addFamily = async (family, items) => {
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
-      .catch(function (err) {
-        //console.log(err)
-      })
+      .catch(function (err) {})
     if (res !== undefined) {
       var jsonItem = JSON.parse(JSON.stringify(res.data))
       pesosFamilia.push(jsonItem.peso)
@@ -43,9 +41,7 @@ const addFamily = async (family, items) => {
         '/familia/queryNombre?nombre=' +
         family.name
     )
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
   if (resFamily === undefined) {
     // Si no existe, se añade la familia a la base de datos
     try {
@@ -131,9 +127,7 @@ const filterNewItems = async (items) => {
       .get(
         process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + item.name
       )
-      .catch(function (err) {
-        //console.log(err)
-      })
+      .catch(function (err) {})
     // Si la respuesta es undefined, significa que no está en la base de datos
     if (res === undefined) {
       newItemsNames.push(item.name)
@@ -202,9 +196,7 @@ const testAddProperty = async () => {
   const name = 'Breton Helm 3'
   const res1 = await axios
     .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 
   const typeData = await parseItemType(res1.data.tipo)
 
@@ -228,9 +220,7 @@ const testAddProperty = async () => {
   }
   const res3 = await axios
     .get(process.env.VUE_APP_SERVER_URL + '/item/queryNombre?nombre=' + name)
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
   console.log(res3.data)
 }
 
@@ -246,9 +236,7 @@ const sandbox = async () => {
 const addFamilyWeights = async () => {
   const res = await axios
     .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 
   var jsonReg = JSON.parse(JSON.stringify(res.data))
 
@@ -258,9 +246,7 @@ const addFamilyWeights = async () => {
     for (const itemId of familia.itemsFamilia) {
       const resItem = await axios
         .get(process.env.VUE_APP_SERVER_URL + '/item/query?_id=' + itemId)
-        .catch(function (err) {
-          //console.log(err)
-        })
+        .catch(function (err) {})
       var jsonItem = JSON.parse(JSON.stringify(resItem.data))
       pesosFamilia.push(jsonItem.peso)
     }
@@ -282,9 +268,7 @@ const addFamilyWeights = async () => {
 
     const resItem = await axios
       .put(process.env.VUE_APP_SERVER_URL + '/familia/update', weights)
-      .catch(function (err) {
-        //console.log(err)
-      })
+      .catch(function (err) {})
   }
 }
 
@@ -295,11 +279,8 @@ const apendItems = async (info) => {
         '/familia/queryNombre?nombre=' +
         info.setName
     )
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 
-  //console.log(res.data)
   var newItems = res.data.itemsFamilia
   console.log(newItems.length)
   for (const itemId of info.items) {
@@ -316,17 +297,13 @@ const apendItems = async (info) => {
       process.env.VUE_APP_SERVER_URL + '/familia/addItemFamilia',
       updateItems
     )
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 }
 
 const addFamilyBonusStats = async () => {
   const res = await axios
     .get(process.env.VUE_APP_SERVER_URL + '/familia/list')
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 
   const familias = res.data
 
@@ -344,8 +321,6 @@ const addFamilyBonusStats = async () => {
         estadisticas: stats.stats,
       }
       newBonos.push(newBono)
-      //var jsonItem = JSON.parse(JSON.stringify(resItem.data))
-      //console.log(JSON.parse(JSON.stringify(stats)))
     }
 
     const bonosUpdate = {
@@ -355,9 +330,7 @@ const addFamilyBonusStats = async () => {
 
     const resUpdate = await axios
       .put(process.env.VUE_APP_SERVER_URL + '/familia/update', bonosUpdate)
-      .catch(function (err) {
-        //console.log(err)
-      })
+      .catch(function (err) {})
   }
 }
 
@@ -385,9 +358,7 @@ const addItemsArmor = async () => {
 
   const res = await axios
     .get(process.env.VUE_APP_SERVER_URL + '/item/list')
-    .catch(function (err) {
-      //console.log(err)
-    })
+    .catch(function (err) {})
 
   const items = res.data
 
@@ -435,9 +406,7 @@ const addItemsArmor = async () => {
 
       const resUpdate = await axios
         .put(process.env.VUE_APP_SERVER_URL + '/item/update', armorUpdate)
-        .catch(function (err) {
-          //console.log(err)
-        })
+        .catch(function (err) {})
     }
   }
 }

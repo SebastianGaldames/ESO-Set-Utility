@@ -23,7 +23,6 @@ export default {
   },
   data() {
     return {
-      //   item: {},
       favorite: false,
     }
   },

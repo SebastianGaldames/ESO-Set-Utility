@@ -2,8 +2,6 @@
   <section>
     <div class="primario">
       <tabla-items :families="families"></tabla-items>
-      <!-- <label for="">{{ post }}</label> -->
-      <!-- <label for="">{{ families }}</label> -->
     </div>
   </section>
 </template>

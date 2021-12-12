@@ -18,7 +18,6 @@
           @keypress="$event.target.blur()"
           @keyup="$event.target.blur()"
         ></v-combobox>
-        <!-- <personaje :personaje="selectedPersonaje" class="bordes"></personaje> -->
         <personaje-lite
           :personaje="selectedPersonaje"
           class="bordes"
@@ -79,7 +78,6 @@
           @keypress="$event.target.blur()"
           @keyup="$event.target.blur()"
         ></v-combobox>
-        <!-- <personaje :personaje="selectedPersonaje2" class="bordes"></personaje> -->
         <personaje-lite
           :personaje="selectedPersonaje2"
           class="bordes"
@@ -167,10 +165,7 @@ export default {
   computed: {
     statsPersonajes() {
       if (this.selectedPersonaje.nombre !== undefined) {
-        // console.log(this.selectedPersonaje)
         const newStats = this.$calculateStats(this.selectedPersonaje.slots)
-        // console.log(this.$getSetsBonus(this.selectedPersonaje.slots))
-        // console.log('stats p 1: ', newStats)
         const stats2 = []
         for (let i = 0; i < this.stats.length; i++) {
           stats2.push(this.stats[i])
@@ -189,7 +184,6 @@ export default {
       }
       if (this.selectedPersonaje2.nombre !== undefined) {
         const newStats = this.$calculateStats(this.selectedPersonaje2.slots)
-        // console.log('stats p 2: ', newStats)
         const stats2 = []
         for (let i = 0; i < this.stats.length; i++) {
           stats2.push(this.stats[i])

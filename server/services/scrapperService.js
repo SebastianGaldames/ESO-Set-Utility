@@ -9,7 +9,6 @@ const scrapStatus = {
 }
 
 // move to ENV variables, change secret then
-// const secret = process.env.SCRAPPER_SECRET
 const testUrls = [
   'https://eso-hub.com/en/sets/dreugh-king-slayer',
   'https://eso-hub.com/en/sets/armor-of-the-code',
@@ -42,11 +41,9 @@ const scrapAllSets = async (setUrls) => {
 }
 
 const scrapAllJewels = async (setUrls) => {
-  //const allSets = []
   var i = 0
   for (const url of setUrls) {
     await scrapJewels(url)
-    //allSets.push(contents)
     console.log('scrapping: ' + i)
     i += 1
   }
@@ -97,7 +94,6 @@ const scrapSet = async (setUrl) => {
   const setBonusSpan = setBonusPanel.querySelector('span')
 
   const setBonus = scrapSetBonus(setBonusSpan)
-  //console.log(setBonusSpan.textContent)
   var setData = scrapSetMeta(stronk, set)
   setData.setBonus = setBonus //add the scrapped bonus
   //scrap image
@@ -152,7 +148,6 @@ const getItemNoTypeList = async (setDomData) => {
     const itemImg = linkNode
       .querySelector('picture source[type*="image/png"]')
       .getAttribute('srcset')
-    //const itemType = await scrapItemType(linkNode.href)
     const item = {
       name: itemName,
       img: 'https://eso-hub.com' + itemImg,
@@ -208,7 +203,6 @@ const scrapItemType = async (itemUrl) => {
   const content = itemDom.window.document.getElementById('content')
 
   const tp = content.querySelector('.col-md-8 strong').nextSibling
-  // console.log(tp.textContent)
   return tp.textContent.trim()
 }
 
@@ -255,7 +249,6 @@ function scrapSetBonus(setBonusSpan) {
   const setBonusAmountScrapped = [...setBonusSpan.querySelectorAll('strong')]
   const setBonus = []
   setBonusAmountScrapped.forEach((numNode, index) => {
-    //console.log(numNode.textContent)
     const nbr = numNode.textContent
     const bonus = {
       number: nbr[1],

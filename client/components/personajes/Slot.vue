@@ -39,7 +39,6 @@
               max-width="32"
               :src="itemImage"
             ></v-img>
-            <!-- <p>{{ itemName }}</p> -->
           </div>
           <div class="d-flex">
             <v-btn
@@ -59,7 +58,6 @@
               :max-height="defaultGlyphTraitHeight"
               :max-width="defaultGlyphTraitWidth"
             ></v-img>
-            <!-- <p>{{ slotProp.glyph }}</p> -->
           </div>
           <div class="d-flex">
             <v-btn
@@ -79,7 +77,6 @@
               :max-height="defaultGlyphTraitHeight"
               :max-width="defaultGlyphTraitWidth"
             ></v-img>
-            <!-- <p>{{ traitName }}</p> -->
           </div>
         </v-card>
       </template>
@@ -180,9 +177,6 @@ export default {
     },
   },
   methods: {
-    // test(event) {
-    //   console.log('evento capturado')
-    // },
     agregarSlotItem() {
       this.$emit('agregarSlotItem', this.id)
     },

@@ -19,8 +19,6 @@ const estadisticasSchema = new Schema({
 const itemSchema = new Schema({
   nombre: { type: String, required: true, unique: true },
   estadisticas: { type: estadisticasSchema, required: false },
-  //efecto: { type: [String], required: false },
-  //categoria: { type: String, required: false },
   tipo: { type: String, default: 'valor no asignado' },
   categoria: { type: String, default: 'valor no asignado' },
   peso: { type: String, default: 'valor no asignado' },

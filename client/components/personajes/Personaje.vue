@@ -109,8 +109,6 @@
 
       <v-btn color="positive" @click="guardarInventario"> Save </v-btn>
       <span v-if="save"> Hay cambios sin guardar en este personaje </span>
-      <!-- <span v-else> Personaje guardado </span> -->
-      <!-- {{ selectedPj.slots }} -->
     </div>
   </div>
 </template>
@@ -350,7 +348,6 @@ export default {
       this.inventario[index].slotPJ.calidadGlyph =
         this.selectedGlyph.calidadGlyph
       this.inventario[index].enableGlyph = false
-      // console.log(this.inventario[index].slotPJ)
       this.selectedGlyph = {}
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },
@@ -372,7 +369,6 @@ export default {
       this.inventario[index].slotPJ.calidadTrait =
         this.selectedTrait.calidadTrait
       this.inventario[index].enableTrait = false
-      // console.log(this.inventario[index].slotPJ)
       this.selectedTrait = {}
       this.$emit('slotChanged', this.inventario[index].slotPJ)
     },

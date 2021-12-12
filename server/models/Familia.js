@@ -8,7 +8,6 @@ const bonoSchema = new Schema({
 
 const familiaSchema = new Schema({
   nombre: { type: String, unique: true, required: true },
-  //hash: { type: String, unique: true },
   tipo: { type: String },
   estilo: { type: String },
   pesos: { type: [String] },
