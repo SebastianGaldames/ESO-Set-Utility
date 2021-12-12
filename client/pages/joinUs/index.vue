@@ -24,7 +24,6 @@
             >
             </v-img>
           </v-flex>
-          <h1>X</h1>
           <v-flex class="d-flex">
             <v-img
               class="imagen"
