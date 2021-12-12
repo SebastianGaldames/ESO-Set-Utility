@@ -1,6 +1,15 @@
 <template>
   <section>
     <div class="w-100 textCentro">
+      <v-flex class="d-flex">
+        <v-img
+          class="imagen"
+          max-height="200"
+          max-width="500"
+          src="https://i.imgur.com/Hc1mF2k.png"
+        >
+        </v-img>
+      </v-flex>
       <v-row>
         <v-col md="2"></v-col>
         <v-col class="" md="8">
@@ -37,11 +46,27 @@
           </h3>
           <h3>
             Esperamos les guste la pagina y nos den muchos comentarios a traves
-            de nuestro discord
+            del Discord de la Comunidad
           </h3>
         </v-col>
         <v-col md="2"></v-col>
       </v-row>
+      <v-flex class="d-flex">
+        <a
+          href="https://discord.gg/WuBbkgC3cy"
+          target="_blank"
+          class="imagen"
+          rel="noopener noreferrer"
+        >
+          <v-img
+            class="imagen"
+            max-height="250"
+            max-width="250"
+            src="https://www.freepnglogos.com/uploads/discord-logo-png/concours-discord-cartes-voeux-fortnite-france-6.png"
+          >
+          </v-img>
+        </a>
+      </v-flex>
     </div>
   </section>
 </template>
@@ -58,5 +83,10 @@
 .linea {
   width: 100%;
   align-content: center;
+}
+.imagen {
+  align-items: center;
+  display: block;
+  margin: 0 auto;
 }
 </style>
