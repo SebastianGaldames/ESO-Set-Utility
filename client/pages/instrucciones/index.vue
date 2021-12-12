@@ -1074,7 +1074,7 @@
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
                           Así una vez se presiona el botón con el signo "+", el
-                          item se verá agregado.
+                          item se verá agregado y el signo "+" desaparecerá.
                         </h4>
                         <v-img
                           class="mt-6"
@@ -1084,6 +1084,39 @@
                           async
                         ></v-img>
                       </v-col>
+                      <v-col class="pl-10" cols="8">
+                        <h4 style="text-align: justify">
+                          Para el caso de armas de una sola mano o anillos, al
+                          agregar estos a un slot del personaje, continuará
+                          apareciendo el botón "+" en el posible botón restante,
+                          para quitar la opción se debe hacer click sobre el
+                          item para deseleccionar o hacer click sobre otro item,
+                          de manera que la opción con signo "+" restante cambie
+                          de slot o desaparezca.
+                        </h4>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/3kYrnww/nuevo.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                      <v-col class="pl-10" cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/25QDM0R/nuevo-2.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
                           Recordar presionar en "Save" para guardar los cambios.
