@@ -213,8 +213,6 @@ export default {
     const storeUser = this.$store.state.usuario
     if (storeUser === null) {
       this.$router.push({ name: 'index' })
-    } else if (this.personajes.length === 0) {
-      this.$router.push('/')
     } else {
       this.fetchUser(storeUser)
     }
@@ -229,6 +227,8 @@ export default {
       if (this.personajes.length > 0) {
         this.selectedPersonaje = this.personajes[0]
         this.selectedPersonaje2 = this.personajes[0]
+      } else {
+        this.$router.push('/')
       }
     },
     async fetchPersonajes(idsArray) {
