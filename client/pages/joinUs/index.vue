@@ -13,7 +13,28 @@
         <v-col md="2"></v-col>
       </v-row>
       <v-row>
-        <v-col md="4"></v-col>
+        <v-col md="2"></v-col>
+        <v-col md="2">
+          <v-flex class="d-flex">
+            <v-img
+              class="imagen"
+              max-height="200"
+              max-width="200"
+              src="https://i.imgur.com/q8tmWZt.png"
+            >
+            </v-img>
+          </v-flex>
+          <h1>X</h1>
+          <v-flex class="d-flex">
+            <v-img
+              class="imagen"
+              max-height="200"
+              max-width="200"
+              src="https://www.freepnglogos.com/uploads/discord-logo-png/concours-discord-cartes-voeux-fortnite-france-6.png"
+            >
+            </v-img>
+          </v-flex>
+        </v-col>
         <v-col class="textDer w-100" md="6">
           <v-text-field v-model="Nombre" label="Nombre"></v-text-field>
           <v-text-field

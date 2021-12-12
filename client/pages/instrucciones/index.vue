@@ -32,7 +32,8 @@
                             class="mt-4"
                             aspect-ratio="15"
                             contain
-                            src="https://i.ibb.co/BsPMw58/navbar.png"
+                            src="https://i.ibb.co/KqDjhQf/navbar.png"
+                            async
                           ></v-img>
                           <h4 class="mt-6" style="text-align: justify">
                             Al hacer click se te redirigirá a una vista como la
@@ -42,6 +43,7 @@
                             aspect-ratio="1"
                             contain
                             src="https://i.ibb.co/KsD5Vgy/familias1.png"
+                            async
                           ></v-img>
 
                           En ella se encuentra el listado total de los items
@@ -58,6 +60,7 @@
                             aspect-ratio="13"
                             contain
                             src="https://i.ibb.co/PjkRmFZ/familias-inferior.png"
+                            async
                           ></v-img>
                         </h4>
                       </v-col>
@@ -84,6 +87,7 @@
                           aspect-ratio="6"
                           contain
                           src="https://i.ibb.co/fGsZmQ9/familia-superior.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           Un ejemplo de esto se muestra a continuación:
@@ -93,6 +97,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/tcxjQYx/Familias5.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           También existe otra manera de ubicar el item que
@@ -108,18 +113,21 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/hWD81cZ/familias2.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">Tipo:</h4>
                         <v-img
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/DDNmrnb/familias3.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">Peso:</h4>
                         <v-img
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/gJzTy82/Familias4.png"
+                          async
                         ></v-img>
                         <h4 style="text-align: justify">
                           Una vez se han puesto todos los filtros o ya has
@@ -133,6 +141,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/W6j9MQ9/Familias-Contenido.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -160,7 +169,8 @@
                           class="mt-4"
                           aspect-ratio="15"
                           contain
-                          src="https://i.ibb.co/BsPMw58/navbar.png"
+                          src="https://i.ibb.co/KqDjhQf/navbar.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           Al hacer click se te redirigirá a una vista como la
@@ -171,6 +181,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/Wzd3P4W/unetenos.png"
+                          async
                         ></v-img>
                         <h4 class="mt-6" style="text-align: justify">
                           En ella deberás llenar los datos solicidatos: Nombre,
@@ -194,12 +205,26 @@
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
                     <v-row justify="center">
-                      <v-col class="pl-10" cols="5">
-                        <h4 class="mt-16" style="text-align: justify">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-6" style="text-align: justify">
                           Para crear un usuario debes dirigirte al botón de
                           inicio de sesión ubicado en la esquina superior
-                          derecha de la pantalla. Posteriormente se abrirá el
-                          siguiente recuadro para el inicio de sesión:
+                          derecha de la pantalla.
+                        </h4>
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="15"
+                          contain
+                          src="https://i.ibb.co/KqDjhQf/navbar.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Posteriormente se abrirá el siguiente recuadro para el
+                          inicio de sesión:
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -208,6 +233,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/rH5yqLd/Login.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -228,6 +254,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/bsBJ3cD/registro.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -248,6 +275,7 @@
                           aspect-ratio="4"
                           contain
                           src="https://i.ibb.co/jH2Fg54/contrase-a.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -258,6 +286,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/yFCWFMc/preguntas-de-seguridad.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="5">
@@ -291,6 +320,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/nf8fdXp/terminos.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -310,14 +340,28 @@
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
                     <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-6" style="text-align: justify">
+                          Para crear un usuario debes dirigirte al botón de
+                          inicio de sesión ubicado en la esquina superior
+                          derecha de la pantalla.
+                        </h4>
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="15"
+                          contain
+                          src="https://i.ibb.co/KqDjhQf/navbar.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
                       <v-col class="pl-10" cols="5">
                         <h4 class="mt-16" style="text-align: justify">
-                          Para iniciar sesión debes dirigirte al botón de inicio
-                          de sesión ubicado en la esquina superior derecha de la
-                          pantalla. Posteriormente se abrirá un recuadro para el
-                          inicio de sesión, en él debes ingresar tus datos de
-                          usuario y contraseña y dar click en el botón de
-                          "Iniciar Sesión":
+                          Posteriormente se abrirá un recuadro para el inicio de
+                          sesión, en él debes ingresar tus datos de usuario y
+                          contraseña y dar click en el botón de "Iniciar
+                          Sesión":
                         </h4>
                       </v-col>
                       <v-col cols="5">
@@ -326,6 +370,7 @@
                           aspect-ratio="2.5"
                           contain
                           src="https://i.ibb.co/rH5yqLd/Login.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -339,18 +384,46 @@
                 <v-expansion-panel-content>
                   <div class="mt-2 mb-5">
                     <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-6" style="text-align: justify">
+                          Para Acceder a la sección de recuperación de
+                          contraseña deberás dirigirte al botón de "Iniciar
+                          Sesión" ubicado en la esquina superior derecha de la
+                          pantalla:
+                        </h4>
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="15"
+                          contain
+                          src="https://i.ibb.co/KqDjhQf/navbar.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
                       <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
-                          Para Recuperar contraseña deberás seguir una serie de
-                          pasos que se han dispuesto con el fin de dar una mayor
-                          seguridad a tus datos. Para Acceder a la sección de
-                          recuperación de contraseña deberás dirigirte al botón
-                          de "Iniciar Sesión" ubicado en la esquina superior
-                          derecha de la pantalla. Posteriormente se abrirá un
-                          recuadro para el inicio de sesión y más abajo estará
-                          el enlace de "¿Olvidaste tu contraseña?", deberás dar
-                          click y se desplegará una vista de Recuperación de
-                          contraseña, tal como se muestra a continuación:
+                          Posteriormente se abrirá un recuadro para el inicio de
+                          sesión:
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-13"
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/rH5yqLd/Login.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Una vez en la vista veras el enlace de "¿Olvidaste tu
+                          contraseña?" click y se desplegará una vista de
+                          Recuperación de contraseña, tal como se muestra a
+                          continuación:
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -359,21 +432,24 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/WtC61vp/Recuperacion-contrase-a.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
                     <v-row justify="center">
                       <v-col class="pl-10" cols="4">
                         <h4 class="mt-16" style="text-align: justify">
-                          En primer lugar deberás validar tu usuario, para ello
-                          debes ingresar el nombre de usuario con el que inicias
-                          sesión regularmente y presionar en el botón de la
-                          derecha "Validar" En el caso de que hayas ingresado tu
-                          usuario correctamente se desplegará un mensaje de
-                          confirmación de que has ingresado de manera exitosa tu
-                          nombre de usuario y se desbloquearán los campos de las
-                          tres preguntas secretas que respondiste cuando creaste
-                          tu cuenta.
+                          Para Recuperar contraseña deberás seguir una serie de
+                          pasos que se han dispuesto con el fin de dar una mayor
+                          seguridad a tus datos. En primer lugar deberás validar
+                          tu usuario, para ello debes ingresar el nombre de
+                          usuario con el que inicias sesión regularmente y
+                          presionar en el botón de la derecha "Validar" En el
+                          caso de que hayas ingresado tu usuario correctamente
+                          se desplegará un mensaje de confirmación de que has
+                          ingresado de manera exitosa tu nombre de usuario y se
+                          desbloquearán los campos de las tres preguntas
+                          secretas que respondiste cuando creaste tu cuenta.
                         </h4>
                       </v-col>
                       <v-col cols="4">
@@ -382,6 +458,7 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/yXbdRtR/passrecovery2.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -403,6 +480,7 @@
                           aspect-ratio="0.9"
                           contain
                           src="https://i.ibb.co/18d3jTw/passrecovery3.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -439,18 +517,19 @@
                           iniciado sesión.
                         </h4>
                         <h4 class="mt-16" style="text-align: justify">
-                          Se desplegarán tres opciones: "Perfil", "Personajes" y
-                          "Salir":
+                          Se desplegarán cuatro opciones: "Perfil",
+                          "Personajes", "Comparar Personajes" y "Salir":
                         </h4>
                       </v-col>
                       <v-col class="mt-10" cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="5"
+                          aspect-ratio="3"
                           height="100%"
                           width="auto"
                           contain
-                          src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                          src="https://i.ibb.co/K9MrCvS/opciones-usuario.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -469,6 +548,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -498,6 +578,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/nf1pnpf/micuentacambiogatos.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -522,18 +603,19 @@
                           iniciado sesión.
                         </h4>
                         <h4 class="mt-16" style="text-align: justify">
-                          Se desplegarán tres opciones: "Perfil", "Personajes" y
-                          "Salir":
+                          Se desplegarán cuatro opciones: "Perfil",
+                          "Personajes", "Comparar Personajes" y "Salir":
                         </h4>
                       </v-col>
                       <v-col class="mt-10" cols="5">
                         <v-img
                           class="mt-4"
-                          aspect-ratio="5"
+                          aspect-ratio="3"
                           height="100%"
                           width="auto"
                           contain
-                          src="https://i.ibb.co/xJrt0mv/opciones-usuario.png"
+                          src="https://i.ibb.co/K9MrCvS/opciones-usuario.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -552,6 +634,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/Sm7LXcc/micuenta.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -580,6 +663,7 @@
                           width="auto"
                           contain
                           src="https://i.ibb.co/jwKBD4C/micuentarespuestasseguridad.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -607,6 +691,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción de "agregar
@@ -618,26 +703,31 @@
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/QkZNWp8/agregar-personaje1.png"
+                          async
                         ></v-img>
-                        <h4 class="mt-16" style="text-align: justify">
-                          Deberás rellenar al menos el campo del nombre del
-                          personaje, el cual es obligatorio y con al menos dos
-                          caracteres para su nombre, tal como se muestra a
-                          continuación:
+                        <h4 class="mt-10" style="text-align: justify">
+                          El botón de "agregar personaje" se mantendrá
+                          deshabilitado hasta que cumplas con las condiciones
+                          mínimas para la creación de un personaje, para esto
+                          deberás rellenar al menos el campo del nombre del
+                          personaje con al menos dos caracteres, tal como se
+                          muestra a continuación:
                         </h4>
                         <v-img
                           class="mt-6"
                           aspect-ratio="3"
                           contain
                           src="https://i.ibb.co/B45cRtL/agregar-personaje2.png"
+                          async
                         ></v-img>
 
-                        <h4 class="mt-16" style="text-align: justify">
+                        <h4 class="mt-10" style="text-align: justify">
                           El campo de descripción es opcional, por lo que no es
                           necesario que lo rellenes, una vez has escrito lo
-                          necesario debes dar click en "agregar Personaje" y una
-                          notificación te avisará si es que se ha creado
-                          correctamente.
+                          necesario debes dar click en "agregar Personaje", que
+                          si has cumplido las restricciones mínimas se habrá
+                          habilitado y una notificación te avisará si es que se
+                          ha creado correctamente.
                         </h4>
                       </v-col>
                     </v-row>
@@ -664,6 +754,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción ubicada a la
@@ -676,6 +767,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/4MLdbRr/agregar-personaje3.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Una vez haz seleccionado el nombre del personaje se
@@ -706,6 +798,7 @@
                           aspect-ratio="17"
                           contain
                           src="https://i.ibb.co/f47JfZL/agregar-personaje.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           En ella deberás seleccionar la opción ubicada a la
@@ -718,6 +811,7 @@
                           aspect-ratio="5"
                           contain
                           src="https://i.ibb.co/4MLdbRr/agregar-personaje3.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Luego de ello debes seleccionar cual es el personaje
@@ -731,6 +825,7 @@
                           aspect-ratio="7"
                           contain
                           src="https://i.ibb.co/ZM0PCqS/agregar-personaje24.png"
+                          async
                         ></v-img>
                         <h4 class="mt-16" style="text-align: justify">
                           Si estás seguro de eliminar el personaje debes dar
@@ -760,6 +855,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/mD9YW53/agregar-personaje4.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -781,6 +877,7 @@
                           aspect-ratio="1"
                           contain
                           src="https://i.ibb.co/Sxrq6kg/agregar-personaje5.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -799,6 +896,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/Sn0JywR/agregar-personaje6.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -816,6 +914,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/9GYwkpz/agregar-personaje7.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -853,6 +952,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/Wpz4Vtb/agregar-personaje8.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -884,9 +984,10 @@
                       <v-col cols="4">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="1.7"
+                          aspect-ratio="1.5"
                           contain
-                          src="https://i.ibb.co/0fRNWsZ/agregar-personaje9.png"
+                          src="https://i.ibb.co/SBXydyT/agregar-personaje9.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -902,9 +1003,10 @@
                       <v-col cols="4">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="1.7"
+                          aspect-ratio="1.5"
                           contain
-                          src="https://i.ibb.co/fq3Vdx8/agregar-personaje22.png"
+                          src="https://i.ibb.co/KjD89BH/agregar-personaje22.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -920,9 +1022,10 @@
                       <v-col cols="4">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="1.7"
+                          aspect-ratio="1.5"
                           contain
-                          src="https://i.ibb.co/Qp3DfDz/detalles-item-en-personaje-equipado.png"
+                          src="https://i.ibb.co/P5wXYtv/descripcion-item-personaje.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -950,7 +1053,8 @@
                           class="mt-6"
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/ZLh3bN7/agregar-personaje10.png"
+                          src="https://i.ibb.co/tKVtrXQ/agregar-personaje4.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -963,25 +1067,69 @@
                           class="mt-6"
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/0JvB4P6/agregar-personaje11.png"
+                          src="https://i.ibb.co/Lp80gpq/agregar-personaje12.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
                           Así una vez se presiona el botón con el signo "+", el
-                          item se verá agregado.
+                          item se verá agregado y el signo "+" desaparecerá.
                         </h4>
                         <v-img
                           class="mt-6"
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/51RhXN9/agregar-personaje12.png"
+                          src="https://i.ibb.co/YP69Sfk/agregar-personaje11.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
+                          Para el caso de armas de una sola mano o anillos, al
+                          agregar estos a un slot del personaje, continuará
+                          apareciendo el botón "+" en el posible botón restante,
+                          para quitar la opción se debe hacer click sobre el
+                          item para deseleccionar o hacer click sobre otro item,
+                          de manera que la opción con signo "+" restante cambie
+                          de slot o desaparezca.
+                        </h4>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/3kYrnww/nuevo.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                      <v-col class="pl-10" cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/25QDM0R/nuevo-2.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 style="text-align: justify">
                           Recordar presionar en "Save" para guardar los cambios.
                         </h4>
+                      </v-col>
+                      <v-col cols="8">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="2"
+                          contain
+                          src="https://i.ibb.co/PNCq3gk/agregar-personaje111.png"
+                          async
+                        ></v-img>
                       </v-col>
                     </v-row>
                   </div>
@@ -998,35 +1146,68 @@
                         <h4 class="mt-16" style="text-align: justify">
                           Para eliminar items del equipamiento del personaje, el
                           usuario deberá hacer click en el switch ubicado en la
-                          esquina superior izquierda de la vista del
-                          equipamiento del personaje, el cual especifica la
-                          opción "Eliminar Slots", deshabilitada por defecto:
+                          esquina inferior izquierda de la vista del
+                          equipamiento del personaje, sobre el botón de "Save",
+                          el cual especifica la opción "Limpiar Slots",
+                          deshabilitada por defecto:
                         </h4>
-
+                      </v-col>
+                      <v-col cols="8">
                         <v-img
                           class="mt-6"
-                          aspect-ratio="20"
+                          aspect-ratio="14"
                           contain
-                          src="https://i.ibb.co/gJNsSHM/eliminar-slot.png"
-                        ></v-img>
-                        <h4 class="mt-4" style="text-align: justify">
-                          Al activar la opción, se modificará la vista para
-                          eliminar los items que el usuario desee, como se
-                          muestra a continuación:
-                        </h4>
-                        <v-img
-                          class="mt-6"
-                          aspect-ratio="3"
-                          contain
-                          src="https://i.ibb.co/DWKSw18/agregar-personaje23.png"
+                          src="https://i.ibb.co/6wnzxZY/nueva-vista-personaje-eliminar1.png"
+                          async
                         ></v-img>
                       </v-col>
-
-                      <h4 style="text-align: justify">
-                        Así dependiendo de la sección en la que se encuentre, el
-                        usuario podrá eliminar items, traits o glifos agregados
-                        en los slots.
-                      </h4>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <h4 class="mt-4" style="text-align: justify">
+                          Al activar la opción, se modificará la vista para
+                          eliminar los slots de items que el usuario desee, como
+                          se muestra a continuación:
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="1.5"
+                          contain
+                          src="https://i.ibb.co/52J31Bp/nueva-vista-personaje-eliminar.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="4">
+                        <h4 style="text-align: justify">
+                          Si el usuario desea eliminar algún slot, debe hacer
+                          click en el título del mismo para realizarlo, estos
+                          han cambiado de color de blanco a rojo cuando la
+                          opción de eliminar slot fue activada.
+                        </h4>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-img
+                          class="mt-6"
+                          aspect-ratio="1.5"
+                          contain
+                          src="https://i.ibb.co/Scs07bS/save-de-cambios.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 style="text-align: justify">
+                          Finalmente para que los cambios realizados hayan sido
+                          guardados, el usuario debe hacer click en el botón
+                          "Save", el cual estará dando aviso con un pequeño
+                          texto, cuando haya cambios sin guardar.
+                        </h4>
+                      </v-col>
                     </v-row>
                   </div>
                 </v-expansion-panel-content>
@@ -1053,6 +1234,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/3TjYZrC/agregar-personaje13.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1067,6 +1249,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/pbmvQyD/agregar-personaje14.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1080,6 +1263,7 @@
                           aspect-ratio="1.7"
                           contain
                           src="https://i.ibb.co/Dtpcbc5/agregar-personaje15.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -1103,28 +1287,37 @@
                           estarán disponibles para añadir los glifos de armor, a
                           continuación se muestra un ejemplo:
                         </h4>
+                      </v-col>
+                      <v-col class="pl-10" cols="8">
                         <v-img
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/CVTdz36/agregar-personaje16.png"
+                          src="https://i.ibb.co/crXzW8w/aaaaaa.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">
                           De manera similar será para joyas:
                         </h4>
+                      </v-col>
+                      <v-col class="pl-10" cols="8">
                         <v-img
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/jGSghVv/agregar-personaje17.png"
+                          src="https://i.ibb.co/wBF908m/jjjjjjjjj.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
                         <h4 style="text-align: justify">Y para armas:</h4>
+                      </v-col>
+                      <v-col class="pl-10" cols="8">
                         <v-img
                           aspect-ratio="2"
                           contain
-                          src="https://i.ibb.co/PQ5t63S/agregar-personaje18.png"
+                          src="https://i.ibb.co/4MtbCzY/wwwwwwwwwwww.png"
+                          async
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -1151,6 +1344,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/5R84d6L/agregar-personaje19.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1166,6 +1360,7 @@
                           aspect-ratio="2"
                           contain
                           src="https://i.ibb.co/DQSp8kt/agregar-personaje20.png"
+                          async
                         ></v-img>
                       </v-col>
                       <v-col class="pl-10" cols="8">
@@ -1195,16 +1390,111 @@
                           habilitará la opción para agregar los traits de armor,
                           a continuación se muestra un ejemplo:
                         </h4>
+                      </v-col>
+                      <v-col class="mt-6" cols="8">
                         <v-img
-                          class="mt-6"
                           aspect-ratio="2.5"
                           contain
-                          src="https://i.ibb.co/bPNkJ1m/agregar-personaje21.png"
+                          src="https://i.ibb.co/NSxZGsd/traits.png"
+                          async
                         ></v-img>
                       </v-col>
-                      <v-col class="pl-10" cols="8">
+                      <v-col class="mt-6" cols="8">
                         <h4 style="text-align: justify">
                           De manera similar funciona para joyas y armas.
+                        </h4>
+                      </v-col>
+                      <v-col class="mt-6" cols="8">
+                        <v-img
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/BVnkz65/traits-guardados1.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                      <v-col class="mt-6" cols="8">
+                        <h4 style="text-align: justify">
+                          Finalmente para que los cambios realizados hayan sido
+                          guardados, el usuario debe hacer click en el botón
+                          "Save", el cual estará dando aviso con un pequeño
+                          texto, cuando haya cambios sin guardar.
+                        </h4>
+                      </v-col>
+                      <v-col class="mt-6" cols="8">
+                        <v-img
+                          aspect-ratio="2.5"
+                          contain
+                          src="https://i.ibb.co/JvPMx2k/traits-guardados2.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <h2>Comparación de Personajes</h2>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <h2>Comparar Personajes</h2></v-expansion-panel-header
+                >
+                <v-expansion-panel-content>
+                  <div class="mt-2 mb-5">
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="5">
+                        <h4 class="mt-16" style="text-align: justify">
+                          Para realizar comparaciones de las estadísticas de tus
+                          personajes equipados, debes dirigirte a la sección
+                          "Comparar Personajes" desde tu perfil, esto lo harás
+                          haciendo click sobre tu nombre de usuario en la
+                          esquina superior derecha de la pantalla luego de haber
+                          iniciado sesión.
+                        </h4>
+                        <h4 class="mt-16" style="text-align: justify">
+                          Se desplegarán cuatro opciones: "Perfil",
+                          "Personajes", "Comparar Personajes" y "Salir":
+                        </h4>
+                      </v-col>
+                      <v-col cols="3">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="4"
+                          height="100%"
+                          contain
+                          src="https://i.ibb.co/DKkgmYh/opciones-usuario2.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-10" style="text-align: justify">
+                          Deberás dar click en "Comparar Personajes", En ella
+                          podrás seleccionar cualquier personaje que hayas
+                          creado y equipado con anterioridad y realizar
+                          comparaciones sobre las estadísticas de cada uno, tal
+                          como se muestra a continuación:
+                        </h4>
+                      </v-col>
+                      <v-col cols="8">
+                        <v-img
+                          class="mt-4"
+                          aspect-ratio="3"
+                          height="100%"
+                          width="auto"
+                          contain
+                          src="https://i.ibb.co/JCH0kSt/comparacion-personajes.png"
+                          async
+                        ></v-img>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col class="pl-10" cols="8">
+                        <h4 class="mt-4" style="text-align: justify">
+                          Se han dispuesto además los colores verde y rojo para
+                          enfatizar cuales estadísticas son mayores (y cuales
+                          menores) entre los personajes a comparar y blanco si
+                          estas son iguales, con el fin de poder visibilizar de
+                          una mejor manera las diferencias entre ellas.
                         </h4>
                       </v-col>
                     </v-row>
@@ -1223,7 +1513,7 @@
 .imagenFondo {
   background-image: url('https://images8.alphacoders.com/497/497515.jpg');
   height: 100%;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-repeat: repeat;
+  background-size: 100% auto;
 }
 </style>
