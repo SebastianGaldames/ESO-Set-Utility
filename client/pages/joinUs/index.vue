@@ -3,11 +3,8 @@
     <div class="w-100 textCentro">
       <v-row>
         <v-col md="2"></v-col>
-        <v-col class="" md="8">
-          <h2>
-            Si quieres seguir las noticias mas de cerca y no perderte de nada
-          </h2>
-          <h2>Inscribete</h2>
+        <v-col md="8">
+          <h2 class="mt-4 mb-4">Juega con nosotros</h2>
           <hr class="linea" />
         </v-col>
         <v-col md="2"></v-col>
@@ -24,7 +21,6 @@
             >
             </v-img>
           </v-flex>
-          <h1>X</h1>
           <v-flex class="d-flex">
             <v-img
               class="imagen"

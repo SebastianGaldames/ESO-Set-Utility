@@ -11,27 +11,22 @@
         <div>
           <v-card class="mx-auto transparent pt-2 pb-2" max-width="600">
             <v-card-text class="div1">
-              <h2
-                class="secundario--text text-decoration-underline pt-2"
-                align="center"
-              >
-                Informacion Personal
-              </h2>
+              <h1 class="pt-2" align="center">Información Personal</h1>
               <div class="secundario--text pt-5 pl-5">
                 <v-icon color="grey darken-1"> mdi-account </v-icon
-                ><v-text>Usuario: </v-text>{{ user.usuario }}
+                ><a class="secundario--text">Usuario: </a>{{ user.usuario }}
               </div>
               <div class="secundario--text pt-2 pl-5">
                 <v-icon color="grey darken-1"> mdi-earth </v-icon
-                ><v-text>País: </v-text>{{ user.pais }}
+                ><a class="secundario--text">País: </a>{{ user.pais }}
               </div>
               <div class="secundario--text pt-2 pl-5">
                 <v-icon color="grey darken-1"> mdi-email </v-icon
-                ><v-text>Email: </v-text>{{ user.email }}
+                ><a class="secundario--text">Email: </a>{{ user.email }}
               </div>
               <div class="secundario--text pt-2 pl-5 pb-5">
                 <v-icon color="grey darken-1"> mdi-gender-male-female </v-icon
-                ><v-text>Sexo: </v-text>{{ user.sexo }}
+                ><a class="secundario--text">Sexo: </a>{{ user.sexo }}
               </div>
             </v-card-text>
           </v-card>
@@ -40,7 +35,7 @@
           <v-expansion-panels focusable>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                <v-text class="pl-4">Cambio de datos</v-text>
+                <a class="pl-4">Cambio de datos</a>
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
                 <v-toolbar color="primario">
@@ -190,7 +185,7 @@
             </v-expansion-panel>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                <v-text class="pl-4">Actualizar respuestas de seguridad</v-text>
+                <a class="pl-4">Actualizar respuestas de seguridad</a>
               </v-expansion-panel-header>
               <v-expansion-panel-content class="primario">
                 <v-toolbar color="primario">

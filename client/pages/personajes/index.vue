@@ -143,15 +143,14 @@ export default {
       return filtered
     },
   },
-  // watch: {
-  //   selectedPersonaje() {
-  //     this.personajeSlots =
-  //       this.selectedPersonaje !== undefined ? this.selectedPersonaje.slots : []
-  //   },
-  // },
+
   beforeMount() {
     const storeUser = this.$store.state.usuario
-    this.currentUser = this.fetchUser(storeUser)
+    if (storeUser === null) {
+      this.$router.push('/')
+    } else {
+      this.currentUser = this.fetchUser(storeUser)
+    }
   },
   methods: {
     async fetchUser(userName) {
