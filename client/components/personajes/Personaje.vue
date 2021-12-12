@@ -160,7 +160,7 @@ export default {
       selectedTrait: {},
       selectedItem: {},
       selectedSet: {},
-      selectedPj: {},
+      selectedPj: this.personaje,
       inventario: [],
       enableDelete: false,
       save: false,
@@ -297,12 +297,17 @@ export default {
     },
     handleAgregarSlotItem(index) {
       this.save = true
+      this.selectedSet = this.set
       const itemAux = this.allItems.find(
         (itemTemp) => itemTemp._id === this.selectedItem._id
       )
       const setAux = this.allSets.find(
         (setTemp) => setTemp._id === this.selectedSet._id
       )
+      console.log('soy el set' + this.set.nombre)
+      console.log('el set: ' + this.selectedSet.nombre)
+      console.log('el pj:' + this.selectedPj.nombre)
+      console.log('el item' + this.selectedItem.nombre)
       if (this.isTwoHanded()) {
         this.$emit('deleteSlot', this.inventario[10].slotPJ)
         this.inventario[10].slotPJ.item = undefined

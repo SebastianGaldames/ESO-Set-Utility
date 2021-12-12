@@ -3,6 +3,7 @@
     <div class="d-flex flex-direction:column">
       <v-card width="30%" class="pa-2">
         <h3>Sets</h3>
+
         <v-text-field
           v-model="setFilter"
           label="Buscar Set"
