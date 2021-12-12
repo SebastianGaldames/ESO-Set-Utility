@@ -331,7 +331,7 @@ export default {
 
       // console.log(user.usuario)
       this.snackbar = true
-      this.router.go()
+      this.$router.go()
     },
     handleGlyphChanged(content) {
       // console.log(content)
@@ -375,7 +375,7 @@ export default {
       // call fetch personajes
       await this.fetchPersonajes(this.currentUser.personajes)
       this.selectedPersonaje = this.personajes[0]
-      this.router.go()
+      this.$router.go()
     },
   },
 }
