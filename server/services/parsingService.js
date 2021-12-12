@@ -1,7 +1,7 @@
 /**
- * referenced from ParsingController.js for testing
- * @param {*} line single line
- * @returns Object with properties: items (Number), stats (array)
+ * referenced by ParsingController.js for testing and scrapperAdapterService.js for intended usage
+ * @param {*} line String, single line from set bonus text
+ * @returns Object with properties: requiredItems (Number), stats (array)
  */
 const parseSetBonusLine = async (line) => {
   const statsList = [
