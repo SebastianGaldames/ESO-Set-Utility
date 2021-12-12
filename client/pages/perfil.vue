@@ -11,12 +11,7 @@
         <div>
           <v-card class="mx-auto transparent pt-2 pb-2" max-width="600">
             <v-card-text class="div1">
-              <h2
-                class="secundario--text text-decoration-underline pt-2"
-                align="center"
-              >
-                Informacion Personal
-              </h2>
+              <h1 class="pt-2" align="center">Información Personal</h1>
               <div class="secundario--text pt-5 pl-5">
                 <v-icon color="grey darken-1"> mdi-account </v-icon
                 ><a class="secundario--text">Usuario: </a>{{ user.usuario }}
