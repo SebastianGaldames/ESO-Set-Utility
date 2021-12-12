@@ -160,7 +160,7 @@ export default {
       selectedTrait: {},
       selectedItem: {},
       selectedSet: {},
-      selectedPj: {},
+      selectedPj: this.personaje,
       inventario: [],
       enableDelete: false,
       save: false,
@@ -297,6 +297,7 @@ export default {
     },
     handleAgregarSlotItem(index) {
       this.save = true
+      this.selectedSet = this.set
       const itemAux = this.allItems.find(
         (itemTemp) => itemTemp._id === this.selectedItem._id
       )
