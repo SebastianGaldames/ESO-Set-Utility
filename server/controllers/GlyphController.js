@@ -65,7 +65,6 @@ const queryPotencia = async (req, res, next) => {
       })
     } else {
       var jsonReg = JSON.parse(JSON.stringify(reg))
-      //console.log(jsonReg.potencias)
 
       jsonReg.potencias.forEach((pot) => {
         if (pot.potencia === req.body.potencia) {
@@ -74,7 +73,6 @@ const queryPotencia = async (req, res, next) => {
         }
       })
 
-      //console.log(jsonReg)
       res.status(200).json(jsonReg)
     }
   } catch (e) {

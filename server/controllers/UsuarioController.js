@@ -104,7 +104,6 @@ const update = async (req, res, next) => {
 }
 const updatePassword = async (req, res, next) => {
   try {
-    //const reg0 = await models.Usuario.findOne({ _id: req.body._id })
     const encryptedPassword = await bcrypt.hash(req.body.password, 10)
     const reg = await models.Usuario.findByIdAndUpdate(
       { _id: req.body._id },
@@ -220,22 +219,14 @@ const removePersonaje = async (req, res, next) =>{
 const addPersonaje = async (req, res, next) => {
   try {
     const regUsr = await models.Usuario.findOne({ _id: req.body._id })
-    // if (!regUsr) {
-    //   res.status(404).send({
-    //     message: 'No se pudo crear el personaje',
-    //   })
-    // }
+   
 
     pj = {
       nombre: req.body.nombre,
       slots: req.body.slots,
     }
     const regPj = await models.Personaje.create(pj)
-    // if (!regPj) {
-    //   res.status(404).send({
-    //     message: 'No se pudo crear el personaje',
-    //   })
-    // }
+
 
     const newPersonajes = regUsr.personajes
     newPersonajes.push(regPj._id)

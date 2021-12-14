@@ -274,12 +274,10 @@ export default {
           _id: this.user._id,
           password: this.character.newPassword,
         }
-        const passwordUpdated = await this.$axios.put(
+        await this.$axios.put(
           process.env.VUE_APP_SERVER_URL + '/Usuario/updatePassword',
           newPassword
         )
-        // eslint-disable-next-line no-console
-        console.log(passwordUpdated)
         this.$router.push('/login')
       }
     },

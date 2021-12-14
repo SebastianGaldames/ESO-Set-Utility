@@ -61,9 +61,6 @@ export default {
     postPersonaje() {
       this.validate()
       if (this.valid) {
-        //   const newPersonaje = {
-        //     nombre: this.newPersonaje.nombre,
-        //   }
         this.cerrarEvent()
       }
     },

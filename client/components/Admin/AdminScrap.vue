@@ -6,6 +6,7 @@
         <v-list-item-title class="text-h5 mb-1">
           Pulsa boton para scrap
         </v-list-item-title>
+        <p id="p01"></p>
       </v-list-item-content>
     </v-list-item>
     <div v-if="power">
@@ -56,6 +57,8 @@ export default {
   methods: {
     async scrapPage() {
       this.power = false
+      const message = document.getElementById('p01')
+      message.innerHTML = ''
       await this.$axios
         .post(process.env.VUE_APP_SERVER_URL + '/scrapper/scrap', {
           secret: 'HWFC8MEvqD',
@@ -65,7 +68,9 @@ export default {
           return respuesta
         })
         .catch((error) => {
-          console.log(error)
+          message.innerHTML = error
+          this.power = true
+          this.safe = false
         })
     },
     estasSeguro() {

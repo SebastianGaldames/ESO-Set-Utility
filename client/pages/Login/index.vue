@@ -31,9 +31,6 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-        <!-- <v-flex v-if="errorM" class="red--text">
-          {{ errorM }}
-        </v-flex> -->
         <div class="ajustes1">
           <v-btn rounded color="error" dark @click="busq">Iniciar Sesión</v-btn>
         </div>
